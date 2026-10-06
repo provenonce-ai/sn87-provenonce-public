@@ -166,4 +166,5 @@ Some tests skip without the private executors; each skip says so. CI runs the sa
 
 Developed by Provenonce, Inc. under the authority of Will O'Brien, Founder & CEO.
 Copyright (c) 2026 Provenonce, Inc. Licensed under the MIT License (see [LICENSE](LICENSE)).
+Provenonce and Bitstarter.ai are partnering on Proof of Assurance (Bittensor Subnet 87).
 Report security issues privately to ops@provenonce.co (see [SECURITY.md](SECURITY.md)).
