@@ -1,0 +1,32 @@
+{
+  "challenge_class": "pipeline-deviation",
+  "challenge_id": "q-lane-one-0001",
+  "expires_at": "2026-09-04T01:00:00Z",
+  "hidden_commitment": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+  "nonce": "lane-one-nonce-0001",
+  "protocol_version": "sn87/0alpha1",
+  "capsule": {
+    "capsule_id": "capsule-0001",
+    "protocol_version": "sn87/0alpha1",
+    "signal": {"class": "release-request"},
+    "orchestration": {"id": "orchestration-example"},
+    "constraints": [{"id": "human-review-required", "required": true}],
+    "observed_paths": [{"id": "validate-release"}],
+    "pipeline": {"id": "pipeline-example", "state": "completed"},
+    "evidence": [{"commitment": "sha256:1111111111111111111111111111111111111111111111111111111111111111", "predicate": "review_gate_present"}],
+    "context": {"environment": "synthetic"},
+    "source_bindings": [{"source_id": "synthetic:lane-one:0001", "commitment": "sha256:0000000000000000000000000000000000000000000000000000000000000000"}],
+    "disclosure_policy": {"policy_id": "metadata-default", "mode": "METADATA", "allowed_evidence_predicates": ["review_gate_present"], "privacy_budget": 0.0},
+    "mapping_confidence": 1.0,
+    "limitations": ["synthetic Type A conformance vector"]
+  },
+  "visible_policy": {
+    "challenge_class": "pipeline-deviation",
+    "challenge_class_version": "0alpha1",
+    "claim_types": ["DEVIATION", "EVIDENCE", "CONFIDENCE"],
+    "oracle_bindings": [{"oracle_class": "A", "identifier": "integrity-v0alpha1"}],
+    "residual_fields": [],
+    "disclosure_modes": ["METADATA"],
+    "max_cost": {"seconds": 45.0, "credits": 1.0, "privacy_budget": 0.0}
+  }
+}

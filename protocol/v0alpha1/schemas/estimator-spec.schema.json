@@ -1,0 +1,118 @@
+{
+  "$defs": {
+    "EstimatorKind": {
+      "enum": [
+        "WEIGHTED_ARITHMETIC_MEAN",
+        "WEIGHTED_HARMONIC_MEAN"
+      ],
+      "title": "EstimatorKind",
+      "type": "string"
+    },
+    "ExactRatio": {
+      "additionalProperties": false,
+      "properties": {
+        "denominator": {
+          "exclusiveMinimum": 0,
+          "title": "Denominator",
+          "type": "integer"
+        },
+        "numerator": {
+          "exclusiveMinimum": 0,
+          "title": "Numerator",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "numerator",
+        "denominator"
+      ],
+      "title": "ExactRatio",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "chain_action_defined": {
+      "const": false,
+      "title": "Chain Action Defined",
+      "type": "boolean"
+    },
+    "component_weights": {
+      "additionalProperties": {
+        "$ref": "#/$defs/ExactRatio"
+      },
+      "minProperties": 1,
+      "propertyNames": {
+        "maxLength": 128,
+        "minLength": 1
+      },
+      "title": "Component Weights",
+      "type": "object"
+    },
+    "estimator_id": {
+      "maxLength": 128,
+      "minLength": 1,
+      "title": "Estimator Id",
+      "type": "string"
+    },
+    "estimator_state": {
+      "const": "EXPERIMENTAL_NON_NORMATIVE",
+      "title": "Estimator State",
+      "type": "string"
+    },
+    "estimator_version": {
+      "const": "sn87/transparent-estimator/0alpha1",
+      "title": "Estimator Version",
+      "type": "string"
+    },
+    "kind": {
+      "$ref": "#/$defs/EstimatorKind"
+    },
+    "normative_scoring": {
+      "const": false,
+      "title": "Normative Scoring",
+      "type": "boolean"
+    },
+    "output_semantics": {
+      "const": "EXPERIMENTAL_COMPONENT_AGGREGATE",
+      "title": "Output Semantics",
+      "type": "string"
+    },
+    "ranking_defined": {
+      "const": false,
+      "title": "Ranking Defined",
+      "type": "boolean"
+    },
+    "task_profile_commitment": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Task Profile Commitment",
+      "type": "string"
+    },
+    "weight_policy_defined": {
+      "const": false,
+      "title": "Weight Policy Defined",
+      "type": "boolean"
+    },
+    "winner_selection_defined": {
+      "const": false,
+      "title": "Winner Selection Defined",
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "estimator_version",
+    "estimator_state",
+    "estimator_id",
+    "task_profile_commitment",
+    "kind",
+    "component_weights",
+    "output_semantics",
+    "normative_scoring",
+    "winner_selection_defined",
+    "ranking_defined",
+    "weight_policy_defined",
+    "chain_action_defined"
+  ],
+  "title": "EstimatorSpec",
+  "type": "object"
+}

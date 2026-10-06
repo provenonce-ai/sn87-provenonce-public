@@ -1,0 +1,57 @@
+[build-system]
+requires = ["hatchling>=1.27,<2"]
+build-backend = "hatchling.build"
+
+[project]
+name = "sn87-provenonce"
+version = "0.1.0a0"
+description = "Protocol contracts for evidence-backed assurance of autonomous work on SN87."
+readme = "README.md"
+requires-python = ">=3.12"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "Provenonce, Inc." }]
+dependencies = ["pydantic>=2.11,<3"]
+
+[project.scripts]
+sn87-provenonce = "sn87_provenonce.cli:main"
+
+[project.optional-dependencies]
+transport = [
+  "bittensor==11.1.0",
+  "starlette==1.7.0",
+  "uvicorn==0.54.0",
+  "valkey==6.1.1",
+  "httpx==0.28.1",
+]
+bittensor = [
+  "bittensor==11.1.0",
+]
+dev = [
+  "pytest>=9.0.3,<10",
+  "ruff>=0.12,<1",
+]
+
+[project.urls]
+Repository = "https://github.com/provenonce-ai/sn87-provenonce-public"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/sn87_provenonce"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra --strict-markers"
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+# The data-dense FICTIONAL source generator keeps its compact layout; a test pins its output
+# byte for byte.
+per-file-ignores = { "scripts/gen_fictional_source.py" = ["E501", "E702", "E731", "SIM115"] }
+
+[tool.ruff.lint.isort]
+# Keeps import order stable when a private module is absent from an exported tree.
+known-first-party = ["sn87_provenonce"]

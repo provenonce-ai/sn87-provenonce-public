@@ -1,0 +1,22 @@
+{
+  "commitment_domain": "SN87:EXAMPLE_POLICY_IDENTITY:v0alpha1",
+  "identities": [
+    {
+      "commitment": "sha256:e3a0c8243a5377f3bee359591809cbd5868389a50a88d5f669cf30a817ad6572",
+      "identifier": "illustrative-false-positive-v1",
+      "preimage": {
+        "policy_id": "illustrative-false-positive-v1",
+        "purpose": "example-only"
+      }
+    },
+    {
+      "commitment": "sha256:19e2c1c5addd47816f60aef9b4ca72192b0a61c1165f45750b4a7f48215ae6ea",
+      "identifier": "illustrative-severity-v1",
+      "preimage": {
+        "policy_id": "illustrative-severity-v1",
+        "purpose": "example-only"
+      }
+    }
+  ],
+  "state": "ILLUSTRATIVE_IDENTITY_ONLY"
+}

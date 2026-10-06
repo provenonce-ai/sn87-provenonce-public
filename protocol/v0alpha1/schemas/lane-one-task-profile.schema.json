@@ -1,0 +1,200 @@
+{
+  "$defs": {
+    "ExactRatio": {
+      "additionalProperties": false,
+      "properties": {
+        "denominator": {
+          "exclusiveMinimum": 0,
+          "title": "Denominator",
+          "type": "integer"
+        },
+        "numerator": {
+          "exclusiveMinimum": 0,
+          "title": "Numerator",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "numerator",
+        "denominator"
+      ],
+      "title": "ExactRatio",
+      "type": "object"
+    },
+    "MatchingPolicy": {
+      "enum": [
+        "EXACT_REFERENCE_ONE_TO_ONE"
+      ],
+      "title": "MatchingPolicy",
+      "type": "string"
+    },
+    "MeasurementComponent": {
+      "enum": [
+        "SEVERITY_WEIGHTED_PRECISION",
+        "SEVERITY_WEIGHTED_RECALL",
+        "F_BETA_DETECTION",
+        "EVIDENCE_QUALITY",
+        "BRIER_CALIBRATION",
+        "CLEAN_CONTROL_OUTCOME"
+      ],
+      "title": "MeasurementComponent",
+      "type": "string"
+    },
+    "PolicyBinding": {
+      "additionalProperties": false,
+      "properties": {
+        "commitment": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Commitment",
+          "type": "string"
+        },
+        "identifier": {
+          "minLength": 1,
+          "title": "Identifier",
+          "type": "string"
+        }
+      },
+      "required": [
+        "identifier",
+        "commitment"
+      ],
+      "title": "PolicyBinding",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Bind one transparent measurement run to explicit component policies.",
+  "properties": {
+    "beta_squared": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ExactRatio"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "calibration_policy_binding": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/PolicyBinding"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "chain_action_defined": {
+      "const": false,
+      "title": "Chain Action Defined",
+      "type": "boolean"
+    },
+    "challenge_class": {
+      "minLength": 1,
+      "title": "Challenge Class",
+      "type": "string"
+    },
+    "challenge_class_version": {
+      "minLength": 1,
+      "title": "Challenge Class Version",
+      "type": "string"
+    },
+    "composite_defined": {
+      "const": false,
+      "title": "Composite Defined",
+      "type": "boolean"
+    },
+    "eligibility_threshold_defined": {
+      "const": false,
+      "title": "Eligibility Threshold Defined",
+      "type": "boolean"
+    },
+    "enabled_components": {
+      "items": {
+        "$ref": "#/$defs/MeasurementComponent"
+      },
+      "minItems": 1,
+      "title": "Enabled Components",
+      "type": "array"
+    },
+    "epoch_estimator_defined": {
+      "const": false,
+      "title": "Epoch Estimator Defined",
+      "type": "boolean"
+    },
+    "false_positive_policy_binding": {
+      "$ref": "#/$defs/PolicyBinding"
+    },
+    "matching_policy": {
+      "$ref": "#/$defs/MatchingPolicy"
+    },
+    "minimum_fp_cost_units": {
+      "exclusiveMinimum": 0,
+      "title": "Minimum Fp Cost Units",
+      "type": "integer"
+    },
+    "normative_scoring": {
+      "const": false,
+      "title": "Normative Scoring",
+      "type": "boolean"
+    },
+    "policy_binding_mode": {
+      "const": "IDENTITY_ONLY",
+      "title": "Policy Binding Mode",
+      "type": "string"
+    },
+    "profile_id": {
+      "minLength": 1,
+      "title": "Profile Id",
+      "type": "string"
+    },
+    "profile_state": {
+      "const": "EXPERIMENTAL_NON_NORMATIVE",
+      "title": "Profile State",
+      "type": "string"
+    },
+    "profile_version": {
+      "const": "sn87/lane-one-task-profile/0alpha1",
+      "title": "Profile Version",
+      "type": "string"
+    },
+    "ranking_defined": {
+      "const": false,
+      "title": "Ranking Defined",
+      "type": "boolean"
+    },
+    "severity_policy_binding": {
+      "$ref": "#/$defs/PolicyBinding"
+    },
+    "weight_policy_defined": {
+      "const": false,
+      "title": "Weight Policy Defined",
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "profile_version",
+    "profile_state",
+    "profile_id",
+    "challenge_class",
+    "challenge_class_version",
+    "enabled_components",
+    "matching_policy",
+    "policy_binding_mode",
+    "severity_policy_binding",
+    "false_positive_policy_binding",
+    "minimum_fp_cost_units",
+    "beta_squared",
+    "calibration_policy_binding",
+    "normative_scoring",
+    "composite_defined",
+    "epoch_estimator_defined",
+    "eligibility_threshold_defined",
+    "ranking_defined",
+    "weight_policy_defined",
+    "chain_action_defined"
+  ],
+  "title": "LaneOneTaskProfile",
+  "type": "object"
+}

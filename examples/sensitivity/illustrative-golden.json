@@ -1,0 +1,157 @@
+{
+  "canonical_report_sha256": "sha256:95ff7ea0168698de6fbdbaac2d7593694f671cf9c806bf55a057f73b3809b3ac",
+  "claim_state": "IMPLEMENTED_TESTED_TRANSPARENT_SENSITIVITY_EVIDENCE_ONLY",
+  "componentwise_relations": [
+    {
+      "left_vector_id": "baseline",
+      "relation": "RIGHT_COMPONENTWISE_DOMINATES",
+      "right_vector_id": "evidence-up"
+    },
+    {
+      "left_vector_id": "baseline",
+      "relation": "LEFT_COMPONENTWISE_DOMINATES",
+      "right_vector_id": "precision-down"
+    },
+    {
+      "left_vector_id": "baseline",
+      "relation": "COMPONENTWISE_INCOMPARABLE",
+      "right_vector_id": "tradeoff"
+    },
+    {
+      "left_vector_id": "evidence-up",
+      "relation": "LEFT_COMPONENTWISE_DOMINATES",
+      "right_vector_id": "precision-down"
+    },
+    {
+      "left_vector_id": "evidence-up",
+      "relation": "COMPONENTWISE_INCOMPARABLE",
+      "right_vector_id": "tradeoff"
+    },
+    {
+      "left_vector_id": "precision-down",
+      "relation": "COMPONENTWISE_INCOMPARABLE",
+      "right_vector_id": "tradeoff"
+    }
+  ],
+  "normalized_spec_commitment": "sha256:5742e10d6a54dfac941c69397a280ba7d578c06257c33f1db396b1d1d4796701",
+  "profile_commitment": "sha256:91765feafde76c049c17442adcc5600f86f97960e77476717e5e89de9242f4fa",
+  "report_commitment": "sha256:470f19509e79f2465a0bb5d328aa9f868559391c7bc4a6a6c3599d725f6d79b2",
+  "result_commitment": "sha256:7a760100ab6d9e1abde3d66ef8b44870ce5cefec42708683de2aa3b57de99da8",
+  "sensitivity_results": [
+    {
+      "baseline_estimate": {
+        "denominator": 2,
+        "numerator": 1
+      },
+      "estimator_commitment": "sha256:30323fcef7632ab45b20d486ff50a2a09f826c8ddcf0d8504869963e1aae0512",
+      "estimator_id": "illustrative-arithmetic",
+      "scenarios": [
+        {
+          "changed_components": [
+            "EVIDENCE_QUALITY"
+          ],
+          "delta_from_baseline": {
+            "denominator": 4,
+            "numerator": 1
+          },
+          "direction": "INCREASED",
+          "estimate": {
+            "denominator": 4,
+            "numerator": 3
+          },
+          "scenario_id": "evidence-up"
+        },
+        {
+          "changed_components": [
+            "SEVERITY_WEIGHTED_PRECISION"
+          ],
+          "delta_from_baseline": {
+            "denominator": 8,
+            "numerator": -1
+          },
+          "direction": "DECREASED",
+          "estimate": {
+            "denominator": 8,
+            "numerator": 3
+          },
+          "scenario_id": "precision-down"
+        },
+        {
+          "changed_components": [
+            "EVIDENCE_QUALITY",
+            "SEVERITY_WEIGHTED_PRECISION"
+          ],
+          "delta_from_baseline": {
+            "denominator": 8,
+            "numerator": 1
+          },
+          "direction": "INCREASED",
+          "estimate": {
+            "denominator": 8,
+            "numerator": 5
+          },
+          "scenario_id": "tradeoff"
+        }
+      ]
+    },
+    {
+      "baseline_estimate": {
+        "denominator": 2,
+        "numerator": 1
+      },
+      "estimator_commitment": "sha256:7bcc9a580b135b367be79c59e65630e874e3c96030bfdaad78e50d7b67c65eee",
+      "estimator_id": "illustrative-harmonic",
+      "scenarios": [
+        {
+          "changed_components": [
+            "EVIDENCE_QUALITY"
+          ],
+          "delta_from_baseline": {
+            "denominator": 6,
+            "numerator": 1
+          },
+          "direction": "INCREASED",
+          "estimate": {
+            "denominator": 3,
+            "numerator": 2
+          },
+          "scenario_id": "evidence-up"
+        },
+        {
+          "changed_components": [
+            "SEVERITY_WEIGHTED_PRECISION"
+          ],
+          "delta_from_baseline": {
+            "denominator": 6,
+            "numerator": -1
+          },
+          "direction": "DECREASED",
+          "estimate": {
+            "denominator": 3,
+            "numerator": 1
+          },
+          "scenario_id": "precision-down"
+        },
+        {
+          "changed_components": [
+            "EVIDENCE_QUALITY",
+            "SEVERITY_WEIGHTED_PRECISION"
+          ],
+          "delta_from_baseline": {
+            "denominator": 10,
+            "numerator": -1
+          },
+          "direction": "DECREASED",
+          "estimate": {
+            "denominator": 5,
+            "numerator": 2
+          },
+          "scenario_id": "tradeoff"
+        }
+      ]
+    }
+  ],
+  "source_spec_sha256": "sha256:a79270a6ae0032410e34d585ef6b74b0432f39ecb91339338f2e87c8f8d6d56b",
+  "vector_state": "ILLUSTRATIVE_NON_NORMATIVE",
+  "vector_version": "sn87/public-sensitivity-conformance-vector/0alpha1"
+}

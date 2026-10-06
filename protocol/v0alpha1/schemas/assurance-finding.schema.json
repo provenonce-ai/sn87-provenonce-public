@@ -1,0 +1,128 @@
+{
+  "$defs": {
+    "EvidenceReference": {
+      "additionalProperties": false,
+      "properties": {
+        "commitment": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Commitment",
+          "type": "string"
+        },
+        "predicate": {
+          "minLength": 1,
+          "title": "Predicate",
+          "type": "string"
+        }
+      },
+      "required": [
+        "commitment",
+        "predicate"
+      ],
+      "title": "EvidenceReference",
+      "type": "object"
+    },
+    "OracleClass": {
+      "enum": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "title": "OracleClass",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "challenge_id": {
+      "minLength": 1,
+      "title": "Challenge Id",
+      "type": "string"
+    },
+    "claim": {
+      "minLength": 1,
+      "title": "Claim",
+      "type": "string"
+    },
+    "confidence": {
+      "anyOf": [
+        {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Confidence"
+    },
+    "counterfactual_path": {
+      "anyOf": [
+        {
+          "minLength": 1,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Counterfactual Path"
+    },
+    "evidence": {
+      "items": {
+        "$ref": "#/$defs/EvidenceReference"
+      },
+      "minItems": 1,
+      "title": "Evidence",
+      "type": "array"
+    },
+    "finding_id": {
+      "minLength": 1,
+      "title": "Finding Id",
+      "type": "string"
+    },
+    "finding_type": {
+      "minLength": 1,
+      "title": "Finding Type",
+      "type": "string"
+    },
+    "limitations": {
+      "default": [],
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "title": "Limitations",
+      "type": "array"
+    },
+    "oracle_class": {
+      "$ref": "#/$defs/OracleClass"
+    },
+    "recommended_action": {
+      "minLength": 1,
+      "title": "Recommended Action",
+      "type": "string"
+    },
+    "severity": {
+      "maximum": 1.0,
+      "minimum": 0.0,
+      "title": "Severity",
+      "type": "number"
+    }
+  },
+  "required": [
+    "finding_id",
+    "challenge_id",
+    "finding_type",
+    "claim",
+    "severity",
+    "oracle_class",
+    "evidence",
+    "recommended_action"
+  ],
+  "title": "AssuranceFinding",
+  "type": "object"
+}

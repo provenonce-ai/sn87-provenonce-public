@@ -1,0 +1,589 @@
+{
+  "$defs": {
+    "Disclosure": {
+      "additionalProperties": false,
+      "properties": {
+        "benchmark_reuse_grant": {
+          "const": "not_in_v0_1",
+          "title": "Benchmark Reuse Grant",
+          "type": "string"
+        },
+        "declared_limits": {
+          "items": {
+            "maxLength": 4096,
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Declared Limits",
+          "type": "array"
+        },
+        "evidence_access_policy_references": {
+          "const": "not_in_v0_1",
+          "title": "Evidence Access Policy References",
+          "type": "string"
+        },
+        "private_data_embedded": {
+          "const": false,
+          "default": false,
+          "title": "Private Data Embedded",
+          "type": "boolean"
+        },
+        "supported_modes": {
+          "items": {
+            "maxLength": 4096,
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Supported Modes",
+          "type": "array"
+        }
+      },
+      "required": [
+        "supported_modes",
+        "declared_limits",
+        "evidence_access_policy_references",
+        "benchmark_reuse_grant"
+      ],
+      "title": "Disclosure",
+      "type": "object"
+    },
+    "Evaluation": {
+      "additionalProperties": false,
+      "properties": {
+        "abstention_state": {
+          "maxLength": 4096,
+          "minLength": 1,
+          "title": "Abstention State",
+          "type": "string"
+        },
+        "applicability_minimum_assignments": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Applicability Minimum Assignments",
+          "type": "integer"
+        },
+        "equivalent_diagnostics": {
+          "maxLength": 4096,
+          "minLength": 1,
+          "title": "Equivalent Diagnostics",
+          "type": "string"
+        },
+        "evidence_quality": {
+          "maxLength": 4096,
+          "minLength": 1,
+          "title": "Evidence Quality",
+          "type": "string"
+        },
+        "false_positive_floor": {
+          "maxLength": 4096,
+          "minLength": 1,
+          "title": "False Positive Floor",
+          "type": "string"
+        },
+        "finding_equivalence": {
+          "maxLength": 4096,
+          "minLength": 1,
+          "title": "Finding Equivalence",
+          "type": "string"
+        },
+        "maximum_raw_invalid_or_missing_rate": {
+          "maxLength": 4096,
+          "minLength": 1,
+          "title": "Maximum Raw Invalid Or Missing Rate",
+          "type": "string"
+        },
+        "measurement_profile_id": {
+          "maxLength": 4096,
+          "minLength": 1,
+          "title": "Measurement Profile Id",
+          "type": "string"
+        },
+        "no_valid_row_behavior": {
+          "maxLength": 4096,
+          "minLength": 1,
+          "title": "No Valid Row Behavior",
+          "type": "string"
+        },
+        "profile_commitment": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Profile Commitment",
+          "type": "string"
+        },
+        "profile_commitment_domain": {
+          "maxLength": 4096,
+          "minLength": 1,
+          "title": "Profile Commitment Domain",
+          "type": "string"
+        },
+        "rule_references": {
+          "items": {
+            "$ref": "#/$defs/RuleReference"
+          },
+          "title": "Rule References",
+          "type": "array"
+        },
+        "score_epoch_weight_policy_references": {
+          "const": "not_in_v0_1",
+          "title": "Score Epoch Weight Policy References",
+          "type": "string"
+        }
+      },
+      "required": [
+        "measurement_profile_id",
+        "profile_commitment",
+        "profile_commitment_domain",
+        "rule_references",
+        "finding_equivalence",
+        "false_positive_floor",
+        "abstention_state",
+        "no_valid_row_behavior",
+        "evidence_quality",
+        "applicability_minimum_assignments",
+        "maximum_raw_invalid_or_missing_rate",
+        "equivalent_diagnostics",
+        "score_epoch_weight_policy_references"
+      ],
+      "title": "Evaluation",
+      "type": "object"
+    },
+    "Identity": {
+      "additionalProperties": false,
+      "properties": {
+        "canonicalization_id": {
+          "maxLength": 4096,
+          "minLength": 1,
+          "title": "Canonicalization Id",
+          "type": "string"
+        },
+        "capsule_schema": {
+          "maxLength": 4096,
+          "minLength": 1,
+          "title": "Capsule Schema",
+          "type": "string"
+        },
+        "class_id": {
+          "maxLength": 4096,
+          "minLength": 1,
+          "title": "Class Id",
+          "type": "string"
+        },
+        "compatible_capsule_versions": {
+          "items": {
+            "maxLength": 4096,
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Compatible Capsule Versions",
+          "type": "array"
+        },
+        "compatible_differential_versions": {
+          "items": {
+            "maxLength": 4096,
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Compatible Differential Versions",
+          "type": "array"
+        },
+        "differential_schema": {
+          "maxLength": 4096,
+          "minLength": 1,
+          "title": "Differential Schema",
+          "type": "string"
+        },
+        "normative_source_references": {
+          "items": {
+            "maxLength": 4096,
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Normative Source References",
+          "type": "array"
+        },
+        "task_id": {
+          "maxLength": 4096,
+          "minLength": 1,
+          "title": "Task Id",
+          "type": "string"
+        },
+        "task_version": {
+          "maxLength": 4096,
+          "minLength": 1,
+          "title": "Task Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "task_id",
+        "class_id",
+        "task_version",
+        "canonicalization_id",
+        "capsule_schema",
+        "differential_schema",
+        "normative_source_references",
+        "compatible_capsule_versions",
+        "compatible_differential_versions"
+      ],
+      "title": "Identity",
+      "type": "object"
+    },
+    "IdentityJoin": {
+      "additionalProperties": false,
+      "properties": {
+        "identity_field": {
+          "maxLength": 4096,
+          "minLength": 1,
+          "title": "Identity Field",
+          "type": "string"
+        },
+        "stage": {
+          "maxLength": 4096,
+          "minLength": 1,
+          "title": "Stage",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "bound",
+            "not_in_v0_1"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "stage",
+        "identity_field",
+        "status"
+      ],
+      "title": "IdentityJoin",
+      "type": "object"
+    },
+    "Limit": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "maxLength": 4096,
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "unit": {
+          "maxLength": 4096,
+          "minLength": 1,
+          "title": "Unit",
+          "type": "string"
+        },
+        "value": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Value",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "name",
+        "value",
+        "unit"
+      ],
+      "title": "Limit",
+      "type": "object"
+    },
+    "Observability": {
+      "additionalProperties": false,
+      "properties": {
+        "aggregation_boundaries": {
+          "const": "not_in_v0_1",
+          "title": "Aggregation Boundaries",
+          "type": "string"
+        },
+        "identity_chain": {
+          "items": {
+            "$ref": "#/$defs/IdentityJoin"
+          },
+          "title": "Identity Chain",
+          "type": "array"
+        }
+      },
+      "required": [
+        "identity_chain",
+        "aggregation_boundaries"
+      ],
+      "title": "Observability",
+      "type": "object"
+    },
+    "Operations": {
+      "additionalProperties": false,
+      "properties": {
+        "authentication_rules": {
+          "const": "not_in_v0_1",
+          "title": "Authentication Rules",
+          "type": "string"
+        },
+        "feedback_reveal_rules": {
+          "const": "not_in_v0_1",
+          "title": "Feedback Reveal Rules",
+          "type": "string"
+        },
+        "instance_expiry": {
+          "const": "not_in_v0_1",
+          "title": "Instance Expiry",
+          "type": "string"
+        },
+        "lease_and_retry_identity": {
+          "const": "not_in_v0_1",
+          "title": "Lease And Retry Identity",
+          "type": "string"
+        },
+        "method_capabilities": {
+          "const": "not_in_v0_1",
+          "title": "Method Capabilities",
+          "type": "string"
+        },
+        "replay_rules": {
+          "items": {
+            "maxLength": 4096,
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Replay Rules",
+          "type": "array"
+        },
+        "resource_limits": {
+          "items": {
+            "$ref": "#/$defs/Limit"
+          },
+          "title": "Resource Limits",
+          "type": "array"
+        },
+        "time_limits": {
+          "const": "not_in_v0_1",
+          "title": "Time Limits",
+          "type": "string"
+        }
+      },
+      "required": [
+        "resource_limits",
+        "time_limits",
+        "instance_expiry",
+        "method_capabilities",
+        "authentication_rules",
+        "replay_rules",
+        "lease_and_retry_identity",
+        "feedback_reveal_rules"
+      ],
+      "title": "Operations",
+      "type": "object"
+    },
+    "Question": {
+      "additionalProperties": false,
+      "properties": {
+        "allowed_transformations": {
+          "const": "not_in_v0_1",
+          "title": "Allowed Transformations",
+          "type": "string"
+        },
+        "claim_ontology": {
+          "items": {
+            "maxLength": 4096,
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Claim Ontology",
+          "type": "array"
+        },
+        "exclusions": {
+          "items": {
+            "maxLength": 4096,
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Exclusions",
+          "type": "array"
+        },
+        "plain_language_task": {
+          "maxLength": 4096,
+          "minLength": 1,
+          "title": "Plain Language Task",
+          "type": "string"
+        },
+        "required_evidence": {
+          "items": {
+            "maxLength": 4096,
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Required Evidence",
+          "type": "array"
+        },
+        "response_states": {
+          "items": {
+            "maxLength": 4096,
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Response States",
+          "type": "array"
+        },
+        "supported_source_mappings": {
+          "const": "not_in_v0_1",
+          "title": "Supported Source Mappings",
+          "type": "string"
+        }
+      },
+      "required": [
+        "plain_language_task",
+        "claim_ontology",
+        "response_states",
+        "required_evidence",
+        "allowed_transformations",
+        "supported_source_mappings",
+        "exclusions"
+      ],
+      "title": "Question",
+      "type": "object"
+    },
+    "Renewal": {
+      "additionalProperties": false,
+      "properties": {
+        "baseline_comparator": {
+          "maxLength": 4096,
+          "minLength": 1,
+          "title": "Baseline Comparator",
+          "type": "string"
+        },
+        "exposure_retirement_note": {
+          "maxLength": 4096,
+          "minLength": 1,
+          "title": "Exposure Retirement Note",
+          "type": "string"
+        },
+        "generator_reference": {
+          "maxLength": 4096,
+          "minLength": 1,
+          "title": "Generator Reference",
+          "type": "string"
+        },
+        "generator_version": {
+          "maxLength": 4096,
+          "minLength": 1,
+          "title": "Generator Version",
+          "type": "string"
+        },
+        "holdout_rules": {
+          "const": "not_in_v0_1",
+          "title": "Holdout Rules",
+          "type": "string"
+        },
+        "observable_view_admission_tests": {
+          "const": "not_in_v0_1",
+          "title": "Observable View Admission Tests",
+          "type": "string"
+        }
+      },
+      "required": [
+        "generator_reference",
+        "generator_version",
+        "baseline_comparator",
+        "exposure_retirement_note",
+        "holdout_rules",
+        "observable_view_admission_tests"
+      ],
+      "title": "Renewal",
+      "type": "object"
+    },
+    "RuleReference": {
+      "additionalProperties": false,
+      "properties": {
+        "oracle_reference": {
+          "maxLength": 4096,
+          "minLength": 1,
+          "title": "Oracle Reference",
+          "type": "string"
+        },
+        "rule_code": {
+          "maxLength": 4096,
+          "minLength": 1,
+          "title": "Rule Code",
+          "type": "string"
+        },
+        "severity": {
+          "maxLength": 4096,
+          "minLength": 1,
+          "title": "Severity",
+          "type": "string"
+        }
+      },
+      "required": [
+        "rule_code",
+        "severity",
+        "oracle_reference"
+      ],
+      "title": "RuleReference",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "adoption_status": {
+      "const": "CANDIDATE_SCHEMA_NOT_ADOPTED",
+      "default": "CANDIDATE_SCHEMA_NOT_ADOPTED",
+      "title": "Adoption Status",
+      "type": "string"
+    },
+    "disclosure": {
+      "$ref": "#/$defs/Disclosure"
+    },
+    "evaluation": {
+      "$ref": "#/$defs/Evaluation"
+    },
+    "identity": {
+      "$ref": "#/$defs/Identity"
+    },
+    "lifecycle_state": {
+      "const": "draft",
+      "default": "draft",
+      "title": "Lifecycle State",
+      "type": "string"
+    },
+    "not_in_v0_1": {
+      "items": {
+        "maxLength": 4096,
+        "minLength": 1,
+        "type": "string"
+      },
+      "title": "Not In V0 1",
+      "type": "array"
+    },
+    "observability": {
+      "$ref": "#/$defs/Observability"
+    },
+    "operations": {
+      "$ref": "#/$defs/Operations"
+    },
+    "question": {
+      "$ref": "#/$defs/Question"
+    },
+    "renewal": {
+      "$ref": "#/$defs/Renewal"
+    },
+    "schema_version": {
+      "const": "sn87-cmt/0.1",
+      "default": "sn87-cmt/0.1",
+      "title": "Schema Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "identity",
+    "question",
+    "disclosure",
+    "evaluation",
+    "operations",
+    "renewal",
+    "observability",
+    "not_in_v0_1"
+  ],
+  "title": "CMTManifest",
+  "type": "object"
+}

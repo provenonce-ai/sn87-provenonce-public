@@ -1,0 +1,11 @@
+{
+  "protocol_version": "sn87/0alpha1",
+  "challenge_id": "q-lane-one-0001",
+  "response_state": "INSUFFICIENT_EVIDENCE_ABSTAIN",
+  "rationale": "The disclosed metadata is insufficient to evaluate the requested predicate.",
+  "findings": null,
+  "counterfactual_paths": null,
+  "confidence_report": null,
+  "evidence_requests": ["review_gate_attestation"],
+  "miner_commitment": "sha256:5555555555555555555555555555555555555555555555555555555555555555"
+}
