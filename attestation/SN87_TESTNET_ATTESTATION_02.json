@@ -1,0 +1,628 @@
+{
+  "attestation_digest": "sha256:57af3c99d683fd3c868bfe6cbcc3353451fab70f70c2a374c0eec11a9c552b7a",
+  "limits": [
+    "All miners are Provenonce-operated.",
+    "Tasks are fictional fixtures.",
+    "Weights are equal because candidate and baseline tie.",
+    "Testnet 582 only.",
+    "CONFIRM rows were posted by the operator on the approver's directive (ledger rows 622 and 678)."
+  ],
+  "mecid": 0,
+  "netuid": 582,
+  "run_count": 21,
+  "runs": [
+    {
+      "approval_seq": 602,
+      "confirm_seq": 623,
+      "evidence": {
+        "run_log": "run_r5-20261005-a.jsonl",
+        "run_log_sha256": "sha256:b9c55a3987c4d6f4a5c9f5586124225b454f25163b2a9d3232fa4e71d2c7ee02",
+        "shadow_record": "shadow/shadow_001_20261005T035512Z_9e2c22b8.json",
+        "shadow_record_file_sha256": "sha256:3ab60ce17a5ae005c325fbc414d776370cc11b4e23aa853bdcf4ff0eb7f1c36a"
+      },
+      "included_block": 8152574,
+      "plan_digest": "sha256:842dc1fc1de1ffbab3840925678c4f9d9a88f2143d1e66ab2ade82885701c5cf",
+      "row": {
+        "dests": [
+          1,
+          2
+        ],
+        "weights": [
+          65535,
+          65535
+        ]
+      },
+      "run_id": "r5-20261005-a",
+      "shadow_record_digest": "sha256:9e2c22b8800a86e5467d86cf49a2fad8bcd08a24d153ccbafc6cda24ba64e605",
+      "validator_pinned_digest": "sha256:6a03fa603228530384bad9e26e8f6797b3f3b4eecaedc1f7bcd338487bfcf65b",
+      "validator_seed": 0,
+      "validator_timestamp": "2026-10-04T00:00:00Z",
+      "window_end": 8152871,
+      "window_start": 8152571
+    },
+    {
+      "approval_seq": 602,
+      "confirm_seq": 626,
+      "evidence": {
+        "run_log": "operate/cycle_20261005T051821Z/run_r5-20261005-b.jsonl",
+        "run_log_sha256": "sha256:d0f999eeb99c1725f964678f36b514ee6e8f795a5c543b832fd91caa8af3a4c6",
+        "shadow_record": "operate/cycle_20261005T051821Z/shadow/shadow_001_20261005T051828Z_b8762c9c.json",
+        "shadow_record_file_sha256": "sha256:9976218fabf827d1054ee3f4f180d54e3c806ac5bf9aa26d58bd6e52fd354b77"
+      },
+      "included_block": 8152940,
+      "plan_digest": "sha256:842dc1fc1de1ffbab3840925678c4f9d9a88f2143d1e66ab2ade82885701c5cf",
+      "row": {
+        "dests": [
+          1,
+          2
+        ],
+        "weights": [
+          65535,
+          65535
+        ]
+      },
+      "run_id": "r5-20261005-b",
+      "shadow_record_digest": "sha256:b8762c9c2343ad676d2d8fcaedbbdf3d38feae62ef7b79d3632b47212dd0edef",
+      "validator_pinned_digest": "sha256:6a03fa603228530384bad9e26e8f6797b3f3b4eecaedc1f7bcd338487bfcf65b",
+      "validator_seed": 0,
+      "validator_timestamp": "2026-10-04T00:00:00Z",
+      "window_end": 8153238,
+      "window_start": 8152938
+    },
+    {
+      "approval_seq": 602,
+      "confirm_seq": 628,
+      "evidence": {
+        "run_log": "operate/cycle_20261005T063056Z/run_r5-20261005-c.jsonl",
+        "run_log_sha256": "sha256:a276bbda4e0fb02479b4f4216cd4e1fcdbafe349ad807251adfa265a52239313",
+        "shadow_record": "operate/cycle_20261005T063056Z/shadow/shadow_001_20261005T063103Z_a1734554.json",
+        "shadow_record_file_sha256": "sha256:64850921fef6a3d3c9587ae551ff19a221e1f03e324ebe735bf9db3bfc7bfb75"
+      },
+      "included_block": 8153302,
+      "plan_digest": "sha256:842dc1fc1de1ffbab3840925678c4f9d9a88f2143d1e66ab2ade82885701c5cf",
+      "row": {
+        "dests": [
+          1,
+          2
+        ],
+        "weights": [
+          65535,
+          65535
+        ]
+      },
+      "run_id": "r5-20261005-c",
+      "shadow_record_digest": "sha256:a17345542c59423c623b6a60c24b392b0438eee3b026b2d77235c86c51cd366a",
+      "validator_pinned_digest": "sha256:6a03fa603228530384bad9e26e8f6797b3f3b4eecaedc1f7bcd338487bfcf65b",
+      "validator_seed": 0,
+      "validator_timestamp": "2026-10-04T00:00:00Z",
+      "window_end": 8153601,
+      "window_start": 8153301
+    },
+    {
+      "approval_seq": 602,
+      "confirm_seq": 630,
+      "evidence": {
+        "run_log": "operate/cycle_20261005T074407Z/run_r5-20261005-d.jsonl",
+        "run_log_sha256": "sha256:badf2f205faeec1404fe6c9bf650589c07f36663b1a6f491f2458f221c9a82f4",
+        "shadow_record": "operate/cycle_20261005T074407Z/shadow/shadow_001_20261005T074414Z_b25e8629.json",
+        "shadow_record_file_sha256": "sha256:28a711863a93879c82d7e964edb195d751eaf74b4059fa90105ddaa045893a76"
+      },
+      "included_block": 8153668,
+      "plan_digest": "sha256:842dc1fc1de1ffbab3840925678c4f9d9a88f2143d1e66ab2ade82885701c5cf",
+      "row": {
+        "dests": [
+          1,
+          2
+        ],
+        "weights": [
+          65535,
+          65535
+        ]
+      },
+      "run_id": "r5-20261005-d",
+      "shadow_record_digest": "sha256:b25e8629c237da011a01b3bda17384a20a818a14fadb32b48f2d1e7c6fda22e3",
+      "validator_pinned_digest": "sha256:6a03fa603228530384bad9e26e8f6797b3f3b4eecaedc1f7bcd338487bfcf65b",
+      "validator_seed": 0,
+      "validator_timestamp": "2026-10-04T00:00:00Z",
+      "window_end": 8153966,
+      "window_start": 8153666
+    },
+    {
+      "approval_seq": 602,
+      "confirm_seq": 632,
+      "evidence": {
+        "run_log": "operate/cycle_20261005T085636Z/run_r5-20261005-e.jsonl",
+        "run_log_sha256": "sha256:c8a3c65cddf565be025fd51dcab9927d93db5434a7d22a91185b6953c0d915cf",
+        "shadow_record": "operate/cycle_20261005T085636Z/shadow/shadow_001_20261005T085644Z_61f67418.json",
+        "shadow_record_file_sha256": "sha256:27e7c7a71c776f663332c6aa113480a714b2b52e909e59cc4f1436d117d292a4"
+      },
+      "included_block": 8154031,
+      "plan_digest": "sha256:842dc1fc1de1ffbab3840925678c4f9d9a88f2143d1e66ab2ade82885701c5cf",
+      "row": {
+        "dests": [
+          1,
+          2
+        ],
+        "weights": [
+          65535,
+          65535
+        ]
+      },
+      "run_id": "r5-20261005-e",
+      "shadow_record_digest": "sha256:61f67418b88fcd44ffb0882011123eddb0d0324ea21a7f740ecce5ea2b28074a",
+      "validator_pinned_digest": "sha256:6a03fa603228530384bad9e26e8f6797b3f3b4eecaedc1f7bcd338487bfcf65b",
+      "validator_seed": 0,
+      "validator_timestamp": "2026-10-04T00:00:00Z",
+      "window_end": 8154329,
+      "window_start": 8154029
+    },
+    {
+      "approval_seq": 602,
+      "confirm_seq": 634,
+      "evidence": {
+        "run_log": "operate/cycle_20261005T100912Z/run_r5-20261005-f.jsonl",
+        "run_log_sha256": "sha256:9e33eee3cf8ad7b7b021f13a9a5603ef930eae3c92f4872830b345c198a0176f",
+        "shadow_record": "operate/cycle_20261005T100912Z/shadow/shadow_001_20261005T100920Z_cb6a5bc9.json",
+        "shadow_record_file_sha256": "sha256:fdb69ff45488bd47aa67b7424b554c32ef86614a090d4217e3e92a6bcbd6918d"
+      },
+      "included_block": 8154394,
+      "plan_digest": "sha256:842dc1fc1de1ffbab3840925678c4f9d9a88f2143d1e66ab2ade82885701c5cf",
+      "row": {
+        "dests": [
+          1,
+          2
+        ],
+        "weights": [
+          65535,
+          65535
+        ]
+      },
+      "run_id": "r5-20261005-f",
+      "shadow_record_digest": "sha256:cb6a5bc9e7a47215b9ac889cd1e9ceb26adee742533cc57ab8da5b9bb0cdef65",
+      "validator_pinned_digest": "sha256:6a03fa603228530384bad9e26e8f6797b3f3b4eecaedc1f7bcd338487bfcf65b",
+      "validator_seed": 0,
+      "validator_timestamp": "2026-10-04T00:00:00Z",
+      "window_end": 8154692,
+      "window_start": 8154392
+    },
+    {
+      "approval_seq": 602,
+      "confirm_seq": 636,
+      "evidence": {
+        "run_log": "operate/cycle_20261005T112143Z/run_r5-20261005-g.jsonl",
+        "run_log_sha256": "sha256:e8294b17339770be7d69b65c3ca7d3eb0b90631fdaac5defdd8e13eaa5880c77",
+        "shadow_record": "operate/cycle_20261005T112143Z/shadow/shadow_001_20261005T112151Z_8847fa31.json",
+        "shadow_record_file_sha256": "sha256:91b07c3b54fb928749151b17e5e471c196650429234da5745ac8367fc40670f5"
+      },
+      "included_block": 8154756,
+      "plan_digest": "sha256:842dc1fc1de1ffbab3840925678c4f9d9a88f2143d1e66ab2ade82885701c5cf",
+      "row": {
+        "dests": [
+          1,
+          2
+        ],
+        "weights": [
+          65535,
+          65535
+        ]
+      },
+      "run_id": "r5-20261005-g",
+      "shadow_record_digest": "sha256:8847fa31ab5722c06a7a8a630f30ae6839cf15abef8395eaaf8f498da589785e",
+      "validator_pinned_digest": "sha256:6a03fa603228530384bad9e26e8f6797b3f3b4eecaedc1f7bcd338487bfcf65b",
+      "validator_seed": 0,
+      "validator_timestamp": "2026-10-04T00:00:00Z",
+      "window_end": 8155055,
+      "window_start": 8154755
+    },
+    {
+      "approval_seq": 602,
+      "confirm_seq": 638,
+      "evidence": {
+        "run_log": "operate/cycle_20261005T123410Z/run_r5-20261005-h.jsonl",
+        "run_log_sha256": "sha256:ef51bb3f3d6159a6cc62df0b6b3aed23a8628ef66ffa8a59a6d9aeaef7514768",
+        "shadow_record": "operate/cycle_20261005T123410Z/shadow/shadow_001_20261005T123418Z_f763ce34.json",
+        "shadow_record_file_sha256": "sha256:02df6eb88bad207a9aabf5a66ccf65d87076a6ee245fe4904a806a975ed31f6b"
+      },
+      "included_block": 8155119,
+      "plan_digest": "sha256:842dc1fc1de1ffbab3840925678c4f9d9a88f2143d1e66ab2ade82885701c5cf",
+      "row": {
+        "dests": [
+          1,
+          2
+        ],
+        "weights": [
+          65535,
+          65535
+        ]
+      },
+      "run_id": "r5-20261005-h",
+      "shadow_record_digest": "sha256:f763ce343e8958abe89f53d2dd660f32f828bc78738741997bb5674d8503c235",
+      "validator_pinned_digest": "sha256:6a03fa603228530384bad9e26e8f6797b3f3b4eecaedc1f7bcd338487bfcf65b",
+      "validator_seed": 0,
+      "validator_timestamp": "2026-10-04T00:00:00Z",
+      "window_end": 8155417,
+      "window_start": 8155117
+    },
+    {
+      "approval_seq": 602,
+      "confirm_seq": 646,
+      "evidence": {
+        "run_log": "operate/cycle_20261005T141345Z/run_r5-20261005-j.jsonl",
+        "run_log_sha256": "sha256:81dd5d73ba5557b229e30fb4976bfd9707d7076aa7d3256ea45b6798eece3745",
+        "shadow_record": "operate/cycle_20261005T141345Z/shadow/shadow_001_20261005T141352Z_e1e047ce.json",
+        "shadow_record_file_sha256": "sha256:83c54b82ce5daef6d3dc61dc5f3ab4342864ea5c970d0efe830a7a29e9b814f9"
+      },
+      "included_block": 8155617,
+      "plan_digest": "sha256:842dc1fc1de1ffbab3840925678c4f9d9a88f2143d1e66ab2ade82885701c5cf",
+      "row": {
+        "dests": [
+          1,
+          2
+        ],
+        "weights": [
+          65535,
+          65535
+        ]
+      },
+      "run_id": "r5-20261005-j",
+      "shadow_record_digest": "sha256:e1e047ced4f12b0918e7e7c096c3689a9628650fc01fe8377442b6722359acf1",
+      "validator_pinned_digest": "sha256:6a03fa603228530384bad9e26e8f6797b3f3b4eecaedc1f7bcd338487bfcf65b",
+      "validator_seed": 0,
+      "validator_timestamp": "2026-10-04T00:00:00Z",
+      "window_end": 8155915,
+      "window_start": 8155615
+    },
+    {
+      "approval_seq": 602,
+      "confirm_seq": 651,
+      "evidence": {
+        "run_log": "operate/cycle_20261005T152637Z/run_r5-20261005-k.jsonl",
+        "run_log_sha256": "sha256:b12140bfb63cbe5d9503480d03b6192ef22db417ac2acd02d3717454093a1fb8",
+        "shadow_record": "operate/cycle_20261005T152637Z/shadow/shadow_001_20261005T152644Z_a103ef5e.json",
+        "shadow_record_file_sha256": "sha256:9a8254c7a654e3ae1c32641095e34c59a469c6c15bd33d7d274ed70520167b4b"
+      },
+      "included_block": 8155981,
+      "plan_digest": "sha256:842dc1fc1de1ffbab3840925678c4f9d9a88f2143d1e66ab2ade82885701c5cf",
+      "row": {
+        "dests": [
+          1,
+          2
+        ],
+        "weights": [
+          65535,
+          65535
+        ]
+      },
+      "run_id": "r5-20261005-k",
+      "shadow_record_digest": "sha256:a103ef5ec11d08837a2c8d23449a0112ef5b10e6bcee3ce330293fef5d305555",
+      "validator_pinned_digest": "sha256:6a03fa603228530384bad9e26e8f6797b3f3b4eecaedc1f7bcd338487bfcf65b",
+      "validator_seed": 0,
+      "validator_timestamp": "2026-10-04T00:00:00Z",
+      "window_end": 8156279,
+      "window_start": 8155979
+    },
+    {
+      "approval_seq": 602,
+      "confirm_seq": 653,
+      "evidence": {
+        "run_log": "operate/cycle_20261005T171110Z/run_r5-20261005-l.jsonl",
+        "run_log_sha256": "sha256:e23485f35c68471eabd3372ff5dccf3ebee932691cd320bab9f999f413b978c0",
+        "shadow_record": "operate/cycle_20261005T171110Z/shadow/shadow_001_20261005T171117Z_f6a3184a.json",
+        "shadow_record_file_sha256": "sha256:3318dbdbd5aca107fed6231c8d34fe131d3088735ba671c33123e974713cc847"
+      },
+      "included_block": 8156504,
+      "plan_digest": "sha256:842dc1fc1de1ffbab3840925678c4f9d9a88f2143d1e66ab2ade82885701c5cf",
+      "row": {
+        "dests": [
+          1,
+          2
+        ],
+        "weights": [
+          65535,
+          65535
+        ]
+      },
+      "run_id": "r5-20261005-l",
+      "shadow_record_digest": "sha256:f6a3184a9a380e8b70dbbdf163157e60cf3d4669597d8acd0024740a2d166410",
+      "validator_pinned_digest": "sha256:6a03fa603228530384bad9e26e8f6797b3f3b4eecaedc1f7bcd338487bfcf65b",
+      "validator_seed": 0,
+      "validator_timestamp": "2026-10-04T00:00:00Z",
+      "window_end": 8156802,
+      "window_start": 8156502
+    },
+    {
+      "approval_seq": 602,
+      "confirm_seq": 656,
+      "evidence": {
+        "run_log": "operate/cycle_20261005T182339Z/run_r5-20261005-m.jsonl",
+        "run_log_sha256": "sha256:691e18c3add9e13bf98455b14878e7ea2455bf86eb7faba8ffde95c534c9ede1",
+        "shadow_record": "operate/cycle_20261005T182339Z/shadow/shadow_001_20261005T182346Z_7b7dbde0.json",
+        "shadow_record_file_sha256": "sha256:fbf7a40bccd56d957050b5ba3739c7a7a5a24b5f9af5aa3c0208a7966ac1add3"
+      },
+      "included_block": 8156866,
+      "plan_digest": "sha256:842dc1fc1de1ffbab3840925678c4f9d9a88f2143d1e66ab2ade82885701c5cf",
+      "row": {
+        "dests": [
+          1,
+          2
+        ],
+        "weights": [
+          65535,
+          65535
+        ]
+      },
+      "run_id": "r5-20261005-m",
+      "shadow_record_digest": "sha256:7b7dbde0bc25b83365cbb0b7269c332885d5be28f91c3202302ce38dc4e7dd0c",
+      "validator_pinned_digest": "sha256:6a03fa603228530384bad9e26e8f6797b3f3b4eecaedc1f7bcd338487bfcf65b",
+      "validator_seed": 0,
+      "validator_timestamp": "2026-10-04T00:00:00Z",
+      "window_end": 8157164,
+      "window_start": 8156864
+    },
+    {
+      "approval_seq": 602,
+      "confirm_seq": 658,
+      "evidence": {
+        "run_log": "operate/cycle_20261005T193605Z/run_r5-20261005-n.jsonl",
+        "run_log_sha256": "sha256:021af45abfeaf82e95d87253350215f8541351bb1f29e6e47f52cebd868862c2",
+        "shadow_record": "operate/cycle_20261005T193605Z/shadow/shadow_001_20261005T193612Z_16e66aad.json",
+        "shadow_record_file_sha256": "sha256:b3cd9ee0504a2803b902eb2a54a48911bcb8bc59f280b56de5d21e5bc63fcec9"
+      },
+      "included_block": 8157228,
+      "plan_digest": "sha256:842dc1fc1de1ffbab3840925678c4f9d9a88f2143d1e66ab2ade82885701c5cf",
+      "row": {
+        "dests": [
+          1,
+          2
+        ],
+        "weights": [
+          65535,
+          65535
+        ]
+      },
+      "run_id": "r5-20261005-n",
+      "shadow_record_digest": "sha256:16e66aad43b73d5c3439fab4b467dfd186d92cf092d688661a10af6fd23cbdc7",
+      "validator_pinned_digest": "sha256:6a03fa603228530384bad9e26e8f6797b3f3b4eecaedc1f7bcd338487bfcf65b",
+      "validator_seed": 0,
+      "validator_timestamp": "2026-10-04T00:00:00Z",
+      "window_end": 8157526,
+      "window_start": 8157226
+    },
+    {
+      "approval_seq": 602,
+      "confirm_seq": 661,
+      "evidence": {
+        "run_log": "operate/cycle_20261005T204827Z/run_r5-20261005-o.jsonl",
+        "run_log_sha256": "sha256:0965615428cdaff6eb0161e78f47bb7e6f4b7d19fcf12b2d4601e4cce9956def",
+        "shadow_record": "operate/cycle_20261005T204827Z/shadow/shadow_001_20261005T204834Z_4f0cba95.json",
+        "shadow_record_file_sha256": "sha256:70e7069fefd48f5de79f30f72e4f183667bb7ab5e4b91413e96d5cc9fd2e4fc5"
+      },
+      "included_block": 8157590,
+      "plan_digest": "sha256:842dc1fc1de1ffbab3840925678c4f9d9a88f2143d1e66ab2ade82885701c5cf",
+      "row": {
+        "dests": [
+          1,
+          2
+        ],
+        "weights": [
+          65535,
+          65535
+        ]
+      },
+      "run_id": "r5-20261005-o",
+      "shadow_record_digest": "sha256:4f0cba9544e32ae9ff23b27422e904358901955119c2a97bd3527f7d420c79fc",
+      "validator_pinned_digest": "sha256:6a03fa603228530384bad9e26e8f6797b3f3b4eecaedc1f7bcd338487bfcf65b",
+      "validator_seed": 0,
+      "validator_timestamp": "2026-10-04T00:00:00Z",
+      "window_end": 8157888,
+      "window_start": 8157588
+    },
+    {
+      "approval_seq": 602,
+      "confirm_seq": 663,
+      "evidence": {
+        "run_log": "operate/cycle_20261005T220143Z/run_r5-20261005-p.jsonl",
+        "run_log_sha256": "sha256:d7709d73777d1f0cd0438427153d9a2b6f90291862de79e22924d754f9f5d017",
+        "shadow_record": "operate/cycle_20261005T220143Z/shadow/shadow_001_20261005T220150Z_ae4f8ea8.json",
+        "shadow_record_file_sha256": "sha256:531c2cbf44fa41e857e7af7a612d4ee1adf80d80f7e442e7c02bb43635cca2ea"
+      },
+      "included_block": 8157956,
+      "plan_digest": "sha256:842dc1fc1de1ffbab3840925678c4f9d9a88f2143d1e66ab2ade82885701c5cf",
+      "row": {
+        "dests": [
+          1,
+          2
+        ],
+        "weights": [
+          65535,
+          65535
+        ]
+      },
+      "run_id": "r5-20261005-p",
+      "shadow_record_digest": "sha256:ae4f8ea8aef0f3200e6d135474501eb681d11d58e0bcb5ece1b34d81943d4f71",
+      "validator_pinned_digest": "sha256:6a03fa603228530384bad9e26e8f6797b3f3b4eecaedc1f7bcd338487bfcf65b",
+      "validator_seed": 0,
+      "validator_timestamp": "2026-10-04T00:00:00Z",
+      "window_end": 8158254,
+      "window_start": 8157954
+    },
+    {
+      "approval_seq": 602,
+      "confirm_seq": 665,
+      "evidence": {
+        "run_log": "operate/cycle_20261005T231454Z/run_r5-20261005-q.jsonl",
+        "run_log_sha256": "sha256:1b35baee5068149b617dc8e8c36321d9bfdc4ed70739ce642e684b217a5086b8",
+        "shadow_record": "operate/cycle_20261005T231454Z/shadow/shadow_001_20261005T231501Z_908a8264.json",
+        "shadow_record_file_sha256": "sha256:8e93d605973c02bbc0e0349d675952d6fd547af082988db9a5741d7665f60a21"
+      },
+      "included_block": 8158322,
+      "plan_digest": "sha256:842dc1fc1de1ffbab3840925678c4f9d9a88f2143d1e66ab2ade82885701c5cf",
+      "row": {
+        "dests": [
+          1,
+          2
+        ],
+        "weights": [
+          65535,
+          65535
+        ]
+      },
+      "run_id": "r5-20261005-q",
+      "shadow_record_digest": "sha256:908a8264362d5fcde0d345a207b72018dfd253b7ef633209830523b745f59029",
+      "validator_pinned_digest": "sha256:6a03fa603228530384bad9e26e8f6797b3f3b4eecaedc1f7bcd338487bfcf65b",
+      "validator_seed": 0,
+      "validator_timestamp": "2026-10-04T00:00:00Z",
+      "window_end": 8158620,
+      "window_start": 8158320
+    },
+    {
+      "approval_seq": 602,
+      "confirm_seq": 667,
+      "evidence": {
+        "run_log": "operate/cycle_20261006T002810Z/run_r5-20261006-a.jsonl",
+        "run_log_sha256": "sha256:0af4e55a5307b617d7cf0228c9c0f2b9af73a6bfd067fb813ee9be4167dd97b3",
+        "shadow_record": "operate/cycle_20261006T002810Z/shadow/shadow_001_20261006T002817Z_b1dd2aed.json",
+        "shadow_record_file_sha256": "sha256:0b5635e5e28ded968e341a7a7c7974ef73e957c8cc899c3f66cfe1b8ccf3bf4d"
+      },
+      "included_block": 8158689,
+      "plan_digest": "sha256:842dc1fc1de1ffbab3840925678c4f9d9a88f2143d1e66ab2ade82885701c5cf",
+      "row": {
+        "dests": [
+          1,
+          2
+        ],
+        "weights": [
+          65535,
+          65535
+        ]
+      },
+      "run_id": "r5-20261006-a",
+      "shadow_record_digest": "sha256:b1dd2aedd316b7ee6dbeffbdeed847748b55db1ac692cb447c4cb84cc2acb824",
+      "validator_pinned_digest": "sha256:6a03fa603228530384bad9e26e8f6797b3f3b4eecaedc1f7bcd338487bfcf65b",
+      "validator_seed": 0,
+      "validator_timestamp": "2026-10-04T00:00:00Z",
+      "window_end": 8158987,
+      "window_start": 8158687
+    },
+    {
+      "approval_seq": 602,
+      "confirm_seq": 669,
+      "evidence": {
+        "run_log": "operate/cycle_20261006T014140Z/run_r5-20261006-b.jsonl",
+        "run_log_sha256": "sha256:ea7fc66f17444611dc51543b9d105c476f5d969ede68b65d7f984493af040253",
+        "shadow_record": "operate/cycle_20261006T014140Z/shadow/shadow_001_20261006T014147Z_d92c4d80.json",
+        "shadow_record_file_sha256": "sha256:6dfb8c0e4f2a83f05577b35a8fa6f19bd9759f777ac333b435bb14b9792496b0"
+      },
+      "included_block": 8159056,
+      "plan_digest": "sha256:842dc1fc1de1ffbab3840925678c4f9d9a88f2143d1e66ab2ade82885701c5cf",
+      "row": {
+        "dests": [
+          1,
+          2
+        ],
+        "weights": [
+          65535,
+          65535
+        ]
+      },
+      "run_id": "r5-20261006-b",
+      "shadow_record_digest": "sha256:d92c4d80642feab77343072f624e353cf8c6eba41c42922c0b7ab405f2745d16",
+      "validator_pinned_digest": "sha256:6a03fa603228530384bad9e26e8f6797b3f3b4eecaedc1f7bcd338487bfcf65b",
+      "validator_seed": 0,
+      "validator_timestamp": "2026-10-04T00:00:00Z",
+      "window_end": 8159354,
+      "window_start": 8159054
+    },
+    {
+      "approval_seq": 602,
+      "confirm_seq": 671,
+      "evidence": {
+        "run_log": "operate/cycle_20261006T025405Z/run_r5-20261006-c.jsonl",
+        "run_log_sha256": "sha256:2031e4e9f1a01033d9fa1cf521919b120676479e8c7245496d3e181aad437f88",
+        "shadow_record": "operate/cycle_20261006T025405Z/shadow/shadow_001_20261006T025412Z_f10bf812.json",
+        "shadow_record_file_sha256": "sha256:8791aa85e1945da0b33c19fca586373e927e7ae14e758208036ca7bcedc50aa3"
+      },
+      "included_block": 8159418,
+      "plan_digest": "sha256:842dc1fc1de1ffbab3840925678c4f9d9a88f2143d1e66ab2ade82885701c5cf",
+      "row": {
+        "dests": [
+          1,
+          2
+        ],
+        "weights": [
+          65535,
+          65535
+        ]
+      },
+      "run_id": "r5-20261006-c",
+      "shadow_record_digest": "sha256:f10bf812be077acc682bee24611e4906f5958a4b86895da2049ed5f8f2c857a1",
+      "validator_pinned_digest": "sha256:6a03fa603228530384bad9e26e8f6797b3f3b4eecaedc1f7bcd338487bfcf65b",
+      "validator_seed": 0,
+      "validator_timestamp": "2026-10-04T00:00:00Z",
+      "window_end": 8159716,
+      "window_start": 8159416
+    },
+    {
+      "approval_seq": 602,
+      "confirm_seq": 673,
+      "evidence": {
+        "run_log": "operate/cycle_20261006T040725Z/run_r5-20261006-d.jsonl",
+        "run_log_sha256": "sha256:8248179d1ecb302c7ddaaf007fb8cde6d1d02738ad9c3b3a1ca766a90d4bfff1",
+        "shadow_record": "operate/cycle_20261006T040725Z/shadow/shadow_001_20261006T040732Z_7220a825.json",
+        "shadow_record_file_sha256": "sha256:0ad581d5d6a787d4d1625391a3b02bd2969f2d10efb2f83361871041d49ff456"
+      },
+      "included_block": 8159785,
+      "plan_digest": "sha256:842dc1fc1de1ffbab3840925678c4f9d9a88f2143d1e66ab2ade82885701c5cf",
+      "row": {
+        "dests": [
+          1,
+          2
+        ],
+        "weights": [
+          65535,
+          65535
+        ]
+      },
+      "run_id": "r5-20261006-d",
+      "shadow_record_digest": "sha256:7220a8251bb1b3ed53b9389ee4bac4a7abc821c0d519d5615b02b9cff05639ff",
+      "validator_pinned_digest": "sha256:6a03fa603228530384bad9e26e8f6797b3f3b4eecaedc1f7bcd338487bfcf65b",
+      "validator_seed": 0,
+      "validator_timestamp": "2026-10-04T00:00:00Z",
+      "window_end": 8160083,
+      "window_start": 8159783
+    },
+    {
+      "approval_seq": 602,
+      "confirm_seq": 675,
+      "evidence": {
+        "run_log": "operate/cycle_20261006T052048Z/run_r5-20261006-e.jsonl",
+        "run_log_sha256": "sha256:c655564f4373fde1f6854d366cf2e68e748a9f15609a130b5c7bd2ad66276c40",
+        "shadow_record": "operate/cycle_20261006T052048Z/shadow/shadow_001_20261006T052057Z_d7e85a14.json",
+        "shadow_record_file_sha256": "sha256:a03c625a4b7381ab309213883f13c0a393a11106fd96fe593c8832c9131e1bed"
+      },
+      "included_block": 8160152,
+      "plan_digest": "sha256:842dc1fc1de1ffbab3840925678c4f9d9a88f2143d1e66ab2ade82885701c5cf",
+      "row": {
+        "dests": [
+          1,
+          2
+        ],
+        "weights": [
+          65535,
+          65535
+        ]
+      },
+      "run_id": "r5-20261006-e",
+      "shadow_record_digest": "sha256:d7e85a14925e806da6e30b520ed04900cb1a3dc5428c1582dbc8c1091d046eeb",
+      "validator_pinned_digest": "sha256:6a03fa603228530384bad9e26e8f6797b3f3b4eecaedc1f7bcd338487bfcf65b",
+      "validator_seed": 0,
+      "validator_timestamp": "2026-10-04T00:00:00Z",
+      "window_end": 8160450,
+      "window_start": 8160150
+    }
+  ],
+  "schema": "sn87.testnet_attestation.v1",
+  "statement": "Testnet only. Provenonce-operated miners, fictional task fixtures, equal weights because candidate and baseline tie. See attestation/README.md for the limits.",
+  "title": "SN87 Testnet Attestation 02",
+  "validator_uid": 0
+}

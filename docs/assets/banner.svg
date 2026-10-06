@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="320" viewBox="0 0 1280 320" role="img" aria-label="SN87 Proof of Assurance">
+  <title>SN87 Proof of Assurance</title>
+  <rect width="1280" height="320" fill="#0A1020"/>
+  <rect x="0" y="0" width="1280" height="6" fill="#C8A24B"/>
+  <g fill="none" stroke="#C8A24B" stroke-width="2" opacity="0.55">
+    <circle cx="1090" cy="160" r="96"/>
+    <circle cx="1090" cy="160" r="60" opacity="0.7"/>
+    <path d="M1054 162 l24 24 l48 -52" stroke-width="6" opacity="1" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <text x="80" y="165" font-family="Helvetica, Arial, sans-serif" font-size="84" font-weight="700" fill="#F4F1E8" letter-spacing="2">SN87 <tspan fill="#C8A24B">·</tspan> Proof of Assurance</text>
+  <text x="82" y="222" font-family="Helvetica, Arial, sans-serif" font-size="30" fill="#AEB6C9">Testing observed autonomous work against a declared contract. Live on Bittensor testnet 582.</text>
+  <rect x="80" y="258" width="120" height="3" fill="#C8A24B"/>
+</svg>

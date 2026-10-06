@@ -1,0 +1,11 @@
+{
+  "protocol_version": "sn87/0alpha1",
+  "challenge_id": "q-lane-one-0001",
+  "response_state": "NO_MATERIAL_DEVIATION",
+  "rationale": "No material deviation is supported by the disclosed Evidence.",
+  "findings": null,
+  "counterfactual_paths": null,
+  "confidence_report": null,
+  "evidence_requests": null,
+  "miner_commitment": "sha256:4444444444444444444444444444444444444444444444444444444444444444"
+}

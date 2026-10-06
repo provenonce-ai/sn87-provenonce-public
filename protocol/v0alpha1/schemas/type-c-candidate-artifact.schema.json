@@ -1,0 +1,350 @@
+{
+  "$defs": {
+    "AssuranceFinding": {
+      "additionalProperties": false,
+      "properties": {
+        "challenge_id": {
+          "minLength": 1,
+          "title": "Challenge Id",
+          "type": "string"
+        },
+        "claim": {
+          "minLength": 1,
+          "title": "Claim",
+          "type": "string"
+        },
+        "confidence": {
+          "anyOf": [
+            {
+              "maximum": 1.0,
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Confidence"
+        },
+        "counterfactual_path": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Counterfactual Path"
+        },
+        "evidence": {
+          "items": {
+            "$ref": "#/$defs/EvidenceReference"
+          },
+          "minItems": 1,
+          "title": "Evidence",
+          "type": "array"
+        },
+        "finding_id": {
+          "minLength": 1,
+          "title": "Finding Id",
+          "type": "string"
+        },
+        "finding_type": {
+          "minLength": 1,
+          "title": "Finding Type",
+          "type": "string"
+        },
+        "limitations": {
+          "default": [],
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Limitations",
+          "type": "array"
+        },
+        "oracle_class": {
+          "$ref": "#/$defs/OracleClass"
+        },
+        "recommended_action": {
+          "minLength": 1,
+          "title": "Recommended Action",
+          "type": "string"
+        },
+        "severity": {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Severity",
+          "type": "number"
+        }
+      },
+      "required": [
+        "finding_id",
+        "challenge_id",
+        "finding_type",
+        "claim",
+        "severity",
+        "oracle_class",
+        "evidence",
+        "recommended_action"
+      ],
+      "title": "AssuranceFinding",
+      "type": "object"
+    },
+    "AssuranceResponse": {
+      "additionalProperties": false,
+      "properties": {
+        "challenge_id": {
+          "minLength": 1,
+          "title": "Challenge Id",
+          "type": "string"
+        },
+        "confidence_report": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CalibrationReport"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "counterfactual_paths": {
+          "anyOf": [
+            {
+              "items": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Counterfactual Paths"
+        },
+        "evidence_requests": {
+          "anyOf": [
+            {
+              "items": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Evidence Requests"
+        },
+        "findings": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/AssuranceFinding"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Findings"
+        },
+        "miner_commitment": {
+          "anyOf": [
+            {
+              "pattern": "^sha256:[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Miner Commitment"
+        },
+        "protocol_version": {
+          "default": "sn87/0alpha1",
+          "minLength": 1,
+          "title": "Protocol Version",
+          "type": "string"
+        },
+        "rationale": {
+          "minLength": 1,
+          "title": "Rationale",
+          "type": "string"
+        },
+        "response_state": {
+          "$ref": "#/$defs/ResponseState"
+        }
+      },
+      "required": [
+        "challenge_id",
+        "response_state",
+        "rationale"
+      ],
+      "title": "AssuranceResponse",
+      "type": "object"
+    },
+    "CalibrationReport": {
+      "additionalProperties": false,
+      "properties": {
+        "claim_confidences": {
+          "additionalProperties": {
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "type": "number"
+          },
+          "minProperties": 1,
+          "propertyNames": {
+            "minLength": 1
+          },
+          "title": "Claim Confidences",
+          "type": "object"
+        },
+        "method": {
+          "minLength": 1,
+          "title": "Method",
+          "type": "string"
+        }
+      },
+      "required": [
+        "method",
+        "claim_confidences"
+      ],
+      "title": "CalibrationReport",
+      "type": "object"
+    },
+    "CandidateArtifactCase": {
+      "additionalProperties": false,
+      "properties": {
+        "fixture_id": {
+          "maxLength": 8192,
+          "minLength": 1,
+          "title": "Fixture Id",
+          "type": "string"
+        },
+        "response": {
+          "$ref": "#/$defs/AssuranceResponse"
+        }
+      },
+      "required": [
+        "fixture_id",
+        "response"
+      ],
+      "title": "CandidateArtifactCase",
+      "type": "object"
+    },
+    "EvidenceReference": {
+      "additionalProperties": false,
+      "properties": {
+        "commitment": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Commitment",
+          "type": "string"
+        },
+        "predicate": {
+          "minLength": 1,
+          "title": "Predicate",
+          "type": "string"
+        }
+      },
+      "required": [
+        "commitment",
+        "predicate"
+      ],
+      "title": "EvidenceReference",
+      "type": "object"
+    },
+    "OracleClass": {
+      "enum": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "title": "OracleClass",
+      "type": "string"
+    },
+    "ResponseState": {
+      "enum": [
+        "FINDINGS",
+        "NO_MATERIAL_DEVIATION",
+        "INSUFFICIENT_EVIDENCE_ABSTAIN"
+      ],
+      "title": "ResponseState",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "artifact_type": {
+      "const": "sn87-transparent-type-c-candidate-artifact",
+      "title": "Artifact Type",
+      "type": "string"
+    },
+    "artifact_version": {
+      "const": "sn87-transparent-type-c-candidate-artifact/0alpha1",
+      "title": "Artifact Version",
+      "type": "string"
+    },
+    "candidate_id": {
+      "maxLength": 128,
+      "minLength": 1,
+      "title": "Candidate Id",
+      "type": "string"
+    },
+    "cases": {
+      "items": {
+        "$ref": "#/$defs/CandidateArtifactCase"
+      },
+      "maxItems": 8,
+      "minItems": 8,
+      "title": "Cases",
+      "type": "array"
+    },
+    "conformance_version": {
+      "const": "type-c-candidate-conformance/0alpha1",
+      "title": "Conformance Version",
+      "type": "string"
+    },
+    "protocol_version": {
+      "const": "sn87/0alpha1",
+      "title": "Protocol Version",
+      "type": "string"
+    },
+    "reference_oracle_report_commitment": {
+      "const": "sha256:354472f0ab5ba0d1e863b24f509c395a913e06a5616e0e3f3faab0916432d9ec",
+      "title": "Reference Oracle Report Commitment",
+      "type": "string"
+    },
+    "reference_oracle_version": {
+      "const": "type-c-transparent-reference-oracle/0alpha2",
+      "title": "Reference Oracle Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "artifact_type",
+    "artifact_version",
+    "protocol_version",
+    "conformance_version",
+    "reference_oracle_version",
+    "reference_oracle_report_commitment",
+    "candidate_id",
+    "cases"
+  ],
+  "title": "TypeCCandidateArtifact",
+  "type": "object"
+}

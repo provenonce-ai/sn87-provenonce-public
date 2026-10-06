@@ -1,0 +1,133 @@
+{
+  "$defs": {
+    "Binding": {
+      "additionalProperties": false,
+      "properties": {
+        "detail": {
+          "maxLength": 4096,
+          "minLength": 1,
+          "title": "Detail",
+          "type": "string"
+        },
+        "reference": {
+          "maxLength": 4096,
+          "minLength": 1,
+          "title": "Reference",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "RESOLVED",
+            "UNRESOLVED",
+            "NOT_BOUND"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "surface": {
+          "maxLength": 4096,
+          "minLength": 1,
+          "title": "Surface",
+          "type": "string"
+        },
+        "version": {
+          "maxLength": 4096,
+          "minLength": 1,
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "surface",
+        "reference",
+        "version",
+        "status",
+        "detail"
+      ],
+      "title": "Binding",
+      "type": "object"
+    },
+    "Diagnostic": {
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "maxLength": 4096,
+          "minLength": 1,
+          "title": "Code",
+          "type": "string"
+        },
+        "message": {
+          "maxLength": 4096,
+          "minLength": 1,
+          "title": "Message",
+          "type": "string"
+        },
+        "severity": {
+          "enum": [
+            "INFO",
+            "WARNING",
+            "BLOCKING"
+          ],
+          "title": "Severity",
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "severity",
+        "message"
+      ],
+      "title": "Diagnostic",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "bindings": {
+      "items": {
+        "$ref": "#/$defs/Binding"
+      },
+      "title": "Bindings",
+      "type": "array"
+    },
+    "diagnostics": {
+      "items": {
+        "$ref": "#/$defs/Diagnostic"
+      },
+      "title": "Diagnostics",
+      "type": "array"
+    },
+    "establishes": {
+      "maxLength": 4096,
+      "minLength": 1,
+      "title": "Establishes",
+      "type": "string"
+    },
+    "manifest_commitment": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Manifest Commitment",
+      "type": "string"
+    },
+    "manifest_commitment_domain": {
+      "maxLength": 4096,
+      "minLength": 1,
+      "title": "Manifest Commitment Domain",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "sn87-cmt-compat/0.1",
+      "default": "sn87-cmt-compat/0.1",
+      "title": "Schema Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "manifest_commitment",
+    "manifest_commitment_domain",
+    "bindings",
+    "diagnostics",
+    "establishes"
+  ],
+  "title": "CompatibilityReport",
+  "type": "object"
+}

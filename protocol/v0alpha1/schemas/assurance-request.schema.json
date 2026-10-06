@@ -1,0 +1,400 @@
+{
+  "$defs": {
+    "AdmissibilityDeclaration": {
+      "additionalProperties": false,
+      "properties": {
+        "challenge_class": {
+          "minLength": 1,
+          "title": "Challenge Class",
+          "type": "string"
+        },
+        "challenge_class_version": {
+          "minLength": 1,
+          "title": "Challenge Class Version",
+          "type": "string"
+        },
+        "claim_types": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Claim Types",
+          "type": "array"
+        },
+        "disclosure_modes": {
+          "items": {
+            "$ref": "#/$defs/DisclosureMode"
+          },
+          "minItems": 1,
+          "title": "Disclosure Modes",
+          "type": "array"
+        },
+        "max_cost": {
+          "$ref": "#/$defs/CostBudget"
+        },
+        "oracle_bindings": {
+          "items": {
+            "$ref": "#/$defs/OracleBinding"
+          },
+          "minItems": 1,
+          "title": "Oracle Bindings",
+          "type": "array"
+        },
+        "residual_fields": {
+          "default": [],
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Residual Fields",
+          "type": "array"
+        }
+      },
+      "required": [
+        "challenge_class",
+        "challenge_class_version",
+        "claim_types",
+        "oracle_bindings",
+        "disclosure_modes",
+        "max_cost"
+      ],
+      "title": "AdmissibilityDeclaration",
+      "type": "object"
+    },
+    "AssuranceCapsule": {
+      "additionalProperties": false,
+      "properties": {
+        "capsule_id": {
+          "minLength": 1,
+          "title": "Capsule Id",
+          "type": "string"
+        },
+        "constraints": {
+          "items": {
+            "additionalProperties": true,
+            "type": "object"
+          },
+          "title": "Constraints",
+          "type": "array"
+        },
+        "context": {
+          "additionalProperties": true,
+          "title": "Context",
+          "type": "object"
+        },
+        "disclosure_policy": {
+          "$ref": "#/$defs/DisclosurePolicy"
+        },
+        "evidence": {
+          "items": {
+            "$ref": "#/$defs/EvidenceReference"
+          },
+          "title": "Evidence",
+          "type": "array"
+        },
+        "limitations": {
+          "default": [],
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Limitations",
+          "type": "array"
+        },
+        "mapping_confidence": {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Mapping Confidence",
+          "type": "number"
+        },
+        "observed_paths": {
+          "items": {
+            "additionalProperties": true,
+            "type": "object"
+          },
+          "title": "Observed Paths",
+          "type": "array"
+        },
+        "orchestration": {
+          "additionalProperties": true,
+          "title": "Orchestration",
+          "type": "object"
+        },
+        "pipeline": {
+          "additionalProperties": true,
+          "title": "Pipeline",
+          "type": "object"
+        },
+        "protocol_version": {
+          "default": "sn87/0alpha1",
+          "minLength": 1,
+          "title": "Protocol Version",
+          "type": "string"
+        },
+        "signal": {
+          "additionalProperties": true,
+          "title": "Signal",
+          "type": "object"
+        },
+        "source_bindings": {
+          "items": {
+            "$ref": "#/$defs/SourceBinding"
+          },
+          "minItems": 1,
+          "title": "Source Bindings",
+          "type": "array"
+        }
+      },
+      "required": [
+        "capsule_id",
+        "signal",
+        "orchestration",
+        "constraints",
+        "observed_paths",
+        "pipeline",
+        "evidence",
+        "context",
+        "source_bindings",
+        "disclosure_policy",
+        "mapping_confidence"
+      ],
+      "title": "AssuranceCapsule",
+      "type": "object"
+    },
+    "CostBudget": {
+      "additionalProperties": false,
+      "properties": {
+        "credits": {
+          "minimum": 0.0,
+          "title": "Credits",
+          "type": "number"
+        },
+        "privacy_budget": {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Privacy Budget",
+          "type": "number"
+        },
+        "seconds": {
+          "exclusiveMinimum": 0.0,
+          "title": "Seconds",
+          "type": "number"
+        }
+      },
+      "required": [
+        "seconds",
+        "credits",
+        "privacy_budget"
+      ],
+      "title": "CostBudget",
+      "type": "object"
+    },
+    "DisclosureMode": {
+      "enum": [
+        "METADATA",
+        "SELECTIVE_EVIDENCE",
+        "CONFIDENTIAL_CHALLENGE"
+      ],
+      "title": "DisclosureMode",
+      "type": "string"
+    },
+    "DisclosurePolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "allowed_evidence_predicates": {
+          "default": [],
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Allowed Evidence Predicates",
+          "type": "array"
+        },
+        "mode": {
+          "$ref": "#/$defs/DisclosureMode"
+        },
+        "policy_id": {
+          "minLength": 1,
+          "title": "Policy Id",
+          "type": "string"
+        },
+        "privacy_budget": {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Privacy Budget",
+          "type": "number"
+        }
+      },
+      "required": [
+        "policy_id",
+        "mode",
+        "privacy_budget"
+      ],
+      "title": "DisclosurePolicy",
+      "type": "object"
+    },
+    "EvidenceReference": {
+      "additionalProperties": false,
+      "properties": {
+        "commitment": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Commitment",
+          "type": "string"
+        },
+        "predicate": {
+          "minLength": 1,
+          "title": "Predicate",
+          "type": "string"
+        }
+      },
+      "required": [
+        "commitment",
+        "predicate"
+      ],
+      "title": "EvidenceReference",
+      "type": "object"
+    },
+    "OracleBinding": {
+      "additionalProperties": false,
+      "properties": {
+        "commitment": {
+          "anyOf": [
+            {
+              "pattern": "^sha256:[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Commitment"
+        },
+        "identifier": {
+          "minLength": 1,
+          "title": "Identifier",
+          "type": "string"
+        },
+        "oracle_class": {
+          "$ref": "#/$defs/OracleClass"
+        },
+        "reliability": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0.0,
+              "maximum": 1.0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reliability"
+        },
+        "reliability_method": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reliability Method"
+        }
+      },
+      "required": [
+        "oracle_class",
+        "identifier"
+      ],
+      "title": "OracleBinding",
+      "type": "object"
+    },
+    "OracleClass": {
+      "enum": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "title": "OracleClass",
+      "type": "string"
+    },
+    "SourceBinding": {
+      "additionalProperties": false,
+      "properties": {
+        "commitment": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Commitment",
+          "type": "string"
+        },
+        "source_id": {
+          "minLength": 1,
+          "title": "Source Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "source_id",
+        "commitment"
+      ],
+      "title": "SourceBinding",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "capsule": {
+      "$ref": "#/$defs/AssuranceCapsule"
+    },
+    "challenge_class": {
+      "minLength": 1,
+      "title": "Challenge Class",
+      "type": "string"
+    },
+    "challenge_id": {
+      "minLength": 1,
+      "title": "Challenge Id",
+      "type": "string"
+    },
+    "expires_at": {
+      "format": "date-time",
+      "title": "Expires At",
+      "type": "string"
+    },
+    "hidden_commitment": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Hidden Commitment",
+      "type": "string"
+    },
+    "nonce": {
+      "minLength": 1,
+      "title": "Nonce",
+      "type": "string"
+    },
+    "protocol_version": {
+      "default": "sn87/0alpha1",
+      "minLength": 1,
+      "title": "Protocol Version",
+      "type": "string"
+    },
+    "visible_policy": {
+      "$ref": "#/$defs/AdmissibilityDeclaration"
+    }
+  },
+  "required": [
+    "challenge_id",
+    "challenge_class",
+    "capsule",
+    "visible_policy",
+    "hidden_commitment",
+    "nonce",
+    "expires_at"
+  ],
+  "title": "AssuranceRequest",
+  "type": "object"
+}

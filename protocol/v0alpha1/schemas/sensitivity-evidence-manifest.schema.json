@@ -1,0 +1,72 @@
+{
+  "$defs": {
+    "SensitivityEvidenceFiles": {
+      "additionalProperties": false,
+      "properties": {
+        "report.json": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Report.Json",
+          "type": "string"
+        },
+        "sensitivity-spec.json": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Sensitivity-Spec.Json",
+          "type": "string"
+        }
+      },
+      "required": [
+        "sensitivity-spec.json",
+        "report.json"
+      ],
+      "title": "SensitivityEvidenceFiles",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "bundle_version": {
+      "const": "sn87/transparent-sensitivity-evidence-bundle/0alpha1",
+      "title": "Bundle Version",
+      "type": "string"
+    },
+    "claim_state": {
+      "const": "IMPLEMENTED_TESTED_TRANSPARENT_SENSITIVITY_EVIDENCE_ONLY",
+      "title": "Claim State",
+      "type": "string"
+    },
+    "files": {
+      "$ref": "#/$defs/SensitivityEvidenceFiles"
+    },
+    "normalized_spec_commitment": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Normalized Spec Commitment",
+      "type": "string"
+    },
+    "report_commitment": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Report Commitment",
+      "type": "string"
+    },
+    "result_commitment": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Result Commitment",
+      "type": "string"
+    },
+    "source_spec_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Source Spec Sha256",
+      "type": "string"
+    }
+  },
+  "required": [
+    "bundle_version",
+    "claim_state",
+    "files",
+    "report_commitment",
+    "source_spec_sha256",
+    "normalized_spec_commitment",
+    "result_commitment"
+  ],
+  "title": "SensitivityEvidenceManifest",
+  "type": "object"
+}

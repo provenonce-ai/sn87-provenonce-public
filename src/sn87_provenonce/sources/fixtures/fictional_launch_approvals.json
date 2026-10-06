@@ -1,0 +1,4420 @@
+{
+ "exports": [
+  {
+   "cases": [
+    {
+     "approver_id": "aurora-w38-001-apr",
+     "case_ref": "w38-001",
+     "gaps": [],
+     "log": [
+      {
+       "condition_text": "Condition v1 for w38-001: two reviewers (fictional)",
+       "effective_ts": "2026-09-14T07:00:00Z",
+       "id": "w38-001-pol1",
+       "policy_ref": "aurora-w38-001-pol1",
+       "ts": "2026-09-14T07:00:00Z",
+       "type": "policy_published"
+      },
+      {
+       "condition_text": "Condition v2 for w38-001: three reviewers (fictional)",
+       "effective_ts": "2026-09-14T07:53:00Z",
+       "id": "w38-001-pol2",
+       "policy_ref": "aurora-w38-001-pol2",
+       "ts": "2026-09-14T07:43:00Z",
+       "type": "policy_published"
+      },
+      {
+       "approved": true,
+       "artifact_text": "Launch notice draft w38-001 (fictional)",
+       "condition_text": "Condition v1 for w38-001: two reviewers (fictional)",
+       "id": "w38-001-rev1",
+       "mission": "aurora-w38-001-mission",
+       "note": "Fictional reviewer note: looks fine.",
+       "recipient": "aurora-w38-001-desk",
+       "reviewer": "aurora-w38-001-rev",
+       "ts": "2026-09-14T07:05:00Z",
+       "type": "review_signed"
+      },
+      {
+       "approved": true,
+       "artifact_text": "Launch notice draft w38-001 (fictional)",
+       "condition_text": "Condition v2 for w38-001: three reviewers (fictional)",
+       "id": "w38-001-rev2",
+       "mission": "aurora-w38-001-mission",
+       "recipient": "aurora-w38-001-desk",
+       "reviewer": "aurora-w38-001-rev",
+       "ts": "2026-09-14T07:58:00Z",
+       "type": "review_signed"
+      },
+      {
+       "approver": "aurora-w38-001-apr",
+       "artifact_text": "Launch notice draft w38-001 (fictional)",
+       "id": "w38-001-apr1",
+       "mission": "aurora-w38-001-mission",
+       "recipient": "aurora-w38-001-desk",
+       "review_id": "w38-001-rev1",
+       "ticket_url": "https://example.invalid/fictional/ticket/w38-001",
+       "ts": "2026-09-14T07:06:00Z",
+       "type": "approval_issued",
+       "valid_until": "2026-09-14T09:13:00Z"
+      },
+      {
+       "approver": "aurora-w38-001-apr",
+       "artifact_text": "Launch notice draft w38-001 (fictional)",
+       "id": "w38-001-apr2",
+       "mission": "aurora-w38-001-mission",
+       "recipient": "aurora-w38-001-desk",
+       "review_id": "w38-001-rev2",
+       "ts": "2026-09-14T07:59:00Z",
+       "type": "approval_issued",
+       "valid_until": "2026-09-14T09:13:00Z"
+      },
+      {
+       "approval_id": "w38-001-apr1",
+       "id": "w38-001-tok1",
+       "token": "aurora-w38-001-tok1",
+       "ts": "2026-09-14T07:07:00Z",
+       "type": "token_bound"
+      },
+      {
+       "approval_id": "w38-001-apr2",
+       "id": "w38-001-tok2",
+       "token": "aurora-w38-001-tok2",
+       "ts": "2026-09-14T08:00:00Z",
+       "type": "token_bound"
+      },
+      {
+       "from_agent": "aurora-w38-001-a",
+       "from_step": 2,
+       "id": "w38-001-hand",
+       "input_text": "Launch notice draft w38-001 (fictional)",
+       "output_text": "Launch notice draft w38-001 (fictional)",
+       "to_agent": "aurora-w38-001-b",
+       "to_step": 3,
+       "token": "aurora-w38-001-tok1",
+       "ts": "2026-09-14T08:03:00Z",
+       "type": "handoff"
+      },
+      {
+       "agent": "aurora-w38-001-a",
+       "artifact_text": "Launch notice draft w38-001 (fictional)",
+       "id": "w38-001-act1",
+       "mission": "aurora-w38-001-mission",
+       "recipient": "aurora-w38-001-desk",
+       "step": 1,
+       "token": "aurora-w38-001-tok1",
+       "ts": "2026-09-14T07:10:00Z",
+       "type": "step_executed"
+      },
+      {
+       "agent": "aurora-w38-001-a",
+       "artifact_text": "Launch notice draft w38-001 (fictional)",
+       "id": "w38-001-act2",
+       "mission": "aurora-w38-001-mission",
+       "recipient": "aurora-w38-001-desk",
+       "step": 2,
+       "token": "aurora-w38-001-tok1",
+       "ts": "2026-09-14T07:30:00Z",
+       "type": "step_executed"
+      },
+      {
+       "agent": "aurora-w38-001-b",
+       "artifact_text": "Launch notice draft w38-001 (fictional)",
+       "id": "w38-001-act3",
+       "mission": "aurora-w38-001-mission",
+       "recipient": "aurora-w38-001-desk",
+       "step": 3,
+       "token": "aurora-w38-001-tok1",
+       "ts": "2026-09-14T08:23:00Z",
+       "type": "step_executed"
+      }
+     ],
+     "origin_agent": "aurora-w38-001-a",
+     "pipeline": "aurora-w38-001",
+     "reviewer_comment": "Fictional free-text comment, not to be mapped.",
+     "reviewer_id": "aurora-w38-001-rev",
+     "reviewer_name": "Pat Fictional",
+     "successor_agent": "aurora-w38-001-b"
+    },
+    {
+     "approver_id": "aurora-w38-002-apr",
+     "case_ref": "w38-002",
+     "gaps": [],
+     "log": [
+      {
+       "condition_text": "Condition v1 for w38-002: two reviewers (fictional)",
+       "effective_ts": "2026-09-14T14:00:00Z",
+       "id": "w38-002-pol1",
+       "policy_ref": "aurora-w38-002-pol1",
+       "ts": "2026-09-14T14:00:00Z",
+       "type": "policy_published"
+      },
+      {
+       "condition_text": "Condition v2 for w38-002: three reviewers (fictional)",
+       "effective_ts": "2026-09-14T14:56:00Z",
+       "id": "w38-002-pol2",
+       "policy_ref": "aurora-w38-002-pol2",
+       "ts": "2026-09-14T14:46:00Z",
+       "type": "policy_published"
+      },
+      {
+       "approved": true,
+       "artifact_text": "Launch notice draft w38-002 (fictional)",
+       "condition_text": "Condition v1 for w38-002: two reviewers (fictional)",
+       "id": "w38-002-rev1",
+       "mission": "aurora-w38-002-mission",
+       "note": "Fictional reviewer note: looks fine.",
+       "recipient": "aurora-w38-002-desk",
+       "reviewer": "aurora-w38-002-rev",
+       "ts": "2026-09-14T14:05:00Z",
+       "type": "review_signed"
+      },
+      {
+       "approved": true,
+       "artifact_text": "Launch notice draft w38-002 (fictional)",
+       "condition_text": "Condition v2 for w38-002: three reviewers (fictional)",
+       "id": "w38-002-rev2",
+       "mission": "aurora-w38-002-mission",
+       "recipient": "aurora-w38-002-desk",
+       "reviewer": "aurora-w38-002-rev",
+       "ts": "2026-09-14T15:01:00Z",
+       "type": "review_signed"
+      },
+      {
+       "approver": "aurora-w38-002-apr",
+       "artifact_text": "Launch notice draft w38-002 (fictional)",
+       "id": "w38-002-apr1",
+       "mission": "aurora-w38-002-mission",
+       "recipient": "aurora-w38-002-desk",
+       "review_id": "w38-002-rev1",
+       "ticket_url": "https://example.invalid/fictional/ticket/w38-002",
+       "ts": "2026-09-14T14:06:00Z",
+       "type": "approval_issued",
+       "valid_until": "2026-09-14T16:16:00Z"
+      },
+      {
+       "approver": "aurora-w38-002-apr",
+       "artifact_text": "Launch notice draft w38-002 (fictional)",
+       "id": "w38-002-apr2",
+       "mission": "aurora-w38-002-mission",
+       "recipient": "aurora-w38-002-desk",
+       "review_id": "w38-002-rev2",
+       "ts": "2026-09-14T15:02:00Z",
+       "type": "approval_issued",
+       "valid_until": "2026-09-14T16:16:00Z"
+      },
+      {
+       "approval_id": "w38-002-apr1",
+       "id": "w38-002-tok1",
+       "token": "aurora-w38-002-tok1",
+       "ts": "2026-09-14T14:07:00Z",
+       "type": "token_bound"
+      },
+      {
+       "approval_id": "w38-002-apr2",
+       "id": "w38-002-tok2",
+       "token": "aurora-w38-002-tok2",
+       "ts": "2026-09-14T15:03:00Z",
+       "type": "token_bound"
+      },
+      {
+       "from_agent": "aurora-w38-002-a",
+       "from_step": 2,
+       "id": "w38-002-hand",
+       "input_text": "Launch notice draft w38-002 (fictional)",
+       "output_text": "Launch notice draft w38-002 (fictional)",
+       "to_agent": "aurora-w38-002-b",
+       "to_step": 3,
+       "token": "aurora-w38-002-tok2",
+       "ts": "2026-09-14T15:06:00Z",
+       "type": "handoff"
+      },
+      {
+       "agent": "aurora-w38-002-a",
+       "artifact_text": "Launch notice draft w38-002 (fictional)",
+       "id": "w38-002-act1",
+       "mission": "aurora-w38-002-mission",
+       "recipient": "aurora-w38-002-desk",
+       "step": 1,
+       "token": "aurora-w38-002-tok1",
+       "ts": "2026-09-14T14:10:00Z",
+       "type": "step_executed"
+      },
+      {
+       "agent": "aurora-w38-002-a",
+       "artifact_text": "Launch notice draft w38-002 (fictional)",
+       "id": "w38-002-act2",
+       "mission": "aurora-w38-002-mission",
+       "recipient": "aurora-w38-002-desk",
+       "step": 2,
+       "token": "aurora-w38-002-tok1",
+       "ts": "2026-09-14T14:30:00Z",
+       "type": "step_executed"
+      },
+      {
+       "agent": "aurora-w38-002-b",
+       "artifact_text": "Launch notice draft w38-002 (fictional)",
+       "id": "w38-002-act3",
+       "mission": "aurora-w38-002-mission",
+       "recipient": "aurora-w38-002-desk",
+       "step": 3,
+       "token": "aurora-w38-002-tok2",
+       "ts": "2026-09-14T15:26:00Z",
+       "type": "step_executed"
+      }
+     ],
+     "origin_agent": "aurora-w38-002-a",
+     "pipeline": "aurora-w38-002",
+     "reviewer_comment": "Fictional free-text comment, not to be mapped.",
+     "reviewer_id": "aurora-w38-002-rev",
+     "reviewer_name": "Pat Fictional",
+     "successor_agent": "aurora-w38-002-b"
+    },
+    {
+     "approver_id": "aurora-w38-003-apr",
+     "case_ref": "w38-003",
+     "gaps": [],
+     "log": [
+      {
+       "condition_text": "Condition v1 for w38-003: two reviewers (fictional)",
+       "effective_ts": "2026-09-14T21:00:00Z",
+       "id": "w38-003-pol1",
+       "policy_ref": "aurora-w38-003-pol1",
+       "ts": "2026-09-14T21:00:00Z",
+       "type": "policy_published"
+      },
+      {
+       "condition_text": "Condition v2 for w38-003: three reviewers (fictional)",
+       "effective_ts": "2026-09-14T21:59:00Z",
+       "id": "w38-003-pol2",
+       "policy_ref": "aurora-w38-003-pol2",
+       "ts": "2026-09-14T21:49:00Z",
+       "type": "policy_published"
+      },
+      {
+       "approved": true,
+       "artifact_text": "Launch notice draft w38-003 (fictional)",
+       "condition_text": "Condition v1 for w38-003: two reviewers (fictional)",
+       "id": "w38-003-rev1",
+       "mission": "aurora-w38-003-mission",
+       "note": "Fictional reviewer note: looks fine.",
+       "recipient": "aurora-w38-003-desk",
+       "reviewer": "aurora-w38-003-rev",
+       "ts": "2026-09-14T21:05:00Z",
+       "type": "review_signed"
+      },
+      {
+       "approved": true,
+       "artifact_text": "Launch notice draft w38-003 (fictional)",
+       "condition_text": "Condition v2 for w38-003: three reviewers (fictional)",
+       "id": "w38-003-rev2",
+       "mission": "aurora-w38-003-mission",
+       "recipient": "aurora-w38-003-desk",
+       "reviewer": "aurora-w38-003-rev",
+       "ts": "2026-09-14T22:04:00Z",
+       "type": "review_signed"
+      },
+      {
+       "approver": "aurora-w38-003-apr",
+       "artifact_text": "Launch notice draft w38-003 (fictional)",
+       "id": "w38-003-apr1",
+       "mission": "aurora-w38-003-mission",
+       "recipient": "aurora-w38-003-desk",
+       "review_id": "w38-003-rev1",
+       "ticket_url": "https://example.invalid/fictional/ticket/w38-003",
+       "ts": "2026-09-14T21:06:00Z",
+       "type": "approval_issued",
+       "valid_until": "2026-09-14T23:19:00Z"
+      },
+      {
+       "approver": "aurora-w38-003-apr",
+       "artifact_text": "Launch notice draft w38-003 (fictional)",
+       "id": "w38-003-apr2",
+       "mission": "aurora-w38-003-mission",
+       "recipient": "aurora-w38-003-desk",
+       "review_id": "w38-003-rev2",
+       "ts": "2026-09-14T22:05:00Z",
+       "type": "approval_issued",
+       "valid_until": "2026-09-14T23:19:00Z"
+      },
+      {
+       "approval_id": "w38-003-apr1",
+       "id": "w38-003-tok1",
+       "token": "aurora-w38-003-tok1",
+       "ts": "2026-09-14T21:07:00Z",
+       "type": "token_bound"
+      },
+      {
+       "approval_id": "w38-003-apr2",
+       "id": "w38-003-tok2",
+       "token": "aurora-w38-003-tok2",
+       "ts": "2026-09-14T22:06:00Z",
+       "type": "token_bound"
+      },
+      {
+       "from_agent": "aurora-w38-003-a",
+       "from_step": 2,
+       "id": "w38-003-hand",
+       "input_text": "Launch notice draft w38-003 (fictional)",
+       "output_text": "Launch notice draft w38-003 (fictional)",
+       "to_agent": "aurora-w38-003-b",
+       "to_step": 3,
+       "token": "aurora-w38-003-tok1",
+       "ts": "2026-09-14T22:09:00Z",
+       "type": "handoff"
+      },
+      {
+       "agent": "aurora-w38-003-a",
+       "artifact_text": "Launch notice draft w38-003 (fictional)",
+       "id": "w38-003-act1",
+       "mission": "aurora-w38-003-mission",
+       "recipient": "aurora-w38-003-desk",
+       "step": 1,
+       "token": "aurora-w38-003-tok1",
+       "ts": "2026-09-14T21:10:00Z",
+       "type": "step_executed"
+      },
+      {
+       "agent": "aurora-w38-003-a",
+       "artifact_text": "Launch notice draft w38-003 (fictional)",
+       "id": "w38-003-act2",
+       "mission": "aurora-w38-003-mission",
+       "recipient": "aurora-w38-003-desk",
+       "step": 2,
+       "token": "aurora-w38-003-tok1",
+       "ts": "2026-09-14T21:30:00Z",
+       "type": "step_executed"
+      },
+      {
+       "agent": "aurora-w38-003-b",
+       "artifact_text": "Launch notice draft w38-003 (fictional)",
+       "id": "w38-003-act3",
+       "mission": "aurora-w38-003-mission",
+       "recipient": "aurora-w38-003-desk",
+       "step": 3,
+       "token": "aurora-w38-003-tok1",
+       "ts": "2026-09-14T22:29:00Z",
+       "type": "step_executed"
+      }
+     ],
+     "origin_agent": "aurora-w38-003-a",
+     "pipeline": "aurora-w38-003",
+     "reviewer_comment": "Fictional free-text comment, not to be mapped.",
+     "reviewer_id": "aurora-w38-003-rev",
+     "reviewer_name": "Pat Fictional",
+     "successor_agent": "aurora-w38-003-b"
+    },
+    {
+     "approver_id": "aurora-w38-004-apr",
+     "case_ref": "w38-004",
+     "gaps": [],
+     "log": [
+      {
+       "condition_text": "Condition v1 for w38-004: two reviewers (fictional)",
+       "effective_ts": "2026-09-15T04:00:00Z",
+       "id": "w38-004-pol1",
+       "policy_ref": "aurora-w38-004-pol1",
+       "ts": "2026-09-15T04:00:00Z",
+       "type": "policy_published"
+      },
+      {
+       "condition_text": "Condition v2 for w38-004: three reviewers (fictional)",
+       "effective_ts": "2026-09-15T04:52:00Z",
+       "id": "w38-004-pol2",
+       "policy_ref": "aurora-w38-004-pol2",
+       "ts": "2026-09-15T04:42:00Z",
+       "type": "policy_published"
+      },
+      {
+       "approved": true,
+       "artifact_text": "Launch notice draft w38-004 (fictional)",
+       "condition_text": "Condition v1 for w38-004: two reviewers (fictional)",
+       "id": "w38-004-rev1",
+       "mission": "aurora-w38-004-mission",
+       "note": "Fictional reviewer note: looks fine.",
+       "recipient": "aurora-w38-004-desk",
+       "reviewer": "aurora-w38-004-rev",
+       "ts": "2026-09-15T04:05:00Z",
+       "type": "review_signed"
+      },
+      {
+       "approved": true,
+       "artifact_text": "Launch notice draft w38-004 (fictional)",
+       "condition_text": "Condition v2 for w38-004: three reviewers (fictional)",
+       "id": "w38-004-rev2",
+       "mission": "aurora-w38-004-mission",
+       "recipient": "aurora-w38-004-desk",
+       "reviewer": "aurora-w38-004-rev",
+       "ts": "2026-09-15T04:57:00Z",
+       "type": "review_signed"
+      },
+      {
+       "approver": "aurora-w38-004-apr",
+       "artifact_text": "Launch notice draft w38-004 (fictional)",
+       "id": "w38-004-apr1",
+       "mission": "aurora-w38-004-mission",
+       "recipient": "aurora-w38-004-desk",
+       "review_id": "w38-004-rev1",
+       "ticket_url": "https://example.invalid/fictional/ticket/w38-004",
+       "ts": "2026-09-15T04:06:00Z",
+       "type": "approval_issued",
+       "valid_until": "2026-09-15T06:12:00Z"
+      },
+      {
+       "approver": "aurora-w38-004-apr",
+       "artifact_text": "Launch notice draft w38-004 (fictional)",
+       "id": "w38-004-apr2",
+       "mission": "aurora-w38-004-mission",
+       "recipient": "aurora-w38-004-desk",
+       "review_id": "w38-004-rev2",
+       "ts": "2026-09-15T04:58:00Z",
+       "type": "approval_issued",
+       "valid_until": "2026-09-15T06:12:00Z"
+      },
+      {
+       "approval_id": "w38-004-apr1",
+       "id": "w38-004-tok1",
+       "token": "aurora-w38-004-tok1",
+       "ts": "2026-09-15T04:07:00Z",
+       "type": "token_bound"
+      },
+      {
+       "approval_id": "w38-004-apr2",
+       "id": "w38-004-tok2",
+       "token": "aurora-w38-004-tok2",
+       "ts": "2026-09-15T04:59:00Z",
+       "type": "token_bound"
+      },
+      {
+       "from_agent": "aurora-w38-004-a",
+       "from_step": 2,
+       "id": "w38-004-hand",
+       "input_text": "Launch notice draft w38-004 (fictional)",
+       "output_text": "Launch notice draft w38-004 (fictional)",
+       "to_agent": "aurora-w38-004-b",
+       "to_step": 3,
+       "token": "aurora-w38-004-tok1",
+       "ts": "2026-09-15T05:02:00Z",
+       "type": "handoff"
+      },
+      {
+       "agent": "aurora-w38-004-a",
+       "artifact_text": "Launch notice draft w38-004 (fictional)",
+       "id": "w38-004-act1",
+       "mission": "aurora-w38-004-mission",
+       "recipient": "aurora-w38-004-desk",
+       "step": 1,
+       "token": "aurora-w38-004-tok1",
+       "ts": "2026-09-15T04:10:00Z",
+       "type": "step_executed"
+      },
+      {
+       "agent": "aurora-w38-004-a",
+       "artifact_text": "Launch notice draft w38-004 (fictional)",
+       "id": "w38-004-act2",
+       "mission": "aurora-w38-004-mission",
+       "recipient": "aurora-w38-004-desk",
+       "step": 2,
+       "token": "aurora-w38-004-tok1",
+       "ts": "2026-09-15T04:30:00Z",
+       "type": "step_executed"
+      },
+      {
+       "agent": "aurora-w38-004-b",
+       "artifact_text": "Launch notice draft w38-004 (fictional)",
+       "id": "w38-004-act3",
+       "mission": "aurora-w38-004-mission",
+       "recipient": "aurora-w38-004-desk",
+       "step": 3,
+       "token": "aurora-w38-004-tok1",
+       "ts": "2026-09-15T05:22:00Z",
+       "type": "step_executed"
+      }
+     ],
+     "origin_agent": "aurora-w38-004-a",
+     "pipeline": "aurora-w38-004",
+     "reviewer_comment": "Fictional free-text comment, not to be mapped.",
+     "reviewer_id": "aurora-w38-004-rev",
+     "reviewer_name": "Pat Fictional",
+     "successor_agent": "aurora-w38-004-b"
+    },
+    {
+     "approver_id": "aurora-w38-005-apr",
+     "case_ref": "w38-005",
+     "gaps": [],
+     "log": [
+      {
+       "condition_text": "Condition v1 for w38-005: two reviewers (fictional)",
+       "effective_ts": "2026-09-15T11:00:00Z",
+       "id": "w38-005-pol1",
+       "policy_ref": "aurora-w38-005-pol1",
+       "ts": "2026-09-15T11:00:00Z",
+       "type": "policy_published"
+      },
+      {
+       "condition_text": "Condition v2 for w38-005: three reviewers (fictional)",
+       "effective_ts": "2026-09-15T11:55:00Z",
+       "id": "w38-005-pol2",
+       "policy_ref": "aurora-w38-005-pol2",
+       "ts": "2026-09-15T11:45:00Z",
+       "type": "policy_published"
+      },
+      {
+       "approved": true,
+       "artifact_text": "Launch notice draft w38-005 (fictional)",
+       "condition_text": "Condition v1 for w38-005: two reviewers (fictional)",
+       "id": "w38-005-rev1",
+       "mission": "aurora-w38-005-mission",
+       "note": "Fictional reviewer note: looks fine.",
+       "recipient": "aurora-w38-005-desk",
+       "reviewer": "aurora-w38-005-rev",
+       "ts": "2026-09-15T11:05:00Z",
+       "type": "review_signed"
+      },
+      {
+       "approved": true,
+       "artifact_text": "Launch notice draft w38-005 (fictional)",
+       "condition_text": "Condition v2 for w38-005: three reviewers (fictional)",
+       "id": "w38-005-rev2",
+       "mission": "aurora-w38-005-mission",
+       "recipient": "aurora-w38-005-desk",
+       "reviewer": "aurora-w38-005-rev",
+       "ts": "2026-09-15T12:00:00Z",
+       "type": "review_signed"
+      },
+      {
+       "approver": "aurora-w38-005-apr",
+       "artifact_text": "Launch notice draft w38-005 (fictional)",
+       "id": "w38-005-apr1",
+       "mission": "aurora-w38-005-mission",
+       "recipient": "aurora-w38-005-desk",
+       "review_id": "w38-005-rev1",
+       "ticket_url": "https://example.invalid/fictional/ticket/w38-005",
+       "ts": "2026-09-15T11:06:00Z",
+       "type": "approval_issued",
+       "valid_until": "2026-09-15T13:15:00Z"
+      },
+      {
+       "approver": "aurora-w38-005-apr",
+       "artifact_text": "Launch notice draft w38-005 (fictional)",
+       "id": "w38-005-apr2",
+       "mission": "aurora-w38-005-mission",
+       "recipient": "aurora-w38-005-desk",
+       "review_id": "w38-005-rev2",
+       "ts": "2026-09-15T12:01:00Z",
+       "type": "approval_issued",
+       "valid_until": "2026-09-15T13:15:00Z"
+      },
+      {
+       "approval_id": "w38-005-apr1",
+       "id": "w38-005-tok1",
+       "token": "aurora-w38-005-tok1",
+       "ts": "2026-09-15T11:07:00Z",
+       "type": "token_bound"
+      },
+      {
+       "approval_id": "w38-005-apr2",
+       "id": "w38-005-tok2",
+       "token": "aurora-w38-005-tok2",
+       "ts": "2026-09-15T12:02:00Z",
+       "type": "token_bound"
+      },
+      {
+       "from_agent": "aurora-w38-005-a",
+       "from_step": 2,
+       "id": "w38-005-hand",
+       "input_text": "Launch notice draft w38-005 (fictional)",
+       "output_text": "Launch notice draft w38-005 (fictional)",
+       "to_agent": "aurora-w38-005-b",
+       "to_step": 3,
+       "token": "aurora-w38-005-tok2",
+       "ts": "2026-09-15T12:05:00Z",
+       "type": "handoff"
+      },
+      {
+       "agent": "aurora-w38-005-a",
+       "artifact_text": "Launch notice draft w38-005 (fictional)",
+       "id": "w38-005-act1",
+       "mission": "aurora-w38-005-mission",
+       "recipient": "aurora-w38-005-desk",
+       "step": 1,
+       "token": "aurora-w38-005-tok1",
+       "ts": "2026-09-15T11:10:00Z",
+       "type": "step_executed"
+      },
+      {
+       "agent": "aurora-w38-005-a",
+       "artifact_text": "Launch notice draft w38-005 (fictional)",
+       "id": "w38-005-act2",
+       "mission": "aurora-w38-005-mission",
+       "recipient": "aurora-w38-005-desk",
+       "step": 2,
+       "token": "aurora-w38-005-tok1",
+       "ts": "2026-09-15T11:30:00Z",
+       "type": "step_executed"
+      },
+      {
+       "agent": "aurora-w38-005-b",
+       "artifact_text": "Launch notice draft w38-005 (fictional)",
+       "id": "w38-005-act3",
+       "mission": "aurora-w38-005-mission",
+       "recipient": "aurora-w38-005-desk",
+       "step": 3,
+       "token": "aurora-w38-005-tok2",
+       "ts": "2026-09-15T12:25:00Z",
+       "type": "step_executed"
+      }
+     ],
+     "origin_agent": "aurora-w38-005-a",
+     "pipeline": "aurora-w38-005",
+     "reviewer_comment": "Fictional free-text comment, not to be mapped.",
+     "reviewer_id": "aurora-w38-005-rev",
+     "reviewer_name": "Pat Fictional",
+     "successor_agent": "aurora-w38-005-b"
+    },
+    {
+     "approver_id": "aurora-w38-006-apr",
+     "case_ref": "w38-006",
+     "gaps": [],
+     "log": [
+      {
+       "condition_text": "Condition v1 for w38-006: two reviewers (fictional)",
+       "effective_ts": "2026-09-15T18:00:00Z",
+       "id": "w38-006-pol1",
+       "policy_ref": "aurora-w38-006-pol1",
+       "ts": "2026-09-15T18:00:00Z",
+       "type": "policy_published"
+      },
+      {
+       "condition_text": "Condition v2 for w38-006: three reviewers (fictional)",
+       "effective_ts": "2026-09-15T18:58:00Z",
+       "id": "w38-006-pol2",
+       "policy_ref": "aurora-w38-006-pol2",
+       "ts": "2026-09-15T18:48:00Z",
+       "type": "policy_published"
+      },
+      {
+       "artifact_text": "Launch notice draft w38-006 (fictional)",
+       "condition_text": "Condition v1 for w38-006: two reviewers (fictional)",
+       "id": "w38-006-rev1",
+       "mission": "aurora-w38-006-mission",
+       "note": "Fictional reviewer note: looks fine.",
+       "recipient": "aurora-w38-006-desk",
+       "reviewer": "aurora-w38-006-rev",
+       "ts": "2026-09-15T18:05:00Z",
+       "type": "review_signed"
+      },
+      {
+       "approved": true,
+       "artifact_text": "Launch notice draft w38-006 (fictional)",
+       "condition_text": "Condition v2 for w38-006: three reviewers (fictional)",
+       "id": "w38-006-rev2",
+       "mission": "aurora-w38-006-mission",
+       "recipient": "aurora-w38-006-desk",
+       "reviewer": "aurora-w38-006-rev",
+       "ts": "2026-09-15T19:03:00Z",
+       "type": "review_signed"
+      },
+      {
+       "approver": "aurora-w38-006-apr",
+       "artifact_text": "Launch notice draft w38-006 (fictional)",
+       "id": "w38-006-apr1",
+       "mission": "aurora-w38-006-mission",
+       "recipient": "aurora-w38-006-desk",
+       "review_id": "w38-006-rev1",
+       "ticket_url": "https://example.invalid/fictional/ticket/w38-006",
+       "ts": "2026-09-15T18:06:00Z",
+       "type": "approval_issued",
+       "valid_until": "2026-09-15T20:18:00Z"
+      },
+      {
+       "approver": "aurora-w38-006-apr",
+       "artifact_text": "Launch notice draft w38-006 (fictional)",
+       "id": "w38-006-apr2",
+       "mission": "aurora-w38-006-mission",
+       "recipient": "aurora-w38-006-desk",
+       "review_id": "w38-006-rev2",
+       "ts": "2026-09-15T19:04:00Z",
+       "type": "approval_issued",
+       "valid_until": "2026-09-15T20:18:00Z"
+      },
+      {
+       "approval_id": "w38-006-apr1",
+       "id": "w38-006-tok1",
+       "token": "aurora-w38-006-tok1",
+       "ts": "2026-09-15T18:07:00Z",
+       "type": "token_bound"
+      },
+      {
+       "approval_id": "w38-006-apr2",
+       "id": "w38-006-tok2",
+       "token": "aurora-w38-006-tok2",
+       "ts": "2026-09-15T19:05:00Z",
+       "type": "token_bound"
+      },
+      {
+       "from_agent": "aurora-w38-006-a",
+       "from_step": 2,
+       "id": "w38-006-hand",
+       "input_text": "Launch notice draft w38-006 (fictional)",
+       "output_text": "Launch notice draft w38-006 (fictional)",
+       "to_agent": "aurora-w38-006-b",
+       "to_step": 3,
+       "token": "aurora-w38-006-tok1",
+       "ts": "2026-09-15T19:08:00Z",
+       "type": "handoff"
+      },
+      {
+       "agent": "aurora-w38-006-a",
+       "artifact_text": "Launch notice draft w38-006 (fictional)",
+       "id": "w38-006-act1",
+       "mission": "aurora-w38-006-mission",
+       "recipient": "aurora-w38-006-desk",
+       "step": 1,
+       "token": "aurora-w38-006-tok1",
+       "ts": "2026-09-15T18:10:00Z",
+       "type": "step_executed"
+      },
+      {
+       "agent": "aurora-w38-006-a",
+       "artifact_text": "Launch notice draft w38-006 (fictional)",
+       "id": "w38-006-act2",
+       "mission": "aurora-w38-006-mission",
+       "recipient": "aurora-w38-006-desk",
+       "step": 2,
+       "token": "aurora-w38-006-tok1",
+       "ts": "2026-09-15T18:30:00Z",
+       "type": "step_executed"
+      },
+      {
+       "agent": "aurora-w38-006-b",
+       "artifact_text": "Launch notice draft w38-006 (fictional)",
+       "id": "w38-006-act3",
+       "mission": "aurora-w38-006-mission",
+       "recipient": "aurora-w38-006-desk",
+       "step": 3,
+       "token": "aurora-w38-006-tok1",
+       "ts": "2026-09-15T19:28:00Z",
+       "type": "step_executed"
+      }
+     ],
+     "origin_agent": "aurora-w38-006-a",
+     "pipeline": "aurora-w38-006",
+     "reviewer_comment": "Fictional free-text comment, not to be mapped.",
+     "reviewer_id": "aurora-w38-006-rev",
+     "reviewer_name": "Pat Fictional",
+     "successor_agent": "aurora-w38-006-b"
+    },
+    {
+     "approver_id": "aurora-w38-007-apr",
+     "case_ref": "w38-007",
+     "gaps": [],
+     "log": [
+      {
+       "condition_text": "Condition v1 for w38-007: two reviewers (fictional)",
+       "effective_ts": "2026-09-16T01:00:00Z",
+       "id": "w38-007-pol1",
+       "policy_ref": "aurora-w38-007-pol1",
+       "ts": "2026-09-16T01:00:00Z",
+       "type": "policy_published"
+      },
+      {
+       "condition_text": "Condition v2 for w38-007: three reviewers (fictional)",
+       "effective_ts": "2026-09-16T01:51:00Z",
+       "id": "w38-007-pol2",
+       "policy_ref": "aurora-w38-007-pol2",
+       "ts": "2026-09-16T01:41:00Z",
+       "type": "policy_published"
+      },
+      {
+       "approved": true,
+       "artifact_text": "Launch notice draft w38-007 (fictional)",
+       "condition_text": "Condition v1 for w38-007: two reviewers (fictional)",
+       "id": "w38-007-rev1",
+       "mission": "aurora-w38-007-mission",
+       "note": "Fictional reviewer note: looks fine.",
+       "recipient": "aurora-w38-007-desk",
+       "reviewer": "aurora-w38-007-rev",
+       "ts": "2026-09-16T01:05:00Z",
+       "type": "review_signed"
+      },
+      {
+       "approved": true,
+       "artifact_text": "Launch notice draft w38-007 (fictional)",
+       "condition_text": "Condition v2 for w38-007: three reviewers (fictional)",
+       "id": "w38-007-rev2",
+       "mission": "aurora-w38-007-mission",
+       "recipient": "aurora-w38-007-desk",
+       "reviewer": "aurora-w38-007-rev",
+       "ts": "2026-09-16T01:56:00Z",
+       "type": "review_signed"
+      },
+      {
+       "approver": "aurora-w38-007-apr",
+       "artifact_text": "Launch notice draft w38-007 (fictional)",
+       "id": "w38-007-apr1",
+       "mission": "aurora-w38-007-mission",
+       "recipient": "aurora-w38-007-desk",
+       "review_id": "w38-007-rev1",
+       "ticket_url": "https://example.invalid/fictional/ticket/w38-007",
+       "ts": "2026-09-16T01:06:00Z",
+       "type": "approval_issued",
+       "valid_until": "2026-09-16T03:11:00Z"
+      },
+      {
+       "approver": "aurora-w38-007-apr",
+       "artifact_text": "Launch notice draft w38-007 (fictional)",
+       "id": "w38-007-apr2",
+       "mission": "aurora-w38-007-mission",
+       "recipient": "aurora-w38-007-desk",
+       "review_id": "w38-007-rev2",
+       "ts": "2026-09-16T01:57:00Z",
+       "type": "approval_issued",
+       "valid_until": "2026-09-16T03:11:00Z"
+      },
+      {
+       "approval_id": "w38-007-apr1",
+       "id": "w38-007-tok1",
+       "token": "aurora-w38-007-tok1",
+       "ts": "2026-09-16T01:07:00Z",
+       "type": "token_bound"
+      },
+      {
+       "approval_id": "w38-007-apr2",
+       "id": "w38-007-tok2",
+       "token": "aurora-w38-007-tok2",
+       "ts": "2026-09-16T01:58:00Z",
+       "type": "token_bound"
+      },
+      {
+       "from_agent": "aurora-w38-007-a",
+       "from_step": 2,
+       "id": "w38-007-hand",
+       "input_text": "Launch notice draft w38-007 (fictional)",
+       "output_text": "Launch notice draft w38-007 (fictional)",
+       "to_agent": "aurora-w38-007-b",
+       "to_step": 3,
+       "token": "aurora-w38-007-tok1",
+       "ts": "2026-09-16T02:01:00Z",
+       "type": "handoff"
+      },
+      {
+       "agent": "aurora-w38-007-a",
+       "artifact_text": "Launch notice draft w38-007 (fictional)",
+       "id": "w38-007-act1",
+       "mission": "aurora-w38-007-mission",
+       "recipient": "aurora-w38-007-desk",
+       "step": 1,
+       "token": "aurora-w38-007-tok1",
+       "ts": "2026-09-16T01:10:00Z",
+       "type": "step_executed"
+      },
+      {
+       "agent": "aurora-w38-007-a",
+       "artifact_text": "Launch notice draft w38-007 (fictional)",
+       "id": "w38-007-act2",
+       "mission": "aurora-w38-007-mission",
+       "recipient": "aurora-w38-007-desk",
+       "step": 2,
+       "token": "aurora-w38-007-tok1",
+       "ts": "2026-09-16T01:30:00Z",
+       "type": "step_executed"
+      },
+      {
+       "agent": "aurora-w38-007-b",
+       "artifact_text": "Launch notice draft w38-007 (fictional)",
+       "id": "w38-007-act3",
+       "mission": "aurora-w38-007-mission",
+       "recipient": "aurora-w38-007-desk",
+       "step": 3,
+       "token": "aurora-w38-007-tok1",
+       "ts": "2026-09-16T02:21:00Z",
+       "type": "step_executed"
+      }
+     ],
+     "origin_agent": "aurora-w38-007-a",
+     "pipeline": "aurora-w38-007",
+     "reviewer_comment": "Fictional free-text comment, not to be mapped.",
+     "reviewer_id": "aurora-w38-007-rev",
+     "reviewer_name": "Pat Fictional",
+     "successor_agent": "aurora-w38-007-b"
+    },
+    {
+     "approver_id": "aurora-w38-008-apr",
+     "case_ref": "w38-008",
+     "gaps": [
+      "token_bound"
+     ],
+     "log": [
+      {
+       "condition_text": "Condition v1 for w38-008: two reviewers (fictional)",
+       "effective_ts": "2026-09-16T08:00:00Z",
+       "id": "w38-008-pol1",
+       "policy_ref": "aurora-w38-008-pol1",
+       "ts": "2026-09-16T08:00:00Z",
+       "type": "policy_published"
+      },
+      {
+       "condition_text": "Condition v2 for w38-008: three reviewers (fictional)",
+       "effective_ts": "2026-09-16T08:54:00Z",
+       "id": "w38-008-pol2",
+       "policy_ref": "aurora-w38-008-pol2",
+       "ts": "2026-09-16T08:44:00Z",
+       "type": "policy_published"
+      },
+      {
+       "approved": true,
+       "artifact_text": "Launch notice draft w38-008 (fictional)",
+       "condition_text": "Condition v1 for w38-008: two reviewers (fictional)",
+       "id": "w38-008-rev1",
+       "mission": "aurora-w38-008-mission",
+       "note": "Fictional reviewer note: looks fine.",
+       "recipient": "aurora-w38-008-desk",
+       "reviewer": "aurora-w38-008-rev",
+       "ts": "2026-09-16T08:05:00Z",
+       "type": "review_signed"
+      },
+      {
+       "approved": true,
+       "artifact_text": "Launch notice draft w38-008 (fictional)",
+       "condition_text": "Condition v2 for w38-008: three reviewers (fictional)",
+       "id": "w38-008-rev2",
+       "mission": "aurora-w38-008-mission",
+       "recipient": "aurora-w38-008-desk",
+       "reviewer": "aurora-w38-008-rev",
+       "ts": "2026-09-16T08:59:00Z",
+       "type": "review_signed"
+      },
+      {
+       "approver": "aurora-w38-008-apr",
+       "artifact_text": "Launch notice draft w38-008 (fictional)",
+       "id": "w38-008-apr1",
+       "mission": "aurora-w38-008-mission",
+       "recipient": "aurora-w38-008-desk",
+       "review_id": "w38-008-rev1",
+       "ticket_url": "https://example.invalid/fictional/ticket/w38-008",
+       "ts": "2026-09-16T08:06:00Z",
+       "type": "approval_issued",
+       "valid_until": "2026-09-16T10:14:00Z"
+      },
+      {
+       "approver": "aurora-w38-008-apr",
+       "artifact_text": "Launch notice draft w38-008 (fictional)",
+       "id": "w38-008-apr2",
+       "mission": "aurora-w38-008-mission",
+       "recipient": "aurora-w38-008-desk",
+       "review_id": "w38-008-rev2",
+       "ts": "2026-09-16T09:00:00Z",
+       "type": "approval_issued",
+       "valid_until": "2026-09-16T10:14:00Z"
+      },
+      {
+       "approval_id": "w38-008-apr2",
+       "id": "w38-008-tok2",
+       "token": "aurora-w38-008-tok2",
+       "ts": "2026-09-16T09:01:00Z",
+       "type": "token_bound"
+      },
+      {
+       "from_agent": "aurora-w38-008-a",
+       "from_step": 2,
+       "id": "w38-008-hand",
+       "input_text": "Launch notice draft w38-008 (fictional)",
+       "output_text": "Launch notice draft w38-008 (fictional)",
+       "to_agent": "aurora-w38-008-b",
+       "to_step": 3,
+       "token": "aurora-w38-008-tok1",
+       "ts": "2026-09-16T09:04:00Z",
+       "type": "handoff"
+      },
+      {
+       "agent": "aurora-w38-008-a",
+       "artifact_text": "Launch notice draft w38-008 (fictional)",
+       "id": "w38-008-act1",
+       "mission": "aurora-w38-008-mission",
+       "recipient": "aurora-w38-008-desk",
+       "step": 1,
+       "token": "aurora-w38-008-tok1",
+       "ts": "2026-09-16T08:10:00Z",
+       "type": "step_executed"
+      },
+      {
+       "agent": "aurora-w38-008-a",
+       "artifact_text": "Launch notice draft w38-008 (fictional)",
+       "id": "w38-008-act2",
+       "mission": "aurora-w38-008-mission",
+       "recipient": "aurora-w38-008-desk",
+       "step": 2,
+       "token": "aurora-w38-008-tok1",
+       "ts": "2026-09-16T08:30:00Z",
+       "type": "step_executed"
+      },
+      {
+       "agent": "aurora-w38-008-b",
+       "artifact_text": "Launch notice draft w38-008 (fictional)",
+       "id": "w38-008-act3",
+       "mission": "aurora-w38-008-mission",
+       "recipient": "aurora-w38-008-desk",
+       "step": 3,
+       "token": "aurora-w38-008-tok1",
+       "ts": "2026-09-16T09:24:00Z",
+       "type": "step_executed"
+      }
+     ],
+     "origin_agent": "aurora-w38-008-a",
+     "pipeline": "aurora-w38-008",
+     "reviewer_comment": "Fictional free-text comment, not to be mapped.",
+     "reviewer_id": "aurora-w38-008-rev",
+     "reviewer_name": "Pat Fictional",
+     "successor_agent": "aurora-w38-008-b"
+    },
+    {
+     "approver_id": "aurora-w38-009-apr",
+     "case_ref": "w38-009",
+     "gaps": [],
+     "log": [
+      {
+       "condition_text": "Condition v1 for w38-009: two reviewers (fictional)",
+       "effective_ts": "2026-09-16T15:00:00Z",
+       "id": "w38-009-pol1",
+       "policy_ref": "aurora-w38-009-pol1",
+       "ts": "2026-09-16T15:00:00Z",
+       "type": "policy_published"
+      },
+      {
+       "condition_text": "Condition v2 for w38-009: three reviewers (fictional)",
+       "effective_ts": "2026-09-16T15:57:00Z",
+       "id": "w38-009-pol2",
+       "policy_ref": "aurora-w38-009-pol2",
+       "ts": "2026-09-16T15:47:00Z",
+       "type": "policy_published"
+      },
+      {
+       "approved": true,
+       "artifact_text": "Launch notice draft w38-009 (fictional)",
+       "condition_text": "Condition v1 for w38-009: two reviewers (fictional)",
+       "id": "w38-009-rev1",
+       "mission": "aurora-w38-009-mission",
+       "note": "Fictional reviewer note: looks fine.",
+       "recipient": "aurora-w38-009-desk",
+       "reviewer": "aurora-w38-009-rev",
+       "ts": "2026-09-16T15:05:00Z",
+       "type": "review_signed"
+      },
+      {
+       "approved": true,
+       "artifact_text": "Launch notice draft w38-009 (fictional)",
+       "condition_text": "Condition v2 for w38-009: three reviewers (fictional)",
+       "id": "w38-009-rev2",
+       "mission": "aurora-w38-009-mission",
+       "recipient": "aurora-w38-009-desk",
+       "reviewer": "aurora-w38-009-rev",
+       "ts": "2026-09-16T16:02:00Z",
+       "type": "review_signed"
+      },
+      {
+       "approver": "aurora-w38-009-apr",
+       "artifact_text": "Launch notice draft w38-009 (fictional)",
+       "id": "w38-009-apr1",
+       "mission": "aurora-w38-009-mission",
+       "recipient": "aurora-w38-009-desk",
+       "review_id": "w38-009-rev1",
+       "ticket_url": "https://example.invalid/fictional/ticket/w38-009",
+       "ts": "2026-09-16T15:06:00Z",
+       "type": "approval_issued",
+       "valid_until": "2026-09-16T17:17:00Z"
+      },
+      {
+       "approver": "aurora-w38-009-apr",
+       "artifact_text": "Launch notice draft w38-009 (fictional)",
+       "id": "w38-009-apr2",
+       "mission": "aurora-w38-009-mission",
+       "recipient": "aurora-w38-009-desk",
+       "review_id": "w38-009-rev2",
+       "ts": "2026-09-16T16:03:00Z",
+       "type": "approval_issued",
+       "valid_until": "2026-09-16T17:17:00Z"
+      },
+      {
+       "approval_id": "w38-009-apr1",
+       "id": "w38-009-tok1",
+       "token": "aurora-w38-009-tok1",
+       "ts": "2026-09-16T15:07:00Z",
+       "type": "token_bound"
+      },
+      {
+       "approval_id": "w38-009-apr2",
+       "id": "w38-009-tok2",
+       "token": "aurora-w38-009-tok2",
+       "ts": "2026-09-16T16:04:00Z",
+       "type": "token_bound"
+      },
+      {
+       "from_agent": "aurora-w38-009-a",
+       "from_step": 2,
+       "id": "w38-009-hand",
+       "input_text": "Launch notice draft w38-009 (fictional)",
+       "output_text": "Launch notice draft w38-009 (fictional)",
+       "to_agent": "aurora-w38-009-b",
+       "to_step": 3,
+       "token": "aurora-w38-009-tok2",
+       "ts": "2026-09-16T16:07:00Z",
+       "type": "handoff"
+      },
+      {
+       "agent": "aurora-w38-009-a",
+       "artifact_text": "Launch notice draft w38-009 (fictional)",
+       "id": "w38-009-act1",
+       "mission": "aurora-w38-009-mission",
+       "recipient": "aurora-w38-009-desk",
+       "step": 1,
+       "token": "aurora-w38-009-tok1",
+       "ts": "2026-09-16T15:10:00Z",
+       "type": "step_executed"
+      },
+      {
+       "agent": "aurora-w38-009-a",
+       "artifact_text": "Launch notice draft w38-009 (fictional)",
+       "id": "w38-009-act2",
+       "mission": "aurora-w38-009-mission",
+       "recipient": "aurora-w38-009-desk",
+       "step": 2,
+       "token": "aurora-w38-009-tok1",
+       "ts": "2026-09-16T15:30:00Z",
+       "type": "step_executed"
+      },
+      {
+       "agent": "aurora-w38-009-b",
+       "artifact_text": "Launch notice draft w38-009 (fictional)",
+       "id": "w38-009-act3",
+       "mission": "aurora-w38-009-mission",
+       "recipient": "aurora-w38-009-desk",
+       "step": 3,
+       "token": "aurora-w38-009-tok2",
+       "ts": "2026-09-16T16:27:00Z",
+       "type": "step_executed"
+      }
+     ],
+     "origin_agent": "aurora-w38-009-a",
+     "pipeline": "aurora-w38-009",
+     "reviewer_comment": "Fictional free-text comment, not to be mapped.",
+     "reviewer_id": "aurora-w38-009-rev",
+     "reviewer_name": "Pat Fictional",
+     "successor_agent": "aurora-w38-009-b"
+    },
+    {
+     "approver_id": "aurora-w38-010-apr",
+     "case_ref": "w38-010",
+     "gaps": [],
+     "log": [
+      {
+       "condition_text": "Condition v1 for w38-010: two reviewers (fictional)",
+       "effective_ts": "2026-09-16T22:00:00Z",
+       "id": "w38-010-pol1",
+       "policy_ref": "aurora-w38-010-pol1",
+       "ts": "2026-09-16T22:00:00Z",
+       "type": "policy_published"
+      },
+      {
+       "condition_text": "Condition v2 for w38-010: three reviewers (fictional)",
+       "effective_ts": "2026-09-16T22:50:00Z",
+       "id": "w38-010-pol2",
+       "policy_ref": "aurora-w38-010-pol2",
+       "ts": "2026-09-16T22:40:00Z",
+       "type": "policy_published"
+      },
+      {
+       "approved": true,
+       "artifact_text": "Launch notice draft w38-010 (fictional)",
+       "condition_text": "Condition v1 for w38-010: two reviewers (fictional)",
+       "id": "w38-010-rev1",
+       "mission": "aurora-w38-010-mission",
+       "note": "Fictional reviewer note: looks fine.",
+       "recipient": "aurora-w38-010-desk",
+       "reviewer": "aurora-w38-010-rev",
+       "ts": "2026-09-16T22:05:00Z",
+       "type": "review_signed"
+      },
+      {
+       "approved": true,
+       "artifact_text": "Launch notice draft w38-010 (fictional)",
+       "condition_text": "Condition v2 for w38-010: three reviewers (fictional)",
+       "id": "w38-010-rev2",
+       "mission": "aurora-w38-010-mission",
+       "recipient": "aurora-w38-010-desk",
+       "reviewer": "aurora-w38-010-rev",
+       "ts": "2026-09-16T22:55:00Z",
+       "type": "review_signed"
+      },
+      {
+       "approver": "aurora-w38-010-apr",
+       "artifact_text": "Launch notice draft w38-010 (fictional)",
+       "id": "w38-010-apr1",
+       "mission": "aurora-w38-010-mission",
+       "recipient": "aurora-w38-010-desk",
+       "review_id": "w38-010-rev1",
+       "ticket_url": "https://example.invalid/fictional/ticket/w38-010",
+       "ts": "2026-09-16T22:06:00Z",
+       "type": "approval_issued",
+       "valid_until": "2026-09-17T00:10:00Z"
+      },
+      {
+       "approver": "aurora-w38-010-apr",
+       "artifact_text": "Launch notice draft w38-010 (fictional)",
+       "id": "w38-010-apr2",
+       "mission": "aurora-w38-010-mission",
+       "recipient": "aurora-w38-010-desk",
+       "review_id": "w38-010-rev2",
+       "ts": "2026-09-16T22:56:00Z",
+       "type": "approval_issued",
+       "valid_until": "2026-09-17T00:10:00Z"
+      },
+      {
+       "approval_id": "w38-010-apr1",
+       "id": "w38-010-tok1",
+       "token": "aurora-w38-010-tok1",
+       "ts": "2026-09-16T22:07:00Z",
+       "type": "token_bound"
+      },
+      {
+       "approval_id": "w38-010-apr2",
+       "id": "w38-010-tok2",
+       "token": "aurora-w38-010-tok2",
+       "ts": "2026-09-16T22:57:00Z",
+       "type": "token_bound"
+      },
+      {
+       "from_agent": "aurora-w38-010-a",
+       "from_step": 2,
+       "id": "w38-010-hand",
+       "input_text": "Launch notice draft w38-010 (fictional)",
+       "output_text": "Launch notice draft w38-010 (fictional)",
+       "to_agent": "aurora-w38-010-b",
+       "to_step": 3,
+       "token": "aurora-w38-010-tok1",
+       "ts": "2026-09-16T23:00:00Z",
+       "type": "handoff"
+      },
+      {
+       "agent": "aurora-w38-010-a",
+       "artifact_text": "Launch notice draft w38-010 (fictional)",
+       "id": "w38-010-act1",
+       "mission": "aurora-w38-010-mission",
+       "recipient": "aurora-w38-010-desk",
+       "step": 1,
+       "token": "aurora-w38-010-tok1",
+       "ts": "2026-09-16T22:10:00Z",
+       "type": "step_executed"
+      },
+      {
+       "agent": "aurora-w38-010-a",
+       "artifact_text": "Launch notice draft w38-010 (fictional)",
+       "id": "w38-010-act2",
+       "mission": "aurora-w38-010-mission",
+       "recipient": "aurora-w38-010-desk",
+       "step": 2,
+       "token": "aurora-w38-010-tok1",
+       "ts": "2026-09-16T22:30:00Z",
+       "type": "step_executed"
+      },
+      {
+       "agent": "aurora-w38-010-b",
+       "artifact_text": "Launch notice draft w38-010 (fictional)",
+       "id": "w38-010-act3",
+       "mission": "aurora-w38-010-mission",
+       "recipient": "aurora-w38-010-desk",
+       "step": 3,
+       "token": "aurora-w38-010-tok1",
+       "ts": "2026-09-16T23:20:00Z",
+       "type": "step_executed"
+      }
+     ],
+     "origin_agent": "aurora-w38-010-a",
+     "pipeline": "aurora-w38-010",
+     "reviewer_comment": "Fictional free-text comment, not to be mapped.",
+     "reviewer_id": "aurora-w38-010-rev",
+     "reviewer_name": "Pat Fictional",
+     "successor_agent": "aurora-w38-010-b"
+    },
+    {
+     "approver_id": "aurora-w38-011-apr",
+     "case_ref": "w38-011",
+     "gaps": [],
+     "log": [
+      {
+       "condition_text": "Condition v1 for w38-011: two reviewers (fictional)",
+       "effective_ts": "2026-09-17T05:00:00Z",
+       "id": "w38-011-pol1",
+       "policy_ref": "aurora-w38-011-pol1",
+       "ts": "2026-09-17T05:00:00Z",
+       "type": "policy_published"
+      },
+      {
+       "condition_text": "Condition v2 for w38-011: three reviewers (fictional)",
+       "effective_ts": "2026-09-17T05:53:00Z",
+       "id": "w38-011-pol2",
+       "policy_ref": "aurora-w38-011-pol2",
+       "ts": "2026-09-17T05:43:00Z",
+       "type": "policy_published"
+      },
+      {
+       "approved": true,
+       "artifact_text": "Launch notice draft w38-011 (fictional)",
+       "condition_text": "Condition v1 for w38-011: two reviewers (fictional)",
+       "id": "w38-011-rev1",
+       "mission": "aurora-w38-011-mission",
+       "note": "Fictional reviewer note: looks fine.",
+       "recipient": "aurora-w38-011-desk",
+       "reviewer": "aurora-w38-011-rev",
+       "ts": "2026-09-17T05:05:00Z",
+       "type": "review_signed"
+      },
+      {
+       "approved": true,
+       "artifact_text": "Launch notice draft w38-011 (fictional)",
+       "condition_text": "Condition v2 for w38-011: three reviewers (fictional)",
+       "id": "w38-011-rev2",
+       "mission": "aurora-w38-011-mission",
+       "recipient": "aurora-w38-011-desk",
+       "reviewer": "aurora-w38-011-rev",
+       "ts": "2026-09-17T05:58:00Z",
+       "type": "review_signed"
+      },
+      {
+       "approver": "aurora-w38-011-apr",
+       "artifact_text": "Launch notice draft w38-011 (fictional)",
+       "id": "w38-011-apr1",
+       "mission": "aurora-w38-011-mission",
+       "recipient": "aurora-w38-011-desk",
+       "review_id": "w38-011-rev1",
+       "ticket_url": "https://example.invalid/fictional/ticket/w38-011",
+       "ts": "2026-09-17T05:06:00Z",
+       "type": "approval_issued",
+       "valid_until": "2026-09-17T07:13:00Z"
+      },
+      {
+       "approver": "aurora-w38-011-apr",
+       "artifact_text": "Launch notice draft w38-011 (fictional)",
+       "id": "w38-011-apr2",
+       "mission": "aurora-w38-011-mission",
+       "recipient": "aurora-w38-011-desk",
+       "review_id": "w38-011-rev2",
+       "ts": "2026-09-17T05:59:00Z",
+       "type": "approval_issued",
+       "valid_until": "2026-09-17T07:13:00Z"
+      },
+      {
+       "approval_id": "w38-011-apr1",
+       "id": "w38-011-tok1",
+       "token": "aurora-w38-011-tok1",
+       "ts": "2026-09-17T05:07:00Z",
+       "type": "token_bound"
+      },
+      {
+       "approval_id": "w38-011-apr2",
+       "id": "w38-011-tok2",
+       "token": "aurora-w38-011-tok2",
+       "ts": "2026-09-17T06:00:00Z",
+       "type": "token_bound"
+      },
+      {
+       "from_agent": "aurora-w38-011-a",
+       "from_step": 2,
+       "id": "w38-011-hand",
+       "input_text": "Launch notice draft w38-011 (fictional)",
+       "output_text": "Launch notice draft w38-011 (fictional)",
+       "to_agent": "aurora-w38-011-b",
+       "to_step": 3,
+       "token": "aurora-w38-011-tok1",
+       "ts": "2026-09-17T06:03:00Z",
+       "type": "handoff"
+      },
+      {
+       "agent": "aurora-w38-011-a",
+       "artifact_text": "Launch notice draft w38-011 (fictional)",
+       "id": "w38-011-act1",
+       "mission": "aurora-w38-011-mission",
+       "recipient": "aurora-w38-011-desk",
+       "step": 1,
+       "token": "aurora-w38-011-tok1",
+       "ts": "2026-09-17T05:10:00Z",
+       "type": "step_executed"
+      },
+      {
+       "agent": "aurora-w38-011-a",
+       "artifact_text": "Launch notice draft w38-011 (fictional)",
+       "id": "w38-011-act2",
+       "mission": "aurora-w38-011-mission",
+       "recipient": "aurora-w38-011-desk",
+       "step": 2,
+       "token": "aurora-w38-011-tok1",
+       "ts": "2026-09-17T05:30:00Z",
+       "type": "step_executed"
+      },
+      {
+       "agent": "aurora-w38-011-b",
+       "artifact_text": "Launch notice draft w38-011 (fictional)",
+       "id": "w38-011-act3",
+       "mission": "aurora-w38-011-mission",
+       "recipient": "aurora-w38-011-desk",
+       "step": 3,
+       "token": "aurora-w38-011-tok1",
+       "ts": "2026-09-17T06:23:00Z",
+       "type": "step_executed"
+      }
+     ],
+     "origin_agent": "aurora-w38-011-a",
+     "pipeline": "aurora-w38-011",
+     "reviewer_comment": "Fictional free-text comment, not to be mapped.",
+     "reviewer_id": "aurora-w38-011-rev",
+     "reviewer_name": "Pat Fictional",
+     "successor_agent": "aurora-w38-011-b"
+    },
+    {
+     "approver_id": "aurora-w38-012-apr",
+     "case_ref": "w38-012",
+     "gaps": [],
+     "log": [
+      {
+       "condition_text": "Condition v1 for w38-012: two reviewers (fictional)",
+       "effective_ts": "2026-09-17T12:00:00Z",
+       "id": "w38-012-pol1",
+       "policy_ref": "aurora-w38-012-pol1",
+       "ts": "2026-09-17T12:00:00Z",
+       "type": "policy_published"
+      },
+      {
+       "condition_text": "Condition v2 for w38-012: three reviewers (fictional)",
+       "effective_ts": "2026-09-17T12:56:00Z",
+       "id": "w38-012-pol2",
+       "policy_ref": "aurora-w38-012-pol2",
+       "ts": "2026-09-17T12:46:00Z",
+       "type": "policy_published"
+      },
+      {
+       "approved": true,
+       "artifact_text": "Launch notice draft w38-012 (fictional)",
+       "condition_text": "Condition v1 for w38-012: two reviewers (fictional)",
+       "id": "w38-012-rev1",
+       "mission": "aurora-w38-012-mission",
+       "note": "Fictional reviewer note: looks fine.",
+       "recipient": "aurora-w38-012-desk",
+       "reviewer": "aurora-w38-012-rev",
+       "ts": "2026-09-17T12:05:00Z",
+       "type": "review_signed"
+      },
+      {
+       "approved": true,
+       "artifact_text": "Launch notice draft w38-012 (fictional)",
+       "condition_text": "Condition v2 for w38-012: three reviewers (fictional)",
+       "id": "w38-012-rev2",
+       "mission": "aurora-w38-012-mission",
+       "recipient": "aurora-w38-012-desk",
+       "reviewer": "aurora-w38-012-rev",
+       "ts": "2026-09-17T13:01:00Z",
+       "type": "review_signed"
+      },
+      {
+       "approver": "aurora-w38-012-apr",
+       "artifact_text": "Launch notice draft w38-012 (fictional)",
+       "id": "w38-012-apr1",
+       "mission": "aurora-w38-012-mission",
+       "recipient": "aurora-w38-012-desk",
+       "review_id": "w38-012-rev1",
+       "ticket_url": "https://example.invalid/fictional/ticket/w38-012",
+       "ts": "2026-09-17T12:06:00Z",
+       "type": "approval_issued",
+       "valid_until": "2026-09-17T14:16:00Z"
+      },
+      {
+       "approver": "aurora-w38-012-apr",
+       "artifact_text": "Launch notice draft w38-012 (fictional)",
+       "id": "w38-012-apr2",
+       "mission": "aurora-w38-012-mission",
+       "recipient": "aurora-w38-012-desk",
+       "review_id": "w38-012-rev2",
+       "ts": "2026-09-17T13:02:00Z",
+       "type": "approval_issued",
+       "valid_until": "2026-09-17T14:16:00Z"
+      },
+      {
+       "approval_id": "w38-012-apr1",
+       "id": "w38-012-tok1",
+       "token": "aurora-w38-012-tok1",
+       "ts": "2026-09-17T12:07:00Z",
+       "type": "token_bound"
+      },
+      {
+       "approval_id": "w38-012-apr2",
+       "id": "w38-012-tok2",
+       "token": "aurora-w38-012-tok2",
+       "ts": "2026-09-17T13:03:00Z",
+       "type": "token_bound"
+      },
+      {
+       "from_agent": "aurora-w38-012-a",
+       "from_step": 2,
+       "id": "w38-012-hand",
+       "input_text": "Launch notice draft w38-012 (fictional)",
+       "output_text": "Launch notice draft w38-012 (fictional)",
+       "to_agent": "aurora-w38-012-b",
+       "to_step": 3,
+       "token": "aurora-w38-012-tok2",
+       "ts": "2026-09-17T13:06:00Z",
+       "type": "handoff"
+      },
+      {
+       "agent": "aurora-w38-012-a",
+       "artifact_text": "Launch notice draft w38-012 (fictional)",
+       "id": "w38-012-act1",
+       "mission": "aurora-w38-012-mission",
+       "recipient": "aurora-w38-012-desk",
+       "step": 1,
+       "token": "aurora-w38-012-tok1",
+       "ts": "2026-09-17T12:10:00Z",
+       "type": "step_executed"
+      },
+      {
+       "agent": "aurora-w38-012-a",
+       "artifact_text": "Launch notice draft w38-012 (fictional)",
+       "id": "w38-012-act2",
+       "mission": "aurora-w38-012-mission",
+       "recipient": "aurora-w38-012-desk",
+       "step": 2,
+       "token": "aurora-w38-012-tok1",
+       "ts": "2026-09-17T12:30:00Z",
+       "type": "step_executed"
+      },
+      {
+       "agent": "aurora-w38-012-b",
+       "artifact_text": "Launch notice draft w38-012 (fictional)",
+       "id": "w38-012-act3",
+       "mission": "aurora-w38-012-mission",
+       "recipient": "aurora-w38-012-desk",
+       "step": 3,
+       "token": "aurora-w38-012-tok2",
+       "ts": "2026-09-17T13:26:00Z",
+       "type": "step_executed"
+      }
+     ],
+     "origin_agent": "aurora-w38-012-a",
+     "pipeline": "aurora-w38-012",
+     "reviewer_comment": "Fictional free-text comment, not to be mapped.",
+     "reviewer_id": "aurora-w38-012-rev",
+     "reviewer_name": "Pat Fictional",
+     "successor_agent": "aurora-w38-012-b"
+    },
+    {
+     "approver_id": "aurora-w38-013-apr",
+     "case_ref": "w38-013",
+     "gaps": [],
+     "log": [
+      {
+       "condition_text": "Condition v1 for w38-013: two reviewers (fictional)",
+       "effective_ts": "2026-09-17T19:00:00Z",
+       "id": "w38-013-pol1",
+       "policy_ref": "aurora-w38-013-pol1",
+       "ts": "2026-09-17T19:00:00Z",
+       "type": "policy_published"
+      },
+      {
+       "condition_text": "Condition v2 for w38-013: three reviewers (fictional)",
+       "effective_ts": "2026-09-17T19:59:00Z",
+       "id": "w38-013-pol2",
+       "policy_ref": "aurora-w38-013-pol2",
+       "ts": "2026-09-17T19:49:00Z",
+       "type": "policy_published"
+      },
+      {
+       "approved": true,
+       "artifact_text": "Launch notice draft w38-013 (fictional)",
+       "condition_text": "Condition v1 for w38-013: two reviewers (fictional)",
+       "id": "w38-013-rev1",
+       "mission": "aurora-w38-013-mission",
+       "note": "Fictional reviewer note: looks fine.",
+       "recipient": "aurora-w38-013-desk",
+       "reviewer": "aurora-w38-013-rev",
+       "ts": "2026-09-17T19:05:00Z",
+       "type": "review_signed"
+      },
+      {
+       "approved": true,
+       "artifact_text": "Launch notice draft w38-013 (fictional)",
+       "condition_text": "Condition v2 for w38-013: three reviewers (fictional)",
+       "id": "w38-013-rev2",
+       "mission": "aurora-w38-013-mission",
+       "recipient": "aurora-w38-013-desk",
+       "reviewer": "aurora-w38-013-rev",
+       "ts": "2026-09-17T20:04:00Z",
+       "type": "review_signed"
+      },
+      {
+       "approver": "aurora-w38-013-apr",
+       "artifact_text": "Launch notice draft w38-013 (fictional)",
+       "id": "w38-013-apr1",
+       "mission": "aurora-w38-013-mission",
+       "recipient": "aurora-w38-013-desk",
+       "review_id": "w38-013-rev1",
+       "ticket_url": "https://example.invalid/fictional/ticket/w38-013",
+       "ts": "2026-09-17T19:06:00Z",
+       "type": "approval_issued",
+       "valid_until": "2026-09-17T21:19:00Z"
+      },
+      {
+       "approver": "aurora-w38-013-apr",
+       "artifact_text": "Launch notice draft w38-013 (fictional)",
+       "id": "w38-013-apr2",
+       "mission": "aurora-w38-013-mission",
+       "recipient": "aurora-w38-013-desk",
+       "review_id": "w38-013-rev2",
+       "ts": "2026-09-17T20:05:00Z",
+       "type": "approval_issued",
+       "valid_until": "2026-09-17T21:19:00Z"
+      },
+      {
+       "approval_id": "w38-013-apr1",
+       "id": "w38-013-tok1",
+       "token": "aurora-w38-013-tok1",
+       "ts": "2026-09-17T19:07:00Z",
+       "type": "token_bound"
+      },
+      {
+       "approval_id": "w38-013-apr2",
+       "id": "w38-013-tok2",
+       "token": "aurora-w38-013-tok2",
+       "ts": "2026-09-17T20:06:00Z",
+       "type": "token_bound"
+      },
+      {
+       "from_agent": "aurora-w38-013-a",
+       "from_step": 2,
+       "id": "w38-013-hand",
+       "input_text": "Launch notice draft w38-013 (fictional)",
+       "output_text": "Launch notice draft w38-013 (fictional)",
+       "to_agent": "aurora-w38-013-b",
+       "to_step": 3,
+       "token": "aurora-w38-013-tok1",
+       "ts": "2026-09-17T20:09:00Z",
+       "type": "handoff"
+      },
+      {
+       "agent": "aurora-w38-013-a",
+       "artifact_text": "Launch notice draft w38-013 (fictional)",
+       "id": "w38-013-act1",
+       "mission": "aurora-w38-013-mission",
+       "recipient": "aurora-w38-013-desk",
+       "step": 1,
+       "token": "aurora-w38-013-tok1",
+       "ts": "2026-09-17T19:10:00Z",
+       "type": "step_executed"
+      },
+      {
+       "agent": "aurora-w38-013-a",
+       "artifact_text": "Launch notice draft w38-013 (fictional)",
+       "id": "w38-013-act2",
+       "mission": "aurora-w38-013-mission",
+       "recipient": "aurora-w38-013-desk",
+       "step": 2,
+       "token": "aurora-w38-013-tok1",
+       "ts": "2026-09-17T19:30:00Z",
+       "type": "step_executed"
+      },
+      {
+       "agent": "aurora-w38-013-b",
+       "artifact_text": "Launch notice draft w38-013 (fictional)",
+       "id": "w38-013-act3",
+       "mission": "aurora-w38-013-mission",
+       "recipient": "aurora-w38-013-desk",
+       "step": 4,
+       "token": "aurora-w38-013-tok1",
+       "ts": "2026-09-17T20:29:00Z",
+       "type": "step_executed"
+      }
+     ],
+     "origin_agent": "aurora-w38-013-a",
+     "pipeline": "aurora-w38-013",
+     "reviewer_comment": "Fictional free-text comment, not to be mapped.",
+     "reviewer_id": "aurora-w38-013-rev",
+     "reviewer_name": "Pat Fictional",
+     "successor_agent": "aurora-w38-013-b"
+    },
+    {
+     "approver_id": "aurora-w38-014-apr",
+     "case_ref": "w38-014",
+     "gaps": [],
+     "log": [
+      {
+       "condition_text": "Condition v1 for w38-014: two reviewers (fictional)",
+       "effective_ts": "2026-09-18T02:00:00Z",
+       "id": "w38-014-pol1",
+       "policy_ref": "aurora-w38-014-pol1",
+       "ts": "2026-09-18T02:00:00Z",
+       "type": "policy_published"
+      },
+      {
+       "condition_text": "Condition v2 for w38-014: three reviewers (fictional)",
+       "effective_ts": "2026-09-18T02:52:00Z",
+       "id": "w38-014-pol2",
+       "policy_ref": "aurora-w38-014-pol2",
+       "ts": "2026-09-18T02:42:00Z",
+       "type": "policy_published"
+      },
+      {
+       "approved": true,
+       "artifact_text": "Launch notice draft w38-014 (fictional)",
+       "condition_text": "Condition v1 for w38-014: two reviewers (fictional)",
+       "id": "w38-014-rev1",
+       "mission": "aurora-w38-014-mission",
+       "note": "Fictional reviewer note: looks fine.",
+       "recipient": "aurora-w38-014-desk",
+       "reviewer": "aurora-w38-014-rev",
+       "ts": "2026-09-18T02:05:00Z",
+       "type": "review_signed"
+      },
+      {
+       "approved": true,
+       "artifact_text": "Launch notice draft w38-014 (fictional)",
+       "condition_text": "Condition v2 for w38-014: three reviewers (fictional)",
+       "id": "w38-014-rev2",
+       "mission": "aurora-w38-014-mission",
+       "recipient": "aurora-w38-014-desk",
+       "reviewer": "aurora-w38-014-rev",
+       "ts": "2026-09-18T02:57:00Z",
+       "type": "review_signed"
+      },
+      {
+       "approver": "aurora-w38-014-apr",
+       "artifact_text": "Launch notice draft w38-014 (fictional)",
+       "id": "w38-014-apr1",
+       "mission": "aurora-w38-014-mission",
+       "recipient": "aurora-w38-014-desk",
+       "review_id": "w38-014-rev1",
+       "ticket_url": "https://example.invalid/fictional/ticket/w38-014",
+       "ts": "2026-09-18T02:06:00Z",
+       "type": "approval_issued",
+       "valid_until": "2026-09-18T04:12:00Z"
+      },
+      {
+       "approver": "aurora-w38-014-apr",
+       "artifact_text": "Launch notice draft w38-014 (fictional)",
+       "id": "w38-014-apr2",
+       "mission": "aurora-w38-014-mission",
+       "recipient": "aurora-w38-014-desk",
+       "review_id": "w38-014-rev2",
+       "ts": "2026-09-18T02:58:00Z",
+       "type": "approval_issued",
+       "valid_until": "2026-09-18T04:12:00Z"
+      },
+      {
+       "approval_id": "w38-014-apr1",
+       "id": "w38-014-tok1",
+       "token": "aurora-w38-014-tok1",
+       "ts": "2026-09-18T02:07:00Z",
+       "type": "token_bound"
+      },
+      {
+       "approval_id": "w38-014-apr2",
+       "id": "w38-014-tok2",
+       "token": "aurora-w38-014-tok2",
+       "ts": "2026-09-18T02:59:00Z",
+       "type": "token_bound"
+      },
+      {
+       "from_agent": "aurora-w38-014-a",
+       "from_step": 2,
+       "id": "w38-014-hand",
+       "input_text": "Launch notice draft w38-014 (fictional)",
+       "output_text": "Launch notice draft w38-014 (fictional)",
+       "to_agent": "aurora-w38-014-b",
+       "to_step": 3,
+       "token": "aurora-w38-014-tok1",
+       "ts": "2026-09-18T03:02:00Z",
+       "type": "handoff"
+      },
+      {
+       "agent": "aurora-w38-014-a",
+       "artifact_text": "Launch notice draft w38-014 (fictional)",
+       "id": "w38-014-act1",
+       "mission": "aurora-w38-014-mission",
+       "recipient": "aurora-w38-014-desk",
+       "step": 1,
+       "token": "aurora-w38-014-tok1",
+       "ts": "2026-09-18T02:10:00Z",
+       "type": "step_executed"
+      },
+      {
+       "agent": "aurora-w38-014-a",
+       "artifact_text": "Launch notice draft w38-014 (fictional)",
+       "id": "w38-014-act2",
+       "mission": "aurora-w38-014-mission",
+       "recipient": "aurora-w38-014-desk",
+       "step": 2,
+       "token": "aurora-w38-014-tok1",
+       "ts": "2026-09-18T02:30:00Z",
+       "type": "step_executed"
+      },
+      {
+       "agent": "aurora-w38-014-b",
+       "artifact_text": "Launch notice draft w38-014 (fictional)",
+       "id": "w38-014-act3",
+       "mission": "aurora-w38-014-mission",
+       "recipient": "aurora-w38-014-desk",
+       "step": 3,
+       "token": "aurora-w38-014-tok1",
+       "ts": "2026-09-18T03:22:00Z",
+       "type": "step_executed"
+      }
+     ],
+     "origin_agent": "aurora-w38-014-a",
+     "pipeline": "aurora-w38-014",
+     "reviewer_comment": "Fictional free-text comment, not to be mapped.",
+     "reviewer_id": "aurora-w38-014-rev",
+     "reviewer_name": "Pat Fictional",
+     "successor_agent": "aurora-w38-014-b"
+    },
+    {
+     "approver_id": "aurora-w38-015-apr",
+     "case_ref": "w38-015",
+     "gaps": [
+      "token_bound"
+     ],
+     "log": [
+      {
+       "condition_text": "Condition v1 for w38-015: two reviewers (fictional)",
+       "effective_ts": "2026-09-18T09:00:00Z",
+       "id": "w38-015-pol1",
+       "policy_ref": "aurora-w38-015-pol1",
+       "ts": "2026-09-18T09:00:00Z",
+       "type": "policy_published"
+      },
+      {
+       "condition_text": "Condition v2 for w38-015: three reviewers (fictional)",
+       "effective_ts": "2026-09-18T09:55:00Z",
+       "id": "w38-015-pol2",
+       "policy_ref": "aurora-w38-015-pol2",
+       "ts": "2026-09-18T09:45:00Z",
+       "type": "policy_published"
+      },
+      {
+       "approved": true,
+       "artifact_text": "Launch notice draft w38-015 (fictional)",
+       "condition_text": "Condition v1 for w38-015: two reviewers (fictional)",
+       "id": "w38-015-rev1",
+       "mission": "aurora-w38-015-mission",
+       "note": "Fictional reviewer note: looks fine.",
+       "recipient": "aurora-w38-015-desk",
+       "reviewer": "aurora-w38-015-rev",
+       "ts": "2026-09-18T09:05:00Z",
+       "type": "review_signed"
+      },
+      {
+       "approved": true,
+       "artifact_text": "Launch notice draft w38-015 (fictional)",
+       "condition_text": "Condition v2 for w38-015: three reviewers (fictional)",
+       "id": "w38-015-rev2",
+       "mission": "aurora-w38-015-mission",
+       "recipient": "aurora-w38-015-desk",
+       "reviewer": "aurora-w38-015-rev",
+       "ts": "2026-09-18T10:00:00Z",
+       "type": "review_signed"
+      },
+      {
+       "approver": "aurora-w38-015-apr",
+       "artifact_text": "Launch notice draft w38-015 (fictional)",
+       "id": "w38-015-apr1",
+       "mission": "aurora-w38-015-mission",
+       "recipient": "aurora-w38-015-desk",
+       "review_id": "w38-015-rev1",
+       "ticket_url": "https://example.invalid/fictional/ticket/w38-015",
+       "ts": "2026-09-18T09:06:00Z",
+       "type": "approval_issued",
+       "valid_until": "2026-09-18T11:15:00Z"
+      },
+      {
+       "approver": "aurora-w38-015-apr",
+       "artifact_text": "Launch notice draft w38-015 (fictional)",
+       "id": "w38-015-apr2",
+       "mission": "aurora-w38-015-mission",
+       "recipient": "aurora-w38-015-desk",
+       "review_id": "w38-015-rev2",
+       "ts": "2026-09-18T10:01:00Z",
+       "type": "approval_issued",
+       "valid_until": "2026-09-18T11:15:00Z"
+      },
+      {
+       "approval_id": "w38-015-apr2",
+       "id": "w38-015-tok2",
+       "token": "aurora-w38-015-tok2",
+       "ts": "2026-09-18T10:02:00Z",
+       "type": "token_bound"
+      },
+      {
+       "from_agent": "aurora-w38-015-a",
+       "from_step": 2,
+       "id": "w38-015-hand",
+       "input_text": "Launch notice draft w38-015 (fictional)",
+       "output_text": "Launch notice draft w38-015 (fictional)",
+       "to_agent": "aurora-w38-015-b",
+       "to_step": 3,
+       "token": "aurora-w38-015-tok2",
+       "ts": "2026-09-18T10:05:00Z",
+       "type": "handoff"
+      },
+      {
+       "agent": "aurora-w38-015-a",
+       "artifact_text": "Launch notice draft w38-015 (fictional)",
+       "id": "w38-015-act1",
+       "mission": "aurora-w38-015-mission",
+       "recipient": "aurora-w38-015-desk",
+       "step": 1,
+       "token": "aurora-w38-015-tok1",
+       "ts": "2026-09-18T09:10:00Z",
+       "type": "step_executed"
+      },
+      {
+       "agent": "aurora-w38-015-a",
+       "artifact_text": "Launch notice draft w38-015 (fictional)",
+       "id": "w38-015-act2",
+       "mission": "aurora-w38-015-mission",
+       "recipient": "aurora-w38-015-desk",
+       "step": 2,
+       "token": "aurora-w38-015-tok1",
+       "ts": "2026-09-18T09:30:00Z",
+       "type": "step_executed"
+      },
+      {
+       "agent": "aurora-w38-015-b",
+       "artifact_text": "Launch notice draft w38-015 (fictional)",
+       "id": "w38-015-act3",
+       "mission": "aurora-w38-015-mission",
+       "recipient": "aurora-w38-015-desk",
+       "step": 3,
+       "token": "aurora-w38-015-tok2",
+       "ts": "2026-09-18T10:25:00Z",
+       "type": "step_executed"
+      }
+     ],
+     "origin_agent": "aurora-w38-015-a",
+     "pipeline": "aurora-w38-015",
+     "reviewer_comment": "Fictional free-text comment, not to be mapped.",
+     "reviewer_id": "aurora-w38-015-rev",
+     "reviewer_name": "Pat Fictional",
+     "successor_agent": "aurora-w38-015-b"
+    },
+    {
+     "approver_id": "aurora-w38-016-apr",
+     "case_ref": "w38-016",
+     "gaps": [],
+     "log": [
+      {
+       "condition_text": "Condition v1 for w38-016: two reviewers (fictional)",
+       "effective_ts": "2026-09-18T16:00:00Z",
+       "id": "w38-016-pol1",
+       "policy_ref": "aurora-w38-016-pol1",
+       "ts": "2026-09-18T16:00:00Z",
+       "type": "policy_published"
+      },
+      {
+       "condition_text": "Condition v2 for w38-016: three reviewers (fictional)",
+       "effective_ts": "2026-09-18T16:58:00Z",
+       "id": "w38-016-pol2",
+       "policy_ref": "aurora-w38-016-pol2",
+       "ts": "2026-09-18T16:48:00Z",
+       "type": "policy_published"
+      },
+      {
+       "approved": true,
+       "artifact_text": "Launch notice draft w38-016 (fictional)",
+       "condition_text": "Condition v1 for w38-016: two reviewers (fictional)",
+       "id": "w38-016-rev1",
+       "mission": "aurora-w38-016-mission",
+       "note": "Fictional reviewer note: looks fine.",
+       "recipient": "aurora-w38-016-desk",
+       "reviewer": "aurora-w38-016-rev",
+       "ts": "2026-09-18T16:05:00Z",
+       "type": "review_signed"
+      },
+      {
+       "approved": true,
+       "artifact_text": "Launch notice draft w38-016 (fictional)",
+       "condition_text": "Condition v2 for w38-016: three reviewers (fictional)",
+       "id": "w38-016-rev2",
+       "mission": "aurora-w38-016-mission",
+       "recipient": "aurora-w38-016-desk",
+       "reviewer": "aurora-w38-016-rev",
+       "ts": "2026-09-18T17:03:00Z",
+       "type": "review_signed"
+      },
+      {
+       "approver": "aurora-w38-016-apr",
+       "artifact_text": "Launch notice draft w38-016 (fictional)",
+       "id": "w38-016-apr1",
+       "mission": "aurora-w38-016-mission",
+       "recipient": "aurora-w38-016-desk",
+       "review_id": "w38-016-rev1",
+       "ticket_url": "https://example.invalid/fictional/ticket/w38-016",
+       "ts": "2026-09-18T16:06:00Z",
+       "type": "approval_issued",
+       "valid_until": "2026-09-18T18:18:00Z"
+      },
+      {
+       "approver": "aurora-w38-016-apr",
+       "artifact_text": "Launch notice draft w38-016 (fictional)",
+       "id": "w38-016-apr2",
+       "mission": "aurora-w38-016-mission",
+       "recipient": "aurora-w38-016-desk",
+       "review_id": "w38-016-rev2",
+       "ts": "2026-09-18T17:04:00Z",
+       "type": "approval_issued",
+       "valid_until": "2026-09-18T18:18:00Z"
+      },
+      {
+       "approval_id": "w38-016-apr1",
+       "id": "w38-016-tok1",
+       "token": "aurora-w38-016-tok1",
+       "ts": "2026-09-18T16:07:00Z",
+       "type": "token_bound"
+      },
+      {
+       "approval_id": "w38-016-apr2",
+       "id": "w38-016-tok2",
+       "token": "aurora-w38-016-tok2",
+       "ts": "2026-09-18T17:05:00Z",
+       "type": "token_bound"
+      },
+      {
+       "from_agent": "aurora-w38-016-a",
+       "from_step": 2,
+       "id": "w38-016-hand",
+       "input_text": "Launch notice draft w38-016 (fictional)",
+       "output_text": "Launch notice draft w38-016 (fictional)",
+       "to_agent": "aurora-w38-016-b",
+       "to_step": 3,
+       "token": "aurora-w38-016-tok1",
+       "ts": "2026-09-18T17:08:00Z",
+       "type": "handoff"
+      },
+      {
+       "agent": "aurora-w38-016-a",
+       "artifact_text": "Launch notice draft w38-016 (fictional)",
+       "id": "w38-016-act1",
+       "mission": "aurora-w38-016-mission",
+       "recipient": "aurora-w38-016-desk",
+       "step": 1,
+       "token": "aurora-w38-016-tok1",
+       "ts": "2026-09-18T16:10:00Z",
+       "type": "step_executed"
+      },
+      {
+       "agent": "aurora-w38-016-a",
+       "artifact_text": "Launch notice draft w38-016 (fictional)",
+       "id": "w38-016-act2",
+       "mission": "aurora-w38-016-mission",
+       "recipient": "aurora-w38-016-desk",
+       "step": 2,
+       "token": "aurora-w38-016-tok1",
+       "ts": "2026-09-18T16:30:00Z",
+       "type": "step_executed"
+      },
+      {
+       "agent": "aurora-w38-016-b",
+       "artifact_text": "Launch notice draft w38-016 (fictional)",
+       "id": "w38-016-act3",
+       "mission": "aurora-w38-016-mission",
+       "recipient": "aurora-w38-016-desk",
+       "step": 3,
+       "token": "aurora-w38-016-tok1",
+       "ts": "2026-09-18T17:28:00Z",
+       "type": "step_executed"
+      }
+     ],
+     "origin_agent": "aurora-w38-016-a",
+     "pipeline": "aurora-w38-016",
+     "reviewer_comment": "Fictional free-text comment, not to be mapped.",
+     "reviewer_id": "aurora-w38-016-rev",
+     "reviewer_name": "Pat Fictional",
+     "successor_agent": "aurora-w38-016-b"
+    }
+   ],
+   "export_id": "aurora-w38",
+   "window": {
+    "closed_at": "2026-09-20T23:59:59Z",
+    "opened_at": "2026-09-14T00:00:00Z"
+   }
+  },
+  {
+   "cases": [
+    {
+     "approver_id": "aurora-w39-001-apr",
+     "case_ref": "w39-001",
+     "gaps": [],
+     "log": [
+      {
+       "condition_text": "Condition v1 for w39-001: two reviewers (fictional)",
+       "effective_ts": "2026-09-21T07:00:00Z",
+       "id": "w39-001-pol1",
+       "policy_ref": "aurora-w39-001-pol1",
+       "ts": "2026-09-21T07:00:00Z",
+       "type": "policy_published"
+      },
+      {
+       "condition_text": "Condition v2 for w39-001: three reviewers (fictional)",
+       "effective_ts": "2026-09-21T07:53:00Z",
+       "id": "w39-001-pol2",
+       "policy_ref": "aurora-w39-001-pol2",
+       "ts": "2026-09-21T07:43:00Z",
+       "type": "policy_published"
+      },
+      {
+       "approved": true,
+       "artifact_text": "Launch notice draft w39-001 (fictional)",
+       "condition_text": "Condition v1 for w39-001: two reviewers (fictional)",
+       "id": "w39-001-rev1",
+       "mission": "aurora-w39-001-mission",
+       "note": "Fictional reviewer note: looks fine.",
+       "recipient": "aurora-w39-001-desk",
+       "reviewer": "aurora-w39-001-rev",
+       "ts": "2026-09-21T07:05:00Z",
+       "type": "review_signed"
+      },
+      {
+       "approved": true,
+       "artifact_text": "Launch notice draft w39-001 (fictional)",
+       "condition_text": "Condition v2 for w39-001: three reviewers (fictional)",
+       "id": "w39-001-rev2",
+       "mission": "aurora-w39-001-mission",
+       "recipient": "aurora-w39-001-desk",
+       "reviewer": "aurora-w39-001-rev",
+       "ts": "2026-09-21T07:58:00Z",
+       "type": "review_signed"
+      },
+      {
+       "approver": "aurora-w39-001-apr",
+       "artifact_text": "Launch notice draft w39-001 (fictional)",
+       "id": "w39-001-apr1",
+       "mission": "aurora-w39-001-mission",
+       "recipient": "aurora-w39-001-desk",
+       "review_id": "w39-001-rev1",
+       "ticket_url": "https://example.invalid/fictional/ticket/w39-001",
+       "ts": "2026-09-21T07:06:00Z",
+       "type": "approval_issued",
+       "valid_until": "2026-09-21T09:13:00Z"
+      },
+      {
+       "approver": "aurora-w39-001-apr",
+       "artifact_text": "Launch notice draft w39-001 (fictional)",
+       "id": "w39-001-apr2",
+       "mission": "aurora-w39-001-mission",
+       "recipient": "aurora-w39-001-desk",
+       "review_id": "w39-001-rev2",
+       "ts": "2026-09-21T07:59:00Z",
+       "type": "approval_issued",
+       "valid_until": "2026-09-21T09:13:00Z"
+      },
+      {
+       "approval_id": "w39-001-apr1",
+       "id": "w39-001-tok1",
+       "token": "aurora-w39-001-tok1",
+       "ts": "2026-09-21T07:07:00Z",
+       "type": "token_bound"
+      },
+      {
+       "approval_id": "w39-001-apr2",
+       "id": "w39-001-tok2",
+       "token": "aurora-w39-001-tok2",
+       "ts": "2026-09-21T08:00:00Z",
+       "type": "token_bound"
+      },
+      {
+       "from_agent": "aurora-w39-001-a",
+       "from_step": 2,
+       "id": "w39-001-hand",
+       "input_text": "Launch notice draft w39-001 (fictional)",
+       "output_text": "Launch notice draft w39-001 (fictional)",
+       "to_agent": "aurora-w39-001-b",
+       "to_step": 3,
+       "token": "aurora-w39-001-tok1",
+       "ts": "2026-09-21T08:03:00Z",
+       "type": "handoff"
+      },
+      {
+       "agent": "aurora-w39-001-a",
+       "artifact_text": "Launch notice draft w39-001 (fictional)",
+       "id": "w39-001-act1",
+       "mission": "aurora-w39-001-mission",
+       "recipient": "aurora-w39-001-desk",
+       "step": 1,
+       "token": "aurora-w39-001-tok1",
+       "ts": "2026-09-21T07:10:00Z",
+       "type": "step_executed"
+      },
+      {
+       "agent": "aurora-w39-001-a",
+       "artifact_text": "Launch notice draft w39-001 (fictional)",
+       "id": "w39-001-act2",
+       "mission": "aurora-w39-001-mission",
+       "recipient": "aurora-w39-001-desk",
+       "step": 2,
+       "token": "aurora-w39-001-tok1",
+       "ts": "2026-09-21T07:30:00Z",
+       "type": "step_executed"
+      },
+      {
+       "agent": "aurora-w39-001-b",
+       "artifact_text": "Launch notice draft w39-001 (fictional)",
+       "id": "w39-001-act3",
+       "mission": "aurora-w39-001-mission",
+       "recipient": "aurora-w39-001-desk",
+       "step": 3,
+       "token": "aurora-w39-001-tok1",
+       "ts": "2026-09-21T08:23:00Z",
+       "type": "step_executed"
+      }
+     ],
+     "origin_agent": "aurora-w39-001-a",
+     "pipeline": "aurora-w39-001",
+     "reviewer_comment": "Fictional free-text comment, not to be mapped.",
+     "reviewer_id": "aurora-w39-001-rev",
+     "reviewer_name": "Pat Fictional",
+     "successor_agent": "aurora-w39-001-b"
+    },
+    {
+     "approver_id": "aurora-w39-002-apr",
+     "case_ref": "w39-002",
+     "gaps": [],
+     "log": [
+      {
+       "condition_text": "Condition v1 for w39-002: two reviewers (fictional)",
+       "effective_ts": "2026-09-21T14:00:00Z",
+       "id": "w39-002-pol1",
+       "policy_ref": "aurora-w39-002-pol1",
+       "ts": "2026-09-21T14:00:00Z",
+       "type": "policy_published"
+      },
+      {
+       "condition_text": "Condition v2 for w39-002: three reviewers (fictional)",
+       "effective_ts": "2026-09-21T14:56:00Z",
+       "id": "w39-002-pol2",
+       "policy_ref": "aurora-w39-002-pol2",
+       "ts": "2026-09-21T14:46:00Z",
+       "type": "policy_published"
+      },
+      {
+       "approved": true,
+       "artifact_text": "Launch notice draft w39-002 (fictional)",
+       "condition_text": "Condition v1 for w39-002: two reviewers (fictional)",
+       "id": "w39-002-rev1",
+       "mission": "aurora-w39-002-mission",
+       "note": "Fictional reviewer note: looks fine.",
+       "recipient": "aurora-w39-002-desk",
+       "reviewer": "aurora-w39-002-rev",
+       "ts": "2026-09-21T14:05:00Z",
+       "type": "review_signed"
+      },
+      {
+       "approved": true,
+       "artifact_text": "Launch notice draft w39-002 (fictional)",
+       "condition_text": "Condition v2 for w39-002: three reviewers (fictional)",
+       "id": "w39-002-rev2",
+       "mission": "aurora-w39-002-mission",
+       "recipient": "aurora-w39-002-desk",
+       "reviewer": "aurora-w39-002-rev",
+       "ts": "2026-09-21T15:01:00Z",
+       "type": "review_signed"
+      },
+      {
+       "approver": "aurora-w39-002-apr",
+       "artifact_text": "Launch notice draft w39-002 (fictional)",
+       "id": "w39-002-apr1",
+       "mission": "aurora-w39-002-mission",
+       "recipient": "aurora-w39-002-desk",
+       "review_id": "w39-002-rev1",
+       "ticket_url": "https://example.invalid/fictional/ticket/w39-002",
+       "ts": "2026-09-21T14:06:00Z",
+       "type": "approval_issued",
+       "valid_until": "2026-09-21T16:16:00Z"
+      },
+      {
+       "approver": "aurora-w39-002-apr",
+       "artifact_text": "Launch notice draft w39-002 (fictional)",
+       "id": "w39-002-apr2",
+       "mission": "aurora-w39-002-mission",
+       "recipient": "aurora-w39-002-desk",
+       "review_id": "w39-002-rev2",
+       "ts": "2026-09-21T15:02:00Z",
+       "type": "approval_issued",
+       "valid_until": "2026-09-21T16:16:00Z"
+      },
+      {
+       "approval_id": "w39-002-apr1",
+       "id": "w39-002-tok1",
+       "token": "aurora-w39-002-tok1",
+       "ts": "2026-09-21T14:07:00Z",
+       "type": "token_bound"
+      },
+      {
+       "approval_id": "w39-002-apr2",
+       "id": "w39-002-tok2",
+       "token": "aurora-w39-002-tok2",
+       "ts": "2026-09-21T15:03:00Z",
+       "type": "token_bound"
+      },
+      {
+       "from_agent": "aurora-w39-002-a",
+       "from_step": 2,
+       "id": "w39-002-hand",
+       "input_text": "Launch notice draft w39-002 (fictional)",
+       "output_text": "Launch notice draft w39-002 (fictional)",
+       "to_agent": "aurora-w39-002-b",
+       "to_step": 3,
+       "token": "aurora-w39-002-tok2",
+       "ts": "2026-09-21T15:06:00Z",
+       "type": "handoff"
+      },
+      {
+       "agent": "aurora-w39-002-a",
+       "artifact_text": "Launch notice draft w39-002 (fictional)",
+       "id": "w39-002-act1",
+       "mission": "aurora-w39-002-mission",
+       "recipient": "aurora-w39-002-desk",
+       "step": 1,
+       "token": "aurora-w39-002-tok1",
+       "ts": "2026-09-21T14:10:00Z",
+       "type": "step_executed"
+      },
+      {
+       "agent": "aurora-w39-002-a",
+       "artifact_text": "Launch notice draft w39-002 (fictional)",
+       "id": "w39-002-act2",
+       "mission": "aurora-w39-002-mission",
+       "recipient": "aurora-w39-002-desk",
+       "step": 2,
+       "token": "aurora-w39-002-tok1",
+       "ts": "2026-09-21T14:30:00Z",
+       "type": "step_executed"
+      },
+      {
+       "agent": "aurora-w39-002-b",
+       "artifact_text": "Launch notice draft w39-002 (fictional)",
+       "id": "w39-002-act3",
+       "mission": "aurora-w39-002-mission",
+       "recipient": "aurora-w39-002-desk",
+       "step": 3,
+       "token": "aurora-w39-002-tok2",
+       "ts": "2026-09-21T15:26:00Z",
+       "type": "step_executed"
+      }
+     ],
+     "origin_agent": "aurora-w39-002-a",
+     "pipeline": "aurora-w39-002",
+     "reviewer_comment": "Fictional free-text comment, not to be mapped.",
+     "reviewer_id": "aurora-w39-002-rev",
+     "reviewer_name": "Pat Fictional",
+     "successor_agent": "aurora-w39-002-b"
+    },
+    {
+     "approver_id": "aurora-w39-003-apr",
+     "case_ref": "w39-003",
+     "gaps": [],
+     "log": [
+      {
+       "condition_text": "Condition v1 for w39-003: two reviewers (fictional)",
+       "effective_ts": "2026-09-21T21:00:00Z",
+       "id": "w39-003-pol1",
+       "policy_ref": "aurora-w39-003-pol1",
+       "ts": "2026-09-21T21:00:00Z",
+       "type": "policy_published"
+      },
+      {
+       "condition_text": "Condition v2 for w39-003: three reviewers (fictional)",
+       "effective_ts": "2026-09-21T21:59:00Z",
+       "id": "w39-003-pol2",
+       "policy_ref": "aurora-w39-003-pol2",
+       "ts": "2026-09-21T21:49:00Z",
+       "type": "policy_published"
+      },
+      {
+       "approved": true,
+       "artifact_text": "Launch notice draft w39-003 (fictional)",
+       "condition_text": "Condition v1 for w39-003: two reviewers (fictional)",
+       "id": "w39-003-rev1",
+       "mission": "aurora-w39-003-mission",
+       "note": "Fictional reviewer note: looks fine.",
+       "recipient": "aurora-w39-003-desk",
+       "reviewer": "aurora-w39-003-rev",
+       "ts": "2026-09-21T21:05:00Z",
+       "type": "review_signed"
+      },
+      {
+       "approved": true,
+       "artifact_text": "Launch notice draft w39-003 (fictional)",
+       "condition_text": "Condition v2 for w39-003: three reviewers (fictional)",
+       "id": "w39-003-rev2",
+       "mission": "aurora-w39-003-mission",
+       "recipient": "aurora-w39-003-desk",
+       "reviewer": "aurora-w39-003-rev",
+       "ts": "2026-09-21T22:04:00Z",
+       "type": "review_signed"
+      },
+      {
+       "approver": "aurora-w39-003-apr",
+       "artifact_text": "Launch notice draft w39-003 (fictional)",
+       "id": "w39-003-apr1",
+       "mission": "aurora-w39-003-mission",
+       "recipient": "aurora-w39-003-desk",
+       "review_id": "w39-003-rev1",
+       "ticket_url": "https://example.invalid/fictional/ticket/w39-003",
+       "ts": "2026-09-21T21:06:00Z",
+       "type": "approval_issued",
+       "valid_until": "2026-09-21T23:19:00Z"
+      },
+      {
+       "approver": "aurora-w39-003-apr",
+       "artifact_text": "Launch notice draft w39-003 (fictional)",
+       "id": "w39-003-apr2",
+       "mission": "aurora-w39-003-mission",
+       "recipient": "aurora-w39-003-desk",
+       "review_id": "w39-003-rev2",
+       "ts": "2026-09-21T22:05:00Z",
+       "type": "approval_issued",
+       "valid_until": "2026-09-21T23:19:00Z"
+      },
+      {
+       "approval_id": "w39-003-apr1",
+       "id": "w39-003-tok1",
+       "token": "aurora-w39-003-tok1",
+       "ts": "2026-09-21T21:07:00Z",
+       "type": "token_bound"
+      },
+      {
+       "approval_id": "w39-003-apr2",
+       "id": "w39-003-tok2",
+       "token": "aurora-w39-003-tok2",
+       "ts": "2026-09-21T22:06:00Z",
+       "type": "token_bound"
+      },
+      {
+       "from_agent": "aurora-w39-003-a",
+       "from_step": 2,
+       "id": "w39-003-hand",
+       "input_text": "Launch notice draft w39-003 (fictional)",
+       "output_text": "Launch notice draft w39-003 (fictional)",
+       "to_agent": "aurora-w39-003-b",
+       "to_step": 3,
+       "token": "aurora-w39-003-tok2",
+       "ts": "2026-09-21T22:09:00Z",
+       "type": "handoff"
+      },
+      {
+       "agent": "aurora-w39-003-a",
+       "artifact_text": "Launch notice draft w39-003 (fictional)",
+       "id": "w39-003-act1",
+       "mission": "aurora-w39-003-mission",
+       "recipient": "aurora-w39-003-desk",
+       "step": 1,
+       "token": "aurora-w39-003-tok1",
+       "ts": "2026-09-21T21:10:00Z",
+       "type": "step_executed"
+      },
+      {
+       "agent": "aurora-w39-003-a",
+       "artifact_text": "Launch notice draft w39-003 (fictional)",
+       "id": "w39-003-act2",
+       "mission": "aurora-w39-003-mission",
+       "recipient": "aurora-w39-003-desk",
+       "step": 2,
+       "token": "aurora-w39-003-tok1",
+       "ts": "2026-09-21T21:30:00Z",
+       "type": "step_executed"
+      },
+      {
+       "agent": "aurora-w39-003-b",
+       "artifact_text": "Launch notice draft w39-003 (fictional)",
+       "id": "w39-003-act3",
+       "mission": "aurora-w39-003-mission",
+       "recipient": "aurora-w39-003-desk",
+       "step": 3,
+       "token": "aurora-w39-003-tok2",
+       "ts": "2026-09-21T22:29:00Z",
+       "type": "step_executed"
+      }
+     ],
+     "origin_agent": "aurora-w39-003-a",
+     "pipeline": "aurora-w39-003",
+     "reviewer_comment": "Fictional free-text comment, not to be mapped.",
+     "reviewer_id": "aurora-w39-003-rev",
+     "reviewer_name": "Pat Fictional",
+     "successor_agent": "aurora-w39-003-b"
+    },
+    {
+     "approver_id": "aurora-w39-004-apr",
+     "case_ref": "w39-004",
+     "gaps": [],
+     "log": [
+      {
+       "condition_text": "Condition v1 for w39-004: two reviewers (fictional)",
+       "effective_ts": "2026-09-22T04:00:00Z",
+       "id": "w39-004-pol1",
+       "policy_ref": "aurora-w39-004-pol1",
+       "ts": "2026-09-22T04:00:00Z",
+       "type": "policy_published"
+      },
+      {
+       "condition_text": "Condition v2 for w39-004: three reviewers (fictional)",
+       "effective_ts": "2026-09-22T04:52:00Z",
+       "id": "w39-004-pol2",
+       "policy_ref": "aurora-w39-004-pol2",
+       "ts": "2026-09-22T04:42:00Z",
+       "type": "policy_published"
+      },
+      {
+       "approved": true,
+       "artifact_text": "Launch notice draft w39-004 (fictional)",
+       "condition_text": "Condition v1 for w39-004: two reviewers (fictional)",
+       "id": "w39-004-rev1",
+       "mission": "aurora-w39-004-mission",
+       "note": "Fictional reviewer note: looks fine.",
+       "recipient": "aurora-w39-004-desk",
+       "reviewer": "aurora-w39-004-rev",
+       "ts": "2026-09-22T04:05:00Z",
+       "type": "review_signed"
+      },
+      {
+       "approved": true,
+       "artifact_text": "Launch notice draft w39-004 (fictional)",
+       "condition_text": "Condition v2 for w39-004: three reviewers (fictional)",
+       "id": "w39-004-rev2",
+       "mission": "aurora-w39-004-mission",
+       "recipient": "aurora-w39-004-desk",
+       "reviewer": "aurora-w39-004-rev",
+       "ts": "2026-09-22T04:57:00Z",
+       "type": "review_signed"
+      },
+      {
+       "approver": "aurora-w39-004-apr",
+       "artifact_text": "Launch notice draft w39-004 (fictional)",
+       "id": "w39-004-apr1",
+       "mission": "aurora-w39-004-mission",
+       "recipient": "aurora-w39-004-desk",
+       "review_id": "w39-004-rev1",
+       "ticket_url": "https://example.invalid/fictional/ticket/w39-004",
+       "ts": "2026-09-22T04:06:00Z",
+       "type": "approval_issued",
+       "valid_until": "2026-09-22T06:12:00Z"
+      },
+      {
+       "approver": "aurora-w39-004-apr",
+       "artifact_text": "Launch notice draft w39-004 (fictional)",
+       "id": "w39-004-apr2",
+       "mission": "aurora-w39-004-mission",
+       "recipient": "aurora-w39-004-desk",
+       "review_id": "w39-004-rev2",
+       "ts": "2026-09-22T04:58:00Z",
+       "type": "approval_issued",
+       "valid_until": "2026-09-22T06:12:00Z"
+      },
+      {
+       "approval_id": "w39-004-apr1",
+       "id": "w39-004-tok1",
+       "token": "aurora-w39-004-tok1",
+       "ts": "2026-09-22T04:07:00Z",
+       "type": "token_bound"
+      },
+      {
+       "approval_id": "w39-004-apr2",
+       "id": "w39-004-tok2",
+       "token": "aurora-w39-004-tok2",
+       "ts": "2026-09-22T04:59:00Z",
+       "type": "token_bound"
+      },
+      {
+       "from_agent": "aurora-w39-004-a",
+       "from_step": 2,
+       "id": "w39-004-hand",
+       "input_text": "Launch notice draft w39-004 (fictional)",
+       "output_text": "Launch notice draft w39-004 (fictional)",
+       "to_agent": "aurora-w39-004-b",
+       "to_step": 3,
+       "token": "aurora-w39-004-tok1",
+       "ts": "2026-09-22T05:02:00Z",
+       "type": "handoff"
+      },
+      {
+       "agent": "aurora-w39-004-a",
+       "artifact_text": "Launch notice draft w39-004 (fictional)",
+       "id": "w39-004-act1",
+       "mission": "aurora-w39-004-mission",
+       "recipient": "aurora-w39-004-desk",
+       "step": 1,
+       "token": "aurora-w39-004-tok1",
+       "ts": "2026-09-22T04:10:00Z",
+       "type": "step_executed"
+      },
+      {
+       "agent": "aurora-w39-004-a",
+       "artifact_text": "Launch notice draft w39-004 (fictional)",
+       "id": "w39-004-act2",
+       "mission": "aurora-w39-004-mission",
+       "recipient": "aurora-w39-004-desk",
+       "step": 2,
+       "token": "aurora-w39-004-tok1",
+       "ts": "2026-09-22T04:30:00Z",
+       "type": "step_executed"
+      },
+      {
+       "agent": "aurora-w39-004-b",
+       "artifact_text": "Launch notice draft w39-004 (fictional)",
+       "id": "w39-004-act3",
+       "mission": "aurora-w39-004-mission",
+       "recipient": "aurora-w39-004-desk",
+       "step": 3,
+       "token": "aurora-w39-004-tok1",
+       "ts": "2026-09-22T05:22:00Z",
+       "type": "step_executed"
+      }
+     ],
+     "origin_agent": "aurora-w39-004-a",
+     "pipeline": "aurora-w39-004",
+     "reviewer_comment": "Fictional free-text comment, not to be mapped.",
+     "reviewer_id": "aurora-w39-004-rev",
+     "reviewer_name": "Pat Fictional",
+     "successor_agent": "aurora-w39-004-b"
+    },
+    {
+     "approver_id": "aurora-w39-005-apr",
+     "case_ref": "w39-005",
+     "gaps": [],
+     "log": [
+      {
+       "condition_text": "Condition v1 for w39-005: two reviewers (fictional)",
+       "effective_ts": "2026-09-22T11:00:00Z",
+       "id": "w39-005-pol1",
+       "policy_ref": "aurora-w39-005-pol1",
+       "ts": "2026-09-22T11:00:00Z",
+       "type": "policy_published"
+      },
+      {
+       "condition_text": "Condition v2 for w39-005: three reviewers (fictional)",
+       "effective_ts": "2026-09-22T11:55:00Z",
+       "id": "w39-005-pol2",
+       "policy_ref": "aurora-w39-005-pol2",
+       "ts": "2026-09-22T11:45:00Z",
+       "type": "policy_published"
+      },
+      {
+       "approved": true,
+       "artifact_text": "Launch notice draft w39-005 (fictional)",
+       "condition_text": "Condition v1 for w39-005: two reviewers (fictional)",
+       "id": "w39-005-rev1",
+       "mission": "aurora-w39-005-mission",
+       "note": "Fictional reviewer note: looks fine.",
+       "recipient": "aurora-w39-005-desk",
+       "reviewer": "aurora-w39-005-rev",
+       "ts": "2026-09-22T11:05:00Z",
+       "type": "review_signed"
+      },
+      {
+       "approved": true,
+       "artifact_text": "Launch notice draft w39-005 (fictional)",
+       "condition_text": "Condition v2 for w39-005: three reviewers (fictional)",
+       "id": "w39-005-rev2",
+       "mission": "aurora-w39-005-mission",
+       "recipient": "aurora-w39-005-desk",
+       "reviewer": "aurora-w39-005-rev",
+       "ts": "2026-09-24 10:00",
+       "type": "review_signed"
+      },
+      {
+       "approver": "aurora-w39-005-apr",
+       "artifact_text": "Launch notice draft w39-005 (fictional)",
+       "id": "w39-005-apr1",
+       "mission": "aurora-w39-005-mission",
+       "recipient": "aurora-w39-005-desk",
+       "review_id": "w39-005-rev1",
+       "ticket_url": "https://example.invalid/fictional/ticket/w39-005",
+       "ts": "2026-09-22T11:06:00Z",
+       "type": "approval_issued",
+       "valid_until": "2026-09-22T13:15:00Z"
+      },
+      {
+       "approver": "aurora-w39-005-apr",
+       "artifact_text": "Launch notice draft w39-005 (fictional)",
+       "id": "w39-005-apr2",
+       "mission": "aurora-w39-005-mission",
+       "recipient": "aurora-w39-005-desk",
+       "review_id": "w39-005-rev2",
+       "ts": "2026-09-22T12:01:00Z",
+       "type": "approval_issued",
+       "valid_until": "2026-09-22T13:15:00Z"
+      },
+      {
+       "approval_id": "w39-005-apr1",
+       "id": "w39-005-tok1",
+       "token": "aurora-w39-005-tok1",
+       "ts": "2026-09-22T11:07:00Z",
+       "type": "token_bound"
+      },
+      {
+       "approval_id": "w39-005-apr2",
+       "id": "w39-005-tok2",
+       "token": "aurora-w39-005-tok2",
+       "ts": "2026-09-22T12:02:00Z",
+       "type": "token_bound"
+      },
+      {
+       "from_agent": "aurora-w39-005-a",
+       "from_step": 2,
+       "id": "w39-005-hand",
+       "input_text": "Launch notice draft w39-005 (fictional)",
+       "output_text": "Launch notice draft w39-005 (fictional)",
+       "to_agent": "aurora-w39-005-b",
+       "to_step": 3,
+       "token": "aurora-w39-005-tok1",
+       "ts": "2026-09-22T12:05:00Z",
+       "type": "handoff"
+      },
+      {
+       "agent": "aurora-w39-005-a",
+       "artifact_text": "Launch notice draft w39-005 (fictional)",
+       "id": "w39-005-act1",
+       "mission": "aurora-w39-005-mission",
+       "recipient": "aurora-w39-005-desk",
+       "step": 1,
+       "token": "aurora-w39-005-tok1",
+       "ts": "2026-09-22T11:10:00Z",
+       "type": "step_executed"
+      },
+      {
+       "agent": "aurora-w39-005-a",
+       "artifact_text": "Launch notice draft w39-005 (fictional)",
+       "id": "w39-005-act2",
+       "mission": "aurora-w39-005-mission",
+       "recipient": "aurora-w39-005-desk",
+       "step": 2,
+       "token": "aurora-w39-005-tok1",
+       "ts": "2026-09-22T11:30:00Z",
+       "type": "step_executed"
+      },
+      {
+       "agent": "aurora-w39-005-b",
+       "artifact_text": "Launch notice draft w39-005 (fictional)",
+       "id": "w39-005-act3",
+       "mission": "aurora-w39-005-mission",
+       "recipient": "aurora-w39-005-desk",
+       "step": 3,
+       "token": "aurora-w39-005-tok1",
+       "ts": "2026-09-22T12:25:00Z",
+       "type": "step_executed"
+      }
+     ],
+     "origin_agent": "aurora-w39-005-a",
+     "pipeline": "aurora-w39-005",
+     "reviewer_comment": "Fictional free-text comment, not to be mapped.",
+     "reviewer_id": "aurora-w39-005-rev",
+     "reviewer_name": "Pat Fictional",
+     "successor_agent": "aurora-w39-005-b"
+    },
+    {
+     "approver_id": "aurora-w39-006-apr",
+     "case_ref": "w39-006",
+     "gaps": [],
+     "log": [
+      {
+       "condition_text": "Condition v1 for w39-006: two reviewers (fictional)",
+       "effective_ts": "2026-09-22T18:00:00Z",
+       "id": "w39-006-pol1",
+       "policy_ref": "aurora-w39-006-pol1",
+       "ts": "2026-09-22T18:00:00Z",
+       "type": "policy_published"
+      },
+      {
+       "condition_text": "Condition v2 for w39-006: three reviewers (fictional)",
+       "effective_ts": "2026-09-22T18:58:00Z",
+       "id": "w39-006-pol2",
+       "policy_ref": "aurora-w39-006-pol2",
+       "ts": "2026-09-22T18:48:00Z",
+       "type": "policy_published"
+      },
+      {
+       "approved": true,
+       "artifact_text": "Launch notice draft w39-006 (fictional)",
+       "condition_text": "Condition v1 for w39-006: two reviewers (fictional)",
+       "id": "w39-006-rev1",
+       "mission": "aurora-w39-006-mission",
+       "note": "Fictional reviewer note: looks fine.",
+       "recipient": "aurora-w39-006-desk",
+       "reviewer": "aurora-w39-006-rev",
+       "ts": "2026-09-22T18:05:00Z",
+       "type": "review_signed"
+      },
+      {
+       "approved": true,
+       "artifact_text": "Launch notice draft w39-006 (fictional)",
+       "condition_text": "Condition v2 for w39-006: three reviewers (fictional)",
+       "id": "w39-006-rev2",
+       "mission": "aurora-w39-006-mission",
+       "recipient": "aurora-w39-006-desk",
+       "reviewer": "aurora-w39-006-rev",
+       "ts": "2026-09-22T19:03:00Z",
+       "type": "review_signed"
+      },
+      {
+       "approver": "aurora-w39-006-apr",
+       "artifact_text": "Launch notice draft w39-006 (fictional)",
+       "id": "w39-006-apr1",
+       "mission": "aurora-w39-006-mission",
+       "recipient": "aurora-w39-006-desk",
+       "review_id": "w39-006-rev1",
+       "ticket_url": "https://example.invalid/fictional/ticket/w39-006",
+       "ts": "2026-09-22T18:06:00Z",
+       "type": "approval_issued",
+       "valid_until": "2026-09-22T20:18:00Z"
+      },
+      {
+       "approver": "aurora-w39-006-apr",
+       "artifact_text": "Launch notice draft w39-006 (fictional)",
+       "id": "w39-006-apr2",
+       "mission": "aurora-w39-006-mission",
+       "recipient": "aurora-w39-006-desk",
+       "review_id": "w39-006-rev2",
+       "ts": "2026-09-22T19:04:00Z",
+       "type": "approval_issued",
+       "valid_until": "2026-09-22T20:18:00Z"
+      },
+      {
+       "approval_id": "w39-006-apr1",
+       "id": "w39-006-tok1",
+       "token": "aurora-w39-006-tok1",
+       "ts": "2026-09-22T18:07:00Z",
+       "type": "token_bound"
+      },
+      {
+       "approval_id": "w39-006-apr2",
+       "id": "w39-006-tok2",
+       "token": "aurora-w39-006-tok2",
+       "ts": "2026-09-22T19:05:00Z",
+       "type": "token_bound"
+      },
+      {
+       "from_agent": "aurora-w39-006-a",
+       "from_step": 2,
+       "id": "w39-006-hand",
+       "input_text": "Launch notice draft w39-006 (fictional)",
+       "output_text": "Launch notice draft w39-006 (fictional)",
+       "to_agent": "aurora-w39-006-b",
+       "to_step": 3,
+       "token": "aurora-w39-006-tok2",
+       "ts": "2026-09-22T19:08:00Z",
+       "type": "handoff"
+      },
+      {
+       "agent": "aurora-w39-006-a",
+       "artifact_text": "Launch notice draft w39-006 (fictional)",
+       "id": "w39-006-act1",
+       "mission": "aurora-w39-006-mission",
+       "recipient": "aurora-w39-006-desk",
+       "step": 1,
+       "token": "aurora-w39-006-tok1",
+       "ts": "2026-09-22T18:10:00Z",
+       "type": "step_executed"
+      },
+      {
+       "agent": "aurora-w39-006-a",
+       "artifact_text": "Launch notice draft w39-006 (fictional)",
+       "id": "w39-006-act2",
+       "mission": "aurora-w39-006-mission",
+       "recipient": "aurora-w39-006-desk",
+       "step": 2,
+       "token": "aurora-w39-006-tok1",
+       "ts": "2026-09-22T18:30:00Z",
+       "type": "step_executed"
+      },
+      {
+       "agent": "aurora-w39-006-b",
+       "artifact_text": "Launch notice draft w39-006 (fictional)",
+       "id": "w39-006-act3",
+       "mission": "aurora-w39-006-mission",
+       "recipient": "aurora-w39-006-desk",
+       "step": 3,
+       "token": "aurora-w39-006-tok2",
+       "ts": "2026-09-22T19:28:00Z",
+       "type": "step_executed"
+      }
+     ],
+     "origin_agent": "aurora-w39-006-a",
+     "pipeline": "aurora-w39-006",
+     "reviewer_comment": "Fictional free-text comment, not to be mapped.",
+     "reviewer_id": "aurora-w39-006-rev",
+     "reviewer_name": "Pat Fictional",
+     "successor_agent": "aurora-w39-006-b"
+    },
+    {
+     "approver_id": "aurora-w39-007-apr",
+     "case_ref": "w39-007",
+     "gaps": [],
+     "log": [
+      {
+       "condition_text": "Condition v1 for w39-007: two reviewers (fictional)",
+       "effective_ts": "2026-09-23T01:00:00Z",
+       "id": "w39-007-pol1",
+       "policy_ref": "aurora-w39-007-pol1",
+       "ts": "2026-09-23T01:00:00Z",
+       "type": "policy_published"
+      },
+      {
+       "condition_text": "Condition v2 for w39-007: three reviewers (fictional)",
+       "effective_ts": "2026-09-23T01:51:00Z",
+       "id": "w39-007-pol2",
+       "policy_ref": "aurora-w39-007-pol2",
+       "ts": "2026-09-23T01:41:00Z",
+       "type": "policy_published"
+      },
+      {
+       "approved": true,
+       "artifact_text": "Launch notice draft w39-007 (fictional)",
+       "condition_text": "Condition v1 for w39-007: two reviewers (fictional)",
+       "id": "w39-007-rev1",
+       "mission": "aurora-w39-007-mission",
+       "note": "Fictional reviewer note: looks fine.",
+       "recipient": "aurora-w39-007-desk",
+       "reviewer": "aurora-w39-007-rev",
+       "ts": "2026-09-23T01:05:00Z",
+       "type": "review_signed"
+      },
+      {
+       "approved": true,
+       "artifact_text": "Launch notice draft w39-007 (fictional)",
+       "condition_text": "Condition v2 for w39-007: three reviewers (fictional)",
+       "id": "w39-007-rev2",
+       "mission": "aurora-w39-007-mission",
+       "recipient": "aurora-w39-007-desk",
+       "reviewer": "aurora-w39-007-rev",
+       "ts": "2026-09-23T01:56:00Z",
+       "type": "review_signed"
+      },
+      {
+       "approver": "aurora-w39-007-apr",
+       "artifact_text": "Launch notice draft w39-007 (fictional)",
+       "id": "w39-007-apr1",
+       "mission": "aurora-w39-007-mission",
+       "recipient": "aurora-w39-007-desk",
+       "review_id": "w39-007-rev1",
+       "ticket_url": "https://example.invalid/fictional/ticket/w39-007",
+       "ts": "2026-09-23T01:06:00Z",
+       "type": "approval_issued",
+       "valid_until": "2026-09-23T03:11:00Z"
+      },
+      {
+       "approver": "aurora-w39-007-apr",
+       "artifact_text": "Launch notice draft w39-007 (fictional)",
+       "id": "w39-007-apr2",
+       "mission": "aurora-w39-007-mission",
+       "recipient": "aurora-w39-007-desk",
+       "review_id": "w39-007-rev2",
+       "ts": "2026-09-23T01:57:00Z",
+       "type": "approval_issued",
+       "valid_until": "2026-09-23T03:11:00Z"
+      },
+      {
+       "approval_id": "w39-007-apr1",
+       "id": "w39-007-tok1",
+       "token": "aurora-w39-007-tok1",
+       "ts": "2026-09-23T01:07:00Z",
+       "type": "token_bound"
+      },
+      {
+       "approval_id": "w39-007-apr2",
+       "id": "w39-007-tok2",
+       "token": "aurora-w39-007-tok2",
+       "ts": "2026-09-23T01:58:00Z",
+       "type": "token_bound"
+      },
+      {
+       "from_agent": "aurora-w39-007-a",
+       "from_step": 2,
+       "id": "w39-007-hand",
+       "input_text": "Launch notice draft w39-007 (fictional)",
+       "output_text": "Launch notice draft w39-007 (fictional)",
+       "to_agent": "aurora-w39-007-b",
+       "to_step": 3,
+       "token": "aurora-w39-007-tok1",
+       "ts": "2026-09-23T02:01:00Z",
+       "type": "handoff"
+      },
+      {
+       "agent": "aurora-w39-007-a",
+       "artifact_text": "Launch notice draft w39-007 (fictional)",
+       "id": "w39-007-act1",
+       "mission": "aurora-w39-007-mission",
+       "recipient": "aurora-w39-007-desk",
+       "step": 1,
+       "token": "aurora-w39-007-tok1",
+       "ts": "2026-09-23T01:10:00Z",
+       "type": "step_executed"
+      },
+      {
+       "agent": "aurora-w39-007-a",
+       "artifact_text": "Launch notice draft w39-007 (fictional)",
+       "id": "w39-007-act2",
+       "mission": "aurora-w39-007-mission",
+       "recipient": "aurora-w39-007-desk",
+       "step": 2,
+       "token": "aurora-w39-007-tok1",
+       "ts": "2026-09-23T01:30:00Z",
+       "type": "step_executed"
+      },
+      {
+       "agent": "aurora-w39-007-b",
+       "artifact_text": "Launch notice draft w39-007 (fictional)",
+       "id": "w39-007-act3",
+       "mission": "aurora-w39-007-mission",
+       "recipient": "aurora-w39-007-desk",
+       "step": 3,
+       "token": "aurora-w39-007-tok1",
+       "ts": "2026-09-23T02:21:00Z",
+       "type": "step_executed"
+      }
+     ],
+     "origin_agent": "aurora-w39-007-a",
+     "pipeline": "aurora-w39-007",
+     "reviewer_comment": "Fictional free-text comment, not to be mapped.",
+     "reviewer_id": "aurora-w39-007-rev",
+     "reviewer_name": "Pat Fictional",
+     "successor_agent": "aurora-w39-007-b"
+    },
+    {
+     "approver_id": "aurora-w39-008-apr",
+     "case_ref": "w39-008",
+     "gaps": [
+      "token_bound"
+     ],
+     "log": [
+      {
+       "condition_text": "Condition v1 for w39-008: two reviewers (fictional)",
+       "effective_ts": "2026-09-23T08:00:00Z",
+       "id": "w39-008-pol1",
+       "policy_ref": "aurora-w39-008-pol1",
+       "ts": "2026-09-23T08:00:00Z",
+       "type": "policy_published"
+      },
+      {
+       "condition_text": "Condition v2 for w39-008: three reviewers (fictional)",
+       "effective_ts": "2026-09-23T08:54:00Z",
+       "id": "w39-008-pol2",
+       "policy_ref": "aurora-w39-008-pol2",
+       "ts": "2026-09-23T08:44:00Z",
+       "type": "policy_published"
+      },
+      {
+       "approved": true,
+       "artifact_text": "Launch notice draft w39-008 (fictional)",
+       "condition_text": "Condition v1 for w39-008: two reviewers (fictional)",
+       "id": "w39-008-rev1",
+       "mission": "aurora-w39-008-mission",
+       "note": "Fictional reviewer note: looks fine.",
+       "recipient": "aurora-w39-008-desk",
+       "reviewer": "aurora-w39-008-rev",
+       "ts": "2026-09-23T08:05:00Z",
+       "type": "review_signed"
+      },
+      {
+       "approved": true,
+       "artifact_text": "Launch notice draft w39-008 (fictional)",
+       "condition_text": "Condition v2 for w39-008: three reviewers (fictional)",
+       "id": "w39-008-rev2",
+       "mission": "aurora-w39-008-mission",
+       "recipient": "aurora-w39-008-desk",
+       "reviewer": "aurora-w39-008-rev",
+       "ts": "2026-09-23T08:59:00Z",
+       "type": "review_signed"
+      },
+      {
+       "approver": "aurora-w39-008-apr",
+       "artifact_text": "Launch notice draft w39-008 (fictional)",
+       "id": "w39-008-apr1",
+       "mission": "aurora-w39-008-mission",
+       "recipient": "aurora-w39-008-desk",
+       "review_id": "w39-008-rev1",
+       "ticket_url": "https://example.invalid/fictional/ticket/w39-008",
+       "ts": "2026-09-23T08:06:00Z",
+       "type": "approval_issued",
+       "valid_until": "2026-09-23T10:14:00Z"
+      },
+      {
+       "approver": "aurora-w39-008-apr",
+       "artifact_text": "Launch notice draft w39-008 (fictional)",
+       "id": "w39-008-apr2",
+       "mission": "aurora-w39-008-mission",
+       "recipient": "aurora-w39-008-desk",
+       "review_id": "w39-008-rev2",
+       "ts": "2026-09-23T09:00:00Z",
+       "type": "approval_issued",
+       "valid_until": "2026-09-23T10:14:00Z"
+      },
+      {
+       "approval_id": "w39-008-apr2",
+       "id": "w39-008-tok2",
+       "token": "aurora-w39-008-tok2",
+       "ts": "2026-09-23T09:01:00Z",
+       "type": "token_bound"
+      },
+      {
+       "from_agent": "aurora-w39-008-a",
+       "from_step": 2,
+       "id": "w39-008-hand",
+       "input_text": "Launch notice draft w39-008 (fictional)",
+       "output_text": "Launch notice draft w39-008 (fictional)",
+       "to_agent": "aurora-w39-008-b",
+       "to_step": 3,
+       "token": "aurora-w39-008-tok1",
+       "ts": "2026-09-23T09:04:00Z",
+       "type": "handoff"
+      },
+      {
+       "agent": "aurora-w39-008-a",
+       "artifact_text": "Launch notice draft w39-008 (fictional)",
+       "id": "w39-008-act1",
+       "mission": "aurora-w39-008-mission",
+       "recipient": "aurora-w39-008-desk",
+       "step": 1,
+       "token": "aurora-w39-008-tok1",
+       "ts": "2026-09-23T08:10:00Z",
+       "type": "step_executed"
+      },
+      {
+       "agent": "aurora-w39-008-a",
+       "artifact_text": "Launch notice draft w39-008 (fictional)",
+       "id": "w39-008-act2",
+       "mission": "aurora-w39-008-mission",
+       "recipient": "aurora-w39-008-desk",
+       "step": 2,
+       "token": "aurora-w39-008-tok1",
+       "ts": "2026-09-23T08:30:00Z",
+       "type": "step_executed"
+      },
+      {
+       "agent": "aurora-w39-008-b",
+       "artifact_text": "Launch notice draft w39-008 (fictional)",
+       "id": "w39-008-act3",
+       "mission": "aurora-w39-008-mission",
+       "recipient": "aurora-w39-008-desk",
+       "step": 3,
+       "token": "aurora-w39-008-tok1",
+       "ts": "2026-09-23T09:24:00Z",
+       "type": "step_executed"
+      }
+     ],
+     "origin_agent": "aurora-w39-008-a",
+     "pipeline": "aurora-w39-008",
+     "reviewer_comment": "Fictional free-text comment, not to be mapped.",
+     "reviewer_id": "aurora-w39-008-rev",
+     "reviewer_name": "Pat Fictional",
+     "successor_agent": "aurora-w39-008-b"
+    },
+    {
+     "approver_id": "aurora-w39-009-apr",
+     "case_ref": "w39-009",
+     "gaps": [],
+     "log": [
+      {
+       "condition_text": "Condition v1 for w39-009: two reviewers (fictional)",
+       "effective_ts": "2026-09-23T15:00:00Z",
+       "id": "w39-009-pol1",
+       "policy_ref": "aurora-w39-009-pol1",
+       "ts": "2026-09-23T15:00:00Z",
+       "type": "policy_published"
+      },
+      {
+       "condition_text": "Condition v2 for w39-009: three reviewers (fictional)",
+       "effective_ts": "2026-09-23T15:57:00Z",
+       "id": "w39-009-pol2",
+       "policy_ref": "aurora-w39-009-pol2",
+       "ts": "2026-09-23T15:47:00Z",
+       "type": "policy_published"
+      },
+      {
+       "approved": true,
+       "artifact_text": "Launch notice draft w39-009 (fictional)",
+       "condition_text": "Condition v1 for w39-009: two reviewers (fictional)",
+       "id": "w39-009-rev1",
+       "mission": "aurora-w39-009-mission",
+       "note": "Fictional reviewer note: looks fine.",
+       "recipient": "aurora-w39-009-desk",
+       "reviewer": "aurora-w39-009-rev",
+       "ts": "2026-09-23T15:05:00Z",
+       "type": "review_signed"
+      },
+      {
+       "approved": true,
+       "artifact_text": "Launch notice draft w39-009 (fictional)",
+       "condition_text": "Condition v2 for w39-009: three reviewers (fictional)",
+       "id": "w39-009-rev2",
+       "mission": "aurora-w39-009-mission",
+       "recipient": "aurora-w39-009-desk",
+       "reviewer": "aurora-w39-009-rev",
+       "ts": "2026-09-23T16:02:00Z",
+       "type": "review_signed"
+      },
+      {
+       "approver": "aurora-w39-009-apr",
+       "artifact_text": "Launch notice draft w39-009 (fictional)",
+       "id": "w39-009-apr1",
+       "mission": "aurora-w39-009-mission",
+       "recipient": "aurora-w39-009-desk",
+       "review_id": "w39-009-rev1",
+       "ticket_url": "https://example.invalid/fictional/ticket/w39-009",
+       "ts": "2026-09-23T15:06:00Z",
+       "type": "approval_issued",
+       "valid_until": "2026-09-23T17:17:00Z"
+      },
+      {
+       "approver": "aurora-w39-009-apr",
+       "artifact_text": "Launch notice draft w39-009 (fictional)",
+       "id": "w39-009-apr2",
+       "mission": "aurora-w39-009-mission",
+       "recipient": "aurora-w39-009-desk",
+       "review_id": "w39-009-rev2",
+       "ts": "2026-09-23T16:03:00Z",
+       "type": "approval_issued",
+       "valid_until": "2026-09-23T17:17:00Z"
+      },
+      {
+       "approval_id": "w39-009-apr1",
+       "id": "w39-009-tok1",
+       "token": "aurora-w39-009-tok1",
+       "ts": "2026-09-23T15:07:00Z",
+       "type": "token_bound"
+      },
+      {
+       "approval_id": "w39-009-apr2",
+       "id": "w39-009-tok2",
+       "token": "aurora-w39-009-tok2",
+       "ts": "2026-09-23T16:04:00Z",
+       "type": "token_bound"
+      },
+      {
+       "from_agent": "aurora-w39-009-a",
+       "from_step": 2,
+       "id": "w39-009-hand",
+       "input_text": "Launch notice draft w39-009 (fictional)",
+       "output_text": "Launch notice draft w39-009 (fictional)",
+       "to_agent": "aurora-w39-009-b",
+       "to_step": 3,
+       "token": "aurora-w39-009-tok2",
+       "ts": "2026-09-23T16:07:00Z",
+       "type": "handoff"
+      },
+      {
+       "agent": "aurora-w39-009-a",
+       "artifact_text": "Launch notice draft w39-009 (fictional)",
+       "id": "w39-009-act1",
+       "mission": "aurora-w39-009-mission",
+       "recipient": "aurora-w39-009-desk",
+       "step": 1,
+       "token": "aurora-w39-009-tok1",
+       "ts": "2026-09-23T15:10:00Z",
+       "type": "step_executed"
+      },
+      {
+       "agent": "aurora-w39-009-a",
+       "artifact_text": "Launch notice draft w39-009 (fictional)",
+       "id": "w39-009-act2",
+       "mission": "aurora-w39-009-mission",
+       "recipient": "aurora-w39-009-desk",
+       "step": 2,
+       "token": "aurora-w39-009-tok1",
+       "ts": "2026-09-23T15:30:00Z",
+       "type": "step_executed"
+      },
+      {
+       "agent": "aurora-w39-009-b",
+       "artifact_text": "Launch notice draft w39-009 (fictional)",
+       "id": "w39-009-act3",
+       "mission": "aurora-w39-009-mission",
+       "recipient": "aurora-w39-009-desk",
+       "step": 3,
+       "token": "aurora-w39-009-tok2",
+       "ts": "2026-09-23T16:27:00Z",
+       "type": "step_executed"
+      }
+     ],
+     "origin_agent": "aurora-w39-009-a",
+     "pipeline": "aurora-w39-009",
+     "reviewer_comment": "Fictional free-text comment, not to be mapped.",
+     "reviewer_id": "aurora-w39-009-rev",
+     "reviewer_name": "Pat Fictional",
+     "successor_agent": "aurora-w39-009-b"
+    },
+    {
+     "approver_id": "aurora-w39-010-apr",
+     "case_ref": "w39-010",
+     "gaps": [],
+     "log": [
+      {
+       "condition_text": "Condition v1 for w39-010: two reviewers (fictional)",
+       "effective_ts": "2026-09-23T22:00:00Z",
+       "id": "w39-010-pol1",
+       "policy_ref": "aurora-w39-010-pol1",
+       "ts": "2026-09-23T22:00:00Z",
+       "type": "policy_published"
+      },
+      {
+       "condition_text": "Condition v2 for w39-010: three reviewers (fictional)",
+       "effective_ts": "2026-09-23T22:50:00Z",
+       "id": "w39-010-pol2",
+       "policy_ref": "aurora-w39-010-pol2",
+       "ts": "2026-09-23T22:40:00Z",
+       "type": "policy_published"
+      },
+      {
+       "approved": true,
+       "artifact_text": "Launch notice draft w39-010 (fictional)",
+       "condition_text": "Condition v1 for w39-010: two reviewers (fictional)",
+       "id": "w39-010-rev1",
+       "mission": "aurora-w39-010-mission",
+       "note": "Fictional reviewer note: looks fine.",
+       "recipient": "aurora-w39-010-desk",
+       "reviewer": "aurora-w39-010-rev",
+       "ts": "2026-09-23T22:05:00Z",
+       "type": "review_signed"
+      },
+      {
+       "approved": true,
+       "artifact_text": "Launch notice draft w39-010 (fictional)",
+       "condition_text": "Condition v2 for w39-010: three reviewers (fictional)",
+       "id": "w39-010-rev2",
+       "mission": "aurora-w39-010-mission",
+       "recipient": "aurora-w39-010-desk",
+       "reviewer": "aurora-w39-010-rev",
+       "ts": "2026-09-23T22:55:00Z",
+       "type": "review_signed"
+      },
+      {
+       "approver": "aurora-w39-010-apr",
+       "artifact_text": "Launch notice draft w39-010 (fictional)",
+       "id": "w39-010-apr1",
+       "mission": "aurora-w39-010-mission",
+       "recipient": "aurora-w39-010-desk",
+       "review_id": "w39-010-rev1",
+       "ticket_url": "https://example.invalid/fictional/ticket/w39-010",
+       "ts": "2026-09-23T22:06:00Z",
+       "type": "approval_issued",
+       "valid_until": "2026-09-24T00:10:00Z"
+      },
+      {
+       "approver": "aurora-w39-010-apr",
+       "artifact_text": "Launch notice draft w39-010 (fictional)",
+       "id": "w39-010-apr2",
+       "mission": "aurora-w39-010-mission",
+       "recipient": "aurora-w39-010-desk",
+       "review_id": "w39-010-rev2",
+       "ts": "2026-09-23T22:56:00Z",
+       "type": "approval_issued",
+       "valid_until": "2026-09-24T00:10:00Z"
+      },
+      {
+       "approval_id": "w39-010-apr1",
+       "id": "w39-010-tok1",
+       "token": "aurora-w39-010-tok1",
+       "ts": "2026-09-23T22:07:00Z",
+       "type": "token_bound"
+      },
+      {
+       "approval_id": "w39-010-apr2",
+       "id": "w39-010-tok2",
+       "token": "aurora-w39-010-tok2",
+       "ts": "2026-09-23T22:57:00Z",
+       "type": "token_bound"
+      },
+      {
+       "from_agent": "aurora-w39-010-a",
+       "from_step": 2,
+       "id": "w39-010-hand",
+       "input_text": "Launch notice draft w39-010 (fictional)",
+       "output_text": "Launch notice draft w39-010 (fictional)",
+       "to_agent": "aurora-w39-010-b",
+       "to_step": 3,
+       "token": "aurora-w39-010-tok1",
+       "ts": "2026-09-23T23:00:00Z",
+       "type": "handoff"
+      },
+      {
+       "agent": "aurora-w39-010-a",
+       "artifact_text": "Launch notice draft w39-010 (fictional)",
+       "id": "w39-010-act1",
+       "mission": "aurora-w39-010-mission",
+       "recipient": "aurora-w39-010-desk",
+       "step": 1,
+       "token": "aurora-w39-010-tok1",
+       "ts": "2026-09-23T22:10:00Z",
+       "type": "step_executed"
+      },
+      {
+       "agent": "aurora-w39-010-a",
+       "artifact_text": "Launch notice draft w39-010 (fictional)",
+       "id": "w39-010-act2",
+       "mission": "aurora-w39-010-mission",
+       "recipient": "aurora-w39-010-desk",
+       "step": 2,
+       "token": "aurora-w39-010-tok1",
+       "ts": "2026-09-23T22:30:00Z",
+       "type": "step_executed"
+      },
+      {
+       "agent": "aurora-w39-010-b",
+       "artifact_text": "Launch notice draft w39-010 (fictional)",
+       "id": "w39-010-act3",
+       "mission": "aurora-w39-010-mission",
+       "recipient": "aurora-w39-010-desk",
+       "step": 3,
+       "token": "aurora-w39-010-tok1",
+       "ts": "2026-09-23T23:20:00Z",
+       "type": "step_executed"
+      }
+     ],
+     "origin_agent": "aurora-w39-010-a",
+     "pipeline": "aurora-w39-010",
+     "reviewer_comment": "Fictional free-text comment, not to be mapped.",
+     "reviewer_id": "aurora-w39-010-rev",
+     "reviewer_name": "Pat Fictional",
+     "successor_agent": "aurora-w39-010-b"
+    },
+    {
+     "approver_id": "aurora-w39-011-apr",
+     "case_ref": "w39-011",
+     "gaps": [],
+     "log": [
+      {
+       "condition_text": "Condition v1 for w39-011: two reviewers (fictional)",
+       "effective_ts": "2026-09-24T05:00:00Z",
+       "id": "w39-011-pol1",
+       "policy_ref": "aurora-w39-011-pol1",
+       "ts": "2026-09-24T05:00:00Z",
+       "type": "policy_published"
+      },
+      {
+       "condition_text": "Condition v2 for w39-011: three reviewers (fictional)",
+       "effective_ts": "2026-09-24T05:53:00Z",
+       "id": "w39-011-pol2",
+       "policy_ref": "aurora-w39-011-pol2",
+       "ts": "2026-09-24T05:43:00Z",
+       "type": "policy_published"
+      },
+      {
+       "approved": true,
+       "artifact_text": "Launch notice draft w39-011 (fictional)",
+       "condition_text": "Condition v1 for w39-011: two reviewers (fictional)",
+       "id": "w39-011-rev1",
+       "mission": "aurora-w39-011-mission",
+       "note": "Fictional reviewer note: looks fine.",
+       "recipient": "aurora-w39-011-desk",
+       "reviewer": "aurora-w39-011-rev",
+       "ts": "2026-09-24T05:05:00Z",
+       "type": "review_signed"
+      },
+      {
+       "approved": true,
+       "artifact_text": "Launch notice draft w39-011 (fictional)",
+       "condition_text": "Condition v2 for w39-011: three reviewers (fictional)",
+       "id": "w39-011-rev2",
+       "mission": "aurora-w39-011-mission",
+       "recipient": "aurora-w39-011-desk",
+       "reviewer": "aurora-w39-011-rev",
+       "ts": "2026-09-24T05:58:00Z",
+       "type": "review_signed"
+      },
+      {
+       "approver": "aurora-w39-011-apr",
+       "artifact_text": "Launch notice draft w39-011 (fictional)",
+       "id": "w39-011-apr1",
+       "mission": "aurora-w39-011-mission",
+       "recipient": "aurora-w39-011-desk",
+       "review_id": "w39-011-rev1",
+       "ticket_url": "https://example.invalid/fictional/ticket/w39-011",
+       "ts": "2026-09-24T05:06:00Z",
+       "type": "approval_issued",
+       "valid_until": "2026-09-24T07:13:00Z"
+      },
+      {
+       "approver": "aurora-w39-011-apr",
+       "artifact_text": "Launch notice draft w39-011 (fictional)",
+       "id": "w39-011-apr2",
+       "mission": "aurora-w39-011-mission",
+       "recipient": "aurora-w39-011-desk",
+       "review_id": "w39-011-rev2",
+       "ts": "2026-09-24T05:59:00Z",
+       "type": "approval_issued",
+       "valid_until": "2026-09-24T07:13:00Z"
+      },
+      {
+       "approval_id": "w39-011-apr1",
+       "id": "w39-011-tok1",
+       "token": "aurora-w39-011-tok1",
+       "ts": "2026-09-24T05:07:00Z",
+       "type": "token_bound"
+      },
+      {
+       "approval_id": "w39-011-apr2",
+       "id": "w39-011-tok2",
+       "token": "aurora-w39-011-tok2",
+       "ts": "2026-09-24T06:00:00Z",
+       "type": "token_bound"
+      },
+      {
+       "from_agent": "aurora-w39-011-a",
+       "from_step": 2,
+       "id": "w39-011-hand",
+       "input_text": "Launch notice draft w39-011 (fictional)",
+       "output_text": "Launch notice draft w39-011 (fictional)",
+       "to_agent": "aurora-w39-011-b",
+       "to_step": 3,
+       "token": "aurora-w39-011-tok1",
+       "ts": "2026-09-24T06:03:00Z",
+       "type": "handoff"
+      },
+      {
+       "agent": "aurora-w39-011-a",
+       "artifact_text": "Launch notice draft w39-011 (fictional)",
+       "id": "w39-011-act1",
+       "mission": "aurora-w39-011-mission",
+       "recipient": "aurora-w39-011-desk",
+       "step": 1,
+       "token": "aurora-w39-011-tok1",
+       "ts": "2026-09-24T05:10:00Z",
+       "type": "step_executed"
+      },
+      {
+       "agent": "aurora-w39-011-a",
+       "artifact_text": "Launch notice draft w39-011 (fictional)",
+       "id": "w39-011-act2",
+       "mission": "aurora-w39-011-mission",
+       "recipient": "aurora-w39-011-desk",
+       "step": 2,
+       "token": "aurora-w39-011-tok1",
+       "ts": "2026-09-24T05:30:00Z",
+       "type": "step_executed"
+      },
+      {
+       "agent": "aurora-w39-011-b",
+       "artifact_text": "Launch notice draft w39-011 (fictional)",
+       "id": "w39-011-act3",
+       "mission": "aurora-w39-011-mission",
+       "recipient": "aurora-w39-011-desk",
+       "step": 3,
+       "token": "aurora-w39-011-tok1",
+       "ts": "2026-09-24T06:23:00Z",
+       "type": "step_executed"
+      }
+     ],
+     "origin_agent": "aurora-w39-011-a",
+     "pipeline": "aurora-w39-011",
+     "reviewer_comment": "Fictional free-text comment, not to be mapped.",
+     "reviewer_id": "aurora-w39-011-rev",
+     "reviewer_name": "Pat Fictional",
+     "successor_agent": "aurora-w39-011-b"
+    },
+    {
+     "approver_id": "aurora-w39-012-apr",
+     "case_ref": "w39-012",
+     "gaps": [
+      "token_bound"
+     ],
+     "log": [
+      {
+       "condition_text": "Condition v1 for w39-012: two reviewers (fictional)",
+       "effective_ts": "2026-09-24T12:00:00Z",
+       "id": "w39-012-pol1",
+       "policy_ref": "aurora-w39-012-pol1",
+       "ts": "2026-09-24T12:00:00Z",
+       "type": "policy_published"
+      },
+      {
+       "condition_text": "Condition v2 for w39-012: three reviewers (fictional)",
+       "effective_ts": "2026-09-24T12:56:00Z",
+       "id": "w39-012-pol2",
+       "policy_ref": "aurora-w39-012-pol2",
+       "ts": "2026-09-24T12:46:00Z",
+       "type": "policy_published"
+      },
+      {
+       "approved": true,
+       "artifact_text": "Launch notice draft w39-012 (fictional)",
+       "condition_text": "Condition v1 for w39-012: two reviewers (fictional)",
+       "id": "w39-012-rev1",
+       "mission": "aurora-w39-012-mission",
+       "note": "Fictional reviewer note: looks fine.",
+       "recipient": "aurora-w39-012-desk",
+       "reviewer": "aurora-w39-012-rev",
+       "ts": "2026-09-24T12:05:00Z",
+       "type": "review_signed"
+      },
+      {
+       "approved": true,
+       "artifact_text": "Launch notice draft w39-012 (fictional)",
+       "condition_text": "Condition v2 for w39-012: three reviewers (fictional)",
+       "id": "w39-012-rev2",
+       "mission": "aurora-w39-012-mission",
+       "recipient": "aurora-w39-012-desk",
+       "reviewer": "aurora-w39-012-rev",
+       "ts": "2026-09-24T13:01:00Z",
+       "type": "review_signed"
+      },
+      {
+       "approver": "aurora-w39-012-apr",
+       "artifact_text": "Launch notice draft w39-012 (fictional)",
+       "id": "w39-012-apr1",
+       "mission": "aurora-w39-012-mission",
+       "recipient": "aurora-w39-012-desk",
+       "review_id": "w39-012-rev1",
+       "ticket_url": "https://example.invalid/fictional/ticket/w39-012",
+       "ts": "2026-09-24T12:06:00Z",
+       "type": "approval_issued",
+       "valid_until": "2026-09-24T14:16:00Z"
+      },
+      {
+       "approver": "aurora-w39-012-apr",
+       "artifact_text": "Launch notice draft w39-012 (fictional)",
+       "id": "w39-012-apr2",
+       "mission": "aurora-w39-012-mission",
+       "recipient": "aurora-w39-012-desk",
+       "review_id": "w39-012-rev2",
+       "ts": "2026-09-24T13:02:00Z",
+       "type": "approval_issued",
+       "valid_until": "2026-09-24T14:16:00Z"
+      },
+      {
+       "approval_id": "w39-012-apr2",
+       "id": "w39-012-tok2",
+       "token": "aurora-w39-012-tok2",
+       "ts": "2026-09-24T13:03:00Z",
+       "type": "token_bound"
+      },
+      {
+       "from_agent": "aurora-w39-012-a",
+       "from_step": 2,
+       "id": "w39-012-hand",
+       "input_text": "Launch notice draft w39-012 (fictional)",
+       "output_text": "Launch notice draft w39-012 (fictional)",
+       "to_agent": "aurora-w39-012-b",
+       "to_step": 3,
+       "token": "aurora-w39-012-tok2",
+       "ts": "2026-09-24T13:06:00Z",
+       "type": "handoff"
+      },
+      {
+       "agent": "aurora-w39-012-a",
+       "artifact_text": "Launch notice draft w39-012 (fictional)",
+       "id": "w39-012-act1",
+       "mission": "aurora-w39-012-mission",
+       "recipient": "aurora-w39-012-desk",
+       "step": 1,
+       "token": "aurora-w39-012-tok1",
+       "ts": "2026-09-24T12:10:00Z",
+       "type": "step_executed"
+      },
+      {
+       "agent": "aurora-w39-012-a",
+       "artifact_text": "Launch notice draft w39-012 (fictional)",
+       "id": "w39-012-act2",
+       "mission": "aurora-w39-012-mission",
+       "recipient": "aurora-w39-012-desk",
+       "step": 2,
+       "token": "aurora-w39-012-tok1",
+       "ts": "2026-09-24T12:30:00Z",
+       "type": "step_executed"
+      },
+      {
+       "agent": "aurora-w39-012-b",
+       "artifact_text": "Launch notice draft w39-012 (fictional)",
+       "id": "w39-012-act3",
+       "mission": "aurora-w39-012-mission",
+       "recipient": "aurora-w39-012-desk",
+       "step": 3,
+       "token": "aurora-w39-012-tok2",
+       "ts": "2026-09-24T13:26:00Z",
+       "type": "step_executed"
+      }
+     ],
+     "origin_agent": "aurora-w39-012-a",
+     "pipeline": "aurora-w39-012",
+     "reviewer_comment": "Fictional free-text comment, not to be mapped.",
+     "reviewer_id": "aurora-w39-012-rev",
+     "reviewer_name": "Pat Fictional",
+     "successor_agent": "aurora-w39-012-b"
+    },
+    {
+     "approver_id": "aurora-w39-013-apr",
+     "case_ref": "w39-013",
+     "gaps": [],
+     "log": [
+      {
+       "condition_text": "Condition v1 for w39-013: two reviewers (fictional)",
+       "effective_ts": "2026-09-24T19:00:00Z",
+       "id": "w39-013-pol1",
+       "policy_ref": "aurora-w39-013-pol1",
+       "ts": "2026-09-24T19:00:00Z",
+       "type": "policy_published"
+      },
+      {
+       "condition_text": "Condition v2 for w39-013: three reviewers (fictional)",
+       "effective_ts": "2026-09-24T19:59:00Z",
+       "id": "w39-013-pol1",
+       "policy_ref": "aurora-w39-013-pol2",
+       "ts": "2026-09-24T19:49:00Z",
+       "type": "policy_published"
+      },
+      {
+       "approved": true,
+       "artifact_text": "Launch notice draft w39-013 (fictional)",
+       "condition_text": "Condition v1 for w39-013: two reviewers (fictional)",
+       "id": "w39-013-rev1",
+       "mission": "aurora-w39-013-mission",
+       "note": "Fictional reviewer note: looks fine.",
+       "recipient": "aurora-w39-013-desk",
+       "reviewer": "aurora-w39-013-rev",
+       "ts": "2026-09-24T19:05:00Z",
+       "type": "review_signed"
+      },
+      {
+       "approved": true,
+       "artifact_text": "Launch notice draft w39-013 (fictional)",
+       "condition_text": "Condition v2 for w39-013: three reviewers (fictional)",
+       "id": "w39-013-rev2",
+       "mission": "aurora-w39-013-mission",
+       "recipient": "aurora-w39-013-desk",
+       "reviewer": "aurora-w39-013-rev",
+       "ts": "2026-09-24T20:04:00Z",
+       "type": "review_signed"
+      },
+      {
+       "approver": "aurora-w39-013-apr",
+       "artifact_text": "Launch notice draft w39-013 (fictional)",
+       "id": "w39-013-apr1",
+       "mission": "aurora-w39-013-mission",
+       "recipient": "aurora-w39-013-desk",
+       "review_id": "w39-013-rev1",
+       "ticket_url": "https://example.invalid/fictional/ticket/w39-013",
+       "ts": "2026-09-24T19:06:00Z",
+       "type": "approval_issued",
+       "valid_until": "2026-09-24T21:19:00Z"
+      },
+      {
+       "approver": "aurora-w39-013-apr",
+       "artifact_text": "Launch notice draft w39-013 (fictional)",
+       "id": "w39-013-apr2",
+       "mission": "aurora-w39-013-mission",
+       "recipient": "aurora-w39-013-desk",
+       "review_id": "w39-013-rev2",
+       "ts": "2026-09-24T20:05:00Z",
+       "type": "approval_issued",
+       "valid_until": "2026-09-24T21:19:00Z"
+      },
+      {
+       "approval_id": "w39-013-apr1",
+       "id": "w39-013-tok1",
+       "token": "aurora-w39-013-tok1",
+       "ts": "2026-09-24T19:07:00Z",
+       "type": "token_bound"
+      },
+      {
+       "approval_id": "w39-013-apr2",
+       "id": "w39-013-tok2",
+       "token": "aurora-w39-013-tok2",
+       "ts": "2026-09-24T20:06:00Z",
+       "type": "token_bound"
+      },
+      {
+       "from_agent": "aurora-w39-013-a",
+       "from_step": 2,
+       "id": "w39-013-hand",
+       "input_text": "Launch notice draft w39-013 (fictional)",
+       "output_text": "Launch notice draft w39-013 (fictional)",
+       "to_agent": "aurora-w39-013-b",
+       "to_step": 3,
+       "token": "aurora-w39-013-tok1",
+       "ts": "2026-09-24T20:09:00Z",
+       "type": "handoff"
+      },
+      {
+       "agent": "aurora-w39-013-a",
+       "artifact_text": "Launch notice draft w39-013 (fictional)",
+       "id": "w39-013-act1",
+       "mission": "aurora-w39-013-mission",
+       "recipient": "aurora-w39-013-desk",
+       "step": 1,
+       "token": "aurora-w39-013-tok1",
+       "ts": "2026-09-24T19:10:00Z",
+       "type": "step_executed"
+      },
+      {
+       "agent": "aurora-w39-013-a",
+       "artifact_text": "Launch notice draft w39-013 (fictional)",
+       "id": "w39-013-act2",
+       "mission": "aurora-w39-013-mission",
+       "recipient": "aurora-w39-013-desk",
+       "step": 2,
+       "token": "aurora-w39-013-tok1",
+       "ts": "2026-09-24T19:30:00Z",
+       "type": "step_executed"
+      },
+      {
+       "agent": "aurora-w39-013-b",
+       "artifact_text": "Launch notice draft w39-013 (fictional)",
+       "id": "w39-013-act3",
+       "mission": "aurora-w39-013-mission",
+       "recipient": "aurora-w39-013-desk",
+       "step": 3,
+       "token": "aurora-w39-013-tok1",
+       "ts": "2026-09-24T20:29:00Z",
+       "type": "step_executed"
+      }
+     ],
+     "origin_agent": "aurora-w39-013-a",
+     "pipeline": "aurora-w39-013",
+     "reviewer_comment": "Fictional free-text comment, not to be mapped.",
+     "reviewer_id": "aurora-w39-013-rev",
+     "reviewer_name": "Pat Fictional",
+     "successor_agent": "aurora-w39-013-b"
+    },
+    {
+     "approver_id": "aurora-w39-014-apr",
+     "case_ref": "w39-014",
+     "gaps": [],
+     "log": [
+      {
+       "condition_text": "Condition v1 for w39-014: two reviewers (fictional)",
+       "effective_ts": "2026-09-25T02:00:00Z",
+       "id": "w39-014-pol1",
+       "policy_ref": "aurora-w39-014-pol1",
+       "ts": "2026-09-25T02:00:00Z",
+       "type": "policy_published"
+      },
+      {
+       "condition_text": "Condition v2 for w39-014: three reviewers (fictional)",
+       "effective_ts": "2026-09-25T02:52:00Z",
+       "id": "w39-014-pol2",
+       "policy_ref": "aurora-w39-014-pol2",
+       "ts": "2026-09-25T02:42:00Z",
+       "type": "policy_published"
+      },
+      {
+       "approved": true,
+       "artifact_text": "Launch notice draft w39-014 (fictional)",
+       "condition_text": "Condition v1 for w39-014: two reviewers (fictional)",
+       "id": "w39-014-rev1",
+       "mission": "aurora-w39-014-mission",
+       "note": "Fictional reviewer note: looks fine.",
+       "recipient": "aurora-w39-014-desk",
+       "reviewer": "aurora-w39-014-rev",
+       "ts": "2026-09-25T02:05:00Z",
+       "type": "review_signed"
+      },
+      {
+       "approved": true,
+       "artifact_text": "Launch notice draft w39-014 (fictional)",
+       "condition_text": "Condition v2 for w39-014: three reviewers (fictional)",
+       "id": "w39-014-rev2",
+       "mission": "aurora-w39-014-mission",
+       "recipient": "aurora-w39-014-desk",
+       "reviewer": "aurora-w39-014-rev",
+       "ts": "2026-09-25T02:57:00Z",
+       "type": "review_signed"
+      },
+      {
+       "approver": "aurora-w39-014-apr",
+       "artifact_text": "Launch notice draft w39-014 (fictional)",
+       "id": "w39-014-apr1",
+       "mission": "aurora-w39-014-mission",
+       "recipient": "aurora-w39-014-desk",
+       "review_id": "w39-014-rev1",
+       "ticket_url": "https://example.invalid/fictional/ticket/w39-014",
+       "ts": "2026-09-25T02:06:00Z",
+       "type": "approval_issued",
+       "valid_until": "2026-09-25T04:12:00Z"
+      },
+      {
+       "approver": "aurora-w39-014-apr",
+       "artifact_text": "Launch notice draft w39-014 (fictional)",
+       "id": "w39-014-apr2",
+       "mission": "aurora-w39-014-mission",
+       "recipient": "aurora-w39-014-desk",
+       "review_id": "w39-014-rev2",
+       "ts": "2026-09-25T02:58:00Z",
+       "type": "approval_issued",
+       "valid_until": "2026-09-25T04:12:00Z"
+      },
+      {
+       "approval_id": "w39-014-apr1",
+       "id": "w39-014-tok1",
+       "token": "aurora-w39-014-tok1",
+       "ts": "2026-09-25T02:07:00Z",
+       "type": "token_bound"
+      },
+      {
+       "approval_id": "w39-014-apr2",
+       "id": "w39-014-tok2",
+       "token": "aurora-w39-014-tok2",
+       "ts": "2026-09-25T02:59:00Z",
+       "type": "token_bound"
+      },
+      {
+       "from_agent": "aurora-w39-014-a",
+       "from_step": 2,
+       "id": "w39-014-hand",
+       "input_text": "Launch notice draft w39-014 (fictional)",
+       "output_text": "Launch notice draft w39-014 (fictional)",
+       "to_agent": "aurora-w39-014-b",
+       "to_step": 3,
+       "token": "aurora-w39-014-tok2",
+       "ts": "2026-09-25T03:02:00Z",
+       "type": "handoff"
+      },
+      {
+       "agent": "aurora-w39-014-a",
+       "artifact_text": "Launch notice draft w39-014 (fictional)",
+       "id": "w39-014-act1",
+       "mission": "aurora-w39-014-mission",
+       "recipient": "aurora-w39-014-desk",
+       "step": 1,
+       "token": "aurora-w39-014-tok1",
+       "ts": "2026-09-25T02:10:00Z",
+       "type": "step_executed"
+      },
+      {
+       "agent": "aurora-w39-014-a",
+       "artifact_text": "Launch notice draft w39-014 (fictional)",
+       "id": "w39-014-act2",
+       "mission": "aurora-w39-014-mission",
+       "recipient": "aurora-w39-014-desk",
+       "step": 2,
+       "token": "aurora-w39-014-tok1",
+       "ts": "2026-09-25T02:30:00Z",
+       "type": "step_executed"
+      },
+      {
+       "agent": "aurora-w39-014-b",
+       "artifact_text": "Launch notice draft w39-014 (fictional)",
+       "id": "w39-014-act3",
+       "mission": "aurora-w39-014-mission",
+       "recipient": "aurora-w39-014-desk",
+       "step": 3,
+       "token": "aurora-w39-014-tok2",
+       "ts": "2026-09-25T03:22:00Z",
+       "type": "step_executed"
+      }
+     ],
+     "origin_agent": "aurora-w39-014-a",
+     "pipeline": "aurora-w39-014",
+     "reviewer_comment": "Fictional free-text comment, not to be mapped.",
+     "reviewer_id": "aurora-w39-014-rev",
+     "reviewer_name": "Pat Fictional",
+     "successor_agent": "aurora-w39-014-b"
+    },
+    {
+     "approver_id": "aurora-w39-015-apr",
+     "case_ref": "w39-015",
+     "gaps": [],
+     "log": [
+      {
+       "condition_text": "Condition v1 for w39-015: two reviewers (fictional)",
+       "effective_ts": "2026-09-25T09:00:00Z",
+       "id": "w39-015-pol1",
+       "policy_ref": "aurora-w39-015-pol1",
+       "ts": "2026-09-25T09:00:00Z",
+       "type": "policy_published"
+      },
+      {
+       "condition_text": "Condition v2 for w39-015: three reviewers (fictional)",
+       "effective_ts": "2026-09-25T09:55:00Z",
+       "id": "w39-015-pol2",
+       "policy_ref": "aurora-w39-015-pol2",
+       "ts": "2026-09-25T09:45:00Z",
+       "type": "policy_published"
+      },
+      {
+       "approved": true,
+       "artifact_text": "Launch notice draft w39-015 (fictional)",
+       "condition_text": "Condition v1 for w39-015: two reviewers (fictional)",
+       "id": "w39-015-rev1",
+       "mission": "aurora-w39-015-mission",
+       "note": "Fictional reviewer note: looks fine.",
+       "recipient": "aurora-w39-015-desk",
+       "reviewer": "aurora-w39-015-rev",
+       "ts": "2026-09-25T09:05:00Z",
+       "type": "review_signed"
+      },
+      {
+       "approved": true,
+       "artifact_text": "Launch notice draft w39-015 (fictional)",
+       "condition_text": "Condition v2 for w39-015: three reviewers (fictional)",
+       "id": "w39-015-rev2",
+       "mission": "aurora-w39-015-mission",
+       "recipient": "aurora-w39-015-desk",
+       "reviewer": "aurora-w39-015-rev",
+       "ts": "2026-09-25T10:00:00Z",
+       "type": "review_signed"
+      },
+      {
+       "approver": "aurora-w39-015-apr",
+       "artifact_text": "Launch notice draft w39-015 (fictional)",
+       "id": "w39-015-apr1",
+       "mission": "aurora-w39-015-mission",
+       "recipient": "aurora-w39-015-desk",
+       "review_id": "w39-015-rev1",
+       "ticket_url": "https://example.invalid/fictional/ticket/w39-015",
+       "ts": "2026-09-25T09:06:00Z",
+       "type": "approval_issued",
+       "valid_until": "2026-09-25T11:15:00Z"
+      },
+      {
+       "approver": "aurora-w39-015-apr",
+       "artifact_text": "Launch notice draft w39-015 (fictional)",
+       "id": "w39-015-apr2",
+       "mission": "aurora-w39-015-mission",
+       "recipient": "aurora-w39-015-desk",
+       "review_id": "w39-015-rev2",
+       "ts": "2026-09-25T10:01:00Z",
+       "type": "approval_issued",
+       "valid_until": "2026-09-25T11:15:00Z"
+      },
+      {
+       "approval_id": "w39-015-apr1",
+       "id": "w39-015-tok1",
+       "token": "aurora-w39-015-tok1",
+       "ts": "2026-09-25T09:07:00Z",
+       "type": "token_bound"
+      },
+      {
+       "approval_id": "w39-015-apr2",
+       "id": "w39-015-tok2",
+       "token": "aurora-w39-015-tok2",
+       "ts": "2026-09-25T10:02:00Z",
+       "type": "token_bound"
+      },
+      {
+       "from_agent": "aurora-w39-015-a",
+       "from_step": 2,
+       "id": "w39-015-hand",
+       "input_text": "Launch notice draft w39-015 (fictional)",
+       "output_text": "Launch notice draft w39-015 (fictional)",
+       "to_agent": "aurora-w39-015-b",
+       "to_step": 3,
+       "token": "aurora-w39-015-tok1",
+       "ts": "2026-09-25T10:05:00Z",
+       "type": "handoff"
+      },
+      {
+       "agent": "aurora-w39-015-a",
+       "artifact_text": "Launch notice draft w39-015 (fictional)",
+       "id": "w39-015-act1",
+       "mission": "aurora-w39-015-mission",
+       "recipient": "aurora-w39-015-desk",
+       "step": 1,
+       "token": "aurora-w39-015-tok1",
+       "ts": "2026-09-25T09:10:00Z",
+       "type": "step_executed"
+      },
+      {
+       "agent": "aurora-w39-015-a",
+       "artifact_text": "Launch notice draft w39-015 (fictional)",
+       "id": "w39-015-act2",
+       "mission": "aurora-w39-015-mission",
+       "recipient": "aurora-w39-015-desk",
+       "step": 2,
+       "token": "aurora-w39-015-tok1",
+       "ts": "2026-09-25T09:30:00Z",
+       "type": "step_executed"
+      },
+      {
+       "agent": "aurora-w39-015-b",
+       "artifact_text": "Launch notice draft w39-015 (fictional)",
+       "id": "w39-015-act3",
+       "mission": "aurora-w39-015-mission",
+       "recipient": "aurora-w39-015-desk",
+       "step": 3,
+       "token": "aurora-w39-015-tok1",
+       "ts": "2026-09-25T10:25:00Z",
+       "type": "step_executed"
+      }
+     ],
+     "origin_agent": "aurora-w39-015-a",
+     "pipeline": "aurora-w39-015",
+     "reviewer_comment": "Fictional free-text comment, not to be mapped.",
+     "reviewer_id": "aurora-w39-015-rev",
+     "reviewer_name": "Pat Fictional",
+     "successor_agent": "aurora-w39-015-b"
+    },
+    {
+     "approver_id": "aurora-w39-016-apr",
+     "case_ref": "w39-016",
+     "gaps": [
+      "token_bound"
+     ],
+     "log": [
+      {
+       "condition_text": "Condition v1 for w39-016: two reviewers (fictional)",
+       "effective_ts": "2026-09-25T16:00:00Z",
+       "id": "w39-016-pol1",
+       "policy_ref": "aurora-w39-016-pol1",
+       "ts": "2026-09-25T16:00:00Z",
+       "type": "policy_published"
+      },
+      {
+       "condition_text": "Condition v2 for w39-016: three reviewers (fictional)",
+       "effective_ts": "2026-09-25T16:58:00Z",
+       "id": "w39-016-pol2",
+       "policy_ref": "aurora-w39-016-pol2",
+       "ts": "2026-09-25T16:48:00Z",
+       "type": "policy_published"
+      },
+      {
+       "approved": true,
+       "artifact_text": "Launch notice draft w39-016 (fictional)",
+       "condition_text": "Condition v1 for w39-016: two reviewers (fictional)",
+       "id": "w39-016-rev1",
+       "mission": "aurora-w39-016-mission",
+       "note": "Fictional reviewer note: looks fine.",
+       "recipient": "aurora-w39-016-desk",
+       "reviewer": "aurora-w39-016-rev",
+       "ts": "2026-09-25T16:05:00Z",
+       "type": "review_signed"
+      },
+      {
+       "approved": true,
+       "artifact_text": "Launch notice draft w39-016 (fictional)",
+       "condition_text": "Condition v2 for w39-016: three reviewers (fictional)",
+       "id": "w39-016-rev2",
+       "mission": "aurora-w39-016-mission",
+       "recipient": "aurora-w39-016-desk",
+       "reviewer": "aurora-w39-016-rev",
+       "ts": "2026-09-25T17:03:00Z",
+       "type": "review_signed"
+      },
+      {
+       "approver": "aurora-w39-016-apr",
+       "artifact_text": "Launch notice draft w39-016 (fictional)",
+       "id": "w39-016-apr1",
+       "mission": "aurora-w39-016-mission",
+       "recipient": "aurora-w39-016-desk",
+       "review_id": "w39-016-rev1",
+       "ticket_url": "https://example.invalid/fictional/ticket/w39-016",
+       "ts": "2026-09-25T16:06:00Z",
+       "type": "approval_issued",
+       "valid_until": "2026-09-25T18:18:00Z"
+      },
+      {
+       "approver": "aurora-w39-016-apr",
+       "artifact_text": "Launch notice draft w39-016 (fictional)",
+       "id": "w39-016-apr2",
+       "mission": "aurora-w39-016-mission",
+       "recipient": "aurora-w39-016-desk",
+       "review_id": "w39-016-rev2",
+       "ts": "2026-09-25T17:04:00Z",
+       "type": "approval_issued",
+       "valid_until": "2026-09-25T18:18:00Z"
+      },
+      {
+       "approval_id": "w39-016-apr2",
+       "id": "w39-016-tok2",
+       "token": "aurora-w39-016-tok2",
+       "ts": "2026-09-25T17:05:00Z",
+       "type": "token_bound"
+      },
+      {
+       "from_agent": "aurora-w39-016-a",
+       "from_step": 2,
+       "id": "w39-016-hand",
+       "input_text": "Launch notice draft w39-016 (fictional)",
+       "output_text": "Launch notice draft w39-016 (fictional)",
+       "to_agent": "aurora-w39-016-b",
+       "to_step": 3,
+       "token": "aurora-w39-016-tok1",
+       "ts": "2026-09-25T17:08:00Z",
+       "type": "handoff"
+      },
+      {
+       "agent": "aurora-w39-016-a",
+       "artifact_text": "Launch notice draft w39-016 (fictional)",
+       "id": "w39-016-act1",
+       "mission": "aurora-w39-016-mission",
+       "recipient": "aurora-w39-016-desk",
+       "step": 1,
+       "token": "aurora-w39-016-tok1",
+       "ts": "2026-09-25T16:10:00Z",
+       "type": "step_executed"
+      },
+      {
+       "agent": "aurora-w39-016-a",
+       "artifact_text": "Launch notice draft w39-016 (fictional)",
+       "id": "w39-016-act2",
+       "mission": "aurora-w39-016-mission",
+       "recipient": "aurora-w39-016-desk",
+       "step": 2,
+       "token": "aurora-w39-016-tok1",
+       "ts": "2026-09-25T16:30:00Z",
+       "type": "step_executed"
+      },
+      {
+       "agent": "aurora-w39-016-b",
+       "artifact_text": "Launch notice draft w39-016 (fictional)",
+       "id": "w39-016-act3",
+       "mission": "aurora-w39-016-mission",
+       "recipient": "aurora-w39-016-desk",
+       "step": 3,
+       "token": "aurora-w39-016-tok1",
+       "ts": "2026-09-25T17:28:00Z",
+       "type": "step_executed"
+      }
+     ],
+     "origin_agent": "aurora-w39-016-a",
+     "pipeline": "aurora-w39-016",
+     "reviewer_comment": "Fictional free-text comment, not to be mapped.",
+     "reviewer_id": "aurora-w39-016-rev",
+     "reviewer_name": "Pat Fictional",
+     "successor_agent": "aurora-w39-016-b"
+    },
+    {
+     "approver_id": "aurora-w39-017-apr",
+     "case_ref": "w39-017",
+     "gaps": [],
+     "log": [
+      {
+       "condition_text": "Condition v1 for w39-017: two reviewers (fictional)",
+       "effective_ts": "2026-09-25T23:00:00Z",
+       "id": "w39-017-pol1",
+       "policy_ref": "aurora-w39-017-pol1",
+       "ts": "2026-09-25T23:00:00Z",
+       "type": "policy_published"
+      },
+      {
+       "condition_text": "Condition v2 for w39-017: three reviewers (fictional)",
+       "effective_ts": "2026-09-25T23:51:00Z",
+       "id": "w39-017-pol2",
+       "policy_ref": "aurora-w39-017-pol2",
+       "ts": "2026-09-25T23:41:00Z",
+       "type": "policy_published"
+      },
+      {
+       "approved": true,
+       "artifact_text": "Launch notice draft w39-017 (fictional)",
+       "condition_text": "Condition v1 for w39-017: two reviewers (fictional)",
+       "id": "w39-017-rev1",
+       "mission": "aurora-w39-017-mission",
+       "note": "Fictional reviewer note: looks fine.",
+       "recipient": "aurora-w39-017-desk",
+       "reviewer": "aurora-w39-017-rev",
+       "ts": "2026-09-25T23:05:00Z",
+       "type": "review_signed"
+      },
+      {
+       "approved": true,
+       "artifact_text": "Launch notice draft w39-017 (fictional)",
+       "condition_text": "Condition v2 for w39-017: three reviewers (fictional)",
+       "id": "w39-017-rev2",
+       "mission": "aurora-w39-017-mission",
+       "recipient": "aurora-w39-017-desk",
+       "reviewer": "aurora-w39-017-rev",
+       "ts": "2026-09-25T23:56:00Z",
+       "type": "review_signed"
+      },
+      {
+       "approver": "aurora-w39-017-apr",
+       "artifact_text": "Launch notice draft w39-017 (fictional)",
+       "id": "w39-017-apr1",
+       "mission": "aurora-w39-017-mission",
+       "recipient": "aurora-w39-017-desk",
+       "review_id": "w39-017-rev1",
+       "ticket_url": "https://example.invalid/fictional/ticket/w39-017",
+       "ts": "2026-09-25T23:06:00Z",
+       "type": "approval_issued",
+       "valid_until": "2026-09-26T01:11:00Z"
+      },
+      {
+       "approver": "aurora-w39-017-apr",
+       "artifact_text": "Launch notice draft w39-017 (fictional)",
+       "id": "w39-017-apr2",
+       "mission": "aurora-w39-017-mission",
+       "recipient": "aurora-w39-017-desk",
+       "review_id": "w39-017-rev2",
+       "ts": "2026-09-25T23:57:00Z",
+       "type": "approval_issued",
+       "valid_until": "2026-09-26T01:11:00Z"
+      },
+      {
+       "approval_id": "w39-017-apr1",
+       "id": "w39-017-tok1",
+       "token": "aurora-w39-017-tok1",
+       "ts": "2026-09-25T23:07:00Z",
+       "type": "token_bound"
+      },
+      {
+       "approval_id": "w39-017-apr2",
+       "id": "w39-017-tok2",
+       "token": "aurora-w39-017-tok2",
+       "ts": "2026-09-25T23:58:00Z",
+       "type": "token_bound"
+      },
+      {
+       "from_agent": "aurora-w39-017-a",
+       "from_step": 2,
+       "id": "w39-017-hand",
+       "input_text": "Launch notice draft w39-017 (fictional)",
+       "output_text": "Launch notice draft w39-017 (fictional)",
+       "to_agent": "aurora-w39-017-b",
+       "to_step": 3,
+       "token": "aurora-w39-017-tok1",
+       "ts": "2026-09-26T00:01:00Z",
+       "type": "handoff"
+      },
+      {
+       "agent": "aurora-w39-017-a",
+       "artifact_text": "Launch notice draft w39-017 (fictional)",
+       "id": "w39-017-act1",
+       "mission": "aurora-w39-017-mission",
+       "recipient": "aurora-w39-017-desk",
+       "step": 1,
+       "token": "aurora-w39-017-tok1",
+       "ts": "2026-09-25T23:10:00Z",
+       "type": "step_executed"
+      },
+      {
+       "agent": "aurora-w39-017-a",
+       "artifact_text": "Launch notice draft w39-017 (fictional)",
+       "id": "w39-017-act2",
+       "mission": "aurora-w39-017-mission",
+       "recipient": "aurora-w39-017-desk",
+       "step": 2,
+       "token": "aurora-w39-017-tok1",
+       "ts": "2026-09-25T23:30:00Z",
+       "type": "step_executed"
+      },
+      {
+       "agent": "aurora-w39-017-b",
+       "artifact_text": "Launch notice draft w39-017 (fictional)",
+       "id": "w39-017-act3",
+       "mission": "aurora-w39-017-mission",
+       "recipient": "aurora-w39-017-desk",
+       "step": 3,
+       "token": "aurora-w39-017-tok1",
+       "ts": "2026-09-26T00:21:00Z",
+       "type": "step_executed"
+      }
+     ],
+     "origin_agent": "aurora-w39-017-a",
+     "pipeline": "aurora-w39-017",
+     "reviewer_comment": "Fictional free-text comment, not to be mapped.",
+     "reviewer_id": "aurora-w39-017-rev",
+     "reviewer_name": "Pat Fictional",
+     "successor_agent": "aurora-w39-017-b"
+    }
+   ],
+   "export_id": "aurora-w39",
+   "window": {
+    "closed_at": "2026-09-27T23:59:59Z",
+    "opened_at": "2026-09-21T00:00:00Z"
+   }
+  }
+ ],
+ "label": "FICTIONAL: Aurora Launch Office is an invented organisation; every record, name and identifier below is synthetic. Not derived from any real source.",
+ "schema_id": "fictional-launch-approvals/1"
+}

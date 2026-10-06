@@ -1,0 +1,23 @@
+{
+  "protocol_version": "sn87/0alpha1",
+  "challenge_id": "q-lane-one-0001",
+  "response_state": "FINDINGS",
+  "rationale": "The required review gate is absent from the committed execution path.",
+  "findings": [{
+    "finding_id": "f-0001",
+    "challenge_id": "q-lane-one-0001",
+    "finding_type": "MATERIAL_DEVIATION",
+    "claim": "Required human review did not occur before release.",
+    "severity": 0.92,
+    "confidence": 0.84,
+    "oracle_class": "A",
+    "evidence": [{"commitment": "sha256:1111111111111111111111111111111111111111111111111111111111111111", "predicate": "review_gate_present=false"}],
+    "counterfactual_path": "Review -> Validate -> Release",
+    "limitations": ["content semantics not evaluated"],
+    "recommended_action": "Hold release and replay from the review gate."
+  }],
+  "counterfactual_paths": ["Review -> Validate -> Release"],
+  "confidence_report": null,
+  "evidence_requests": null,
+  "miner_commitment": "sha256:3333333333333333333333333333333333333333333333333333333333333333"
+}

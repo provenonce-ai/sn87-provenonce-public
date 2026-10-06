@@ -1,0 +1,166 @@
+{
+  "schema": "sn87-public-manifest/0.2",
+  "status": "EXPORT_SET_DECIDED_CARD_18B",
+  "note": "Decides which tracked files of the private source repository are exported into the public repository. Every tracked file must match exactly one class (scripts/check_manifest.py, run by tests/test_public_manifest.py). Classes: allow (exported), private (tracked here, never exported), review_required (undecided; must stay empty), deny (secrets and run state; never exported). If a file ever matched more than one class the precedence is deny, private, review_required, allow, and the check reports the overlap as a failure; a file that matches no class also fails. scripts/export_public.py builds the export from this manifest and refuses to run on a dirty working tree. Paths are relative to the repository root.",
+  "allow": [
+    {
+      "globs": [
+        "README.md",
+        "LIMITATIONS.md",
+        "PROVENANCE.md",
+        "CONTRIBUTING.md",
+        "SECURITY.md",
+        "CHANGELOG.md",
+        "AGENTS.md",
+        "LICENSE",
+        "PUBLIC_MANIFEST.json"
+      ],
+      "why": "Status, limits, rules and the MIT license; written to be read by outsiders."
+    },
+    {
+      "globs": [
+        "pyproject.toml",
+        "uv.lock",
+        ".gitignore",
+        ".gitleaks.toml",
+        ".github/CODEOWNERS",
+        ".github/dependabot.yml",
+        ".github/workflows/conformance.yml"
+      ],
+      "why": "Reproducible pinned install and least-privilege CI. conformance.yml is added at export from export/overlay (the private repository's own CI is ci.yml, class private)."
+    },
+    {
+      "globs": [
+        "docs/protocol/cmt-v0.1.md",
+        "docs/protocol/evidence-bundle.md",
+        "docs/protocol/implementation-status.md",
+        "docs/protocol/profile-application.md",
+        "docs/protocol/v0alpha1-field-traceability.md",
+        "docs/protocol/wire-rules.md",
+        "docs/quickstart/**",
+        "docs/architecture/ADR-*.md",
+        "docs/releases/MIGRATION-scorer-rebuild.md",
+        "docs/whitepaper/**",
+        "docs/assets/**",
+        "docs/runtime/**",
+        "docs/simulation/**"
+      ],
+      "why": "Protocol, decisions and the docs of the exported modules. Fictional and synthetic fixtures only."
+    },
+    {
+      "globs": [
+        "protocol/v0alpha1/**",
+        "examples/sensitivity/**",
+        "scripts/export_schemas.py",
+        "scripts/gen_fictional_source.py",
+        "scripts/check_manifest.py",
+        "scripts/chain_read.py",
+        "scripts/verify_attestation.py",
+        "scripts/miner_serve.py",
+        "attestation/README.md",
+        "attestation/SN87_TESTNET_ATTESTATION_01.json",
+        "attestation/SN87_TESTNET_ATTESTATION_02.json"
+      ],
+      "why": "Schemas, public test vectors, the illustrative sensitivity vector, the localhost miner server, and the public verifier with its read-only chain client. Each entry point runs, imports and passes its tests with the private files absent."
+    },
+    {
+      "globs": [
+        "src/sn87_provenonce/canonical.py",
+        "src/sn87_provenonce/profile.py",
+        "src/sn87_provenonce/scoring.py",
+        "src/sn87_provenonce/baselines.py",
+        "src/sn87_provenonce/private_executors.py",
+        "src/sn87_provenonce/weights_dry_run.py",
+        "src/sn87_provenonce/bundle.py",
+        "src/sn87_provenonce/cli.py",
+        "src/sn87_provenonce/classes.py",
+        "src/sn87_provenonce/evidence.py",
+        "src/sn87_provenonce/evidence_filesystem.py",
+        "src/sn87_provenonce/__init__.py",
+        "src/sn87_provenonce/profiles/*.json",
+        "src/sn87_provenonce/institutional_v02/__init__.py",
+        "src/sn87_provenonce/institutional_v02/contracts.py",
+        "src/sn87_provenonce/institutional_v02/fixtures.py",
+        "src/sn87_provenonce/simulation/__init__.py",
+        "src/sn87_provenonce/simulation/estimator_comparison.py",
+        "src/sn87_provenonce/simulation/evidence.py",
+        "src/sn87_provenonce/simulation/lane_one*.py",
+        "src/sn87_provenonce/simulation/sensitivity*.py",
+        "src/sn87_provenonce/simulation/type_c.py",
+        "src/sn87_provenonce/simulation/type_c_candidate_artifact*.py",
+        "src/sn87_provenonce/simulation/type_c_conformance*.py",
+        "src/sn87_provenonce/simulation/type_c_evidence.py",
+        "src/sn87_provenonce/pilot/__init__.py",
+        "src/sn87_provenonce/pilot/server.py",
+        "src/sn87_provenonce/pilot/client.py",
+        "src/sn87_provenonce/pilot/transport.py",
+        "src/sn87_provenonce/pilot/contracts.py",
+        "src/sn87_provenonce/miners/*.py",
+        "src/sn87_provenonce/sources/__init__.py",
+        "src/sn87_provenonce/sources/mapping.py",
+        "src/sn87_provenonce/sources/fixtures/*.json",
+        "src/sn87_provenonce/service/__init__.py",
+        "src/sn87_provenonce/service/queue.py",
+        "src/sn87_provenonce/cmt/*.py",
+        "src/sn87_provenonce/protocol/**",
+        "src/sn87_provenonce/runtime/**"
+      ],
+      "why": "The one canonicalizer, profile loader, scorer and bundle, the wire contracts, the miner kit (miners/ is written from the public contract only and separation-tested), the CMT compiler and the local queue. classes.py binds the two task classes; the reference executors it calls are imported lazily and raise PrivateReferenceExecutorUnavailable when absent. Case generators and case data are deterministic fixtures; hidden-instance supply is bound privately."
+    },
+    {
+      "globs": [
+        "tests/conftest.py",
+        "tests/_requires_executors.py",
+        "tests/conformance/**",
+        "tests/bittensor/**",
+        "tests/runtime/**",
+        "tests/simulation/**",
+        "tests/cmt_vectors/*.json",
+        "tests/test_bundle.py",
+        "tests/test_a2_observe_none_and_reject_digest.py",
+        "tests/test_separation.py",
+        "tests/test_gra_canonical.py",
+        "tests/test_profile.py",
+        "tests/test_inert_profile_fields.py",
+        "tests/test_truth_profile_derivation.py",
+        "tests/test_scoring.py",
+        "tests/test_miners.py",
+        "tests/test_sources.py",
+        "tests/test_fictional_source_fixture.py",
+        "tests/test_service_queue.py",
+        "tests/test_decoupling.py",
+        "tests/test_weights_dry_run.py",
+        "tests/test_public_manifest.py",
+        "tests/test_cmt.py",
+        "tests/test_miner_serve.py",
+        "tests/test_verify_attestation_public.py"
+      ],
+      "why": "Conformance and negative tests over the exported code. Tests that need the private reference executors skip with an explicit reason when those are absent."
+    }
+  ],
+  "private": [
+    {
+      "globs": [],
+      "why": "Some files of the source repository are kept private and are not exported."
+    }
+  ],
+  "review_required": [],
+  "deny": [
+    {
+      "globs": [
+        "**/*run-state/**",
+        "**/.env*",
+        "**/*.key",
+        "**/wallet*",
+        "**/*.salt"
+      ],
+      "why": "Run state, secrets and wallet material never travel."
+    }
+  ],
+  "precedence": [
+    "deny",
+    "private",
+    "review_required",
+    "allow"
+  ]
+}

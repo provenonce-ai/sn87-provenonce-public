@@ -1,0 +1,518 @@
+{
+  "$defs": {
+    "ChangeDirection": {
+      "enum": [
+        "DECREASED",
+        "UNCHANGED",
+        "INCREASED"
+      ],
+      "title": "ChangeDirection",
+      "type": "string"
+    },
+    "ComponentValue": {
+      "additionalProperties": false,
+      "properties": {
+        "component": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Component",
+          "type": "string"
+        },
+        "value": {
+          "$ref": "#/$defs/UnitRatio"
+        }
+      },
+      "required": [
+        "component",
+        "value"
+      ],
+      "title": "ComponentValue",
+      "type": "object"
+    },
+    "ComponentVector": {
+      "additionalProperties": false,
+      "properties": {
+        "components": {
+          "items": {
+            "$ref": "#/$defs/ComponentValue"
+          },
+          "maxItems": 64,
+          "minItems": 1,
+          "title": "Components",
+          "type": "array"
+        },
+        "vector_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Vector Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "vector_id",
+        "components"
+      ],
+      "title": "ComponentVector",
+      "type": "object"
+    },
+    "ComponentwiseRelation": {
+      "enum": [
+        "LEFT_COMPONENTWISE_DOMINATES",
+        "RIGHT_COMPONENTWISE_DOMINATES",
+        "COMPONENTWISE_EQUAL",
+        "COMPONENTWISE_INCOMPARABLE"
+      ],
+      "title": "ComponentwiseRelation",
+      "type": "string"
+    },
+    "ComponentwiseRelationResult": {
+      "additionalProperties": false,
+      "properties": {
+        "left_vector_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Left Vector Id",
+          "type": "string"
+        },
+        "relation": {
+          "$ref": "#/$defs/ComponentwiseRelation"
+        },
+        "right_vector_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Right Vector Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "left_vector_id",
+        "right_vector_id",
+        "relation"
+      ],
+      "title": "ComponentwiseRelationResult",
+      "type": "object"
+    },
+    "EstimatorKind": {
+      "enum": [
+        "WEIGHTED_ARITHMETIC_MEAN",
+        "WEIGHTED_HARMONIC_MEAN"
+      ],
+      "title": "EstimatorKind",
+      "type": "string"
+    },
+    "EstimatorSensitivityResult": {
+      "additionalProperties": false,
+      "properties": {
+        "baseline_estimate": {
+          "$ref": "#/$defs/UnitRatio"
+        },
+        "estimator_commitment": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Estimator Commitment",
+          "type": "string"
+        },
+        "estimator_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Estimator Id",
+          "type": "string"
+        },
+        "scenarios": {
+          "items": {
+            "$ref": "#/$defs/SensitivityScenarioResult"
+          },
+          "maxItems": 256,
+          "minItems": 1,
+          "title": "Scenarios",
+          "type": "array"
+        }
+      },
+      "required": [
+        "estimator_id",
+        "estimator_commitment",
+        "baseline_estimate",
+        "scenarios"
+      ],
+      "title": "EstimatorSensitivityResult",
+      "type": "object"
+    },
+    "EstimatorSpec": {
+      "additionalProperties": false,
+      "properties": {
+        "chain_action_defined": {
+          "const": false,
+          "title": "Chain Action Defined",
+          "type": "boolean"
+        },
+        "component_weights": {
+          "additionalProperties": {
+            "$ref": "#/$defs/ExactRatio"
+          },
+          "minProperties": 1,
+          "propertyNames": {
+            "maxLength": 128,
+            "minLength": 1
+          },
+          "title": "Component Weights",
+          "type": "object"
+        },
+        "estimator_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Estimator Id",
+          "type": "string"
+        },
+        "estimator_state": {
+          "const": "EXPERIMENTAL_NON_NORMATIVE",
+          "title": "Estimator State",
+          "type": "string"
+        },
+        "estimator_version": {
+          "const": "sn87/transparent-estimator/0alpha1",
+          "title": "Estimator Version",
+          "type": "string"
+        },
+        "kind": {
+          "$ref": "#/$defs/EstimatorKind"
+        },
+        "normative_scoring": {
+          "const": false,
+          "title": "Normative Scoring",
+          "type": "boolean"
+        },
+        "output_semantics": {
+          "const": "EXPERIMENTAL_COMPONENT_AGGREGATE",
+          "title": "Output Semantics",
+          "type": "string"
+        },
+        "ranking_defined": {
+          "const": false,
+          "title": "Ranking Defined",
+          "type": "boolean"
+        },
+        "task_profile_commitment": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Task Profile Commitment",
+          "type": "string"
+        },
+        "weight_policy_defined": {
+          "const": false,
+          "title": "Weight Policy Defined",
+          "type": "boolean"
+        },
+        "winner_selection_defined": {
+          "const": false,
+          "title": "Winner Selection Defined",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "estimator_version",
+        "estimator_state",
+        "estimator_id",
+        "task_profile_commitment",
+        "kind",
+        "component_weights",
+        "output_semantics",
+        "normative_scoring",
+        "winner_selection_defined",
+        "ranking_defined",
+        "weight_policy_defined",
+        "chain_action_defined"
+      ],
+      "title": "EstimatorSpec",
+      "type": "object"
+    },
+    "ExactRatio": {
+      "additionalProperties": false,
+      "properties": {
+        "denominator": {
+          "exclusiveMinimum": 0,
+          "title": "Denominator",
+          "type": "integer"
+        },
+        "numerator": {
+          "exclusiveMinimum": 0,
+          "title": "Numerator",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "numerator",
+        "denominator"
+      ],
+      "title": "ExactRatio",
+      "type": "object"
+    },
+    "SensitivityAnalysisSpec": {
+      "additionalProperties": false,
+      "properties": {
+        "analysis_state": {
+          "const": "EXPERIMENTAL_NON_NORMATIVE",
+          "title": "Analysis State",
+          "type": "string"
+        },
+        "analysis_version": {
+          "const": "sn87/transparent-sensitivity-analysis/0alpha1",
+          "title": "Analysis Version",
+          "type": "string"
+        },
+        "baseline": {
+          "$ref": "#/$defs/ComponentVector"
+        },
+        "chain_action_defined": {
+          "const": false,
+          "title": "Chain Action Defined",
+          "type": "boolean"
+        },
+        "estimator_preference_defined": {
+          "const": false,
+          "title": "Estimator Preference Defined",
+          "type": "boolean"
+        },
+        "estimator_specs": {
+          "items": {
+            "$ref": "#/$defs/EstimatorSpec"
+          },
+          "maxItems": 16,
+          "minItems": 1,
+          "title": "Estimator Specs",
+          "type": "array"
+        },
+        "normative_scoring": {
+          "const": false,
+          "title": "Normative Scoring",
+          "type": "boolean"
+        },
+        "output_semantics": {
+          "const": "DESCRIPTIVE_ESTIMATOR_SENSITIVITY",
+          "title": "Output Semantics",
+          "type": "string"
+        },
+        "production_policy_selected": {
+          "const": false,
+          "title": "Production Policy Selected",
+          "type": "boolean"
+        },
+        "ranking_defined": {
+          "const": false,
+          "title": "Ranking Defined",
+          "type": "boolean"
+        },
+        "scenarios": {
+          "items": {
+            "$ref": "#/$defs/ComponentVector"
+          },
+          "maxItems": 256,
+          "minItems": 1,
+          "title": "Scenarios",
+          "type": "array"
+        },
+        "task_profile_commitment": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Task Profile Commitment",
+          "type": "string"
+        },
+        "weight_policy_defined": {
+          "const": false,
+          "title": "Weight Policy Defined",
+          "type": "boolean"
+        },
+        "winner_selection_defined": {
+          "const": false,
+          "title": "Winner Selection Defined",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "analysis_version",
+        "analysis_state",
+        "task_profile_commitment",
+        "estimator_specs",
+        "baseline",
+        "scenarios",
+        "output_semantics",
+        "production_policy_selected",
+        "estimator_preference_defined",
+        "normative_scoring",
+        "winner_selection_defined",
+        "ranking_defined",
+        "weight_policy_defined",
+        "chain_action_defined"
+      ],
+      "title": "SensitivityAnalysisSpec",
+      "type": "object"
+    },
+    "SensitivityScenarioResult": {
+      "additionalProperties": false,
+      "properties": {
+        "changed_components": {
+          "items": {
+            "maxLength": 128,
+            "minLength": 1,
+            "type": "string"
+          },
+          "maxItems": 64,
+          "title": "Changed Components",
+          "type": "array"
+        },
+        "delta_from_baseline": {
+          "$ref": "#/$defs/SignedRatio"
+        },
+        "direction": {
+          "$ref": "#/$defs/ChangeDirection"
+        },
+        "estimate": {
+          "$ref": "#/$defs/UnitRatio"
+        },
+        "scenario_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Scenario Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "scenario_id",
+        "changed_components",
+        "estimate",
+        "delta_from_baseline",
+        "direction"
+      ],
+      "title": "SensitivityScenarioResult",
+      "type": "object"
+    },
+    "SignedRatio": {
+      "additionalProperties": false,
+      "properties": {
+        "denominator": {
+          "exclusiveMinimum": 0,
+          "title": "Denominator",
+          "type": "integer"
+        },
+        "numerator": {
+          "title": "Numerator",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "numerator",
+        "denominator"
+      ],
+      "title": "SignedRatio",
+      "type": "object"
+    },
+    "UnitRatio": {
+      "additionalProperties": false,
+      "properties": {
+        "denominator": {
+          "exclusiveMinimum": 0,
+          "title": "Denominator",
+          "type": "integer"
+        },
+        "numerator": {
+          "minimum": 0,
+          "title": "Numerator",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "numerator",
+        "denominator"
+      ],
+      "title": "UnitRatio",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "analysis_commitment": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Analysis Commitment",
+      "type": "string"
+    },
+    "analysis_spec": {
+      "$ref": "#/$defs/SensitivityAnalysisSpec"
+    },
+    "chain_action_defined": {
+      "const": false,
+      "title": "Chain Action Defined",
+      "type": "boolean"
+    },
+    "componentwise_relations": {
+      "items": {
+        "$ref": "#/$defs/ComponentwiseRelationResult"
+      },
+      "maxItems": 32896,
+      "minItems": 1,
+      "title": "Componentwise Relations",
+      "type": "array"
+    },
+    "estimator_preference_defined": {
+      "const": false,
+      "title": "Estimator Preference Defined",
+      "type": "boolean"
+    },
+    "normative_scoring": {
+      "const": false,
+      "title": "Normative Scoring",
+      "type": "boolean"
+    },
+    "production_policy_selected": {
+      "const": false,
+      "title": "Production Policy Selected",
+      "type": "boolean"
+    },
+    "ranking_defined": {
+      "const": false,
+      "title": "Ranking Defined",
+      "type": "boolean"
+    },
+    "relation_semantics": {
+      "const": "PAIRWISE_COMPONENT_VALUES_ONLY",
+      "title": "Relation Semantics",
+      "type": "string"
+    },
+    "result_commitment": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Result Commitment",
+      "type": "string"
+    },
+    "sensitivity_results": {
+      "items": {
+        "$ref": "#/$defs/EstimatorSensitivityResult"
+      },
+      "maxItems": 16,
+      "minItems": 1,
+      "title": "Sensitivity Results",
+      "type": "array"
+    },
+    "weight_policy_defined": {
+      "const": false,
+      "title": "Weight Policy Defined",
+      "type": "boolean"
+    },
+    "winner_selected": {
+      "const": false,
+      "title": "Winner Selected",
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "analysis_spec",
+    "analysis_commitment",
+    "sensitivity_results",
+    "componentwise_relations",
+    "relation_semantics",
+    "production_policy_selected",
+    "estimator_preference_defined",
+    "normative_scoring",
+    "winner_selected",
+    "ranking_defined",
+    "weight_policy_defined",
+    "chain_action_defined",
+    "result_commitment"
+  ],
+  "title": "SensitivityAnalysisResult",
+  "type": "object"
+}

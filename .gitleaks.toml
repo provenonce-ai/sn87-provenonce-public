@@ -1,0 +1,11 @@
+# Secret-scan configuration. The one allowlist entry covers the FICTIONAL source fixture: its
+# "token" fields are invented approval-token identifiers of an invented organisation (see the
+# fixture's own label), not credentials. Nothing else is allowlisted.
+title = "SN87 gitleaks config"
+
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "Fictional fixture approval tokens (invented identifiers, not credentials)"
+paths = ['''src/sn87_provenonce/sources/fixtures/fictional_launch_approvals\.json''']

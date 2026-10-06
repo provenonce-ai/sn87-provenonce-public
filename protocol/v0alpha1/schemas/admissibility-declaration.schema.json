@@ -1,0 +1,170 @@
+{
+  "$defs": {
+    "CostBudget": {
+      "additionalProperties": false,
+      "properties": {
+        "credits": {
+          "minimum": 0.0,
+          "title": "Credits",
+          "type": "number"
+        },
+        "privacy_budget": {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Privacy Budget",
+          "type": "number"
+        },
+        "seconds": {
+          "exclusiveMinimum": 0.0,
+          "title": "Seconds",
+          "type": "number"
+        }
+      },
+      "required": [
+        "seconds",
+        "credits",
+        "privacy_budget"
+      ],
+      "title": "CostBudget",
+      "type": "object"
+    },
+    "DisclosureMode": {
+      "enum": [
+        "METADATA",
+        "SELECTIVE_EVIDENCE",
+        "CONFIDENTIAL_CHALLENGE"
+      ],
+      "title": "DisclosureMode",
+      "type": "string"
+    },
+    "OracleBinding": {
+      "additionalProperties": false,
+      "properties": {
+        "commitment": {
+          "anyOf": [
+            {
+              "pattern": "^sha256:[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Commitment"
+        },
+        "identifier": {
+          "minLength": 1,
+          "title": "Identifier",
+          "type": "string"
+        },
+        "oracle_class": {
+          "$ref": "#/$defs/OracleClass"
+        },
+        "reliability": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0.0,
+              "maximum": 1.0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reliability"
+        },
+        "reliability_method": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reliability Method"
+        }
+      },
+      "required": [
+        "oracle_class",
+        "identifier"
+      ],
+      "title": "OracleBinding",
+      "type": "object"
+    },
+    "OracleClass": {
+      "enum": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "title": "OracleClass",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "challenge_class": {
+      "minLength": 1,
+      "title": "Challenge Class",
+      "type": "string"
+    },
+    "challenge_class_version": {
+      "minLength": 1,
+      "title": "Challenge Class Version",
+      "type": "string"
+    },
+    "claim_types": {
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Claim Types",
+      "type": "array"
+    },
+    "disclosure_modes": {
+      "items": {
+        "$ref": "#/$defs/DisclosureMode"
+      },
+      "minItems": 1,
+      "title": "Disclosure Modes",
+      "type": "array"
+    },
+    "max_cost": {
+      "$ref": "#/$defs/CostBudget"
+    },
+    "oracle_bindings": {
+      "items": {
+        "$ref": "#/$defs/OracleBinding"
+      },
+      "minItems": 1,
+      "title": "Oracle Bindings",
+      "type": "array"
+    },
+    "residual_fields": {
+      "default": [],
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "title": "Residual Fields",
+      "type": "array"
+    }
+  },
+  "required": [
+    "challenge_class",
+    "challenge_class_version",
+    "claim_types",
+    "oracle_bindings",
+    "disclosure_modes",
+    "max_cost"
+  ],
+  "title": "AdmissibilityDeclaration",
+  "type": "object"
+}
