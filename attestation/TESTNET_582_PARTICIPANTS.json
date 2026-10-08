@@ -1,0 +1,68 @@
+{
+  "schema": "sn87.testnet_participants.v1",
+  "netuid": 582,
+  "mecid": 0,
+  "validator_uid": 0,
+  "periods": {
+    "first_light": {
+      "label": "First Light row",
+      "from_block": 8102381,
+      "from_block_source": "the block in which the First Light weight row was applied (dests 1 and 2, 65535 each)",
+      "basis": "First Light weight row and run record"
+    },
+    "attested_runs": {
+      "label": "attested runs (attestation 01 and 02)",
+      "from_block": "ATTESTATION_FIRST_INCLUDED_BLOCK",
+      "from_block_source": "the lowest included_block over the runs of attestation 02, read from that file",
+      "basis": "private naming binding; not verifiable from public files"
+    }
+  },
+  "rows": [
+    {
+      "uid": 0,
+      "hotkey": "5H6U3sdsYP4c27VuVvQ1JbfVyCWPHjeqiifHBHHXgj5vccjw",
+      "method": null,
+      "role": "validator",
+      "period": null
+    },
+    {
+      "uid": 1,
+      "hotkey": "5CFoMvioksya5AYP9WAKRptwQR7tgtcKPhwcb6W79UbYaLPF",
+      "method": "state_machine",
+      "role": "reference",
+      "period": "first_light"
+    },
+    {
+      "uid": 2,
+      "hotkey": "5GusuV1QhzkX22zjAGrBE29ybEQqF2aj84ooDYv7JJeo8TsC",
+      "method": "relational",
+      "role": "reference",
+      "period": "first_light"
+    },
+    {
+      "uid": 1,
+      "hotkey": "5CFoMvioksya5AYP9WAKRptwQR7tgtcKPhwcb6W79UbYaLPF",
+      "method": "approval_witness",
+      "role": "candidate",
+      "period": "attested_runs"
+    },
+    {
+      "uid": 2,
+      "hotkey": "5GusuV1QhzkX22zjAGrBE29ybEQqF2aj84ooDYv7JJeo8TsC",
+      "method": "baseline_miner",
+      "role": "baseline",
+      "period": "attested_runs"
+    }
+  ],
+  "method_notes": {
+    "state_machine": "Provenonce reference algorithm; also computes truth.",
+    "relational": "Provenonce reference algorithm; also computes truth.",
+    "approval_witness": "The replaceable Provenonce-written candidate (miners/witness_ic.py).",
+    "baseline_miner": "The public-contract baseline algorithm run as a miner."
+  },
+  "notes": [
+    "The same two hotkeys hold uids 1 and 2 throughout. What differs between the two periods is which methods the weight row is said to name for those uids.",
+    "A weight row names uids, not methods. The attestation files carry only the uids (1 and 2, 65535 each). For the attested runs, the method behind each uid comes from a naming binding that Provenonce records privately; it is not independently verifiable from public files, and its approval is not citable here. It is a naming choice, not an identity proof: nothing shows that a process behind either hotkey runs the method named for it.",
+    "The block at which each hotkey was registered is not recorded in this repository. The from block is the first block at which a weight row naming the uid is recorded."
+  ]
+}

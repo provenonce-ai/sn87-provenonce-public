@@ -5,15 +5,20 @@ conformance evidence only.
 
 1. **Conformance, not competition.** The First Light row (run `e6ffa76e6f8a14bc0625fc2caf92e2cc`,
    profile `IC-FIRST-LIGHT-MIN-1`, public testnet netuid 582, block 8,102,381) is conformance evidence for
-   transport, integrity and arithmetic. Both methods (`state_machine`, `relational`) are Provenonce reference
-   algorithms that also compute the truth, under common control. Equal scores of 1 show agreement,
+   transport, integrity and arithmetic. Both methods (`state_machine` on uid 1, `relational` on uid 2)
+   are Provenonce reference algorithms that also compute the truth, under common control. The later
+   attested runs name the same two uids; the methods behind them rest on a privately recorded
+   naming binding that cannot be checked from public files. The table in the
+   [README](README.md#which-methods-hold-uids-1-and-2) gives the mapping for each period. Equal scores of 1 show agreement,
    not that either beats the other. Every bundle carries `claim: CONFORMANCE_ONLY`.
 2. **Plain weight mode only.** Testnet runs with commit-reveal off. Commit-reveal is not implemented.
 3. **Binary evidence credit.** Evidence quality is 1 only if every required reference is cited,
    else 0. No partial credit, and no penalty for citing more: any superset of the required refs
    receives full credit. The public-contract baselines use exactly that (they cite every bounded
    event plus the completeness scope, e.g. 13 refs where an IC `stale_authority` case requires 9),
-   so their evidence score shows the rule's weakness, not evidence skill.
+   so their evidence score shows the rule's weakness, not evidence skill. A new profile version,
+   `IC-FIRST-LIGHT-MIN-2`, makes the credit precision-aware (ADR-0019). It is committed and not
+   active on any weight path; the committed profiles score as described here.
 4. **Dead branch.** The "no grounded dimension, flag for review" branch is unreachable: detection
    is always applicable, so the branch cannot fire.
 5. **beta is fixed at 1** (F1 score) in both profiles.
@@ -56,7 +61,9 @@ conformance evidence only.
 13. **One Provenonce-written candidate, one fictional source, one configuration.**
     `miners/witness_ic.py` (`approval_witness`, role `candidate`) is written and maintained by
     Provenonce from the public contract; it is a replaceable stand-in, still common control, not an
-    independent miner, and it is not a chain participant (no uid). Its author had read the
+    independent miner. It has no hotkey or uid of its own: a privately recorded naming binding associates it with uid 1
+    (the hotkey registered for the First Light method `state_machine`); the attested weight rows
+    name only the uid, and the binding is not an identity proof and not verifiable here (see the [README](README.md#which-methods-hold-uids-1-and-2)). Its author had read the
     evaluator-only reference before writing it, so its independence from the oracle is
     unverified beyond the import-graph and blocked-import tests, and its per-action loop closely
     follows the public-contract baseline's (`baselines.py`, the IC action loop). It is a
@@ -100,7 +107,9 @@ conformance evidence only.
     perturbation report shows the tie on IC: the baseline's agreement with
     truth falls to about 0.56 under clock skew, but its mean score delta is identical to the
     references' in every cell. Score alone does not separate the tested methods there; agreement
-    does. This is an observation only; the scorer and profile are unchanged.
+    does. This is an observation about the committed profiles; they are unchanged. A new profile
+    version, `IC-FIRST-LIGHT-MIN-2`, pays a correct abstention and a wrong-scope abstention on
+    record (ADR-0019). It is committed and not active on any weight path.
 
 See [docs/protocol/implementation-status.md](docs/protocol/implementation-status.md) for what
 is implemented, enabled, tested and deployed.

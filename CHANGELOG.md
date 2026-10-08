@@ -5,6 +5,11 @@ notes are maintained outside the repository.
 
 ## Unreleased
 
+- Scoring profile `IC-FIRST-LIGHT-MIN-2` (ADR-0019), committed and not active on any weight path:
+  a 3 x 3 state-by-truth payoff matrix that pays a correct abstention, the wrong-scope rule
+  recorded as abstention on record, and a precision-aware citation rule, declared in an optional
+  `scoring_rules` block. Profiles without the block (`IC-FIRST-LIGHT-MIN-1`, `GRA-W03-3`) score
+  byte for byte as before.
 - Public export: the miner kit (`miners/`, `scripts/miner_serve.py`), the protocol, schemas and
   canonical modules, the scorer and evidence bundle, the local simulations and the attestation
   verifier are published. `scripts/verify_attestation.py` and the read-only chain client

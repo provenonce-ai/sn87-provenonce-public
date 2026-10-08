@@ -1,10 +1,22 @@
 # ADR-0005: Use a minimal ASGI boundary and shared atomic replay store
 
-**Status:** Accepted architecture; implementation deferred
+**Status:** Implemented
 
-**Date:** 2026-09-03
+**Date:** 2026-09-03 (decision); implemented 2026-09-27
 
 **Deciders:** Will O'Brien, Provenonce Founder & CEO; SN87 protocol maintainer
+
+**Implementation:** commit `757def4e630a5bb07d683e6071767ca8515fa170` (merged 2026-09-27) added
+`src/sn87_provenonce/pilot/transport.py` (SDK verification and the Valkey nonce store) and
+`src/sn87_provenonce/pilot/server.py` (the ASGI app factory `create_app`). The signed transport
+was exercised by the First Light run whose weight row was applied on public testnet netuid 582
+at block 8,102,381. A later commit (`af4b7ec`, 2026-10-03) changed only the import of the
+canonicalizer in `server.py`; the decision below is unchanged. The tests that prove the transport
+(including the atomic race and fail-closed store cases) live in the private suite and are not in
+this repository.
+
+**Not done:** nothing in this repository launches `create_app` as a service. Its only callers are private
+(a local smoke script and the private transport tests). A public, runnable launcher is separate work and is not claimed here.
 
 ## Context
 

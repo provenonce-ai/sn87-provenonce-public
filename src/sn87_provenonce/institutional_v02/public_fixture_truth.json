@@ -1,0 +1,44 @@
+{
+  "cases": {
+    "fresh_review": {
+      "capsule_commitment": "sha256:01ae396211bc7bb0d3d1fa7bdfb1d0d372cf28cc6cff4a717bfc2df51afdf034",
+      "truth": {
+        "defects": [],
+        "state": "NO_MATERIAL_DEVIATION"
+      }
+    },
+    "incomplete": {
+      "capsule_commitment": "sha256:d1bf5579a74b2c33226b1b0f38d290ff31a9d20020937341b14edc3ade0fb4a4",
+      "truth": {
+        "defects": [],
+        "state": "INSUFFICIENT_EVIDENCE_ABSTAIN"
+      }
+    },
+    "stale_authority": {
+      "capsule_commitment": "sha256:f23eb075d923b57c4a7f349391d9a9e0757e425f2fac003f2d7759ba91e8bd04",
+      "truth": {
+        "defects": [
+          {
+            "code": "STALE_APPROVAL",
+            "required_refs": [
+              "$completeness",
+              "fixture-stale_authority-019",
+              "fixture-stale_authority-021",
+              "fixture-stale_authority-022",
+              "fixture-stale_authority-024",
+              "fixture-stale_authority-028",
+              "fixture-stale_authority-031",
+              "fixture-stale_authority-032",
+              "fixture-stale_authority-033"
+            ],
+            "severity": "HIGH"
+          }
+        ],
+        "state": "FINDINGS"
+      }
+    }
+  },
+  "class_id": "IC-APPROVAL-APPLICABILITY",
+  "generator": "institutional_v02.fixtures.build_case with default identifiers and timestamp",
+  "schema": "sn87-public-fixture-truth/0.1"
+}
