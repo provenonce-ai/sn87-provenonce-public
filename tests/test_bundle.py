@@ -86,7 +86,8 @@ def test_implementation_status_doc_is_the_generated_matrix():
 
     text = (ROOT / "docs" / "protocol" / "implementation-status.md").read_text()
     table = text.split("<!-- BEGIN STATUS_MATRIX -->\n")[1].split("<!-- END STATUS_MATRIX -->")[0]
-    assert table == status_markdown()
+    # the document may mark private-suite references (scripts/render_status_matrix.py)
+    assert table.replace(" (private suite)", "") == status_markdown()
 
 
 def _floats(value):

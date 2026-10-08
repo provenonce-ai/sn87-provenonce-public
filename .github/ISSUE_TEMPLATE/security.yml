@@ -1,0 +1,21 @@
+name: Security report (private route)
+description: Ask for the private security route. This form does not accept vulnerability details.
+title: "[security] request for private contact"
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Do not put vulnerability details in this issue.** Issues here are public.
+
+        Report suspected vulnerabilities privately, as set out in SECURITY.md: send them to ops@provenonce.co. Include the affected commit, reproducible conditions, expected impact and the minimum evidence needed to verify the report.
+
+        Submitting this form only tells the maintainers that a private report is on its way. Leave out the details, secrets, keys and wallet material.
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: Confirmation
+      options:
+        - label: I have not included vulnerability details, secrets or private data in this issue.
+          required: true
+        - label: I have sent, or will send, the report to the private address in SECURITY.md.
+          required: true

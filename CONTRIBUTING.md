@@ -30,6 +30,38 @@ reference vectors. Scoring parameters live only in committed profiles; a change 
 version, never hidden configuration ([profile application](docs/protocol/profile-application.md)).
 No chain or wallet writes without approval from Provenonce.
 
+## Filing an issue and getting an answer
+
+Open an issue from the [issue chooser](https://github.com/provenonce-ai/sn87-provenonce-public/issues/new/choose);
+blank issues are off so that each report carries what is needed to act on it.
+
+| Template | Use it for | Include |
+|---|---|---|
+| Setup failure | An install or documented step that fails | Platform, Python and uv versions, the document and step, the exact command, expected and actual result, the last 40 lines of output |
+| Scoring question | A score you cannot explain or reproduce | Class, public fixture or window id, profile id, observed and expected score, how to reproduce |
+| Security report | A suspected vulnerability | Nothing. Do not put details in an issue; send them privately as described in [SECURITY.md](SECURITY.md) |
+
+Never include secrets, wallet material, raw Tenant Evidence or hidden challenge material in an
+issue or pull request.
+
+Triage is done by the maintainers listed in `.github/CODEOWNERS`. The cadence is a triage sweep on
+Wednesdays and answers on Fridays, US Pacific time. This is a cadence, not a service-level
+agreement: a busy week can slip, and a slip is stated on the issue rather than left silent. Each
+sweep records its inputs (the issues and questions it covered) and its triage outcome (owner,
+label and next step), and the outcome is posted back on the issue. Security reports follow the
+handling in [SECURITY.md](SECURITY.md) instead.
+
+## How builders enter
+
+A builder adds a new task family as a new class binding (`ClassBinding` in `scoring.py`, registered
+in `classes.py`), never as a new scorer. The one scorer, one canonicalizer and one profile loader stay
+unchanged; the binding supplies the capsule and differential validators, the defect severities, the
+generator and the baseline, and the family is scored by the existing code under a committed profile.
+Start from [`docs/protocol/cmt-v0.1.md`](docs/protocol/cmt-v0.1.md), which is a candidate schema (not
+adopted). A scoring change is a new profile version, and admission of any new class to live scoring
+needs approval from Provenonce. Open a scoring question issue, or a pull request with the proposed
+binding and its tests.
+
 ## Pull requests
 
 1. Fork the repository and branch from `main`.

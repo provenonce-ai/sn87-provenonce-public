@@ -14,8 +14,8 @@ def test_demo_returns_passing_synthetic_gate() -> None:
     assert payload["integrity_gate"]["passed"] is True
 
 
-def test_demo_command_prints_machine_readable_result(capsys) -> None:
-    assert main(["demo"]) == 0
+def test_legacy_demo_command_prints_machine_readable_result(capsys) -> None:
+    assert main(["demo", "--legacy-v0alpha1"]) == 0
     payload = json.loads(capsys.readouterr().out)
     assert payload["challenge_id"] == "q-lane-one-0001"
     assert payload["response_state"] == "FINDINGS"

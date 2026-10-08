@@ -1,0 +1,49 @@
+name: Scoring question
+description: A question about a score, a class or a fixture, or a score that differs from what you expected.
+title: "[scoring] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form for a score you cannot explain or reproduce. Use only public fixtures and your own outputs. Do not include raw Tenant Evidence or hidden challenge material.
+        For a suspected vulnerability do not use this form; follow SECURITY.md.
+  - type: input
+    id: class
+    attributes:
+      label: Class
+      description: The class binding the case belongs to.
+    validations:
+      required: true
+  - type: input
+    id: case-id
+    attributes:
+      label: Fixture or window id
+      description: The public fixture name or the window id from the attestation.
+    validations:
+      required: true
+  - type: input
+    id: profile-id
+    attributes:
+      label: Profile id
+      description: The scoring profile id the run used.
+    validations:
+      required: true
+  - type: input
+    id: observed
+    attributes:
+      label: Observed score
+    validations:
+      required: true
+  - type: input
+    id: expected
+    attributes:
+      label: Expected score
+    validations:
+      required: true
+  - type: textarea
+    id: reasoning
+    attributes:
+      label: Why you expected that
+      description: The rule, document or earlier result you relied on, and how to reproduce the observed score.
+    validations:
+      required: true

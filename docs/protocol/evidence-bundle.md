@@ -29,8 +29,12 @@ source except labelled FIXTURE samples. Canonical `gra/0.1` JSON; numbers per
   computes truth (`state_machine`, `relational`). `candidate`: proven to see only the public
   contract (`miners/`). Used only on the source-execution path, where `approval_witness` is bound
   beside the references; the fixture bundles and the First Light row do not include it, and its
-  `uid` is null until assigned. `baseline`: the matched public-contract baseline, `uid` null, never in
-  the row.
+  `uid` in a bundle is null until assigned. `baseline`: the matched public-contract baseline
+  (`public_contract_baseline`), `uid` null, never in the bundle's `row`. On chain, a weight row names uids only. A privately recorded naming binding associates the
+  candidate with uid 1 and the baseline algorithm run as a separate miner (`baseline_miner`, not
+  the bundle's baseline entry) with uid 2 for the attested runs; that binding cannot be checked
+  from public files. The README table shows the mapping and its basis for each period; the First
+  Light row named `state_machine` and `relational`.
 - `baseline`: `{"state": "CONFIGURED", "method_id": "public_contract_baseline", "definition",
   "public_contract_only": true}`. Scores, cost and diagnostics cover it like any method.
 - `comparison`: per non-baseline method, `estimate_delta` (method minus baseline, wire string or

@@ -1,0 +1,72 @@
+{
+  "profile_id": "IC-FIRST-LIGHT-MIN-2",
+  "whitepaper": "0.7.2",
+  "weights": {
+    "detection": "0.60",
+    "evidence": "0.25",
+    "calibration": "0.15"
+  },
+  "beta": "1",
+  "epsilon": "0.000001",
+  "tail_fraction": "0",
+  "difficulty": "1",
+  "freshness": "1",
+  "theta": "0.60",
+  "gamma": "2",
+  "severity": {
+    "LOW": "0.25",
+    "MEDIUM": "0.50",
+    "HIGH": "1.00"
+  },
+  "false_positive_floor": "0.25",
+  "minimum_assignments": 12,
+  "maximum_raw_invalid_or_missing_rate": "0.10",
+  "assignment": {
+    "stale_authority": 8,
+    "fresh_review": 4
+  },
+  "diagnostics": {
+    "incomplete": 4
+  },
+  "equivalent_diagnostics": "DEFERRED_BY_AUTHORITY_Q73_246",
+  "utility": "NA_NO_DEFENSIBLE_FUNCTION",
+  "robustness": "DIAGNOSTIC_ONLY",
+  "cost_coefficients": [
+    "0",
+    "0",
+    "0",
+    "0"
+  ],
+  "finding_confidence": "REQUIRED_PER_FINDING; EMPTY_CLEAN_OR_ABSTAIN_CLAIMS_NA",
+  "revision": "IC_FIRST_LIGHT_MIN_1_PLUS_STATE_PAYOFF_WRONG_SCOPE_CITATION_PRECISION",
+  "derived_from": "IC-FIRST-LIGHT-MIN-1",
+  "scoring_rules": {
+    "state_payoff": {
+      "FINDINGS": {
+        "FINDINGS": "1",
+        "NO_MATERIAL_DEVIATION": "0",
+        "INSUFFICIENT_EVIDENCE_ABSTAIN": "0.25"
+      },
+      "NO_MATERIAL_DEVIATION": {
+        "FINDINGS": "0",
+        "NO_MATERIAL_DEVIATION": "1",
+        "INSUFFICIENT_EVIDENCE_ABSTAIN": "0.25"
+      },
+      "INSUFFICIENT_EVIDENCE_ABSTAIN": {
+        "FINDINGS": "0",
+        "NO_MATERIAL_DEVIATION": "0",
+        "INSUFFICIENT_EVIDENCE_ABSTAIN": "0.5"
+      }
+    },
+    "wrong_scope": "ABSTENTION_ON_RECORD",
+    "evidence_credit": "PRECISION_TIMES_RECALL"
+  },
+  "wire_max_bytes": 262144,
+  "private_storage_max_bytes": 33554432,
+  "matching": "EXACT_CODE_ONE_TO_ONE_NO_PARTIAL_CREDIT_DUPLICATES_ARE_FP",
+  "evidence_quality": "PRECISION_TIMES_RECALL_OVER_CITED_AND_REQUIRED_REFS",
+  "numeric": "IEEE754_BINARY64_FINITE_FSUM; REPRODUCTION_ABSOLUTE_TOLERANCE_1e-12",
+  "no_valid_row": "NO_VALID_PREFERENCE_ROW_NO_SUBMISSION",
+  "rule_reliability": "0.95",
+  "deterministic": true
+}

@@ -132,8 +132,23 @@ def run_local_validator_demo(vectors: object = DEFAULT_VECTORS) -> dict[str, obj
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="sn87-provenonce")
     subcommands = parser.add_subparsers(dest="command", required=True)
-    demo = subcommands.add_parser("demo", help="run the local synthetic conformance demo")
-    demo.add_argument("--vectors", type=Path, default=DEFAULT_VECTORS)
+    demo = subcommands.add_parser(
+        "demo",
+        help="run the institution/0.2 quickstart: build, send, answer and score public fixtures",
+    )
+    demo.add_argument("--json", action="store_true", help="print the result as JSON")
+    demo.add_argument(
+        "--legacy-v0alpha1",
+        action="store_true",
+        help="run the old v0alpha1 research demo instead (on no weight path; gate inputs are "
+        "hard-coded true)",
+    )
+    demo.add_argument(
+        "--vectors",
+        type=Path,
+        default=None,
+        help="v0alpha1 vector directory (only with --legacy-v0alpha1)",
+    )
     simulation = subcommands.add_parser(
         "simulate-lane-one",
         help="run the transparent local Lane One architecture simulation",
@@ -248,9 +263,23 @@ def main(argv: Sequence[str] | None = None) -> int:
 
 
 def _main(argv: Sequence[str] | None) -> int:
-    args = build_parser().parse_args(argv)
+    parser = build_parser()
+    args = parser.parse_args(argv)
     if args.command == "demo":
-        print(json.dumps(run_demo(args.vectors), indent=2, sort_keys=True))
+        if args.vectors is not None and not args.legacy_v0alpha1:
+            parser.error("--vectors applies only to --legacy-v0alpha1")
+        if args.legacy_v0alpha1:
+            print(
+                "LEGACY v0alpha1 DEMO: research code on no weight path. Signature, nonce, "
+                "policy and evidence checks are fixed to true; weights use institution/0.2.",
+                file=sys.stderr,
+            )
+            print(json.dumps(run_demo(args.vectors or DEFAULT_VECTORS), indent=2, sort_keys=True))
+        else:
+            from sn87_provenonce.quickstart import render, run_quickstart
+
+            result = run_quickstart()
+            print(json.dumps(result, indent=2, sort_keys=True) if args.json else render(result))
         return 0
     if args.command == "simulate-lane-one":
         report = run_lane_one_simulation(force_no_valid_row=args.force_no_valid_row)

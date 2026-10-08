@@ -45,7 +45,6 @@ from __future__ import annotations
 import argparse
 import json
 import os
-import pwd
 import subprocess
 import sys
 import tempfile
@@ -83,11 +82,30 @@ def _is_int(value: Any) -> bool:
 
 
 # ------------------------------------------------------------------------------- environment
+PLATFORM_POLICY = (
+    "supported platforms are Linux and macOS (Windows through WSL2); native Windows is "
+    "unsupported because it lacks the pwd database and the descriptor-anchored, "
+    "symlink-refusing file controls (O_DIRECTORY, O_NOFOLLOW) the evidence bundle requires"
+)
+
+
+def _real_home() -> str:
+    """The account database's home for this user. ``pwd`` is imported here, not at module
+    level, so importing this script works on platforms that lack it."""
+    try:
+        import pwd
+    except ImportError as error:
+        raise VerifyRefused(
+            f"the account database (pwd) is unavailable: {PLATFORM_POLICY}"
+        ) from error
+    return pwd.getpwuid(os.getuid()).pw_dir
+
+
 def require_fake_home(env: dict[str, str] | None = None, real_home: str | None = None) -> None:
     """The chain read must run under a fake HOME so no wallet or key directory can be reached."""
     env = os.environ if env is None else env
     if real_home is None:
-        real_home = pwd.getpwuid(os.getuid()).pw_dir
+        real_home = _real_home()
     home = env.get("HOME")
     if not home or os.path.realpath(home) == os.path.realpath(real_home):
         raise VerifyRefused("run with HOME set to a scratch directory, not the real home")

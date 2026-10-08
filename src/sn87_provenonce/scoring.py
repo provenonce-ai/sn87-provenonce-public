@@ -123,6 +123,40 @@ def geometric(
     )
 
 
+def evidence_credit(profile: Profile, required: list[str], cited: list[str]) -> float:
+    """Evidence quality of one matched finding.
+
+    A profile without ``scoring_rules`` gets the original binary credit: 1 when
+    every required reference is cited, whatever else is cited. Under ``PRECISION_TIMES_RECALL``
+    it is (|cited & required| / |cited|) * (|cited & required| / |required|), so surplus
+    references lower it and citing every event no longer matches citing exactly the witness.
+    """
+    needed, seen = set(required), set(cited)
+    if profile.evidence_credit is None or not needed:  # nothing required: credit 1, as before
+        return float(needed <= seen)
+    hits = len(needed & seen)
+    return hits * hits / (len(seen) * len(needed)) if hits else 0.0
+
+
+def state_payoff_score(profile: Profile, truth_state: str, response_state: str,
+                       composite: float) -> tuple[float, dict[str, Any]]:
+    """Score under the 3 x 3 state-by-truth payoff matrix (ADR-0019).
+
+    The cell caps the score. Only a correct FINDINGS response carries per-finding quality (the
+    existing composite of detection, evidence and calibration); every other cell is the cell
+    value, so a confidence claim cannot lift a wrong answer above a correct abstention. Valid
+    responses keep the profile's epsilon floor, as before.
+    """
+    assert profile.state_payoff is not None
+    try:
+        cell = profile.state_payoff[truth_state][response_state]
+    except KeyError:
+        raise ValueError("unknown truth or response state") from None
+    quality = composite if truth_state == response_state == "FINDINGS" else 1.0
+    return bounded(max(cell * quality, profile.epsilon)), {
+        "truth": truth_state, "response": response_state, "cell": cell, "quality": quality}
+
+
 def score_response(
     binding: ClassBinding,
     capsule: dict[str, Any],
@@ -158,8 +192,8 @@ def score_response(
             matched.append(code)
             weight = severity[target["severity"]]
             tp_weights.append(weight)
-            evidence.append((weight, float(set(target["required_refs"]) <= set(
-                finding["evidence_refs"]))))
+            evidence.append((weight, evidence_credit(
+                profile, target["required_refs"], finding["evidence_refs"])))
         else:
             unmatched.append(index)
             sealed = binding.defect_severity.get(code, "HIGH")
@@ -191,8 +225,12 @@ def score_response(
     }
     composite = geometric(dimensions, profile.weights, profile.epsilon)
     eta = 1.0  # Eq. 11 with all committed coefficients "0" (enforced by the profile).
-    return {
-        "score": 0.0 if composite is None else bounded(composite * eta),
+    score = 0.0 if composite is None else bounded(composite * eta)
+    payoff = None
+    if profile.state_payoff is not None:  # ADR-0019 rules, off when absent
+        score, payoff = state_payoff_score(profile, truth["state"], response["state"], score)
+    result = {
+        "score": score,
         "valid": True,
         "failures": [],
         "dimensions": {k: NA if v is None else v for k, v in dimensions.items()},
@@ -206,6 +244,9 @@ def score_response(
         "cost_coefficients": list(profile.coefficients),
         "rule_score": NA,
     }
+    if payoff is not None:
+        result["payoff"] = payoff
+    return result
 
 
 def epoch_estimate(scores: list[float], valid: list[bool], profile: Profile) -> dict[str, Any]:

@@ -1,0 +1,66 @@
+name: Setup failure
+description: The install, a documented command or a quickstart step did not work as written.
+title: "[setup] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form when a documented step fails. Do not paste secrets, wallet material, keys or tokens. Redact paths that identify you.
+        For a suspected vulnerability do not use this form; follow SECURITY.md.
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Platform
+      options:
+        - macOS
+        - Linux
+        - Windows (WSL)
+        - Windows (native)
+        - Other (say which in the output field)
+    validations:
+      required: true
+  - type: input
+    id: versions
+    attributes:
+      label: Python and uv versions
+      description: Output of `python --version` and `uv --version`.
+      placeholder: "Python 3.12.x, uv 0.x.y"
+    validations:
+      required: true
+  - type: input
+    id: doc-step
+    attributes:
+      label: Which document and step
+      description: The file and the step or heading you were following.
+      placeholder: "docs/quickstart/miner.md, step 3"
+    validations:
+      required: true
+  - type: input
+    id: command
+    attributes:
+      label: Command you ran
+      description: The exact command, copied from the terminal.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected result
+      description: What the document said should happen.
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual result
+      description: What happened instead.
+    validations:
+      required: true
+  - type: textarea
+    id: output
+    attributes:
+      label: Last 40 lines of output
+      description: Paste the last 40 lines (for example `... 2>&1 | tail -n 40`).
+      render: shell
+    validations:
+      required: true
