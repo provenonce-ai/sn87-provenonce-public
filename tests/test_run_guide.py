@@ -225,14 +225,14 @@ def test_requires_valkey_step_is_skipped_without_a_server_and_fails_when_require
         tree, monkeypatch):
     monkeypatch.setattr(rg.shutil, "which", lambda name: None)
     text = step("echo x", "x", flags="requires-valkey") + step("echo y", "y")
-    monkeypatch.delenv(rg.REQUIRE_VALKEY_ENV, raising=False)
+    monkeypatch.delenv(rg.REQUIRE_STORE_ENV, raising=False)
     results, out = run(text, tree)
     assert [r.status for r in results] == ["SKIP", "PASS"]
     assert "valkey-server or redis-server" in out
-    monkeypatch.setenv(rg.REQUIRE_VALKEY_ENV, "1")
+    monkeypatch.setenv(rg.REQUIRE_STORE_ENV, "1")
     results, out = run(text, tree)
     assert [r.status for r in results] == ["FAIL", "PASS"]
-    assert rg.REQUIRE_VALKEY_ENV + " is set" in out
+    assert rg.REQUIRE_STORE_ENV + " is set" in out
 
 
 @needs_server
@@ -267,3 +267,15 @@ def test_a_server_left_running_by_a_step_is_stopped_when_the_step_ends(tree, tmp
             return
         rg.time.sleep(0.1)
     raise AssertionError("the background process is still running")
+
+
+def test_the_guides_clone_uses_git_transport_and_shares_no_files_with_the_origin(tree):
+    """A clone by path copies or hard-links the origin's object files and can fail if they move
+    underneath it (seen on macOS runners). The mapped URL is a file:// URL, so git serves the
+    objects through its transport and the clone shares no file with the origin."""
+    base = "https://github.com/provenonce-ai/sn87-provenonce-public"
+    text = (step("cd ~", flags="silent") + step(f"git clone -q {base}", flags="silent")
+            + step("find sn87-provenonce-public/.git/objects -type f -links +1 | wc -l | tr -d ' '",
+                   "0"))
+    results, out = run(text, tree)
+    assert [r.status for r in results] == ["PASS"] * 3, out
