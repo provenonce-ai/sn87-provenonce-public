@@ -95,7 +95,9 @@
         "attestation/README.md",
         "attestation/SN87_TESTNET_ATTESTATION_01.json",
         "attestation/SN87_TESTNET_ATTESTATION_02.json",
-        "attestation/TESTNET_582_PARTICIPANTS.json"
+        "attestation/TESTNET_582_PARTICIPANTS.json",
+        "shadow/allowlist.json",
+        "shadow/criteria-proposed.json"
       ],
       "why": "Schemas, public test vectors, the illustrative sensitivity vector, the localhost miner server, and the public verifier with its read-only chain client. Each entry point runs, imports and passes its tests with the private files absent."
     },
@@ -184,6 +186,7 @@
         "tests/test_cmt.py",
         "tests/test_miner_serve.py",
         "tests/test_admission_plan.py",
+        "tests/test_criteria_proposed_file.py",
         "tests/test_commit_reveal_weights.py",
         "tests/test_second_validator_check.py",
         "tests/test_quickstart_demo.py",

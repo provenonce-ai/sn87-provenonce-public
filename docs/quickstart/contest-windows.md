@@ -105,4 +105,5 @@ is decided.
   commitments and capsules, and truth only if per-case truth of a closed window is later published
   (an open decision).
 - It does not admit outside miners. The responses file is plain input; how responses arrive is out of
-  scope.
+  scope. How an outside miner applies to the shadow cohort is in
+  [shadow-cohort.md](../guides/shadow-cohort.md).

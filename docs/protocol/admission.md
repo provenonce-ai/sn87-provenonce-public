@@ -65,7 +65,9 @@ approval record that cites the document's digest, and nothing in this tree reads
 
 For a uid in `shadow`, the maintainers' shadow tooling does the following in each window. That
 tooling is operator-only and is not part of this tree; this tree holds the plan versions, the
-criteria and the checker that consume its published results.
+criteria and the checker that consume its published results. How an outside miner applies, and
+the proposed criteria for leaving shadow, are on the public page
+[shadow-cohort.md](../guides/shadow-cohort.md).
 
 1. Reads the chain (read only) and confirms the uid still holds the announced hotkey.
 2. Sends each capsule of the window to the announced endpoint through the signed client. The

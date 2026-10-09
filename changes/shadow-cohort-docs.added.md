@@ -1,0 +1,1 @@
+A new page, docs/guides/shadow-cohort.md, sets out the admission criteria for the shadow cohort (outside uids that are scored and published with weight 0), with an issue form to apply and a proposed criteria file at shadow/criteria-proposed.json. The miner guide, the contest-windows quickstart and the admission document now point to it.

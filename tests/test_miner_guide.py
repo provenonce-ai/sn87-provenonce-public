@@ -158,9 +158,10 @@ def test_every_endpoint_code_has_the_status_the_server_sends():
         assert cells[0] == str(expected(code)), (code, cells[0], expected(code))
 
 
-def test_the_guide_says_the_last_step_is_not_available_and_names_what_it_needs():
+def test_the_guide_says_the_last_step_depends_on_the_shadow_cohort_and_names_what_it_needs():
     text = GUIDE.read_text(encoding="utf-8")
-    assert "**Not available yet: depends on admission.**" in text
+    assert "**Depends on admission to the shadow cohort.**" in text
+    assert "shadow-cohort.md" in text
     part = text[text.index("## Part F."):text.index("## Part G.")]
     for needed in ("admission decision", "published result for a closed window",
                    "Your uid in that record", "admission.md"):

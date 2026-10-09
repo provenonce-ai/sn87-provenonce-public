@@ -182,7 +182,12 @@ uv run sn87-miner serve --role candidate --hotkey-keyfile PATH \
 
 [The miner guide](docs/guides/miner-guide.md) takes one sitting: install, write and score a method,
 run the signed endpoint, sign an announcement, and see what is still missing before a score on the
-test network. [docs/quickstart/miner.md](docs/quickstart/miner.md) shows a request against a fixture capsule,
+test network.
+
+[The shadow cohort page](docs/guides/shadow-cohort.md) says how an outside miner applies to be
+scored and published with weight 0, and the proposed criteria for anything beyond that.
+
+[docs/quickstart/miner.md](docs/quickstart/miner.md) shows a request against a fixture capsule,
 the wire rules, the signed endpoint and how to announce it
 ([docs/protocol/miner-announcement.md](docs/protocol/miner-announcement.md)). Registering a hotkey
 and anything on a chain is yours to do with your own wallet; this repository does not do it for

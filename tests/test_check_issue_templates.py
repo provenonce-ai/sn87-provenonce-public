@@ -129,3 +129,28 @@ def test_the_subset_parser_rejects_what_it_cannot_read():
 
 def test_doubled_single_quotes_are_accepted():
     assert cit.parse_yaml_subset("a: 'Builder''s report'\n") == {"a": "Builder's report"}
+
+
+def test_the_shadow_application_template_is_required_and_well_formed(tmp_path):
+    assert "shadow-cohort-application.yml" in cit.REQUIRED_TEMPLATES
+    d = _copy(tmp_path)
+    (d / "shadow-cohort-application.yml").unlink()
+    assert any("shadow-cohort-application.yml: missing" in p for p in cit.check_dir(d))
+
+    data = cit.parse_yaml_subset((TEMPLATES / "shadow-cohort-application.yml").read_text())
+    assert data["title"] == "[shadow] "
+    fields = {item["id"]: item for item in data["body"] if "id" in item}
+    assert fields["netuid"]["type"] == "dropdown"
+    assert fields["netuid"]["attributes"]["options"] == ["582"]
+    for ident in ("uid", "hotkey", "endpoint", "announcement-url", "miner-version"):
+        assert fields[ident]["validations"]["required"] is True
+    assert fields["method"]["validations"]["required"] is False
+    boxes = fields["confirmations"]["attributes"]["options"]
+    assert len(boxes) == 4 and all(box["required"] is True for box in boxes)
+    # free text must come with the warning about secrets
+    warning = data["body"][0]["attributes"]["value"]
+    assert data["body"][0]["type"] == "markdown"
+    assert "Do not paste secrets" in warning
+    assert "do not paste secrets" in fields["hotkey"]["attributes"]["description"]
+    assert "no key, seed, mnemonic, wallet file or token" in boxes[-1]["label"]
+    assert "public hostname" in fields["endpoint"]["attributes"]["description"]

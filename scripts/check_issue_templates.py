@@ -25,7 +25,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_DIR = ROOT / ".github" / "ISSUE_TEMPLATE"
-REQUIRED_TEMPLATES = ("setup-failure.yml", "scoring-question.yml", "security.yml", "config.yml")
+REQUIRED_TEMPLATES = ("setup-failure.yml", "scoring-question.yml", "security.yml",
+                      "shadow-cohort-application.yml", "config.yml")
 FIELD_TYPES = {"markdown", "input", "textarea", "dropdown", "checkboxes"}
 FREE_TEXT = {"input", "textarea"}
 SECURITY_TEMPLATE = "security.yml"
