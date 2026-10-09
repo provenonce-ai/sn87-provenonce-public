@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "sn87-provenonce"
-version = "0.1.0a0"
+version = "0.1.0"
 description = "Protocol contracts for evidence-backed assurance of autonomous work on SN87."
 readme = "README.md"
 requires-python = ">=3.12"
