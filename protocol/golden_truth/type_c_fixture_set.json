@@ -1,0 +1,1090 @@
+{
+  "cases": [
+    {
+      "capsule_commitment": "sha256:fce76514f43a9330465bcb54b2169a58ec02abbf971cb2b3517f9d802878ce16",
+      "case_id": "fixture-run/000",
+      "family": "clean",
+      "index": 0,
+      "qid": "type-c-clean-control-000",
+      "track": "scored",
+      "truth": {
+        "defects": [],
+        "state": "NO_MATERIAL_DEVIATION"
+      }
+    },
+    {
+      "capsule_commitment": "sha256:633423b1ade13e33c9ea39feac1b8897221e7c214c26dbd44d2b1a34e7510d81",
+      "case_id": "fixture-run/001",
+      "family": "clean",
+      "index": 1,
+      "qid": "type-c-clean-control-001",
+      "track": "scored",
+      "truth": {
+        "defects": [],
+        "state": "NO_MATERIAL_DEVIATION"
+      }
+    },
+    {
+      "capsule_commitment": "sha256:ae3e65f6468a1f3bdc4e49217d3a8a263a1b171f90e5214d32ce4f75a1fef068",
+      "case_id": "fixture-run/002",
+      "family": "clean",
+      "index": 2,
+      "qid": "type-c-clean-control-002",
+      "track": "scored",
+      "truth": {
+        "defects": [],
+        "state": "NO_MATERIAL_DEVIATION"
+      }
+    },
+    {
+      "capsule_commitment": "sha256:8e21dfb08c32925cb275ebf0f36f4527b770c438cc7403bc46875cef5770c85c",
+      "case_id": "fixture-run/003",
+      "family": "clean",
+      "index": 3,
+      "qid": "type-c-clean-control-003",
+      "track": "scored",
+      "truth": {
+        "defects": [],
+        "state": "NO_MATERIAL_DEVIATION"
+      }
+    },
+    {
+      "capsule_commitment": "sha256:65072c2c9ad53725fa31c844c542d3aee2f94c38a7792f9f3e4193b1281e0cc6",
+      "case_id": "fixture-run/004",
+      "family": "clean",
+      "index": 4,
+      "qid": "type-c-clean-control-004",
+      "track": "scored",
+      "truth": {
+        "defects": [],
+        "state": "NO_MATERIAL_DEVIATION"
+      }
+    },
+    {
+      "capsule_commitment": "sha256:19e73b4d5306c375878c4e2e60f4c4d95c3271fdc2b7289870470a0c8e5ffbe3",
+      "case_id": "fixture-run/005",
+      "family": "clean",
+      "index": 5,
+      "qid": "type-c-clean-control-005",
+      "track": "scored",
+      "truth": {
+        "defects": [],
+        "state": "NO_MATERIAL_DEVIATION"
+      }
+    },
+    {
+      "capsule_commitment": "sha256:1544eee27c4ace3fd026f24dcf7487de0ad5e9d97b7bf8a0908c82433487de4c",
+      "case_id": "fixture-run/006",
+      "family": "clean",
+      "index": 6,
+      "qid": "type-c-clean-control-006",
+      "track": "scored",
+      "truth": {
+        "defects": [],
+        "state": "NO_MATERIAL_DEVIATION"
+      }
+    },
+    {
+      "capsule_commitment": "sha256:cf369d427083b254dcf339b1781d56f8bd30724997c125756a4e24178baa2f9d",
+      "case_id": "fixture-run/007",
+      "family": "clean",
+      "index": 7,
+      "qid": "type-c-clean-control-007",
+      "track": "scored",
+      "truth": {
+        "defects": [],
+        "state": "NO_MATERIAL_DEVIATION"
+      }
+    },
+    {
+      "capsule_commitment": "sha256:491230378e5f1dbc5265e6f1e6f752ab9c6bb838f275c91df27cad9303412ecd",
+      "case_id": "fixture-run/008",
+      "family": "clean",
+      "index": 8,
+      "qid": "type-c-clean-control-008",
+      "track": "scored",
+      "truth": {
+        "defects": [],
+        "state": "NO_MATERIAL_DEVIATION"
+      }
+    },
+    {
+      "capsule_commitment": "sha256:ed08064ebd3d71a073920a56da48735237506de60874ba7c07264ef51834dd94",
+      "case_id": "fixture-run/009",
+      "family": "clean",
+      "index": 9,
+      "qid": "type-c-clean-control-009",
+      "track": "scored",
+      "truth": {
+        "defects": [],
+        "state": "NO_MATERIAL_DEVIATION"
+      }
+    },
+    {
+      "capsule_commitment": "sha256:3ff7104ff9aff2838be5400ae154d891c99edf31acb4638315cc02a9e41f4b03",
+      "case_id": "fixture-run/010",
+      "family": "clean",
+      "index": 10,
+      "qid": "type-c-clean-control-010",
+      "track": "scored",
+      "truth": {
+        "defects": [],
+        "state": "NO_MATERIAL_DEVIATION"
+      }
+    },
+    {
+      "capsule_commitment": "sha256:7fdfc4c5b33d88cba35e52fff7cf7233eef55eef871244546818461ec0689b5d",
+      "case_id": "fixture-run/011",
+      "family": "clean",
+      "index": 11,
+      "qid": "type-c-clean-control-011",
+      "track": "scored",
+      "truth": {
+        "defects": [],
+        "state": "NO_MATERIAL_DEVIATION"
+      }
+    },
+    {
+      "capsule_commitment": "sha256:015f66b9a25b591ba198607929cca49c7c61f8d21e20fbd1461ed4fd22018eac",
+      "case_id": "fixture-run/012",
+      "family": "missing_gate",
+      "index": 12,
+      "qid": "type-c-missing-review-012",
+      "track": "scored",
+      "truth": {
+        "defects": [
+          {
+            "code": "MISSING_REVIEW_GATE",
+            "required_refs": [
+              "$completeness",
+              "e1",
+              "e3",
+              "e4"
+            ],
+            "severity": "HIGH"
+          }
+        ],
+        "state": "FINDINGS"
+      }
+    },
+    {
+      "capsule_commitment": "sha256:4ec0f9c0586aef0948514326d93160b8ee7db7f5e0efd2489fd126e0178fc7ce",
+      "case_id": "fixture-run/013",
+      "family": "missing_gate",
+      "index": 13,
+      "qid": "type-c-missing-review-013",
+      "track": "scored",
+      "truth": {
+        "defects": [
+          {
+            "code": "MISSING_REVIEW_GATE",
+            "required_refs": [
+              "$completeness",
+              "e1",
+              "e3",
+              "e4"
+            ],
+            "severity": "HIGH"
+          }
+        ],
+        "state": "FINDINGS"
+      }
+    },
+    {
+      "capsule_commitment": "sha256:5d4f5091874f332c8c4da5301e2152dc5273d671b225c0ebcd8e6a8ae1d49595",
+      "case_id": "fixture-run/014",
+      "family": "missing_gate",
+      "index": 14,
+      "qid": "type-c-missing-review-014",
+      "track": "scored",
+      "truth": {
+        "defects": [
+          {
+            "code": "MISSING_REVIEW_GATE",
+            "required_refs": [
+              "$completeness",
+              "e1",
+              "e3",
+              "e4"
+            ],
+            "severity": "HIGH"
+          }
+        ],
+        "state": "FINDINGS"
+      }
+    },
+    {
+      "capsule_commitment": "sha256:0f7c3219f37a58caa4a3da84b777fa8bb2791f82d2202b67c0823f09a9f2d4ec",
+      "case_id": "fixture-run/015",
+      "family": "missing_gate",
+      "index": 15,
+      "qid": "type-c-missing-review-015",
+      "track": "scored",
+      "truth": {
+        "defects": [
+          {
+            "code": "MISSING_REVIEW_GATE",
+            "required_refs": [
+              "$completeness",
+              "e1",
+              "e3",
+              "e4"
+            ],
+            "severity": "HIGH"
+          }
+        ],
+        "state": "FINDINGS"
+      }
+    },
+    {
+      "capsule_commitment": "sha256:3c45958485adc6063496b719dabd691818aaa21018dce0659460aa547c411eb9",
+      "case_id": "fixture-run/016",
+      "family": "missing_gate",
+      "index": 16,
+      "qid": "type-c-missing-review-016",
+      "track": "scored",
+      "truth": {
+        "defects": [
+          {
+            "code": "MISSING_REVIEW_GATE",
+            "required_refs": [
+              "$completeness",
+              "e1",
+              "e3",
+              "e4"
+            ],
+            "severity": "HIGH"
+          }
+        ],
+        "state": "FINDINGS"
+      }
+    },
+    {
+      "capsule_commitment": "sha256:4993d21601f546165e04ba20245d24e1300a47b0b50782caa2c8bccbc3912c9c",
+      "case_id": "fixture-run/017",
+      "family": "missing_gate",
+      "index": 17,
+      "qid": "type-c-missing-review-017",
+      "track": "scored",
+      "truth": {
+        "defects": [
+          {
+            "code": "MISSING_REVIEW_GATE",
+            "required_refs": [
+              "$completeness",
+              "e1",
+              "e3",
+              "e4"
+            ],
+            "severity": "HIGH"
+          }
+        ],
+        "state": "FINDINGS"
+      }
+    },
+    {
+      "capsule_commitment": "sha256:5d5975333370c0c2a286736a1a8d3f16a9077bd4891190b30ae968967e0eda2a",
+      "case_id": "fixture-run/018",
+      "family": "missing_gate",
+      "index": 18,
+      "qid": "type-c-missing-review-018",
+      "track": "scored",
+      "truth": {
+        "defects": [
+          {
+            "code": "MISSING_REVIEW_GATE",
+            "required_refs": [
+              "$completeness",
+              "e1",
+              "e3",
+              "e4"
+            ],
+            "severity": "HIGH"
+          }
+        ],
+        "state": "FINDINGS"
+      }
+    },
+    {
+      "capsule_commitment": "sha256:0cc32e28490d56e832a5bc6be6df5b083a116701effd600fdf485d32cebf1556",
+      "case_id": "fixture-run/019",
+      "family": "missing_gate",
+      "index": 19,
+      "qid": "type-c-missing-review-019",
+      "track": "scored",
+      "truth": {
+        "defects": [
+          {
+            "code": "MISSING_REVIEW_GATE",
+            "required_refs": [
+              "$completeness",
+              "e1",
+              "e3",
+              "e4"
+            ],
+            "severity": "HIGH"
+          }
+        ],
+        "state": "FINDINGS"
+      }
+    },
+    {
+      "capsule_commitment": "sha256:58201ad6caecf52c5665d4753f9665d80945ece37cc521e6115cca29b5f45fdd",
+      "case_id": "fixture-run/020",
+      "family": "missing_gate",
+      "index": 20,
+      "qid": "type-c-missing-review-020",
+      "track": "scored",
+      "truth": {
+        "defects": [
+          {
+            "code": "MISSING_REVIEW_GATE",
+            "required_refs": [
+              "$completeness",
+              "e1",
+              "e3",
+              "e4"
+            ],
+            "severity": "HIGH"
+          }
+        ],
+        "state": "FINDINGS"
+      }
+    },
+    {
+      "capsule_commitment": "sha256:f2d71acdde861a17aefce0665dc61edf67b50edc7cbb974b709f96afabf4b567",
+      "case_id": "fixture-run/021",
+      "family": "missing_gate",
+      "index": 21,
+      "qid": "type-c-missing-review-021",
+      "track": "scored",
+      "truth": {
+        "defects": [
+          {
+            "code": "MISSING_REVIEW_GATE",
+            "required_refs": [
+              "$completeness",
+              "e1",
+              "e3",
+              "e4"
+            ],
+            "severity": "HIGH"
+          }
+        ],
+        "state": "FINDINGS"
+      }
+    },
+    {
+      "capsule_commitment": "sha256:e7448be96ad1575f41a3d33b8c68bfb0bafcf8baa35b1485ded35d1e768dd2d6",
+      "case_id": "fixture-run/022",
+      "family": "missing_gate",
+      "index": 22,
+      "qid": "type-c-missing-review-022",
+      "track": "scored",
+      "truth": {
+        "defects": [
+          {
+            "code": "MISSING_REVIEW_GATE",
+            "required_refs": [
+              "$completeness",
+              "e1",
+              "e3",
+              "e4"
+            ],
+            "severity": "HIGH"
+          }
+        ],
+        "state": "FINDINGS"
+      }
+    },
+    {
+      "capsule_commitment": "sha256:082d8e0b63dba57456e4bab38090e45c2b62b53cfc9aaad82356a8e9c51317e2",
+      "case_id": "fixture-run/023",
+      "family": "missing_gate",
+      "index": 23,
+      "qid": "type-c-missing-review-023",
+      "track": "scored",
+      "truth": {
+        "defects": [
+          {
+            "code": "MISSING_REVIEW_GATE",
+            "required_refs": [
+              "$completeness",
+              "e1",
+              "e3",
+              "e4"
+            ],
+            "severity": "HIGH"
+          }
+        ],
+        "state": "FINDINGS"
+      }
+    },
+    {
+      "capsule_commitment": "sha256:71c52fa6e90c104c7d124de0cc69782f4951765f6d46f758b8b4f2aeb1e38623",
+      "case_id": "fixture-run/024",
+      "family": "order",
+      "index": 24,
+      "qid": "type-c-validation-before-submit-024",
+      "track": "scored",
+      "truth": {
+        "defects": [
+          {
+            "code": "INVALID_WORKFLOW_ORDER",
+            "required_refs": [
+              "e1",
+              "e2",
+              "e3",
+              "e4"
+            ],
+            "severity": "MEDIUM"
+          }
+        ],
+        "state": "FINDINGS"
+      }
+    },
+    {
+      "capsule_commitment": "sha256:23bb08715b34acf71e541db3387a4c695bdb8a0018ee923dde2dd61f46bece5d",
+      "case_id": "fixture-run/025",
+      "family": "order",
+      "index": 25,
+      "qid": "type-c-validation-before-submit-025",
+      "track": "scored",
+      "truth": {
+        "defects": [
+          {
+            "code": "INVALID_WORKFLOW_ORDER",
+            "required_refs": [
+              "e1",
+              "e2",
+              "e3",
+              "e4"
+            ],
+            "severity": "MEDIUM"
+          }
+        ],
+        "state": "FINDINGS"
+      }
+    },
+    {
+      "capsule_commitment": "sha256:b0c317d0902d643079b6bce8e00d87b1a5bfc5bd5fa7648997b5bcbd70859381",
+      "case_id": "fixture-run/026",
+      "family": "order",
+      "index": 26,
+      "qid": "type-c-validation-before-submit-026",
+      "track": "scored",
+      "truth": {
+        "defects": [
+          {
+            "code": "INVALID_WORKFLOW_ORDER",
+            "required_refs": [
+              "e1",
+              "e2",
+              "e3",
+              "e4"
+            ],
+            "severity": "MEDIUM"
+          }
+        ],
+        "state": "FINDINGS"
+      }
+    },
+    {
+      "capsule_commitment": "sha256:284ae11d9d5a57b4d14c7a4f17c4081f0c4f647a4e1feb9399bf002d15ae2d21",
+      "case_id": "fixture-run/027",
+      "family": "order",
+      "index": 27,
+      "qid": "type-c-validation-before-submit-027",
+      "track": "scored",
+      "truth": {
+        "defects": [
+          {
+            "code": "INVALID_WORKFLOW_ORDER",
+            "required_refs": [
+              "e1",
+              "e2",
+              "e3",
+              "e4"
+            ],
+            "severity": "MEDIUM"
+          }
+        ],
+        "state": "FINDINGS"
+      }
+    },
+    {
+      "capsule_commitment": "sha256:4573da548aed34b97213e392d18c441d3cb68077fedce1233d7086358464a89b",
+      "case_id": "fixture-run/028",
+      "family": "order",
+      "index": 28,
+      "qid": "type-c-validation-before-submit-028",
+      "track": "scored",
+      "truth": {
+        "defects": [
+          {
+            "code": "INVALID_WORKFLOW_ORDER",
+            "required_refs": [
+              "e1",
+              "e2",
+              "e3",
+              "e4"
+            ],
+            "severity": "MEDIUM"
+          }
+        ],
+        "state": "FINDINGS"
+      }
+    },
+    {
+      "capsule_commitment": "sha256:a667c1cfe42cee2938a180118aa04694fb3adef2f002385074f5bb8e317811c9",
+      "case_id": "fixture-run/029",
+      "family": "order",
+      "index": 29,
+      "qid": "type-c-validation-before-submit-029",
+      "track": "scored",
+      "truth": {
+        "defects": [
+          {
+            "code": "INVALID_WORKFLOW_ORDER",
+            "required_refs": [
+              "e1",
+              "e2",
+              "e3",
+              "e4"
+            ],
+            "severity": "MEDIUM"
+          }
+        ],
+        "state": "FINDINGS"
+      }
+    },
+    {
+      "capsule_commitment": "sha256:b1dbf9497f8a76d7f9e9d75e215e05f69b37bb9d79966e936779e321197a61d0",
+      "case_id": "fixture-run/030",
+      "family": "order",
+      "index": 30,
+      "qid": "type-c-validation-before-submit-030",
+      "track": "scored",
+      "truth": {
+        "defects": [
+          {
+            "code": "INVALID_WORKFLOW_ORDER",
+            "required_refs": [
+              "e1",
+              "e2",
+              "e3",
+              "e4"
+            ],
+            "severity": "MEDIUM"
+          }
+        ],
+        "state": "FINDINGS"
+      }
+    },
+    {
+      "capsule_commitment": "sha256:1608b4938b649b0df40be14c326f27ca946e73da7ef0e1a461396fb3609d6226",
+      "case_id": "fixture-run/031",
+      "family": "order",
+      "index": 31,
+      "qid": "type-c-validation-before-submit-031",
+      "track": "scored",
+      "truth": {
+        "defects": [
+          {
+            "code": "INVALID_WORKFLOW_ORDER",
+            "required_refs": [
+              "e1",
+              "e2",
+              "e3",
+              "e4"
+            ],
+            "severity": "MEDIUM"
+          }
+        ],
+        "state": "FINDINGS"
+      }
+    },
+    {
+      "capsule_commitment": "sha256:70cc61e6044d25264e58c3a40e3a67e91473a0bf090b4d7cf9eef03bc81b91a3",
+      "case_id": "fixture-run/032",
+      "family": "continuity",
+      "index": 32,
+      "qid": "type-c-chain-break-032",
+      "track": "scored",
+      "truth": {
+        "defects": [
+          {
+            "code": "EVIDENCE_CHAIN_BREAK",
+            "required_refs": [
+              "e1",
+              "e2",
+              "e3",
+              "e4"
+            ],
+            "severity": "HIGH"
+          }
+        ],
+        "state": "FINDINGS"
+      }
+    },
+    {
+      "capsule_commitment": "sha256:74f7a745475b72bb4b9c41be00884cec6f66bc1cb3ee984eda0361461cb08d73",
+      "case_id": "fixture-run/033",
+      "family": "continuity",
+      "index": 33,
+      "qid": "type-c-chain-break-033",
+      "track": "scored",
+      "truth": {
+        "defects": [
+          {
+            "code": "EVIDENCE_CHAIN_BREAK",
+            "required_refs": [
+              "e1",
+              "e2",
+              "e3",
+              "e4"
+            ],
+            "severity": "HIGH"
+          }
+        ],
+        "state": "FINDINGS"
+      }
+    },
+    {
+      "capsule_commitment": "sha256:7a225f8ac1de8071ea22badf1178b987cd005f5df1ed8c7af92b92ac7d6237c5",
+      "case_id": "fixture-run/034",
+      "family": "continuity",
+      "index": 34,
+      "qid": "type-c-chain-break-034",
+      "track": "scored",
+      "truth": {
+        "defects": [
+          {
+            "code": "EVIDENCE_CHAIN_BREAK",
+            "required_refs": [
+              "e1",
+              "e2",
+              "e3",
+              "e4"
+            ],
+            "severity": "HIGH"
+          }
+        ],
+        "state": "FINDINGS"
+      }
+    },
+    {
+      "capsule_commitment": "sha256:86c758e2ed402b2faeb3ae8989706f85b61330a3f18223b4ab140889f3e38873",
+      "case_id": "fixture-run/035",
+      "family": "continuity",
+      "index": 35,
+      "qid": "type-c-chain-break-035",
+      "track": "scored",
+      "truth": {
+        "defects": [
+          {
+            "code": "EVIDENCE_CHAIN_BREAK",
+            "required_refs": [
+              "e1",
+              "e2",
+              "e3",
+              "e4"
+            ],
+            "severity": "HIGH"
+          }
+        ],
+        "state": "FINDINGS"
+      }
+    },
+    {
+      "capsule_commitment": "sha256:94b645b5a3cdf2cd91448e29f0507432fd74b60c70fc7ed5af62827417febad5",
+      "case_id": "fixture-run/036",
+      "family": "continuity",
+      "index": 36,
+      "qid": "type-c-chain-break-036",
+      "track": "scored",
+      "truth": {
+        "defects": [
+          {
+            "code": "EVIDENCE_CHAIN_BREAK",
+            "required_refs": [
+              "e1",
+              "e2",
+              "e3",
+              "e4"
+            ],
+            "severity": "HIGH"
+          }
+        ],
+        "state": "FINDINGS"
+      }
+    },
+    {
+      "capsule_commitment": "sha256:23c7edfc034604ed2d4512c273922e69977b9ffd61db3012749de72bf5d8e07e",
+      "case_id": "fixture-run/037",
+      "family": "continuity",
+      "index": 37,
+      "qid": "type-c-chain-break-037",
+      "track": "scored",
+      "truth": {
+        "defects": [
+          {
+            "code": "EVIDENCE_CHAIN_BREAK",
+            "required_refs": [
+              "e1",
+              "e2",
+              "e3",
+              "e4"
+            ],
+            "severity": "HIGH"
+          }
+        ],
+        "state": "FINDINGS"
+      }
+    },
+    {
+      "capsule_commitment": "sha256:277e2c13af170dd5fb3713eb7401b6882f954d3c0151832b29695b2185acbf61",
+      "case_id": "fixture-run/038",
+      "family": "continuity",
+      "index": 38,
+      "qid": "type-c-chain-break-038",
+      "track": "scored",
+      "truth": {
+        "defects": [
+          {
+            "code": "EVIDENCE_CHAIN_BREAK",
+            "required_refs": [
+              "e1",
+              "e2",
+              "e3",
+              "e4"
+            ],
+            "severity": "HIGH"
+          }
+        ],
+        "state": "FINDINGS"
+      }
+    },
+    {
+      "capsule_commitment": "sha256:55527a9ad82a5d1e6310b4ef872ffb85e9812209d16db6fc49a9f570d5a9f46f",
+      "case_id": "fixture-run/039",
+      "family": "continuity",
+      "index": 39,
+      "qid": "type-c-chain-break-039",
+      "track": "scored",
+      "truth": {
+        "defects": [
+          {
+            "code": "EVIDENCE_CHAIN_BREAK",
+            "required_refs": [
+              "e1",
+              "e2",
+              "e3",
+              "e4"
+            ],
+            "severity": "HIGH"
+          }
+        ],
+        "state": "FINDINGS"
+      }
+    },
+    {
+      "capsule_commitment": "sha256:82475dd36f16f5edc7ba8336837d5aac1bb24d448e329f02bdf6ec693c4c4c83",
+      "case_id": "fixture-run/040",
+      "family": "incomplete",
+      "index": 40,
+      "qid": "type-c-insufficient-evidence-040",
+      "track": "diagnostic",
+      "truth": {
+        "defects": [],
+        "state": "INSUFFICIENT_EVIDENCE_ABSTAIN"
+      }
+    },
+    {
+      "capsule_commitment": "sha256:a4246131ccd916f4db4fc5b5c588a84ee6bed4f832d3fa45b1468602a98ec72a",
+      "case_id": "fixture-run/041",
+      "family": "incomplete",
+      "index": 41,
+      "qid": "type-c-insufficient-evidence-041",
+      "track": "diagnostic",
+      "truth": {
+        "defects": [],
+        "state": "INSUFFICIENT_EVIDENCE_ABSTAIN"
+      }
+    },
+    {
+      "capsule_commitment": "sha256:f0f7be3b732e28f2bc482c722629c5a604ba7dae13ab7a7e96cc16d5573b92fb",
+      "case_id": "fixture-run/042",
+      "family": "incomplete",
+      "index": 42,
+      "qid": "type-c-insufficient-evidence-042",
+      "track": "diagnostic",
+      "truth": {
+        "defects": [],
+        "state": "INSUFFICIENT_EVIDENCE_ABSTAIN"
+      }
+    },
+    {
+      "capsule_commitment": "sha256:a48371b831dade606fa31101d4ee983bdff5d902e0106badefa38247f9804b88",
+      "case_id": "fixture-run/043",
+      "family": "incomplete",
+      "index": 43,
+      "qid": "type-c-insufficient-evidence-043",
+      "track": "diagnostic",
+      "truth": {
+        "defects": [],
+        "state": "INSUFFICIENT_EVIDENCE_ABSTAIN"
+      }
+    },
+    {
+      "capsule_commitment": "sha256:6f65ecb3538da8dc08cb1ac7ccca15b8cd1215ec826a2fb1b511a17e81cbd2bf",
+      "case_id": "fixture-run/044",
+      "family": "equivalent",
+      "index": 44,
+      "qid": "type-c-missing-review-equivalent-observation-044",
+      "track": "diagnostic",
+      "truth": {
+        "defects": [
+          {
+            "code": "MISSING_REVIEW_GATE",
+            "required_refs": [
+              "$completeness",
+              "e1",
+              "e3",
+              "e4",
+              "semantic-no-op"
+            ],
+            "severity": "HIGH"
+          }
+        ],
+        "state": "FINDINGS"
+      }
+    },
+    {
+      "capsule_commitment": "sha256:5eceb13e823e7ab33310970d5c230baea7b1ece24512cf17042a0e4f3d762d1c",
+      "case_id": "fixture-run/045",
+      "family": "equivalent",
+      "index": 45,
+      "qid": "type-c-missing-review-equivalent-observation-045",
+      "track": "diagnostic",
+      "truth": {
+        "defects": [
+          {
+            "code": "MISSING_REVIEW_GATE",
+            "required_refs": [
+              "$completeness",
+              "e1",
+              "e3",
+              "e4",
+              "semantic-no-op"
+            ],
+            "severity": "HIGH"
+          }
+        ],
+        "state": "FINDINGS"
+      }
+    },
+    {
+      "capsule_commitment": "sha256:87a432b40ae87c318d32f3e42af29434d09c4aa4bb1bdc0d7a4a6c6993f25a94",
+      "case_id": "fixture-run/046",
+      "family": "equivalent",
+      "index": 46,
+      "qid": "type-c-missing-review-equivalent-observation-046",
+      "track": "diagnostic",
+      "truth": {
+        "defects": [
+          {
+            "code": "MISSING_REVIEW_GATE",
+            "required_refs": [
+              "$completeness",
+              "e1",
+              "e3",
+              "e4",
+              "semantic-no-op"
+            ],
+            "severity": "HIGH"
+          }
+        ],
+        "state": "FINDINGS"
+      }
+    },
+    {
+      "capsule_commitment": "sha256:bcf564b7e50f3e048aaf7a99f23a63026ef4fa89d706ee1203b33c8b6ce3d3e7",
+      "case_id": "fixture-run/047",
+      "family": "equivalent",
+      "index": 47,
+      "qid": "type-c-missing-review-equivalent-observation-047",
+      "track": "diagnostic",
+      "truth": {
+        "defects": [
+          {
+            "code": "MISSING_REVIEW_GATE",
+            "required_refs": [
+              "$completeness",
+              "e1",
+              "e3",
+              "e4",
+              "semantic-no-op"
+            ],
+            "severity": "HIGH"
+          }
+        ],
+        "state": "FINDINGS"
+      }
+    },
+    {
+      "capsule_commitment": "sha256:dc178909e1d204e7d5dfbe1c453de9d6e0c85c82a5601fb4f5216b6a20e31546",
+      "case_id": "default/type-c-clean-control",
+      "fixture_id": "type-c-clean-control",
+      "qid": "type-c-clean-control",
+      "truth": {
+        "defects": [],
+        "state": "NO_MATERIAL_DEVIATION"
+      }
+    },
+    {
+      "capsule_commitment": "sha256:e9d69dc8084232f0cef4196da7dbbe225c18432c70347edb5f14c4def0e28683",
+      "case_id": "default/type-c-missing-review",
+      "fixture_id": "type-c-missing-review",
+      "qid": "type-c-missing-review",
+      "truth": {
+        "defects": [
+          {
+            "code": "MISSING_REVIEW_GATE",
+            "required_refs": [
+              "$completeness",
+              "e1",
+              "e3",
+              "e4"
+            ],
+            "severity": "HIGH"
+          }
+        ],
+        "state": "FINDINGS"
+      }
+    },
+    {
+      "capsule_commitment": "sha256:da9fe82b3ae0a0e03593f74d184ed3419e0a607b6cc488426da61450101c8cda",
+      "case_id": "default/type-c-missing-review-equivalent-observation",
+      "fixture_id": "type-c-missing-review-equivalent-observation",
+      "qid": "type-c-missing-review-equivalent-observation",
+      "truth": {
+        "defects": [
+          {
+            "code": "MISSING_REVIEW_GATE",
+            "required_refs": [
+              "$completeness",
+              "e1",
+              "e3",
+              "e4",
+              "semantic-no-op"
+            ],
+            "severity": "HIGH"
+          }
+        ],
+        "state": "FINDINGS"
+      }
+    },
+    {
+      "capsule_commitment": "sha256:85d957b5e20daaba41b06cfa86575ef96df83502c4d1528384da5d52f6536526",
+      "case_id": "default/type-c-chain-break",
+      "fixture_id": "type-c-chain-break",
+      "qid": "type-c-chain-break",
+      "truth": {
+        "defects": [
+          {
+            "code": "EVIDENCE_CHAIN_BREAK",
+            "required_refs": [
+              "e1",
+              "e2",
+              "e3",
+              "e4"
+            ],
+            "severity": "HIGH"
+          }
+        ],
+        "state": "FINDINGS"
+      }
+    },
+    {
+      "capsule_commitment": "sha256:e8b46a3c074a7c05558e0c01d4728d89ad0fbd5e148be1df4faf15f74e295412",
+      "case_id": "default/type-c-insufficient-evidence",
+      "fixture_id": "type-c-insufficient-evidence",
+      "qid": "type-c-insufficient-evidence",
+      "truth": {
+        "defects": [],
+        "state": "INSUFFICIENT_EVIDENCE_ABSTAIN"
+      }
+    },
+    {
+      "capsule_commitment": "sha256:8d063a1a672d46656a8dd363b8c966741859b8e2eaf6d1101e0ce1c61cd399fc",
+      "case_id": "default/type-c-missing-submit",
+      "fixture_id": "type-c-missing-submit",
+      "qid": "type-c-missing-submit",
+      "truth": {
+        "defects": [
+          {
+            "code": "MISSING_SUBMIT_EVENT",
+            "required_refs": [
+              "$completeness",
+              "e2",
+              "e3",
+              "e4"
+            ],
+            "severity": "HIGH"
+          }
+        ],
+        "state": "FINDINGS"
+      }
+    },
+    {
+      "capsule_commitment": "sha256:5bb93f82ac08b6eb9587a03cbc1ba071d8b561b3d07985f24c590511a5edf3f6",
+      "case_id": "default/type-c-validation-before-submit",
+      "fixture_id": "type-c-validation-before-submit",
+      "qid": "type-c-validation-before-submit",
+      "truth": {
+        "defects": [
+          {
+            "code": "INVALID_WORKFLOW_ORDER",
+            "required_refs": [
+              "e1",
+              "e2",
+              "e3",
+              "e4"
+            ],
+            "severity": "MEDIUM"
+          }
+        ],
+        "state": "FINDINGS"
+      }
+    },
+    {
+      "capsule_commitment": "sha256:99b57f5f5d0eeea3e9a1065670748539c196c4c88915ea605cbea83ebd64c712",
+      "case_id": "default/type-c-duplicate-submit",
+      "fixture_id": "type-c-duplicate-submit",
+      "qid": "type-c-duplicate-submit",
+      "truth": {
+        "defects": [
+          {
+            "code": "DUPLICATE_SUBMIT_EVENT",
+            "required_refs": [
+              "duplicate-submit",
+              "e1",
+              "e2",
+              "e3",
+              "e4"
+            ],
+            "severity": "MEDIUM"
+          }
+        ],
+        "state": "FINDINGS"
+      }
+    }
+  ],
+  "class_id": "TYPE-C-RELEASE",
+  "description": "Truth of the gra/0.1 capsules built from the eight public Type C fixtures (simulation.type_c.FIXTURES). fixture-run/NNN: the profile's full assignment through classes.TYPE_C_RELEASE.generate(family, NNN). default/FIXTURE_ID: pilot.contracts.capsule_from_fixture(fixture) with its default identifiers.",
+  "profile_id": "GRA-W03-3",
+  "schema": "sn87-golden-truth/0.1",
+  "set_digest": "sha256:b33c7213dc18eb03c6b63052c32ca94ecfd7e6e08fe423ae39d7885c8b9eeac4",
+  "set_id": "type-c-release-fixture-set"
+}

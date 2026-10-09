@@ -1,0 +1,1 @@
+Supported platforms are now stated: Linux and macOS are tested in CI on Python 3.12 and 3.13, and Windows is supported through WSL2. Native Windows is not supported, and evidence bundles fail closed there instead of falling back to weaker path checks.

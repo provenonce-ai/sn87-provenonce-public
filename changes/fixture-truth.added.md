@@ -1,0 +1,1 @@
+The expected result for each public fixture case is published in `src/sn87_provenonce/institutional_v02/public_fixture_truth.json`, bound to the case's evidence commitment, so the demo output can be compared with a record.

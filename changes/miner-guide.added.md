@@ -1,0 +1,1 @@
+One public miner guide, `docs/guides/miner-guide.md`, takes a newcomer from install to a signed, probed and announced endpoint with the expected output after every command, and states plainly which last step (a score on the test network) is not available yet and what it depends on. Its commands run in CI, and its error-code table is checked against the source.

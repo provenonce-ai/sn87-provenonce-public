@@ -1,13 +1,15 @@
 """A minimal READ-ONLY chain client for the SN87 testnet attestation verifier.
 
-It answers exactly the reads ``verify_attestation.py`` needs, through the public ``bittensor``
-SDK (the ``transport`` extra), and nothing else:
+It answers exactly the reads ``verify_attestation.py`` and the miner guide need, through the
+public ``bittensor`` SDK (the ``transport`` extra), and nothing else:
 
 - ``last_weights_block(netuid, uid, at_block=None)``: ``LastUpdate[uid]`` of the subnet, from the
   state at ``at_block`` (or the current state).
 - ``weight_row(netuid, mecid, uid, at_block=None)``: the uid's weight row, as
   ``{"dests": [...], "weights": [...]}``, from the state at ``at_block``.
 - ``current_block()``.
+- ``registration_burn(netuid)``: the burn the chain charges now to register a hotkey on the
+  subnet, in rao (the miner guide reads it so that no figure is typed into a document).
 
 This module has no write path of any kind: it never builds a transaction, holds no key or
 account object, reads no home directory and no environment variable. It talks to one endpoint
@@ -107,6 +109,13 @@ class ChainReader:
         if not isinstance(updates, list) or not 0 <= uid < len(updates):
             raise ChainReadError("last_weights_block: uid outside the LastUpdate vector")
         return int(updates[uid])
+
+    def registration_burn(self, netuid: int, at_block: int | None = None) -> int:
+        """``Burn[netuid]``: what registering a hotkey on the subnet costs right now, in rao."""
+        burn = self._query("Burn", [netuid], block=at_block)
+        if type(burn) is not int or burn < 0:
+            raise ChainReadError("registration_burn: not a non-negative integer")
+        return burn
 
     def weight_row(self, netuid: int, mecid: int, uid: int,
                    at_block: int | None = None) -> dict[str, list[int]]:

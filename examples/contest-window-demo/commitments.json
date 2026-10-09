@@ -1,0 +1,18 @@
+{
+  "claim": "SHADOW_TOOLING_NOT_WIRED_TO_WEIGHTS",
+  "generator": "sn87-contest-generator/0.1",
+  "profile_commitment": "sha256:039b8639a839f8617003c2f5e686dcf313dd7fc80f9de2c1b8d7d9762a6e7665",
+  "profile_id": "IC-FIRST-LIGHT-MIN-3",
+  "schedule_commitment": "sha256:9c20e79437c2f4057c888505ce57fd9a1ef3768fb1cb39df48635f2453eec76f",
+  "schedule_id": "demo-schedule-1",
+  "schema_version": "sn87-contest-commitments/0.1",
+  "windows": [
+    {
+      "closes_at": "2026-10-21T00:00:00Z",
+      "opens_at": "2026-10-20T00:00:00Z",
+      "seed_commitment": "sha256:832db2851e085a20453df081cf957814c35adfc2bd6972565a388e18e16180f9",
+      "spec_commitment": "sha256:823804c2ffe4c3270ac1cd296c86e0ca2fd6fecf16546b81a210fa748f3a10d4",
+      "window_id": "demo-0001"
+    }
+  ]
+}

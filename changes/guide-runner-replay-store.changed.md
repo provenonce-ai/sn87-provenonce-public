@@ -1,0 +1,1 @@
+The guide runner can start a private replay store for a step marked `requires-valkey`, stops any server a step leaves running when the step ends, and keeps loopback addresses reachable in offline steps, so a guide can start a local server and talk to it.

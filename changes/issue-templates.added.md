@@ -1,0 +1,1 @@
+Issues now start from a chooser with three forms: setup failure, scoring question and security report. `scripts/check_issue_templates.py` checks the forms in CI, and blank issues are off so each report says what is needed to act on it.

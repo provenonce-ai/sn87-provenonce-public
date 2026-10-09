@@ -1,0 +1,376 @@
+{
+  "cases": [
+    {
+      "capsule_commitment": "sha256:322323453a9a9efc9799bb515191328c962b106ca4c04d8d584620bb07f5802c",
+      "case_id": "fixture-run/000",
+      "family": "stale_authority",
+      "index": 0,
+      "qid": "fx-stale_authority-000-000",
+      "track": "scored",
+      "truth": {
+        "defects": [
+          {
+            "code": "STALE_APPROVAL",
+            "required_refs": [
+              "$completeness",
+              "fx-stale_authority-000-018",
+              "fx-stale_authority-000-020",
+              "fx-stale_authority-000-021",
+              "fx-stale_authority-000-023",
+              "fx-stale_authority-000-027",
+              "fx-stale_authority-000-030",
+              "fx-stale_authority-000-031",
+              "fx-stale_authority-000-032"
+            ],
+            "severity": "HIGH"
+          }
+        ],
+        "state": "FINDINGS"
+      }
+    },
+    {
+      "capsule_commitment": "sha256:6a29e968b94450baff4620e41fc761c5097a4fec4b1bbc27671ea104110001a5",
+      "case_id": "fixture-run/001",
+      "family": "stale_authority",
+      "index": 1,
+      "qid": "fx-stale_authority-001-000",
+      "track": "scored",
+      "truth": {
+        "defects": [
+          {
+            "code": "STALE_APPROVAL",
+            "required_refs": [
+              "$completeness",
+              "fx-stale_authority-001-018",
+              "fx-stale_authority-001-020",
+              "fx-stale_authority-001-021",
+              "fx-stale_authority-001-023",
+              "fx-stale_authority-001-027",
+              "fx-stale_authority-001-030",
+              "fx-stale_authority-001-031",
+              "fx-stale_authority-001-032"
+            ],
+            "severity": "HIGH"
+          }
+        ],
+        "state": "FINDINGS"
+      }
+    },
+    {
+      "capsule_commitment": "sha256:df4f41387e98f8f35b7459477443fdcb0af67d040fdf93cb25b421b7a40351ef",
+      "case_id": "fixture-run/002",
+      "family": "stale_authority",
+      "index": 2,
+      "qid": "fx-stale_authority-002-000",
+      "track": "scored",
+      "truth": {
+        "defects": [
+          {
+            "code": "STALE_APPROVAL",
+            "required_refs": [
+              "$completeness",
+              "fx-stale_authority-002-018",
+              "fx-stale_authority-002-020",
+              "fx-stale_authority-002-021",
+              "fx-stale_authority-002-023",
+              "fx-stale_authority-002-027",
+              "fx-stale_authority-002-030",
+              "fx-stale_authority-002-031",
+              "fx-stale_authority-002-032"
+            ],
+            "severity": "HIGH"
+          }
+        ],
+        "state": "FINDINGS"
+      }
+    },
+    {
+      "capsule_commitment": "sha256:464317e8570c3007ff49944ae75b16142fc3c99d42637309d23f73c88c728cad",
+      "case_id": "fixture-run/003",
+      "family": "stale_authority",
+      "index": 3,
+      "qid": "fx-stale_authority-003-000",
+      "track": "scored",
+      "truth": {
+        "defects": [
+          {
+            "code": "STALE_APPROVAL",
+            "required_refs": [
+              "$completeness",
+              "fx-stale_authority-003-018",
+              "fx-stale_authority-003-020",
+              "fx-stale_authority-003-021",
+              "fx-stale_authority-003-023",
+              "fx-stale_authority-003-027",
+              "fx-stale_authority-003-030",
+              "fx-stale_authority-003-031",
+              "fx-stale_authority-003-032"
+            ],
+            "severity": "HIGH"
+          }
+        ],
+        "state": "FINDINGS"
+      }
+    },
+    {
+      "capsule_commitment": "sha256:6922cd978b4fa1d69fa2b0918821290351714506026f0a5be07236983290b7f5",
+      "case_id": "fixture-run/004",
+      "family": "stale_authority",
+      "index": 4,
+      "qid": "fx-stale_authority-004-000",
+      "track": "scored",
+      "truth": {
+        "defects": [
+          {
+            "code": "STALE_APPROVAL",
+            "required_refs": [
+              "$completeness",
+              "fx-stale_authority-004-018",
+              "fx-stale_authority-004-020",
+              "fx-stale_authority-004-021",
+              "fx-stale_authority-004-023",
+              "fx-stale_authority-004-027",
+              "fx-stale_authority-004-030",
+              "fx-stale_authority-004-031",
+              "fx-stale_authority-004-032"
+            ],
+            "severity": "HIGH"
+          }
+        ],
+        "state": "FINDINGS"
+      }
+    },
+    {
+      "capsule_commitment": "sha256:d77562ac62a63b5287a8c88083dd28a0c0fd67d6582d8c3cf768f0b17371c276",
+      "case_id": "fixture-run/005",
+      "family": "stale_authority",
+      "index": 5,
+      "qid": "fx-stale_authority-005-000",
+      "track": "scored",
+      "truth": {
+        "defects": [
+          {
+            "code": "STALE_APPROVAL",
+            "required_refs": [
+              "$completeness",
+              "fx-stale_authority-005-018",
+              "fx-stale_authority-005-020",
+              "fx-stale_authority-005-021",
+              "fx-stale_authority-005-023",
+              "fx-stale_authority-005-027",
+              "fx-stale_authority-005-030",
+              "fx-stale_authority-005-031",
+              "fx-stale_authority-005-032"
+            ],
+            "severity": "HIGH"
+          }
+        ],
+        "state": "FINDINGS"
+      }
+    },
+    {
+      "capsule_commitment": "sha256:79accce84b93c7a38df082ca64f9e9ccad22c521d9d84e7eb3e9ad7b2597ac2e",
+      "case_id": "fixture-run/006",
+      "family": "stale_authority",
+      "index": 6,
+      "qid": "fx-stale_authority-006-000",
+      "track": "scored",
+      "truth": {
+        "defects": [
+          {
+            "code": "STALE_APPROVAL",
+            "required_refs": [
+              "$completeness",
+              "fx-stale_authority-006-018",
+              "fx-stale_authority-006-020",
+              "fx-stale_authority-006-021",
+              "fx-stale_authority-006-023",
+              "fx-stale_authority-006-027",
+              "fx-stale_authority-006-030",
+              "fx-stale_authority-006-031",
+              "fx-stale_authority-006-032"
+            ],
+            "severity": "HIGH"
+          }
+        ],
+        "state": "FINDINGS"
+      }
+    },
+    {
+      "capsule_commitment": "sha256:633c70791d85259be3dbd44c298b8a0aa69404db9bc4602c9139525fe481d2eb",
+      "case_id": "fixture-run/007",
+      "family": "stale_authority",
+      "index": 7,
+      "qid": "fx-stale_authority-007-000",
+      "track": "scored",
+      "truth": {
+        "defects": [
+          {
+            "code": "STALE_APPROVAL",
+            "required_refs": [
+              "$completeness",
+              "fx-stale_authority-007-018",
+              "fx-stale_authority-007-020",
+              "fx-stale_authority-007-021",
+              "fx-stale_authority-007-023",
+              "fx-stale_authority-007-027",
+              "fx-stale_authority-007-030",
+              "fx-stale_authority-007-031",
+              "fx-stale_authority-007-032"
+            ],
+            "severity": "HIGH"
+          }
+        ],
+        "state": "FINDINGS"
+      }
+    },
+    {
+      "capsule_commitment": "sha256:123a8dcdbc94f6f41c310199b9f97a95e5eecff86ffe141c56a18e56ea0c50b8",
+      "case_id": "fixture-run/008",
+      "family": "fresh_review",
+      "index": 8,
+      "qid": "fx-fresh_review-008-000",
+      "track": "scored",
+      "truth": {
+        "defects": [],
+        "state": "NO_MATERIAL_DEVIATION"
+      }
+    },
+    {
+      "capsule_commitment": "sha256:2f47e7f6d5cbb9148b18bd6ae8dd74406cc35285898c740781bfd1d2607fc30d",
+      "case_id": "fixture-run/009",
+      "family": "fresh_review",
+      "index": 9,
+      "qid": "fx-fresh_review-009-000",
+      "track": "scored",
+      "truth": {
+        "defects": [],
+        "state": "NO_MATERIAL_DEVIATION"
+      }
+    },
+    {
+      "capsule_commitment": "sha256:cc470e1391bf196db776cd1d9a1dfafaa1360af516a4329e06a9868f56a3025a",
+      "case_id": "fixture-run/010",
+      "family": "fresh_review",
+      "index": 10,
+      "qid": "fx-fresh_review-010-000",
+      "track": "scored",
+      "truth": {
+        "defects": [],
+        "state": "NO_MATERIAL_DEVIATION"
+      }
+    },
+    {
+      "capsule_commitment": "sha256:294154f73277177bd9435c01fbf5709d82cc3911e20f355ca1099845a2e7020f",
+      "case_id": "fixture-run/011",
+      "family": "fresh_review",
+      "index": 11,
+      "qid": "fx-fresh_review-011-000",
+      "track": "scored",
+      "truth": {
+        "defects": [],
+        "state": "NO_MATERIAL_DEVIATION"
+      }
+    },
+    {
+      "capsule_commitment": "sha256:c91ab933da7f2c4cccc211e0b440916f771098143ca8730003dc01fcb8dfb542",
+      "case_id": "fixture-run/012",
+      "family": "incomplete",
+      "index": 12,
+      "qid": "fx-incomplete-012-000",
+      "track": "diagnostic",
+      "truth": {
+        "defects": [],
+        "state": "INSUFFICIENT_EVIDENCE_ABSTAIN"
+      }
+    },
+    {
+      "capsule_commitment": "sha256:480e6e89cca8c8616a6491b51487d4a02c1c6f179825b5845097708cf03a3f04",
+      "case_id": "fixture-run/013",
+      "family": "incomplete",
+      "index": 13,
+      "qid": "fx-incomplete-013-000",
+      "track": "diagnostic",
+      "truth": {
+        "defects": [],
+        "state": "INSUFFICIENT_EVIDENCE_ABSTAIN"
+      }
+    },
+    {
+      "capsule_commitment": "sha256:67a9f7c6c600bb08fc0309560a56c8527c62c7bf7413b96569862b7c078d0b5d",
+      "case_id": "fixture-run/014",
+      "family": "incomplete",
+      "index": 14,
+      "qid": "fx-incomplete-014-000",
+      "track": "diagnostic",
+      "truth": {
+        "defects": [],
+        "state": "INSUFFICIENT_EVIDENCE_ABSTAIN"
+      }
+    },
+    {
+      "capsule_commitment": "sha256:e7ff9487032281649080af6a9aa083e54ef8caac23878eeac3bec48f1b5b3c04",
+      "case_id": "fixture-run/015",
+      "family": "incomplete",
+      "index": 15,
+      "qid": "fx-incomplete-015-000",
+      "track": "diagnostic",
+      "truth": {
+        "defects": [],
+        "state": "INSUFFICIENT_EVIDENCE_ABSTAIN"
+      }
+    },
+    {
+      "capsule_commitment": "sha256:f23eb075d923b57c4a7f349391d9a9e0757e425f2fac003f2d7759ba91e8bd04",
+      "case_id": "default/stale_authority",
+      "family": "stale_authority",
+      "qid": "fixture-stale_authority-001",
+      "truth": {
+        "defects": [
+          {
+            "code": "STALE_APPROVAL",
+            "required_refs": [
+              "$completeness",
+              "fixture-stale_authority-019",
+              "fixture-stale_authority-021",
+              "fixture-stale_authority-022",
+              "fixture-stale_authority-024",
+              "fixture-stale_authority-028",
+              "fixture-stale_authority-031",
+              "fixture-stale_authority-032",
+              "fixture-stale_authority-033"
+            ],
+            "severity": "HIGH"
+          }
+        ],
+        "state": "FINDINGS"
+      }
+    },
+    {
+      "capsule_commitment": "sha256:01ae396211bc7bb0d3d1fa7bdfb1d0d372cf28cc6cff4a717bfc2df51afdf034",
+      "case_id": "default/fresh_review",
+      "family": "fresh_review",
+      "qid": "fixture-fresh_review-001",
+      "truth": {
+        "defects": [],
+        "state": "NO_MATERIAL_DEVIATION"
+      }
+    },
+    {
+      "capsule_commitment": "sha256:d1bf5579a74b2c33226b1b0f38d290ff31a9d20020937341b14edc3ade0fb4a4",
+      "case_id": "default/incomplete",
+      "family": "incomplete",
+      "qid": "fixture-incomplete-001",
+      "truth": {
+        "defects": [],
+        "state": "INSUFFICIENT_EVIDENCE_ABSTAIN"
+      }
+    }
+  ],
+  "class_id": "IC-APPROVAL-APPLICABILITY",
+  "description": "Truth of the institution/0.2 capsules built by the public generator institutional_v02.fixtures.build_case. fixture-run/NNN: the profile's full assignment through classes.IC_APPROVAL_APPLICABILITY.generate(family, NNN), which is the instance set of the attested validator (seed 0). default/FAMILY: build_case(FAMILY) with its default identifiers and timestamp.",
+  "profile_id": "IC-FIRST-LIGHT-MIN-1",
+  "schema": "sn87-golden-truth/0.1",
+  "set_digest": "sha256:c3c4efdbef2974e82e1a6db0e2903454a8a2d7e9136153726de78cd14d21cc10",
+  "set_id": "ic-approval-applicability-fixture-set"
+}

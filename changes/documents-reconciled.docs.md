@@ -1,0 +1,1 @@
+The architecture decision on signed HTTP and the replay boundary, the status matrix and the evidence bundle description were brought into agreement, and documents that cite files from the unpublished test suite now say so.

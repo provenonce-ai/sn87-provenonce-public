@@ -1,0 +1,1 @@
+The `sn87-provenonce demo` command now runs the `institution/0.2` path on three public synthetic fixtures (`stale_authority`, `fresh_review`, `incomplete`) and prints one scored row per case. It works offline in one process; the earlier `v0alpha1` demo stays available with `--legacy-v0alpha1`.

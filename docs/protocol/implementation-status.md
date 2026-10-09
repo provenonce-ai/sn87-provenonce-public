@@ -22,7 +22,7 @@ evidence only ([LIMITATIONS](../../LIMITATIONS.md)). CI status is not deployment
 | Eq.11 efficiency (neutral eta=1 only) | `sn87_provenonce.scoring:EFFICIENCY_STATUS` | no | `tests/test_scoring.py::test_inactive_dimensions_are_na` | no |
 | Committed profile applied | `sn87_provenonce.profile:load` | yes | `tests/test_profile.py::test_profile_drives_result` | no |
 | Canonicalizer gra/0.1 | `sn87_provenonce.canonical:canonical_bytes` | yes | `tests/test_gra_canonical.py::test_canonical_attacks_rejected` | `REPLAY_EQUIVALENT_TO_FIRST_LIGHT_BLOCK_8102381` |
-| Signed transport and replay protection | `sn87_provenonce.pilot.transport:verify_bytes` | yes | `tests/pilot/test_transport.py` (private suite) | `FIRST_LIGHT_TESTNET_582_BLOCK_8102381` |
+| Signed transport and replay protection | `sn87_provenonce.pilot.transport:verify_bytes` | yes | `tests/transport/test_signed_endpoint.py` | `FIRST_LIGHT_TESTNET_582_BLOCK_8102381` |
 | Chain target dry run | `scripts/pilot_chain_dry_run.py:dry_run` (private suite) | yes | `tests/test_golden.py::test_first_light_row_reproduces` (private suite) | `FIRST_LIGHT_TESTNET_582_BLOCK_8102381` |
 | Plain weight submission (approval-gated) | `scripts/pilot_chain_weights_institutional_v02.py:make_manifest` (private suite) | yes | `tests/pilot/test_institutional_v02_scripts.py` (private suite) | `FIRST_LIGHT_TESTNET_582_BLOCK_8102381` |
 | Commit-reveal submission | no | no | `NOT_TESTED` | no |

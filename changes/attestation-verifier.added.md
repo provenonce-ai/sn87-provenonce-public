@@ -1,0 +1,1 @@
+`scripts/verify_attestation.py` checks the testnet attestation files against the chain with a small read-only client (`scripts/chain_read.py`) and reports each check as PASS, FAIL or UNVERIFIED. Checks that need unpublished reference code report UNVERIFIED instead of being skipped.

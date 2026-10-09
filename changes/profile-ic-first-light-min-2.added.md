@@ -1,0 +1,1 @@
+A new scoring profile, `IC-FIRST-LIGHT-MIN-2`, is committed but not active on any weight path. It pays a correct abstention, records a wrong-scope answer as an abstention, and scores citations by precision; the earlier profiles score exactly as before.

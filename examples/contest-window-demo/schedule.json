@@ -1,0 +1,13 @@
+{
+  "mix_preset": "messy",
+  "profile_id": "IC-FIRST-LIGHT-MIN-3",
+  "schedule_id": "demo-schedule-1",
+  "schema_version": "sn87-contest-schedule/0.1",
+  "windows": [
+    {
+      "closes_at": "2026-10-21T00:00:00Z",
+      "opens_at": "2026-10-20T00:00:00Z",
+      "window_id": "demo-0001"
+    }
+  ]
+}

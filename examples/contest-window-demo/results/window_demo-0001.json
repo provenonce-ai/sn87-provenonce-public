@@ -1,0 +1,135 @@
+{
+  "claim": "SHADOW_RESULTS_NOT_WIRED_TO_WEIGHTS",
+  "disclosure": "SCORES_ONLY",
+  "evidence": {
+    "baseline_recomputed_from_public_code": true,
+    "integrity": "ASSERTED_FIXTURE",
+    "same_cases_for_every_method": true
+  },
+  "methods": [
+    {
+      "cost": {
+        "bytes_in": {
+          "missing": null,
+          "n": 32,
+          "source": "canonical_capsule_bytes",
+          "unit": "bytes",
+          "value": "198576"
+        },
+        "bytes_out": {
+          "missing": null,
+          "n": 32,
+          "source": "canonical_response_bytes",
+          "unit": "bytes",
+          "value": "15380"
+        },
+        "cpu_time": {
+          "missing": "NOT_REPORTED",
+          "n": 32,
+          "source": null,
+          "unit": "ms",
+          "value": "NA"
+        },
+        "model_tokens": {
+          "missing": "NOT_REPORTED",
+          "n": 32,
+          "source": null,
+          "unit": "tokens",
+          "value": "NA"
+        },
+        "oracle_time": {
+          "missing": "NOT_REPORTED",
+          "n": 32,
+          "source": null,
+          "unit": "ms",
+          "value": "NA"
+        },
+        "wall_time": {
+          "missing": "NOT_REPORTED",
+          "n": 32,
+          "source": null,
+          "unit": "ms",
+          "value": "NA"
+        }
+      },
+      "method_id": "approval_witness",
+      "role": "candidate",
+      "score": {
+        "eligible": true,
+        "estimate": "0.83333333333333337",
+        "reason": null
+      },
+      "uid": null
+    },
+    {
+      "cost": {
+        "bytes_in": {
+          "missing": null,
+          "n": 32,
+          "source": "canonical_capsule_bytes",
+          "unit": "bytes",
+          "value": "198576"
+        },
+        "bytes_out": {
+          "missing": null,
+          "n": 32,
+          "source": "canonical_response_bytes",
+          "unit": "bytes",
+          "value": "18595"
+        },
+        "cpu_time": {
+          "missing": "NOT_REPORTED",
+          "n": 32,
+          "source": null,
+          "unit": "ms",
+          "value": "NA"
+        },
+        "model_tokens": {
+          "missing": "NOT_REPORTED",
+          "n": 32,
+          "source": null,
+          "unit": "tokens",
+          "value": "NA"
+        },
+        "oracle_time": {
+          "missing": "NOT_REPORTED",
+          "n": 32,
+          "source": null,
+          "unit": "ms",
+          "value": "NA"
+        },
+        "wall_time": {
+          "missing": "NOT_REPORTED",
+          "n": 32,
+          "source": null,
+          "unit": "ms",
+          "value": "NA"
+        }
+      },
+      "method_id": "public_contract_baseline",
+      "role": "baseline",
+      "score": {
+        "eligible": true,
+        "estimate": "0.67173687877932842",
+        "reason": null
+      },
+      "uid": null
+    }
+  ],
+  "note": "Shadow results. Testnet weights are unchanged; nothing here sets a weight.",
+  "profile": {
+    "profile_commitment": "sha256:039b8639a839f8617003c2f5e686dcf313dd7fc80f9de2c1b8d7d9762a6e7665",
+    "profile_id": "IC-FIRST-LIGHT-MIN-3",
+    "state_payoff": true
+  },
+  "schema_version": "sn87-contest-window-results/0.1",
+  "window": {
+    "cases": 32,
+    "cases_commitment": "sha256:14a349f9d4e06d39e48a01f7fda5201e3eaa789bab17ec2f52ae63d52645e71c",
+    "closes_at": "2026-10-21T00:00:00Z",
+    "minimum_assignments": 22,
+    "opens_at": "2026-10-20T00:00:00Z",
+    "truth_commitment": "sha256:59ef699f9b25e4c86fdf6d92a8009a153c18351d761fa1ef4f506929c80a6105",
+    "window_id": "demo-0001"
+  }
+}

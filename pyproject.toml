@@ -15,6 +15,7 @@ dependencies = ["pydantic>=2.11,<3"]
 
 [project.scripts]
 sn87-provenonce = "sn87_provenonce.cli:main"
+sn87-miner = "sn87_provenonce.miner_node.launcher:main"
 
 [project.optional-dependencies]
 transport = [

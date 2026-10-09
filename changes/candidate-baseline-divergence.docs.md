@@ -1,0 +1,1 @@
+A new test module shows where the candidate and the baseline differ on edited capsules built from the public fixture generator, and LIMITATIONS.md and the reviewer guide now say the tie holds on the published fixtures only.

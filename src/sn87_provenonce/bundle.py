@@ -73,7 +73,7 @@ STATUS_MATRIX = [
     ("Canonicalizer gra/0.1", "sn87_provenonce.canonical:canonical_bytes", True,
      "tests/test_gra_canonical.py::test_canonical_attacks_rejected", EQUIVALENT),
     ("Signed transport and replay protection", "sn87_provenonce.pilot.transport:verify_bytes",
-     True, "tests/pilot/test_transport.py", FIRST_LIGHT),
+     True, "tests/transport/test_signed_endpoint.py", FIRST_LIGHT),
     ("Chain target dry run", "scripts/pilot_chain_dry_run.py:dry_run", True,
      "tests/test_golden.py::test_first_light_row_reproduces", FIRST_LIGHT),
     ("Plain weight submission (approval-gated)",
