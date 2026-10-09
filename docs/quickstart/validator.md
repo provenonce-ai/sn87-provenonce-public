@@ -87,7 +87,7 @@ runs come from a private harness that is not in this repository.
 
 For new families the design rule is that truth is fixed when the instance is built, so that
 validator code can be open while instances stay hidden:
-[ADR-0019](../architecture/ADR-0019-published-truth-for-public-fixtures.md).
+[ADR-0021](../architecture/ADR-0021-published-truth-for-public-fixtures.md).
 
 ## Resources
 

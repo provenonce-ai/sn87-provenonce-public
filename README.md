@@ -252,7 +252,7 @@ against the published truth do. CI runs the same steps
 - Guides that CI runs command by command: [reviewer test guide](docs/guides/reviewer-test-guide.md); [guide format and runner](docs/protocol/guide-format.md)
 - Research code, local only: [simulation](docs/simulation), [runtime](docs/runtime), [sensitivity example](examples/sensitivity/README.md)
 - [Whitepaper policy](docs/whitepaper/README.md), [CHANGELOG](CHANGELOG.md)
-- Decisions: [docs/architecture](docs/architecture) (ADR-0001 to ADR-0019)
+- Decisions: [docs/architecture](docs/architecture) (ADR-0001 to ADR-0021)
 
 ## License and contact
 

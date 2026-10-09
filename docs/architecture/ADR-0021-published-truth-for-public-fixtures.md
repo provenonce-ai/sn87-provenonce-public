@@ -1,4 +1,4 @@
-# ADR-0019: Published truth for public fixtures, truth fixed at build time for new families
+# ADR-0021: Published truth for public fixtures, truth fixed at build time for new families
 
 Status: accepted for the committed public fixtures. The second half is a design rule for families
 not yet built; no such family exists in this repository.
