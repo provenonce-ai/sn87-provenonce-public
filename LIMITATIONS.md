@@ -143,7 +143,7 @@ conformance evidence only.
     capsule, they are a perfect answer key for hidden instances. The files cover the attested
     seed only; the truth of later windows is not published. The design for new families, where
     truth is fixed when the instance is built, is in
-    [ADR-0019](docs/architecture/ADR-0019-published-truth-for-public-fixtures.md).
+    [ADR-0021](docs/architecture/ADR-0021-published-truth-for-public-fixtures.md).
 
 See [docs/protocol/implementation-status.md](docs/protocol/implementation-status.md) for what
 is implemented, enabled, tested and deployed.

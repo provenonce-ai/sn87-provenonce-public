@@ -1,0 +1,1 @@
+The expected scores for the public fixtures are now published, so anyone can recompute the validator digest with the verifier on their own machine and no longer needs anything from Provenonce to check it. The design note is ADR-0021 in docs/architecture.
