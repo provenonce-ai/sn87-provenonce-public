@@ -1,6 +1,6 @@
 # Limitations
 
-Status: alpha protocol (`0.1.0a0`) on public testnet netuid 582. Existing testnet rows are
+Status: alpha protocol (`0.1.0`) on public testnet netuid 582. Existing testnet rows are
 conformance evidence only.
 
 1. **Conformance, not competition.** The First Light row (run `e6ffa76e6f8a14bc0625fc2caf92e2cc`,

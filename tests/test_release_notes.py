@@ -246,13 +246,19 @@ def test_natural_sort_compares_digits_as_numbers():
 
 
 def test_this_repositorys_fragments_assemble_cleanly(tmp_path, capsys):
-    """A dry run on a copy of the real fragments and CHANGELOG.md."""
+    """A dry run on a copy of the real fragments and CHANGELOG.md.
+
+    Uses a version no release has used, so it keeps passing after a release. Right after one the
+    fragments are archived, there is nothing to assemble, and the test is skipped.
+    """
+    if not [p for p in (ROOT / "changes").glob("*.*.md") if p.name != "README.md"]:
+        pytest.skip("no unreleased fragments in changes/")
     repo = make_repo(tmp_path / "r", {
         f"changes/{p.name}": p.read_text() for p in (ROOT / "changes").iterdir() if p.is_file()},
         changelog=(ROOT / "CHANGELOG.md").read_text())
-    assert run(repo, "--dry-run", "--title", "Public testnet release") == 0
+    assert run(repo, "--dry-run", "--title", "Public testnet release", version="99.0.0") == 0
     out = capsys.readouterr().out
-    assert "### Added" in out and "v0.1.0" in out
+    assert "### Added" in out and "v99.0.0" in out
 
 
 def test_a_failing_move_leaves_nothing_behind(tmp_path, capsys, monkeypatch):
