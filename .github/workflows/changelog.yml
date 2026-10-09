@@ -1,0 +1,33 @@
+name: Changelog
+
+# A pull request that changes src/, scripts/ or a public document adds a change note in
+# changes/ (see CONTRIBUTING.md, "Writing a change note"), or carries the label no-changelog.
+# Not a required check; the decision is scripts/check_fragment_required.py, which has its tests.
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, labeled, unlabeled]
+
+permissions: {}
+
+jobs:
+  changelog:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - name: Require a change note
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          # a renamed file lists its old path too, so a rename out of src/ still needs a note
+          gh api --paginate "repos/${GH_REPO}/pulls/${PR_NUMBER}/files" \
+            --jq '.[] | "\(.status)\t\(.filename)", (select(.previous_filename != null) | "removed\t\(.previous_filename)")' \
+            > "$RUNNER_TEMP/files.txt"
+          labels="$(gh pr view "$PR_NUMBER" --json labels --jq '[.labels[].name] | join(",")')"
+          python3 scripts/check_fragment_required.py --files "$RUNNER_TEMP/files.txt" --labels "$labels"

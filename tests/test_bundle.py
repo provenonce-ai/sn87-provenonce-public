@@ -5,6 +5,7 @@ import math
 from pathlib import Path
 
 import pytest
+from golden_support import truth_of
 
 from sn87_provenonce.bundle import (
     COST_UNITS,
@@ -46,7 +47,7 @@ def test_fixture_bundle_end_to_end(class_id):
 
 def test_missing_observations_stay_zero_and_mismatched_profile_fails_closed():
     case = {"qid": "q", "track": "scored", "capsule": IC.generate("stale_authority", 0)}
-    case["truth"] = IC.reference(case["capsule"])
+    case["truth"] = truth_of(IC, case["capsule"])  # executor if present, else published truth
     common = dict(mode="REPLAY", run_id="r", window={"opened_at": "a", "closed_at": "b"},
                   source_digest="sha256:" + "0" * 64)
     bundle = evaluate(IC, [case], {m: {} for m in IC.candidates},

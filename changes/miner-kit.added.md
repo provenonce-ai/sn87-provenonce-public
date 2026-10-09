@@ -1,0 +1,1 @@
+The miner kit is published: the miner methods, the localhost miner server (`scripts/miner_serve.py`) and a quickstart for running one. The scorer, canonical encoding and evidence bundle it relies on ship with it.

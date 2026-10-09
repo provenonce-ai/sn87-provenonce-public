@@ -1,0 +1,1 @@
+Release notes are now assembled from short notes kept in `changes/`, with a CI check on their wording and a check that pull requests touching code or documents carry one. CONTRIBUTING.md has the rules, and docs/releases/RELEASING.md describes the release steps.

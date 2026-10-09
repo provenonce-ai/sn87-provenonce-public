@@ -15,7 +15,8 @@ evidence only (see [LIMITATIONS.md](LIMITATIONS.md)). Contributions must preserv
 ```bash
 uv sync --locked --all-extras   # Python 3.12+, versions pinned by uv.lock
 uv run ruff check .
-uv run pytest -q                # tests that need the private reference executors skip
+uv run pytest -q                # tests that need the private reference executors skip; scorer
+                                # tests run against the published truth in protocol/golden_truth
 ```
 
 Scoring has one scorer, one canonicalizer and one profile loader (`scoring.py`, `canonical.py`,
@@ -66,9 +67,41 @@ binding and its tests.
 
 1. Fork the repository and branch from `main`.
 2. Make the change with its test; run `uv run ruff check .` and `uv run pytest` (both must pass).
+   Add a change note (see [Writing a change note](#writing-a-change-note)).
 3. Open a pull request that says what changed and why. There is no sign-off or CLA step; by
    contributing you agree your change is under the MIT License. Maintainers review for the rules
    above, and CI must be green.
+
+## Writing a change note
+
+Every pull request that changes `src/`, `scripts/` or a public document adds one short note, so
+that release notes are written by the people who know the change. Create
+`changes/<name>.<type>.md`, where `<type>` is `added`, `changed`, `fixed`, `security` or `docs`
+and `<name>` is a short lower-case label (letters, digits, `-` and `_`) or the pull request
+number. Names are checked with the same word list as the text. The file holds one or two
+plain sentences for someone who has not followed the project: what is different for them, and
+where to look. No bullet marker, no heading, at most 600 characters.
+
+Good:
+
+- `changes/platform-policy.changed.md`: "Linux and macOS are now tested in CI on Python 3.12 and
+  3.13, and Windows is supported through WSL2. Native Windows is not supported."
+- `changes/doc-path-check.added.md`: "`scripts/check_doc_paths.py` fails when a document or
+  script names a repository file that does not exist, so a moved file cannot leave a dangling
+  pointer."
+
+Bad:
+
+- "Fix bug in server." It does not say which bug, what a reader will see, or where to look.
+- "Refactor the canonical layer to harmonise the serialisation boundary per ADR discussion." It is
+  written for the author, uses terms a reader has not met, and says nothing about the effect.
+
+Write what changed for a reader, not what you did. Never put secrets, local paths, e-mail
+addresses, names of people or organisations outside the project, or statements about funds or
+launch dates in a note. `scripts/check_release_notes.py` runs in CI, ignores letter case and fails
+on those. When a change has nothing a reader can see (a test-only change, a rename inside a
+private module), ask a maintainer to add the label `no-changelog` instead of writing a note; the
+`changelog` check on the pull request is advisory and passes with that label.
 
 ## Good first issues
 

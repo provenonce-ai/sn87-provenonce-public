@@ -26,5 +26,6 @@ Golden row facts: [docs/protocol/evidence-bundle.md](docs/protocol/evidence-bund
   profile loader and one evidence bundle (see the
   [migration note](docs/releases/MIGRATION-scorer-rebuild.md)). The rebuilt scorer reproduces the
   same row on replay of the sealed run; that check also needs the private custody.
-- Validator scoring and the reference executors are private, so the expected truth behind the row
-  is not recomputable outside Provenonce.
+- The reference executors are private. The expected truth of the committed public fixtures is
+  published (`protocol/golden_truth/`), but the truth behind the First Light row and for any
+  hidden instance is not recomputable outside Provenonce.

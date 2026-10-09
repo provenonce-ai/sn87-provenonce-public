@@ -11,13 +11,16 @@ conformance evidence only.
    naming binding that cannot be checked from public files. The table in the
    [README](README.md#which-methods-hold-uids-1-and-2) gives the mapping for each period. Equal scores of 1 show agreement,
    not that either beats the other. Every bundle carries `claim: CONFORMANCE_ONLY`.
-2. **Plain weight mode only.** Testnet runs with commit-reveal off. Commit-reveal is not implemented.
+2. **Plain weight mode only.** Testnet runs with commit-reveal off. Commit-reveal submission exists as tested payload, schedule and state code against a fake chain, with no submitter that sends to a chain, so it has not run on any chain ([second-validator readiness](docs/protocol/second-validator-readiness.md)). The plain path refuses a commit-reveal target.
 3. **Binary evidence credit.** Evidence quality is 1 only if every required reference is cited,
    else 0. No partial credit, and no penalty for citing more: any superset of the required refs
    receives full credit. The public-contract baselines use exactly that (they cite every bounded
    event plus the completeness scope, e.g. 13 refs where an IC `stale_authority` case requires 9),
    so their evidence score shows the rule's weakness, not evidence skill. A new profile version,
-   `IC-FIRST-LIGHT-MIN-2`, makes the credit precision-aware (ADR-0019). It is committed and not
+   `IC-FIRST-LIGHT-MIN-2`, makes the credit precision-aware (ADR-0019); on the published
+   `stale_authority` fixture it gives the baseline lower evidence credit than the candidate while
+   `IC-FIRST-LIGHT-MIN-1` gives both full credit (computed in
+   `tests/test_candidate_baseline_divergence.py`). It is committed and not
    active on any weight path; the committed profiles score as described here.
 4. **Dead branch.** The "no grounded dimension, flag for review" branch is unreachable: detection
    is always applicable, so the branch cannot fire.
@@ -37,6 +40,13 @@ conformance evidence only.
    it sees only the public contract (import graph, plus a runtime run with every evaluator-only
    module blocked). On both committed families it scores 1, like the references: the bundle
    reports `NULL_NO_HEADROOM` for each reference method. That null result is kept, not hidden.
+   The tie belongs to the published fixtures and to every case with published truth, not to the
+   methods: the candidate (item 13) and the baseline are different methods, and on contract-valid
+   capsules built from the public fixture generator and edited in memory they return different
+   states (for example, the candidate abstains on a broken approval chain and the baseline, which
+   reads only the review condition, does not check it). The edits need no reference executor to
+   reproduce; their truth is not published, so this shows the methods differ, not which is right.
+   See `tests/test_candidate_baseline_divergence.py`.
    The two bound methods are role `reference`, because they are also the truth executors (the
    private reference executors, which are evaluator-only and not in this repository). See item 13
    for the one candidate.
@@ -72,11 +82,17 @@ conformance evidence only.
     reviewed condition was ever governed, so on such contract-valid capsules it may give a
     finding where the reference abstains. Scoring would count such a divergence against it, but
     neither the First Light fixtures nor the FICTIONAL source contains such a capsule, so the
-    measured estimate of 1 does not exercise these gaps: they are untested, not measured. The source
+    measured estimate of 1 does not exercise these gaps: they are untested, not measured.
+    Separately, the candidate and the baseline are not equivalent: contract-valid capsules built
+    by editing a public fixture and re-sealing it make them return different states, mostly
+    because the candidate abstains on a broken approval chain; one case runs the other way (a
+    same-instant tie of governing versions with one condition, which the candidate decides and
+    the baseline abstains on). The truth for those edited capsules is not published, so which
+    method is right on them is not measured (see `tests/test_candidate_baseline_divergence.py`). The source
     (`sources/fixtures/`, labelled FICTIONAL) is invented, not a real organisation's data; the
     permission is a fixture, not a legal grant. Two executions of one source configuration
     (12 admitted scored capsules each, the profile minimum) are eligible, and every method,
-    candidate and baseline included, scores 1: a null result with no headroom (Provenonce's
+    candidate and baseline included, scores 1 on those fixtures: a null result with no headroom (Provenonce's
     private coverage report). That is two windows of one configuration, not
     population quality, not a second source, and not evidence of real-world coverage or cost.
     Model tokens, human exceptions and network cost are `NA` with reasons.
@@ -93,7 +109,10 @@ conformance evidence only.
     case from admitted supply and makes the window ineligible (`NO_VALID_PREFERENCE_ROW`).
     Whether to size windows above the minimum, add reference redundancy, or change the minimum
     (which would be a new profile version, never an in-place edit) is a decision for Provenonce;
-    nothing here changes the profile.
+    nothing here changes the profile. A new profile version, `IC-FIRST-LIGHT-MIN-3`, assigns a
+    larger window than its minimum so that a window absorbs a stated number of reference failures
+    (ADR-0020 lists the size and the tolerance, generated from the profile). It is committed and
+    not active on any weight path.
 
 16. **The score does not credit a correct abstention.** When recomputed truth is
     `INSUFFICIENT_EVIDENCE_ABSTAIN` with no defects, a correct abstention scores the floor
@@ -110,6 +129,21 @@ conformance evidence only.
     does. This is an observation about the committed profiles; they are unchanged. A new profile
     version, `IC-FIRST-LIGHT-MIN-2`, pays a correct abstention and a wrong-scope abstention on
     record (ADR-0019). It is committed and not active on any weight path.
+
+17. **Scoring is checkable for the committed public fixtures only.** The per-case truth of those
+    fixtures is published in [`protocol/golden_truth/`](protocol/golden_truth), so the public
+    scorer can be run against it, and `scripts/verify_attestation.py` recomputes the attested
+    validator digest from it (PASS or FAIL, no reference executor needed). Still not checkable
+    outside Provenonce: (a) the plan digest, which covers a plan document built by private
+    operator tooling from unpublished files (the check is UNVERIFIED, so a public verifier run
+    ends UNVERIFIED, exit 3); (b) that the published truth is the reference executors' output,
+    which a private test shows and the digest match supports but does not prove; (c) the truth
+    of any instance other than those public fixtures, which only the private reference executors
+    compute. The executors stay private because, for a family whose truth is computed from the
+    capsule, they are a perfect answer key for hidden instances. The files cover the attested
+    seed only; the truth of later windows is not published. The design for new families, where
+    truth is fixed when the instance is built, is in
+    [ADR-0019](docs/architecture/ADR-0019-published-truth-for-public-fixtures.md).
 
 See [docs/protocol/implementation-status.md](docs/protocol/implementation-status.md) for what
 is implemented, enabled, tested and deployed.

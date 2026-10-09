@@ -11,6 +11,7 @@ import sys
 from pathlib import Path
 
 import pytest
+from golden_support import truth_of
 
 from sn87_provenonce.bundle import fixture_run
 from sn87_provenonce.classes import BINDINGS
@@ -840,7 +841,7 @@ def test_baseline_matches_truth_and_null_result_is_kept(class_id):
 def test_type_c_baseline_on_every_public_fixture(fixture):
     binding = BINDINGS["TYPE-C-RELEASE"]
     capsule = capsule_from_fixture(fixture)
-    truth = binding.reference(capsule)
+    truth = truth_of(binding, capsule)  # executor if present, else the published truth
     result = score_response(binding, capsule, truth, binding.baseline(capsule),
                             Integrity(*[True] * 6))
     assert result["valid"] and binding.baseline(capsule)["state"] == truth["state"]

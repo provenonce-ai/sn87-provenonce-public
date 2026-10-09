@@ -87,7 +87,7 @@ def test_committed_profiles_declare_no_new_rules_and_keep_their_pins():
         p = binding.profile
         assert (p.state_payoff, p.wrong_scope, p.evidence_credit) == (None, None, None)
         assert "scoring_rules" not in p.document
-    assert set(profile.REGISTRY) == {"GRA-W03-3", OLD_ID, NEW_ID}
+    assert set(profile.REGISTRY) == {"GRA-W03-3", OLD_ID, NEW_ID, "IC-FIRST-LIGHT-MIN-3"}
 
 
 def test_old_profile_scores_are_unchanged_to_the_last_bit():
@@ -117,7 +117,8 @@ def test_the_new_profile_is_not_active_anywhere():
     named = sorted(p.relative_to(SRC).as_posix() for p in SRC.rglob("*")
                    if p.is_file() and "__pycache__" not in p.parts
                    and NEW_ID in p.read_bytes().decode("utf-8", "ignore"))
-    assert named == ["profile.py", f"profiles/{NEW_ID}.json"]
+    # MIN-3 (ADR-0020) names its parent in `derived_from`, so its document is the one other carrier.
+    assert named == ["profile.py", f"profiles/{NEW_ID}.json", "profiles/IC-FIRST-LIGHT-MIN-3.json"]
 
 
 # --- the new profile document -------------------------------------------------------------------

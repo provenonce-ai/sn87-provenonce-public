@@ -5,17 +5,37 @@ notes are maintained outside the repository.
 
 ## Unreleased
 
+Changes waiting for the next release are written as short notes in `changes/` (see
+`changes/README.md`) and assembled into a new section here by `scripts/release_notes.py`
+when a version is cut.
+
+## Before the first release
+
+Earlier entries, kept as written before release notes were assembled from `changes/`.
+
 - Scoring profile `IC-FIRST-LIGHT-MIN-2` (ADR-0019), committed and not active on any weight path:
   a 3 x 3 state-by-truth payoff matrix that pays a correct abstention, the wrong-scope rule
   recorded as abstention on record, and a precision-aware citation rule, declared in an optional
-  `scoring_rules` block. Profiles without the block (`IC-FIRST-LIGHT-MIN-1`, `GRA-W03-3`) score
+  `scoring_rules` block. Profiles without the block (the two earlier profiles) score
   byte for byte as before.
+- Miner launch: `sn87-miner serve` runs a miner method behind the signed endpoint
+  (`pilot.server.create_app`, `btauth/1`, Valkey replay store) with a hotkey from a key file or an
+  environment variable; `--check` validates the configuration; `sn87-miner probe` self-tests a
+  running endpoint. `scripts/miner_serve.py` is now the unsigned loopback development mode of the
+  same launcher and shares the method interface and canonical bytes. `sn87-miner announce`
+  signs an endpoint announcement record (`docs/protocol/miner-announcement.md`). The signed
+  transport tests are public (`tests/transport`) and run against a Valkey container in CI.
 - Public export: the miner kit (`miners/`, `scripts/miner_serve.py`), the protocol, schemas and
   canonical modules, the scorer and evidence bundle, the local simulations and the attestation
   verifier are published. `scripts/verify_attestation.py` and the read-only chain client
-  `scripts/chain_read.py` check every attested weight-set against the chain; the plan and
-  validator-scoring checks need the private reference executors and report UNVERIFIED. Validator
-  scoring, the reference executors and the operator tooling stay private.
+  `scripts/chain_read.py` check every attested weight-set against the chain. The reference
+  executors and the operator tooling stay private.
+- Published per-case truth for the committed public fixtures (`protocol/golden_truth/`, read by
+  `scripts/golden_truth.py`), bound to each capsule by its evidence commitment. The staging
+  validator (`scripts/staging_subnet.py`) is public and takes its truth from those files; the
+  attestation verifier recomputes the validator pinned digest from them, so that check is PASS or
+  FAIL outside Provenonce. The plan check stays UNVERIFIED (private operator tooling). Scorer
+  tests that used the executors now also run against the published truth.
 - `PUBLIC_MANIFEST.json` classifies every tracked file of the source repository exactly once
   (allow, private, review_required, deny); `scripts/check_manifest.py` enforces it.
 - Evidence bundle schema 0.3 (additive): `manifest.profile_document` and `profile_commitment_domain` carry the

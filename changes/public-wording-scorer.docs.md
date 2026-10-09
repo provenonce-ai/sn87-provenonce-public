@@ -1,0 +1,1 @@
+The agent guide, the validator quickstart and the reviewer test guide now say exactly what is public: the one scorer, the committed profiles, the published truth for the public fixtures and the verifier. Only the reference executors, hidden-instance truth and operator tooling are private.

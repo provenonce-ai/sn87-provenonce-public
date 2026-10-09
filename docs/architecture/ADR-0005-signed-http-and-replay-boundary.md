@@ -12,11 +12,14 @@
 was exercised by the First Light run whose weight row was applied on public testnet netuid 582
 at block 8,102,381. A later commit (`af4b7ec`, 2026-10-03) changed only the import of the
 canonicalizer in `server.py`; the decision below is unchanged. The tests that prove the transport
-(including the atomic race and fail-closed store cases) live in the private suite and are not in
-this repository.
+(including the atomic race and fail-closed store cases) are in `tests/transport`; they run against a
+Valkey-compatible server (`SN87_TEST_VALKEY_URL`, or a server binary on PATH) and in CI against a
+pinned Valkey container.
 
-**Not done:** nothing in this repository launches `create_app` as a service. Its only callers are private
-(a local smoke script and the private transport tests). A public, runnable launcher is separate work and is not claimed here.
+**Launcher:** `sn87-miner serve` (`src/sn87_provenonce/miner_node/launcher.py`) runs `create_app` as a
+service from a miner method, a hotkey read from a key file or an environment variable, and a Valkey
+URL. It performs no chain action. How a miner announces its endpoint and how a validator finds it is in
+[miner-announcement.md](../protocol/miner-announcement.md); that document lists what remains open.
 
 ## Context
 

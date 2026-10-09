@@ -38,6 +38,12 @@ REGISTRY = {
         "SN87:SCORING_PROFILE:institution/0.2",
         "sha256:1c0562f791afa00caeebdfa5a9afcc3473957e6f0f2d7f07d4f8bae310c75bfe",
     ),
+    # Committed, not bound to any class or weight path (ADR-0020): MIN-2 rules, larger window.
+    "IC-FIRST-LIGHT-MIN-3": (
+        "IC-APPROVAL-APPLICABILITY",
+        "SN87:SCORING_PROFILE:institution/0.2",
+        "sha256:039b8639a839f8617003c2f5e686dcf313dd7fc80f9de2c1b8d7d9762a6e7665",
+    ),
 }
 # Whitepaper equations defined but not applied by any committed profile.
 INACTIVE = ("eq2_rule_score", "eq8_utility", "eq10_robustness")  # Eq.11: neutral eta, see scoring

@@ -18,17 +18,20 @@ The same file runs in the full Provenonce tree and in the public tree. Sections:
                 attested row, and the block lies inside the run's window. If the node cannot
                 serve state at that block the run is UNVERIFIED, never PASS. The current-state
                 read made afterwards is printed as supplementary information only.
-  3. SCORING (runs only when its prerequisites are present)
-     plan       per run, the approved plan digest, recomputed by running
-                Provenonce's private flip-plan tool (``flip_to_testnet.py --plan --json``, run as a
-                subprocess) equals the attested one.
-     validator  per run, the validator pinned digest, recomputed in process from the committed
-                fixtures (the private staging harness, ``staging_subnet.run_staging``, with the
-                attested seed and timestamp, no network beyond loopback), equals the attested
-                one.
-     Both need the private reference executors. Where they are absent the two checks are
-     UNVERIFIED with the reason "requires private reference executor", never FAIL: scoring is
-     not verifiable outside Provenonce.
+  3. SCORING (recomputed offline; each check runs only when its inputs are present)
+     validator  per run, the validator pinned digest, recomputed in process by the staging
+                validator (``staging_subnet.run_staging``, with the attested seed and timestamp,
+                no network beyond loopback) from the committed fixtures, the PUBLISHED per-case
+                truth (``protocol/golden_truth``, read by ``golden_truth.py``) and the public
+                scorer, equals the attested one. No reference executor is needed. PASS if equal,
+                FAIL if different, UNVERIFIED only when no truth is published for the attested
+                seed.
+     plan       per run, the approved plan digest, recomputed by running Provenonce's private
+                flip-plan tool (``flip_to_testnet.py --plan --json``, run as a subprocess)
+                equals the attested one. The plan document is built by private operator tooling
+                from files that are not published, so outside Provenonce this check is
+                UNVERIFIED with that reason, never FAIL. (Its scoring input, the validator
+                pinned digest, is the validator check above.)
 
 Verdicts are PASS, FAIL and UNVERIFIED, per run and overall. A run is FAIL if any check fails,
 else UNVERIFIED if any check is, else PASS. Overall: FAIL if any FAIL; UNVERIFIED if none FAIL
@@ -67,6 +70,9 @@ VALIDATOR_UID = 0
 WALLET_MODULES = ("flip_wallet", "flip_runlive", "bittensor_wallet", "bittensor.wallet",
                   "bittensor.keyfiles", "bittensor.wallets")
 PRIVATE_REASON = "requires private reference executor"
+PLAN_REASON = ("the plan document is built by Provenonce-private operator tooling from files that "
+               "are not published")
+TRUTH_REASON = "no published truth for this validator seed"
 
 
 class VerifyRefused(RuntimeError):
@@ -138,7 +144,7 @@ def compute_plan_digest() -> str:
     """The plan digest from ``flip_to_testnet.py --plan --json`` in a child process."""
     tool = SCRIPTS / "flip_to_testnet.py"
     if not tool.is_file():
-        raise PrivateUnavailable(PRIVATE_REASON)
+        raise PrivateUnavailable(PLAN_REASON)
     proc = subprocess.run([sys.executable, str(tool), "--plan", "--json"], cwd=ROOT,
                           capture_output=True, text=True, timeout=180, check=False)
     if proc.returncode != 0:
@@ -156,14 +162,35 @@ TRANSPORT_HINT = ("run uv sync --locked --extra transport "
                   "(a plain uv run drops the bittensor dependency)")
 
 
+TRUTH_NOTE: dict[str, str] = {}  # filled by compute_validator_digest: which truth was used
+
+
 def compute_validator_digest(seed: int, timestamp: str) -> str:
     """The validator pinned digest from the committed fixtures, in process (loopback only).
 
-    Imported lazily: the staging module and the private reference executors it needs are not
-    part of the public tree. Without them the check is UNVERIFIED, not a failure."""
+    The per-case truth is the published golden truth (``protocol/golden_truth``), so the
+    recomputation needs no reference executor: it runs the same staging validator and the same
+    public scorer as the attested runs. Where the golden truth has no case for an instance of
+    this seed, the check is UNVERIFIED (never PASS, never a guess). Imported lazily: the staging
+    module loads the SDK, which must happen only after the fake HOME is set."""
+    try:
+        import golden_truth  # noqa: PLC0415
+    except ImportError as error:
+        raise PrivateUnavailable(f"{TRUTH_REASON} (golden_truth.py is absent)") from error
+    try:
+        store = golden_truth.load()
+    except golden_truth.GoldenTruthMissing as error:
+        raise PrivateUnavailable(f"{TRUTH_REASON} ({error})") from error
+    except golden_truth.GoldenTruthInvalid as error:
+        raise RuntimeError(f"the published truth is invalid: {error}") from error
+    TRUTH_NOTE["truth"] = store.describe()
     try:
         import staging_subnet  # noqa: PLC0415 - loads the SDK: only after the fake HOME is set
-        receipt = staging_subnet.run_staging(seed=seed, timestamp=timestamp)
+        receipt = staging_subnet.run_staging(
+            seed=seed, timestamp=timestamp, truth_for=store.truth_for,
+            truth_source=f"published golden vectors ({store.describe()})")
+    except golden_truth.GoldenTruthMissing as error:
+        raise PrivateUnavailable(f"{TRUTH_REASON} {seed} ({error})") from error
     except PrivateReferenceExecutorUnavailable as error:
         raise PrivateUnavailable(PRIVATE_REASON) from error
     except ImportError as error:
@@ -239,7 +266,8 @@ def check_validator(run: dict[str, Any],
         return False, f"could not recompute the validator digest: {value}"
     if run.get("validator_pinned_digest") != value:
         return False, f"attested {run.get('validator_pinned_digest')}, recomputed {value}"
-    return True, f"validator pinned digest recomputes (seed {key[0]}, {key[1]}; {value})"
+    return True, (f"validator pinned digest recomputes from published truth and the public "
+                  f"scorer (seed {key[0]}, {key[1]}; {value})")
 
 
 PASS, FAIL, UNVERIFIED = "PASS", "FAIL", "UNVERIFIED"
@@ -399,28 +427,33 @@ def wallet_state() -> dict[str, Any]:
             "wallet_modules_loaded": loaded}
 
 
+def _check_summary(report: dict[str, Any], name: str) -> str:
+    """``validator 21/21 PASS`` or ``plan 0/21 PASS, 21 UNVERIFIED (reason)`` over all runs."""
+    n = len(report["runs"])
+    verdicts = [r["checks"][name]["verdict"] for r in report["runs"]]
+    counts = tally(verdicts)
+    text = f"{name} {counts[PASS]}/{n} PASS"
+    if counts[FAIL]:
+        text += f", {counts[FAIL]} FAIL"
+    if counts[UNVERIFIED]:
+        text += f", {counts[UNVERIFIED]} UNVERIFIED"
+        reasons = {r["checks"][name]["detail"].removeprefix("UNVERIFIED: ")
+                   for r in report["runs"] if r["checks"][name]["verdict"] == UNVERIFIED}
+        if len(reasons) == 1:
+            text += f" ({reasons.pop()})"
+    return text
+
+
 def summary_line(report: dict[str, Any]) -> str:
     """One honest line: what was checked on chain and what could not be checked."""
     n = len(report["runs"])
-    ct, st = report["chain"]["tally"], report["scoring"]["tally"]
+    ct = report["chain"]["tally"]
     chain = f"chain: {ct[PASS]}/{n} PASS"
     if ct[FAIL]:
         chain += f", {ct[FAIL]} FAIL"
     if ct[UNVERIFIED]:
         chain += f", {ct[UNVERIFIED]} UNVERIFIED"
-    total = sum(st.values())
-    reasons = {c["detail"].removeprefix("UNVERIFIED: ") for r in report["runs"]
-               for name, c in r["checks"].items()
-               if name in ("plan", "validator") and c["verdict"] == UNVERIFIED}
-    if total and st[UNVERIFIED] == total and len(reasons) == 1:
-        scoring = (f"scoring: not verifiable outside Provenonce (plan and validator "
-                   f"UNVERIFIED: {reasons.pop()})")
-    else:
-        scoring = f"scoring: {st[PASS]}/{total} PASS (plan and validator recomputed)"
-        if st[FAIL]:
-            scoring += f", {st[FAIL]} FAIL"
-        if st[UNVERIFIED]:
-            scoring += f", {st[UNVERIFIED]} UNVERIFIED"
+    scoring = f"scoring: {_check_summary(report, 'validator')}; {_check_summary(report, 'plan')}"
     return f"SUMMARY integrity: {report['integrity']['verdict']}; {chain}; {scoring}"
 
 
@@ -429,14 +462,16 @@ def render(report: dict[str, Any]) -> str:
     n = len(runs)
     off, chn = report["offline"], report["chain"]
     lines = ["SN87 testnet attestation verification (read only: no key, no chain write)", "",
-             "== 1. OFFLINE REPRODUCTION (file integrity; plan and validator digest "
-             "recomputation where the private reference executors are present; no chain "
-             "read) =="]
+             "== 1. OFFLINE REPRODUCTION (file integrity; validator digest recomputed from "
+             "published truth and the public scorer; plan digest where Provenonce's private "
+             "plan tool is present; no chain read) =="]
     i = report["integrity"]
     lines.append(f"integrity  {i['verdict']}  {i['detail']}")
+    if report.get("truth"):
+        lines.append(f"published truth: {report['truth']}")
     for run in runs:
         lines.append(f"run {run['run_id']}  CONFIRM seq {run['confirm_seq']}")
-        for name in ("plan", "validator"):
+        for name in ("validator", "plan"):
             c = run["checks"][name]
             lines.append(f"  {name:<10} {c['verdict']}  {c['detail']}")
     t = off["tally"]
@@ -495,6 +530,8 @@ def main(argv: list[str] | None = None, *,
         report = verify(doc, chain_client=chain_client or (lambda: make_read_client(args.endpoint)),
                         plan_digest_fn=plan_digest_fn, validator_digest_fn=validator_digest_fn)
         report["wallet_state"] = wallet_state()
+        if TRUTH_NOTE.get("truth"):
+            report["truth"] = TRUTH_NOTE["truth"]
         if report["wallet_state"]["our_wallet_code_loaded"]:
             report["ok"], report["verdict"] = False, FAIL
         print(json.dumps(report, indent=2, sort_keys=True) if args.json else render(report))

@@ -1,0 +1,378 @@
+{
+  "claim": "SHADOW_RESULTS_NOT_WIRED_TO_WEIGHTS",
+  "disclosure": "TRUTH_DERIVED",
+  "evidence": {
+    "baseline_recomputed_from_public_code": true,
+    "integrity": "ASSERTED_FIXTURE",
+    "same_cases_for_every_method": true
+  },
+  "methods": [
+    {
+      "agreement": {
+        "exact_all": {
+          "agree": 32,
+          "fraction": "1",
+          "n": 32
+        },
+        "state_all": {
+          "agree": 32,
+          "fraction": "1",
+          "n": 32
+        },
+        "state_diagnostic": {
+          "agree": 8,
+          "fraction": "1",
+          "n": 8
+        },
+        "state_scored": {
+          "agree": 24,
+          "fraction": "1",
+          "n": 24
+        }
+      },
+      "by_family": {
+        "fresh_review": {
+          "mean_score": "1",
+          "n": 6,
+          "state_agreement": {
+            "agree": 6,
+            "fraction": "1",
+            "n": 6
+          }
+        },
+        "incomplete": {
+          "mean_score": "0.5",
+          "n": 6,
+          "state_agreement": {
+            "agree": 6,
+            "fraction": "1",
+            "n": 6
+          }
+        },
+        "stale_authority": {
+          "mean_score": "1",
+          "n": 10,
+          "state_agreement": {
+            "agree": 10,
+            "fraction": "1",
+            "n": 10
+          }
+        },
+        "wrong_scope_clear": {
+          "mean_score": "0.5",
+          "n": 5,
+          "state_agreement": {
+            "agree": 5,
+            "fraction": "1",
+            "n": 5
+          }
+        },
+        "wrong_scope_stale": {
+          "mean_score": "0.5",
+          "n": 5,
+          "state_agreement": {
+            "agree": 5,
+            "fraction": "1",
+            "n": 5
+          }
+        }
+      },
+      "confusion": {
+        "FINDINGS": {
+          "FINDINGS": 10,
+          "INSUFFICIENT_EVIDENCE_ABSTAIN": 0,
+          "NO_MATERIAL_DEVIATION": 0,
+          "NO_VALID_RESPONSE": 0
+        },
+        "INSUFFICIENT_EVIDENCE_ABSTAIN": {
+          "FINDINGS": 0,
+          "INSUFFICIENT_EVIDENCE_ABSTAIN": 16,
+          "NO_MATERIAL_DEVIATION": 0,
+          "NO_VALID_RESPONSE": 0
+        },
+        "NO_MATERIAL_DEVIATION": {
+          "FINDINGS": 0,
+          "INSUFFICIENT_EVIDENCE_ABSTAIN": 0,
+          "NO_MATERIAL_DEVIATION": 6,
+          "NO_VALID_RESPONSE": 0
+        }
+      },
+      "cost": {
+        "bytes_in": {
+          "missing": null,
+          "n": 32,
+          "source": "canonical_capsule_bytes",
+          "unit": "bytes",
+          "value": "198576"
+        },
+        "bytes_out": {
+          "missing": null,
+          "n": 32,
+          "source": "canonical_response_bytes",
+          "unit": "bytes",
+          "value": "15380"
+        },
+        "cpu_time": {
+          "missing": "NOT_REPORTED",
+          "n": 32,
+          "source": null,
+          "unit": "ms",
+          "value": "NA"
+        },
+        "model_tokens": {
+          "missing": "NOT_REPORTED",
+          "n": 32,
+          "source": null,
+          "unit": "tokens",
+          "value": "NA"
+        },
+        "oracle_time": {
+          "missing": "NOT_REPORTED",
+          "n": 32,
+          "source": null,
+          "unit": "ms",
+          "value": "NA"
+        },
+        "wall_time": {
+          "missing": "NOT_REPORTED",
+          "n": 32,
+          "source": null,
+          "unit": "ms",
+          "value": "NA"
+        }
+      },
+      "diagnostic": {
+        "assigned": 8,
+        "epoch_input": false,
+        "mean_score": "0.5"
+      },
+      "failures": {
+        "by_reason": {},
+        "invalid_or_missing": 0
+      },
+      "method_id": "approval_witness",
+      "role": "candidate",
+      "score": {
+        "admitted": 24,
+        "dimensions": {
+          "calibration": "1",
+          "detection": "0.66666666666666663",
+          "evidence": "1",
+          "robustness": "NA",
+          "utility": "NA"
+        },
+        "eligible": true,
+        "estimate": "0.83333333333333337",
+        "evaluable": 24,
+        "lower": "0.5",
+        "raw_invalid_or_missing_rate": "0",
+        "reason": null,
+        "upper": "1"
+      },
+      "uid": null,
+      "versus_baseline": {
+        "agreement_delta": "0.3125",
+        "estimate_delta": "0.16159645455400495",
+        "result": "ABOVE_BASELINE"
+      }
+    },
+    {
+      "agreement": {
+        "exact_all": {
+          "agree": 22,
+          "fraction": "0.6875",
+          "n": 32
+        },
+        "state_all": {
+          "agree": 22,
+          "fraction": "0.6875",
+          "n": 32
+        },
+        "state_diagnostic": {
+          "agree": 4,
+          "fraction": "0.5",
+          "n": 8
+        },
+        "state_scored": {
+          "agree": 18,
+          "fraction": "0.75",
+          "n": 24
+        }
+      },
+      "by_family": {
+        "fresh_review": {
+          "mean_score": "1",
+          "n": 6,
+          "state_agreement": {
+            "agree": 6,
+            "fraction": "1",
+            "n": 6
+          }
+        },
+        "incomplete": {
+          "mean_score": "0.5",
+          "n": 6,
+          "state_agreement": {
+            "agree": 6,
+            "fraction": "1",
+            "n": 6
+          }
+        },
+        "stale_authority": {
+          "mean_score": "0.91216790907038803",
+          "n": 10,
+          "state_agreement": {
+            "agree": 10,
+            "fraction": "1",
+            "n": 10
+          }
+        },
+        "wrong_scope_clear": {
+          "mean_score": "9.9999999999999995e-07",
+          "n": 5,
+          "state_agreement": {
+            "agree": 0,
+            "fraction": "0",
+            "n": 5
+          }
+        },
+        "wrong_scope_stale": {
+          "mean_score": "9.9999999999999995e-07",
+          "n": 5,
+          "state_agreement": {
+            "agree": 0,
+            "fraction": "0",
+            "n": 5
+          }
+        }
+      },
+      "confusion": {
+        "FINDINGS": {
+          "FINDINGS": 10,
+          "INSUFFICIENT_EVIDENCE_ABSTAIN": 0,
+          "NO_MATERIAL_DEVIATION": 0,
+          "NO_VALID_RESPONSE": 0
+        },
+        "INSUFFICIENT_EVIDENCE_ABSTAIN": {
+          "FINDINGS": 5,
+          "INSUFFICIENT_EVIDENCE_ABSTAIN": 6,
+          "NO_MATERIAL_DEVIATION": 5,
+          "NO_VALID_RESPONSE": 0
+        },
+        "NO_MATERIAL_DEVIATION": {
+          "FINDINGS": 0,
+          "INSUFFICIENT_EVIDENCE_ABSTAIN": 0,
+          "NO_MATERIAL_DEVIATION": 6,
+          "NO_VALID_RESPONSE": 0
+        }
+      },
+      "cost": {
+        "bytes_in": {
+          "missing": null,
+          "n": 32,
+          "source": "canonical_capsule_bytes",
+          "unit": "bytes",
+          "value": "198576"
+        },
+        "bytes_out": {
+          "missing": null,
+          "n": 32,
+          "source": "canonical_response_bytes",
+          "unit": "bytes",
+          "value": "18595"
+        },
+        "cpu_time": {
+          "missing": "NOT_REPORTED",
+          "n": 32,
+          "source": null,
+          "unit": "ms",
+          "value": "NA"
+        },
+        "model_tokens": {
+          "missing": "NOT_REPORTED",
+          "n": 32,
+          "source": null,
+          "unit": "tokens",
+          "value": "NA"
+        },
+        "oracle_time": {
+          "missing": "NOT_REPORTED",
+          "n": 32,
+          "source": null,
+          "unit": "ms",
+          "value": "NA"
+        },
+        "wall_time": {
+          "missing": "NOT_REPORTED",
+          "n": 32,
+          "source": null,
+          "unit": "ms",
+          "value": "NA"
+        }
+      },
+      "diagnostic": {
+        "assigned": 8,
+        "epoch_input": false,
+        "mean_score": "0.25000050000000001"
+      },
+      "failures": {
+        "by_reason": {},
+        "invalid_or_missing": 0
+      },
+      "method_id": "public_contract_baseline",
+      "recomputed_from_public_code": true,
+      "role": "baseline",
+      "score": {
+        "admitted": 24,
+        "dimensions": {
+          "calibration": "0.76923076923076927",
+          "detection": "0.66666666666666663",
+          "evidence": "0.69230769230769229",
+          "robustness": "NA",
+          "utility": "NA"
+        },
+        "eligible": true,
+        "estimate": "0.67173687877932842",
+        "evaluable": 24,
+        "lower": "9.9999999999999995e-07",
+        "raw_invalid_or_missing_rate": "0",
+        "reason": null,
+        "upper": "1"
+      },
+      "uid": null,
+      "versus_baseline": {
+        "agreement_delta": "NA",
+        "estimate_delta": "NA",
+        "result": "NA"
+      }
+    }
+  ],
+  "note": "Shadow results. Testnet weights are unchanged; nothing here sets a weight.",
+  "profile": {
+    "profile_commitment": "sha256:039b8639a839f8617003c2f5e686dcf313dd7fc80f9de2c1b8d7d9762a6e7665",
+    "profile_id": "IC-FIRST-LIGHT-MIN-3",
+    "state_payoff": true
+  },
+  "schema_version": "sn87-contest-window-results/0.1",
+  "truth_state_counts": {
+    "FINDINGS": 10,
+    "INSUFFICIENT_EVIDENCE_ABSTAIN": 16,
+    "NO_MATERIAL_DEVIATION": 6
+  },
+  "window": {
+    "admitted_diagnostic": 8,
+    "admitted_scored": 24,
+    "assigned_scored": 24,
+    "cases": 32,
+    "cases_commitment": "sha256:14a349f9d4e06d39e48a01f7fda5201e3eaa789bab17ec2f52ae63d52645e71c",
+    "closes_at": "2026-10-21T00:00:00Z",
+    "minimum_assignments": 22,
+    "opens_at": "2026-10-20T00:00:00Z",
+    "reference_failure_qids": [],
+    "reference_failures": 0,
+    "reference_failures_tolerated": 2,
+    "status": "VALID",
+    "truth_commitment": "sha256:59ef699f9b25e4c86fdf6d92a8009a153c18351d761fa1ef4f506929c80a6105",
+    "window_id": "demo-0001"
+  }
+}

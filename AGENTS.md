@@ -6,9 +6,10 @@ Rules for agents and humans working in `sn87-provenonce`.
 
 - Owner: Provenonce, Inc., under Will O'Brien, Founder & CEO. `.github/CODEOWNERS` names the reviewer.
 - This repository holds protocol contracts, the reference implementation, the miner kit, public-safe
-  fixtures, tests, docs and the public attestation verifier. Hidden challenge truth, validator
-  scoring, the reference executors and production operations are maintained privately; do not
-  add them here.
+  fixtures, tests, docs, the one scorer (`scoring.py`), the committed profiles, the signed
+  transport, the published truth of the public fixtures and the public attestation verifier.
+  Hidden challenge truth, the reference executors (the code that computes expected truth for
+  hidden instances) and operator tooling are maintained privately; do not add them here.
 - One canonicalizer (`gra/0.1`), one profile family, one scorer, one bundle. Do not add a second.
 
 ## Run tests
@@ -20,8 +21,12 @@ uv run ruff check .
 uv run pytest
 ```
 
-Tests that need the private reference executors skip with that reason. The signed-HTTP transport
-tests need a Valkey server and run in Provenonce's private suite; the design is in
+Tests that need the private reference executors skip with that reason; the scorer tests that can
+run against the published truth (`protocol/golden_truth/`) do. The signed-HTTP transport
+tests (`tests/transport`) are public. They need a Valkey-compatible server: set
+`SN87_TEST_VALKEY_URL` to one (CI uses a pinned Valkey container), or put `valkey-server` or
+`redis-server` on PATH; otherwise they skip with that reason (`SN87_REQUIRE_TRANSPORT_TESTS=1`
+makes the skip a failure). The design is in
 `docs/architecture/ADR-0005-signed-http-and-replay-boundary.md`.
 
 ## Data boundaries

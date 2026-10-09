@@ -155,15 +155,16 @@ def test_plan_and_validator_are_unverified_with_the_private_reason_never_fail():
     assert report["verdict"] == va.UNVERIFIED and not report["ok"]
     text = va.render(report)
     assert "uv sync" not in text
-    assert ("SUMMARY integrity: PASS; chain: 3/3 PASS; scoring: not verifiable outside "
-            f"Provenonce (plan and validator UNVERIFIED: {REASON})") in text
+    assert ("SUMMARY integrity: PASS; chain: 3/3 PASS; scoring: "
+            f"validator 0/3 PASS, 3 UNVERIFIED ({REASON}); "
+            f"plan 0/3 PASS, 3 UNVERIFIED ({REASON})") in text
     assert "OVERALL UNVERIFIED" in text and "exit code 3" in text
 
 
 def test_real_default_functions_report_private_absence_when_prerequisites_are_missing(monkeypatch):
     """Simulate a public tree by monkeypatching, without deleting any file."""
     monkeypatch.setattr(va, "SCRIPTS", ROOT / "scripts" / "no_such_dir")
-    with pytest.raises(va.PrivateUnavailable, match=REASON):
+    with pytest.raises(va.PrivateUnavailable, match=va.PLAN_REASON):
         va.compute_plan_digest()
 
     def fail_import(name, *args, **kwargs):
@@ -209,7 +210,7 @@ def test_overall_pass_needs_every_section_pass():
     report = run(doc, FakeReader(doc), plan_digest_fn=lambda: "sha256:" + "ab" * 32,
                  validator_digest_fn=lambda s, t: "sha256:" + "cd" * 32)
     assert report["verdict"] == va.PASS and report["ok"]
-    assert "scoring: 6/6 PASS" in va.render(report)
+    assert "scoring: validator 3/3 PASS; plan 3/3 PASS" in va.render(report)
     for verdict_set in ([va.PASS, va.UNVERIFIED], [va.UNVERIFIED, va.FAIL, va.PASS]):
         assert va.worst(verdict_set) != va.PASS
 
@@ -261,7 +262,8 @@ def test_chain_client_source_has_no_write_capable_names():
 
 def test_chain_client_exposes_only_reads_and_checks_the_genesis(monkeypatch):
     public = {n for n in dir(cr.ChainReader) if not n.startswith("_")}
-    assert public == {"endpoint", "current_block", "last_weights_block", "weight_row"}
+    assert public == {"endpoint", "current_block", "last_weights_block", "weight_row",
+                      "registration_burn"}
 
     class Sub:
         block = 7
@@ -294,6 +296,36 @@ def test_chain_client_exposes_only_reads_and_checks_the_genesis(monkeypatch):
         wrong.current_block()
 
 
+def test_registration_burn_is_one_read_of_the_burn_storage_and_must_be_an_integer(monkeypatch):
+    class Sub:
+        block = 7
+
+        def __init__(self, value):
+            self.value, self.asked = value, []
+            self._client = self
+            self._substrate = self
+
+        def block_hash(self, n):
+            return cr.GENESIS
+
+        def _call(self, value):
+            return value
+
+        def query(self, descriptor, params, block=None):
+            self.asked.append((descriptor, params, block))
+            return self.value
+
+    monkeypatch.setattr(cr, "_storage", lambda: type("S", (), {"Burn": "B"}))
+    sub = Sub(500000)
+    reader = cr.ChainReader("wss://example.invalid", subtensor_factory=lambda e: sub)
+    assert reader.registration_burn(582) == 500000
+    assert sub.asked == [("B", [582], None)]
+    for bad in (None, "5", 1.5, True, -1):
+        broken = cr.ChainReader("wss://example.invalid", subtensor_factory=lambda e, v=bad: Sub(v))
+        with pytest.raises(cr.ChainReadError):
+            broken.registration_burn(582)
+
+
 # ------------------------------------- executors absent: UNVERIFIED (exit 3), never FAIL
 def test_a_late_private_executor_error_is_unverified_not_fail(monkeypatch):
     """After decoupling the staging module imports; the executor is missing only when called."""
@@ -320,13 +352,14 @@ def test_a_plan_child_failing_on_a_missing_executor_is_unverified(monkeypatch, t
         va.compute_plan_digest()
 
 
-def test_verifier_with_executors_blocked_reports_unverified_exit_3(tmp_path):
-    """End to end in a subprocess: executors blocked, integrity PASS, scoring UNVERIFIED."""
+def test_verifier_with_executors_blocked_checks_the_validator_and_leaves_the_plan_unverified():
+    """End to end in a subprocess: executors and the plan tool absent, as in the public tree.
+
+    The validator digest of the real attestation recomputes from the published truth (PASS for
+    every run); the plan digest cannot (UNVERIFIED); nothing is FAIL; the exit code is 3."""
     import subprocess
 
-    doc = make_doc()
-    path = tmp_path / "att.json"
-    path.write_bytes(canonical_bytes(doc))
+    attestation = ROOT / "attestation" / "SN87_TESTNET_ATTESTATION_02.json"
     code = f"""
 import pathlib, sys
 for n in ("sn87_provenonce.institutional_v02.references", "sn87_provenonce.pilot.reference",
@@ -334,14 +367,17 @@ for n in ("sn87_provenonce.institutional_v02.references", "sn87_provenonce.pilot
     sys.modules[n] = None
 sys.path.insert(0, {str(ROOT / "scripts")!r})
 import verify_attestation as va
-va.SCRIPTS = pathlib.Path({str(tmp_path / "no_scripts")!r})  # no plan tool: private-absent
-doc = __import__("json").loads(open({str(path)!r}).read())
+va.SCRIPTS = pathlib.Path({str(ROOT / 'scripts' / 'no_scripts')!r})  # no plan tool: private-absent
+doc = __import__("json").loads(open({str(attestation)!r}).read())
 report = va.verify(doc, client=None)
-print(report["verdict"], report["scoring"]["verdict"], report["integrity"]["ok"])
+checks = [r["checks"] for r in report["runs"]]
+print(report["verdict"], report["scoring"]["verdict"], report["integrity"]["ok"],
+      sorted({{c["validator"]["verdict"] for c in checks}}),
+      sorted({{c["plan"]["verdict"] for c in checks}}))
 sys.exit(va.exit_code(report["verdict"]))
 """
     done = subprocess.run([sys.executable, "-c", code], capture_output=True, text=True,
                           cwd=ROOT, timeout=300)
     assert done.returncode == 3, (done.stdout, done.stderr)
-    verdict, scoring, integrity = done.stdout.split()
-    assert verdict == "UNVERIFIED" and scoring == "UNVERIFIED" and integrity == "True"
+    assert done.stdout.split(None, 3)[:3] == ["UNVERIFIED", "UNVERIFIED", "True"], done.stdout
+    assert "['PASS'] ['UNVERIFIED']" in done.stdout

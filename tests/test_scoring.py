@@ -3,8 +3,9 @@
 from copy import deepcopy
 from dataclasses import replace
 
-import _requires_executors  # noqa: F401
 import pytest
+from conftest import executors_available
+from golden_support import response_from_truth, truth_of
 
 from sn87_provenonce.classes import TYPE_C_RELEASE as TC
 from sn87_provenonce.pilot.contracts import (
@@ -12,7 +13,6 @@ from sn87_provenonce.pilot.contracts import (
     validate_capsule,
     validate_differential,
 )
-from sn87_provenonce.pilot.reference import agreed_truth, make_differential
 from sn87_provenonce.scoring import (
     EFFICIENCY_STATUS,
     Integrity,
@@ -29,6 +29,20 @@ OK = Integrity(True, True, True, True, True, True)
 P = TC.profile
 
 
+def agreed_truth(c):
+    """The reference executor's truth in the private tree, the published golden truth otherwise."""
+    return truth_of(TC, c)
+
+
+def make_differential(c, method):
+    """The executor's response in the private tree; in the public tree the response of a method
+    that reproduces the published truth exactly (``golden_support.response_from_truth``)."""
+    if executors_available():
+        from sn87_provenonce.pilot.reference import make_differential as reference_response
+        return reference_response(c, method)
+    return response_from_truth(c, agreed_truth(c), method)
+
+
 def score(c, truth, d, integrity=OK):
     return score_response(TC, c, truth, d, integrity)
 
@@ -39,6 +53,7 @@ def test_type_c_references_and_capsule_contract(index):
     validate_capsule(c)
     truth = agreed_truth(c)
     left, right = make_differential(c, "state_machine"), make_differential(c, "relational")
+    validate_differential(c, left)
     assert left | {"method": "same"} == right | {"method": "same"}
     result = score(c, truth, left)
     assert result["valid"]

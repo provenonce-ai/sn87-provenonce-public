@@ -1,0 +1,480 @@
+{
+  "description": "The transparent Type C reference-oracle report over the eight public fixtures, as run_type_c_simulation returns it. Its report_commitment is the value pinned in simulation.type_c_candidate_artifact.REFERENCE_ORACLE_REPORT_COMMITMENT, so the report can be checked against public code.",
+  "report": {
+    "all_references_agree": true,
+    "boundaries": {
+      "benchmark_truth": false,
+      "chain_submission": false,
+      "external_network": false,
+      "hidden_fixture": false,
+      "miner_scoring": false,
+      "production_evidence": false
+    },
+    "claim_state": "IMPLEMENTED_TESTED_TRANSPARENT_TYPE_C_REFERENCE_ORACLE_ONLY",
+    "fixtures": [
+      {
+        "agreed_outcome": {
+          "defect_codes": [],
+          "response_state": "NO_MATERIAL_DEVIATION"
+        },
+        "case_class": "TYPE_C_CLEAN_CONTROL",
+        "events": [
+          {
+            "event_id": "e1",
+            "input_commitment": "sha256:f2ca489f5902628d80e3aa566dcee4ebc5c3ad1aeda4a56c595ed82f7d8ae58b",
+            "kind": "SUBMIT",
+            "output_commitment": "sha256:546d77bc6e6402e04d3604187e80e9bda5f084458bdcea5fa265355c385762f4"
+          },
+          {
+            "approved": true,
+            "event_id": "e2",
+            "input_commitment": "sha256:546d77bc6e6402e04d3604187e80e9bda5f084458bdcea5fa265355c385762f4",
+            "kind": "REVIEW",
+            "output_commitment": "sha256:3441fd07d4bb8ff020430a8c88b1f520c76de668ca370703a14bd6302b873c24"
+          },
+          {
+            "event_id": "e3",
+            "input_commitment": "sha256:3441fd07d4bb8ff020430a8c88b1f520c76de668ca370703a14bd6302b873c24",
+            "kind": "VALIDATE",
+            "output_commitment": "sha256:e37c0da88e8068526239730a09463f90c4aa2b5475d4ef8cb7d67436649f2713"
+          },
+          {
+            "event_id": "e4",
+            "input_commitment": "sha256:e37c0da88e8068526239730a09463f90c4aa2b5475d4ef8cb7d67436649f2713",
+            "kind": "RELEASE",
+            "output_commitment": "sha256:3422b7f02606dab5f2440801da45c11e52dad00ae1216de70fb87cd21aa5d77b"
+          }
+        ],
+        "evidence_complete": true,
+        "fixture_id": "type-c-clean-control",
+        "input_commitment": "sha256:3e744d15eb779de25c6d196dff9b0139d1628379249e38295a69c7c4f8f4dafc",
+        "mutation_provenance": {
+          "expected_invariant": "NO_MATERIAL_DEVIATION",
+          "operator": "BASELINE",
+          "source_fixture_id": null
+        },
+        "reference_agreement": true,
+        "reference_results": {
+          "relational": {
+            "defect_codes": [],
+            "response_state": "NO_MATERIAL_DEVIATION"
+          },
+          "state_machine": {
+            "defect_codes": [],
+            "response_state": "NO_MATERIAL_DEVIATION"
+          }
+        }
+      },
+      {
+        "agreed_outcome": {
+          "defect_codes": [
+            "MISSING_REVIEW_GATE"
+          ],
+          "response_state": "FINDINGS"
+        },
+        "case_class": "TYPE_C_PLANTED_DEFECT",
+        "events": [
+          {
+            "event_id": "e1",
+            "input_commitment": "sha256:f2ca489f5902628d80e3aa566dcee4ebc5c3ad1aeda4a56c595ed82f7d8ae58b",
+            "kind": "SUBMIT",
+            "output_commitment": "sha256:546d77bc6e6402e04d3604187e80e9bda5f084458bdcea5fa265355c385762f4"
+          },
+          {
+            "event_id": "e3",
+            "input_commitment": "sha256:546d77bc6e6402e04d3604187e80e9bda5f084458bdcea5fa265355c385762f4",
+            "kind": "VALIDATE",
+            "output_commitment": "sha256:e37c0da88e8068526239730a09463f90c4aa2b5475d4ef8cb7d67436649f2713"
+          },
+          {
+            "event_id": "e4",
+            "input_commitment": "sha256:e37c0da88e8068526239730a09463f90c4aa2b5475d4ef8cb7d67436649f2713",
+            "kind": "RELEASE",
+            "output_commitment": "sha256:3422b7f02606dab5f2440801da45c11e52dad00ae1216de70fb87cd21aa5d77b"
+          }
+        ],
+        "evidence_complete": true,
+        "fixture_id": "type-c-missing-review",
+        "input_commitment": "sha256:6f558d7c3c8f9f17a53e730ec2522bc3636055a6563ee1254cd3508c0606af39",
+        "mutation_provenance": {
+          "expected_invariant": "MISSING_REVIEW_GATE",
+          "operator": "DELETE_REVIEW_EVENT",
+          "source_fixture_id": "type-c-clean-control"
+        },
+        "reference_agreement": true,
+        "reference_results": {
+          "relational": {
+            "defect_codes": [
+              "MISSING_REVIEW_GATE"
+            ],
+            "response_state": "FINDINGS"
+          },
+          "state_machine": {
+            "defect_codes": [
+              "MISSING_REVIEW_GATE"
+            ],
+            "response_state": "FINDINGS"
+          }
+        }
+      },
+      {
+        "agreed_outcome": {
+          "defect_codes": [
+            "MISSING_REVIEW_GATE"
+          ],
+          "response_state": "FINDINGS"
+        },
+        "case_class": "TYPE_C_EQUIVALENT_MUTATION",
+        "events": [
+          {
+            "event_id": "e1",
+            "input_commitment": "sha256:f2ca489f5902628d80e3aa566dcee4ebc5c3ad1aeda4a56c595ed82f7d8ae58b",
+            "kind": "SUBMIT",
+            "output_commitment": "sha256:546d77bc6e6402e04d3604187e80e9bda5f084458bdcea5fa265355c385762f4"
+          },
+          {
+            "event_id": "semantic-no-op",
+            "input_commitment": "sha256:546d77bc6e6402e04d3604187e80e9bda5f084458bdcea5fa265355c385762f4",
+            "kind": "OBSERVE",
+            "output_commitment": "sha256:546d77bc6e6402e04d3604187e80e9bda5f084458bdcea5fa265355c385762f4"
+          },
+          {
+            "event_id": "e3",
+            "input_commitment": "sha256:546d77bc6e6402e04d3604187e80e9bda5f084458bdcea5fa265355c385762f4",
+            "kind": "VALIDATE",
+            "output_commitment": "sha256:e37c0da88e8068526239730a09463f90c4aa2b5475d4ef8cb7d67436649f2713"
+          },
+          {
+            "event_id": "e4",
+            "input_commitment": "sha256:e37c0da88e8068526239730a09463f90c4aa2b5475d4ef8cb7d67436649f2713",
+            "kind": "RELEASE",
+            "output_commitment": "sha256:3422b7f02606dab5f2440801da45c11e52dad00ae1216de70fb87cd21aa5d77b"
+          }
+        ],
+        "evidence_complete": true,
+        "fixture_id": "type-c-missing-review-equivalent-observation",
+        "input_commitment": "sha256:a93f2cd251b3e79a5a5b9da3a7483f49870aa47a70cb785dd8edb1e14cf19c83",
+        "mutation_provenance": {
+          "expected_invariant": "MISSING_REVIEW_GATE",
+          "operator": "INSERT_SEMANTIC_NO_OP",
+          "source_fixture_id": "type-c-missing-review"
+        },
+        "reference_agreement": true,
+        "reference_results": {
+          "relational": {
+            "defect_codes": [
+              "MISSING_REVIEW_GATE"
+            ],
+            "response_state": "FINDINGS"
+          },
+          "state_machine": {
+            "defect_codes": [
+              "MISSING_REVIEW_GATE"
+            ],
+            "response_state": "FINDINGS"
+          }
+        }
+      },
+      {
+        "agreed_outcome": {
+          "defect_codes": [
+            "EVIDENCE_CHAIN_BREAK"
+          ],
+          "response_state": "FINDINGS"
+        },
+        "case_class": "TYPE_C_PLANTED_DEFECT",
+        "events": [
+          {
+            "event_id": "e1",
+            "input_commitment": "sha256:f2ca489f5902628d80e3aa566dcee4ebc5c3ad1aeda4a56c595ed82f7d8ae58b",
+            "kind": "SUBMIT",
+            "output_commitment": "sha256:546d77bc6e6402e04d3604187e80e9bda5f084458bdcea5fa265355c385762f4"
+          },
+          {
+            "approved": true,
+            "event_id": "e2",
+            "input_commitment": "sha256:de26237a11ca0b553e3e372966f3288a4a418c9ec25bd5355b066199c48c7700",
+            "kind": "REVIEW",
+            "output_commitment": "sha256:3441fd07d4bb8ff020430a8c88b1f520c76de668ca370703a14bd6302b873c24"
+          },
+          {
+            "event_id": "e3",
+            "input_commitment": "sha256:3441fd07d4bb8ff020430a8c88b1f520c76de668ca370703a14bd6302b873c24",
+            "kind": "VALIDATE",
+            "output_commitment": "sha256:e37c0da88e8068526239730a09463f90c4aa2b5475d4ef8cb7d67436649f2713"
+          },
+          {
+            "event_id": "e4",
+            "input_commitment": "sha256:e37c0da88e8068526239730a09463f90c4aa2b5475d4ef8cb7d67436649f2713",
+            "kind": "RELEASE",
+            "output_commitment": "sha256:3422b7f02606dab5f2440801da45c11e52dad00ae1216de70fb87cd21aa5d77b"
+          }
+        ],
+        "evidence_complete": true,
+        "fixture_id": "type-c-chain-break",
+        "input_commitment": "sha256:79e3ba110f1a8cc581a6719f94fa37934b76c24c6c828feb5abb952280c169bd",
+        "mutation_provenance": {
+          "expected_invariant": "EVIDENCE_CHAIN_BREAK",
+          "operator": "SUBSTITUTE_REVIEW_INPUT",
+          "source_fixture_id": "type-c-clean-control"
+        },
+        "reference_agreement": true,
+        "reference_results": {
+          "relational": {
+            "defect_codes": [
+              "EVIDENCE_CHAIN_BREAK"
+            ],
+            "response_state": "FINDINGS"
+          },
+          "state_machine": {
+            "defect_codes": [
+              "EVIDENCE_CHAIN_BREAK"
+            ],
+            "response_state": "FINDINGS"
+          }
+        }
+      },
+      {
+        "agreed_outcome": {
+          "defect_codes": [],
+          "response_state": "INSUFFICIENT_EVIDENCE_ABSTAIN"
+        },
+        "case_class": "TYPE_C_INSUFFICIENT_EVIDENCE",
+        "events": [
+          {
+            "event_id": "e4",
+            "input_commitment": "sha256:e37c0da88e8068526239730a09463f90c4aa2b5475d4ef8cb7d67436649f2713",
+            "kind": "RELEASE",
+            "output_commitment": "sha256:3422b7f02606dab5f2440801da45c11e52dad00ae1216de70fb87cd21aa5d77b"
+          }
+        ],
+        "evidence_complete": false,
+        "fixture_id": "type-c-insufficient-evidence",
+        "input_commitment": "sha256:f870b10f74ddb21c1e36c17b25b85735356bc73e079e845237723534c9675b7d",
+        "mutation_provenance": {
+          "expected_invariant": "INSUFFICIENT_EVIDENCE_ABSTAIN",
+          "operator": "REDACT_REQUIRED_EVENTS",
+          "source_fixture_id": "type-c-clean-control"
+        },
+        "reference_agreement": true,
+        "reference_results": {
+          "relational": {
+            "defect_codes": [],
+            "response_state": "INSUFFICIENT_EVIDENCE_ABSTAIN"
+          },
+          "state_machine": {
+            "defect_codes": [],
+            "response_state": "INSUFFICIENT_EVIDENCE_ABSTAIN"
+          }
+        }
+      },
+      {
+        "agreed_outcome": {
+          "defect_codes": [
+            "MISSING_SUBMIT_EVENT"
+          ],
+          "response_state": "FINDINGS"
+        },
+        "case_class": "TYPE_C_PLANTED_DEFECT",
+        "events": [
+          {
+            "approved": true,
+            "event_id": "e2",
+            "input_commitment": "sha256:546d77bc6e6402e04d3604187e80e9bda5f084458bdcea5fa265355c385762f4",
+            "kind": "REVIEW",
+            "output_commitment": "sha256:3441fd07d4bb8ff020430a8c88b1f520c76de668ca370703a14bd6302b873c24"
+          },
+          {
+            "event_id": "e3",
+            "input_commitment": "sha256:3441fd07d4bb8ff020430a8c88b1f520c76de668ca370703a14bd6302b873c24",
+            "kind": "VALIDATE",
+            "output_commitment": "sha256:e37c0da88e8068526239730a09463f90c4aa2b5475d4ef8cb7d67436649f2713"
+          },
+          {
+            "event_id": "e4",
+            "input_commitment": "sha256:e37c0da88e8068526239730a09463f90c4aa2b5475d4ef8cb7d67436649f2713",
+            "kind": "RELEASE",
+            "output_commitment": "sha256:3422b7f02606dab5f2440801da45c11e52dad00ae1216de70fb87cd21aa5d77b"
+          }
+        ],
+        "evidence_complete": true,
+        "fixture_id": "type-c-missing-submit",
+        "input_commitment": "sha256:83fe0e634aa49266d6aa5b205f23ede939fc535ab931d0165f1e737acec04746",
+        "mutation_provenance": {
+          "expected_invariant": "MISSING_SUBMIT_EVENT",
+          "operator": "DELETE_SUBMIT_EVENT",
+          "source_fixture_id": "type-c-clean-control"
+        },
+        "reference_agreement": true,
+        "reference_results": {
+          "relational": {
+            "defect_codes": [
+              "MISSING_SUBMIT_EVENT"
+            ],
+            "response_state": "FINDINGS"
+          },
+          "state_machine": {
+            "defect_codes": [
+              "MISSING_SUBMIT_EVENT"
+            ],
+            "response_state": "FINDINGS"
+          }
+        }
+      },
+      {
+        "agreed_outcome": {
+          "defect_codes": [
+            "INVALID_WORKFLOW_ORDER"
+          ],
+          "response_state": "FINDINGS"
+        },
+        "case_class": "TYPE_C_PLANTED_DEFECT",
+        "events": [
+          {
+            "event_id": "e1",
+            "input_commitment": "sha256:f2ca489f5902628d80e3aa566dcee4ebc5c3ad1aeda4a56c595ed82f7d8ae58b",
+            "kind": "VALIDATE",
+            "output_commitment": "sha256:546d77bc6e6402e04d3604187e80e9bda5f084458bdcea5fa265355c385762f4"
+          },
+          {
+            "approved": true,
+            "event_id": "e2",
+            "input_commitment": "sha256:546d77bc6e6402e04d3604187e80e9bda5f084458bdcea5fa265355c385762f4",
+            "kind": "REVIEW",
+            "output_commitment": "sha256:3441fd07d4bb8ff020430a8c88b1f520c76de668ca370703a14bd6302b873c24"
+          },
+          {
+            "event_id": "e3",
+            "input_commitment": "sha256:3441fd07d4bb8ff020430a8c88b1f520c76de668ca370703a14bd6302b873c24",
+            "kind": "SUBMIT",
+            "output_commitment": "sha256:e37c0da88e8068526239730a09463f90c4aa2b5475d4ef8cb7d67436649f2713"
+          },
+          {
+            "event_id": "e4",
+            "input_commitment": "sha256:e37c0da88e8068526239730a09463f90c4aa2b5475d4ef8cb7d67436649f2713",
+            "kind": "RELEASE",
+            "output_commitment": "sha256:3422b7f02606dab5f2440801da45c11e52dad00ae1216de70fb87cd21aa5d77b"
+          }
+        ],
+        "evidence_complete": true,
+        "fixture_id": "type-c-validation-before-submit",
+        "input_commitment": "sha256:9584338fafe0d9ba745451f167aa2464daffc903d97a61cf29260b5302bf4eca",
+        "mutation_provenance": {
+          "expected_invariant": "INVALID_WORKFLOW_ORDER",
+          "operator": "SWAP_SUBMIT_AND_VALIDATE_KINDS",
+          "source_fixture_id": "type-c-clean-control"
+        },
+        "reference_agreement": true,
+        "reference_results": {
+          "relational": {
+            "defect_codes": [
+              "INVALID_WORKFLOW_ORDER"
+            ],
+            "response_state": "FINDINGS"
+          },
+          "state_machine": {
+            "defect_codes": [
+              "INVALID_WORKFLOW_ORDER"
+            ],
+            "response_state": "FINDINGS"
+          }
+        }
+      },
+      {
+        "agreed_outcome": {
+          "defect_codes": [
+            "DUPLICATE_SUBMIT_EVENT"
+          ],
+          "response_state": "FINDINGS"
+        },
+        "case_class": "TYPE_C_PLANTED_DEFECT",
+        "events": [
+          {
+            "event_id": "e1",
+            "input_commitment": "sha256:f2ca489f5902628d80e3aa566dcee4ebc5c3ad1aeda4a56c595ed82f7d8ae58b",
+            "kind": "SUBMIT",
+            "output_commitment": "sha256:546d77bc6e6402e04d3604187e80e9bda5f084458bdcea5fa265355c385762f4"
+          },
+          {
+            "event_id": "duplicate-submit",
+            "input_commitment": "sha256:546d77bc6e6402e04d3604187e80e9bda5f084458bdcea5fa265355c385762f4",
+            "kind": "SUBMIT",
+            "output_commitment": "sha256:546d77bc6e6402e04d3604187e80e9bda5f084458bdcea5fa265355c385762f4"
+          },
+          {
+            "approved": true,
+            "event_id": "e2",
+            "input_commitment": "sha256:546d77bc6e6402e04d3604187e80e9bda5f084458bdcea5fa265355c385762f4",
+            "kind": "REVIEW",
+            "output_commitment": "sha256:3441fd07d4bb8ff020430a8c88b1f520c76de668ca370703a14bd6302b873c24"
+          },
+          {
+            "event_id": "e3",
+            "input_commitment": "sha256:3441fd07d4bb8ff020430a8c88b1f520c76de668ca370703a14bd6302b873c24",
+            "kind": "VALIDATE",
+            "output_commitment": "sha256:e37c0da88e8068526239730a09463f90c4aa2b5475d4ef8cb7d67436649f2713"
+          },
+          {
+            "event_id": "e4",
+            "input_commitment": "sha256:e37c0da88e8068526239730a09463f90c4aa2b5475d4ef8cb7d67436649f2713",
+            "kind": "RELEASE",
+            "output_commitment": "sha256:3422b7f02606dab5f2440801da45c11e52dad00ae1216de70fb87cd21aa5d77b"
+          }
+        ],
+        "evidence_complete": true,
+        "fixture_id": "type-c-duplicate-submit",
+        "input_commitment": "sha256:3afa98d3fc5f3f55654cadca7a176a5c355eb8be78042a0092d8141ee6b78723",
+        "mutation_provenance": {
+          "expected_invariant": "DUPLICATE_SUBMIT_EVENT",
+          "operator": "INSERT_DUPLICATE_SUBMIT",
+          "source_fixture_id": "type-c-clean-control"
+        },
+        "reference_agreement": true,
+        "reference_results": {
+          "relational": {
+            "defect_codes": [
+              "DUPLICATE_SUBMIT_EVENT"
+            ],
+            "response_state": "FINDINGS"
+          },
+          "state_machine": {
+            "defect_codes": [
+              "DUPLICATE_SUBMIT_EVENT"
+            ],
+            "response_state": "FINDINGS"
+          }
+        }
+      }
+    ],
+    "reference_executors": [
+      "state_machine",
+      "relational"
+    ],
+    "report_commitment": "sha256:354472f0ab5ba0d1e863b24f509c395a913e06a5616e0e3f3faab0916432d9ec",
+    "simulation_version": "type-c-transparent-reference-oracle/0alpha2",
+    "workflow_contract": {
+      "commitment_chain_must_be_contiguous": true,
+      "observation_window": "AFTER_SUBMIT_BEFORE_RELEASE",
+      "optional_events": [
+        "OBSERVE"
+      ],
+      "release_must_be_terminal": true,
+      "required_event_cardinality": {
+        "RELEASE": 1,
+        "REVIEW": 1,
+        "SUBMIT": 1,
+        "VALIDATE": 1
+      },
+      "required_event_order": [
+        "SUBMIT",
+        "REVIEW",
+        "VALIDATE",
+        "RELEASE"
+      ],
+      "review_must_be_approved": true
+    }
+  },
+  "schema": "sn87-golden-reference-report/0.1",
+  "set_digest": "sha256:326587248469d01b891fa19d0654616aabe4124af0e305b6fa1cbf8b7799a416",
+  "set_id": "type-c-reference-oracle"
+}

@@ -1,0 +1,57 @@
+{
+  "schema_version": "sn87-contest-reveal/0.1",
+  "seed": "8c2514fc5992c1c3ad455aa064a7e0f97fd5c2e3209b4026133fe084a8e7969d",
+  "spec": {
+    "closes_at": "2026-10-21T00:00:00Z",
+    "generator": "sn87-contest-generator/0.1",
+    "mix": [
+      {
+        "count": 10,
+        "family": "stale_authority",
+        "track": "scored"
+      },
+      {
+        "count": 6,
+        "family": "fresh_review",
+        "track": "scored"
+      },
+      {
+        "count": 3,
+        "family": "wrong_scope_stale",
+        "track": "scored"
+      },
+      {
+        "count": 3,
+        "family": "wrong_scope_clear",
+        "track": "scored"
+      },
+      {
+        "count": 2,
+        "family": "incomplete",
+        "track": "scored"
+      },
+      {
+        "count": 4,
+        "family": "incomplete",
+        "track": "diagnostic"
+      },
+      {
+        "count": 2,
+        "family": "wrong_scope_stale",
+        "track": "diagnostic"
+      },
+      {
+        "count": 2,
+        "family": "wrong_scope_clear",
+        "track": "diagnostic"
+      }
+    ],
+    "mix_preset": "messy",
+    "opens_at": "2026-10-20T00:00:00Z",
+    "profile_commitment": "sha256:039b8639a839f8617003c2f5e686dcf313dd7fc80f9de2c1b8d7d9762a6e7665",
+    "profile_id": "IC-FIRST-LIGHT-MIN-3",
+    "schedule_id": "demo-schedule-1",
+    "window_id": "demo-0001"
+  },
+  "window_id": "demo-0001"
+}
