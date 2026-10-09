@@ -1,0 +1,1 @@
+The guide runner now serves the tree under test to a guide's `git clone` through git's own transport instead of the local-clone shortcut, which removes an intermittent clone failure seen on macOS runners.

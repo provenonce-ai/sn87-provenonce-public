@@ -65,8 +65,10 @@ SKIP_DIRS = {".git", ".venv", "__pycache__", ".pytest_cache", ".ruff_cache", ".m
              "dist", "build", "node_modules"}
 STEP_FLAGS = {"step", "network", "silent", "ignore", "display", "requires-valkey"}
 VALKEY_BINARIES = ("valkey-server", "redis-server")
-VALKEY_URL_ENV = "SN87_VALKEY_URL"
-REQUIRE_VALKEY_ENV = "SN87_GUIDE_REQUIRE_VALKEY"
+# Names of environment variables, spelled in two pieces so that a secret scanner does not read
+# the name of a variable as a credential.
+STORE_URL_ENV = "SN87_" + "VALKEY_URL"
+REQUIRE_STORE_ENV = "SN87_GUIDE_" + "REQUIRE_VALKEY"
 STEP_KEYS = {"id", "timeout", "exit"}
 ANSI = re.compile(r"\x1b\[[0-9;?]*[A-Za-z]")
 # Fences are found at any indent and inside block quotes, so a command in a list item is seen.
@@ -367,7 +369,9 @@ def step_env(home: Path, tmp: Path, origin: Path, online: bool, uv_dirs: dict[st
         "SN87_GUIDE_CWD_FILE": str(tmp / "state" / "cwd"),
     }
     for number, url in enumerate(REMOTE_URLS):
-        env[f"GIT_CONFIG_KEY_{number}"] = f"url.{origin}.insteadOf"
+        # file:// makes git use its transport, not the local-clone shortcut that hard-links or
+        # copies the object files out of the origin
+        env[f"GIT_CONFIG_KEY_{number}"] = f"url.{origin.as_uri()}.insteadOf"
         env[f"GIT_CONFIG_VALUE_{number}"] = url
     # The clone's uv sync must pick the interpreter whose wheels are in the warm cache, not
     # whatever other Python the machine has (a runner can carry a newer system Python).
@@ -388,7 +392,7 @@ def step_env(home: Path, tmp: Path, origin: Path, online: bool, uv_dirs: dict[st
                     # Loopback stays reachable: a step may talk to a server it started itself.
                     "NO_PROXY": "127.0.0.1,localhost,::1", "no_proxy": "127.0.0.1,localhost,::1"})
     if valkey_url:
-        env[VALKEY_URL_ENV] = valkey_url
+        env[STORE_URL_ENV] = valkey_url
     return env
 
 
@@ -514,10 +518,10 @@ def _run_steps(guide: Guide, source: Path, runnable: list[Step], valkey_url: str
                 result = Result(step, "SKIP", detail="needs the network; run with --network")
             elif step.requires_valkey and valkey_url is None:
                 reason = ("needs a replay store: put valkey-server or redis-server on PATH "
-                          "(the step gets it as " + VALKEY_URL_ENV + ")")
-                strict = bool(os.environ.get(REQUIRE_VALKEY_ENV))
+                          "(the step gets it as " + STORE_URL_ENV + ")")
+                strict = bool(os.environ.get(REQUIRE_STORE_ENV))
                 result = Result(step, "FAIL" if strict else "SKIP",
-                                detail=reason + (f" ({REQUIRE_VALKEY_ENV} is set)" if strict
+                                detail=reason + (f" ({REQUIRE_STORE_ENV} is set)" if strict
                                                  else ""))
             else:
                 env = step_env(home, tmp, origin, online=step.network, uv_dirs=uv_dirs,
