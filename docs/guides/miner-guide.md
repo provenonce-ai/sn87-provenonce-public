@@ -6,10 +6,15 @@ published truth, run the signed endpoint that validators call, sign an announcem
 learn what is left to do on the public test network, number 582.
 
 **This guide does not end at a score on 582, and it says so up front.** The last step of a miner's
-route is "uid N received a non-zero score in window W on 582". That step cannot be completed
-today, because outside miners are not admitted to scoring yet. Part F states exactly what must
-exist before it can be, and what you will check when it does. Parts A and B are real. Parts C and D are rehearsals on your machine, with public fixtures and a
-throwaway key. Part E is a list of operator actions. Nothing in this guide sends anything to a chain.
+route is "uid N received a non-zero score in window W on 582". You cannot complete that step
+from this guide alone: it needs your uid to be on the shadow allowlist and a window to have
+closed. A shadow cohort is described in [shadow-cohort.md](shadow-cohort.md): shadow results are
+scored and published but not weighted. This guide does not claim that any uid is enrolled or that
+a window has run, and no outside uid is known to be scored by this repository's tooling. Part F
+states exactly what must exist before the step can be completed, and what you will check when it
+does. Parts A and B are real. Parts C and D are rehearsals on your machine, with public fixtures
+and a throwaway key. Part E is a list of operator actions. Nothing in this guide sends anything
+to a chain.
 
 The guide is written once, here. `scripts/run_guide.py` runs its commands and compares the output
 with the blocks below. The offline parts run on every change, on Linux and macOS. The one command
@@ -31,7 +36,7 @@ things you do with your own tools, which the guide does not do for you.
 | C | Write a method, serve it locally, score it against published truth | 15 min | rehearsal on public fixtures |
 | D | The signed endpoint, probe and announcement | 20 min | rehearsal with a throwaway key |
 | E | Registration and test funds on 582 | 10 min | operator actions, not performed here |
-| F | The first score on 582 | 5 min | not available yet: depends on admission; plus a rehearsal on a demo window |
+| F | The first score on 582 | 5 min | depends on the shadow cohort allowlist; plus a rehearsal on a demo window |
 | G | Troubleshooting by error code | as needed | reference |
 | H | Report back | 5 min | real |
 
@@ -578,22 +583,25 @@ tool. Do not rely on a figure in any document, including this one.
 
 ## Part F. The first score on 582
 
-**Not available yet: depends on admission.**
+**Depends on admission to the shadow cohort.**
 
 The check this guide is meant to end with is:
 
 > uid N received a non-zero score in window W on 582.
 
-Today it cannot be done, because of what has not been decided or published. The route is in
+The shadow cohort is described in [shadow-cohort.md](shadow-cohort.md), with how to apply and the
+criteria. This guide does not claim that any uid is on the allowlist, that a window has run, or
+that any result is published; look at the published results to see. The check cannot be done until
+all of the items below exist for your uid. The route is in
 [admission.md](../protocol/admission.md): a uid goes from registered to `shadow` (scored and
 published with weight 0) to `weighted`, one approved plan version per step. For the check above,
 all of these must exist:
 
-1. **An admission decision.** An approved plan version that stages your uid as `shadow`, made by the
-   maintainers outside this repository. The tooling in this repository (`scripts/admission_plan.py`)
-   builds and checks such versions; it approves nothing. Today the weight rows on 582 name uids 1
-   and 2 only, both operated by Provenonce (the uid table in the [README](../../README.md)), and no
-   outside uid is staged.
+1. **An admission decision.** Your uid on the shadow allowlist, through the application and review
+   steps in [shadow-cohort.md](shadow-cohort.md). The tooling in this repository
+   (`scripts/admission_plan.py`) builds and checks plan versions; it approves nothing. The weight
+   rows on 582 name uids 1 and 2 only, both operated by Provenonce (the uid table in the
+   [README](../../README.md)); a shadow uid is not in a weight row.
 2. **A valid announced endpoint for your uid.** An endpoint record that passes the checks in
    admission.md and names your hotkey, found through the discovery rule in Step 16. The
    validator-side reader and the shadow tooling that queries your endpoint are operator-only and
@@ -800,9 +808,11 @@ If your problem has no code, or the code's advice did not help, report it (Part 
 Read these before you judge what you saw. [LIMITATIONS.md](../../LIMITATIONS.md) has the full
 list.
 
-- **No outside miner is scored on 582 today.** The weight rows name uids 1 and 2, which
-  Provenonce operates. Part F is not available yet, and nothing in this guide can show you a
-  score on the network.
+- **No outside miner is weighted on 582.** The weight rows name uids 1 and 2, which Provenonce
+  operates. A shadow cohort is described in [shadow-cohort.md](shadow-cohort.md) (shadow results
+  are scored and published with weight 0). This guide does not claim any uid is enrolled, and no
+  outside uid is known to be scored by this repository's tooling; nothing in this guide can show
+  you a score on the network.
 - **Parts C and D are rehearsals.** The scorer, the wire and the signatures are the real code,
   but the capsules are the three public fictional fixtures, the key is a throwaway, the replay
   store is yours, and the integrity checks are asserted locally in the scoring script. A score
@@ -833,6 +843,7 @@ config.yml
 scoring-question.yml
 security.yml
 setup-failure.yml
+shadow-cohort-application.yml
 ```
 
 - **Setup failure** (`setup-failure.yml`): a command or an expected output in this guide did not
@@ -840,6 +851,8 @@ setup-failure.yml
   error code if there is one, and the last 40 lines of output. Never paste a key, a seed or a
   wallet file.
 - **Scoring question** (`scoring-question.yml`): a score or a fixture you cannot explain.
+- **Shadow cohort application** (`shadow-cohort-application.yml`): ask for a uid you registered
+  on 582 to be queried and scored in shadow. Read [shadow-cohort.md](shadow-cohort.md) first.
 - **Security** (`security.yml`): do not put vulnerability details in an issue. The form only asks
   for the private route described in [SECURITY.md](../../SECURITY.md).
 

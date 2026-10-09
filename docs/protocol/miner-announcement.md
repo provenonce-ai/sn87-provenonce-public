@@ -4,7 +4,12 @@
 (`src/sn87_provenonce/miner_node/announcement.py`, `tests/transport/test_miner_announcement.py`).
 The rule below is the specification a validator follows to find an outside miner. A validator-side
 reader that applies it is not part of this repository. Nothing here claims that any uid on
-testnet 582 publishes an endpoint. Alpha, testnet only ([LIMITATIONS.md](../../LIMITATIONS.md)).
+testnet 582 publishes an endpoint.
+
+How a miner applies for the shadow cohort with a signed announcement is in
+[shadow-cohort.md](../guides/shadow-cohort.md).
+
+Alpha, testnet only ([LIMITATIONS.md](../../LIMITATIONS.md)).
 
 The signed endpoint (`POST /v1/assurance`, `btauth/1`, see
 [ADR-0005](../architecture/ADR-0005-signed-http-and-replay-boundary.md)) answers anyone who can

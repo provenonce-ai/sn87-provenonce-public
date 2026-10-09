@@ -377,12 +377,15 @@ config.yml
 scoring-question.yml
 security.yml
 setup-failure.yml
+shadow-cohort-application.yml
 ```
 
 - **Setup failure** (`setup-failure.yml`): a command or an expected output in this guide did not
   work as written. Give your platform, the step number, the version from Step 3, the command, and
   the last 40 lines of output. Redact paths that identify you.
 - **Scoring question** (`scoring-question.yml`): a score or a fixture you cannot explain.
+- **Shadow cohort application** (`shadow-cohort-application.yml`): ask for a uid you registered
+  on 582 to be queried and scored in shadow. Read [shadow-cohort.md](shadow-cohort.md) first.
 - **Security** (`security.yml`): do not put vulnerability details in an issue. The form only asks
   for the private route described in [SECURITY.md](../../SECURITY.md).
 

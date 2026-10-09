@@ -1,0 +1,88 @@
+name: Shadow cohort application
+description: Ask for a uid you registered on testnet 582 to be queried and scored in shadow, with weight 0.
+title: "[shadow] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form to apply for the shadow cohort. Read docs/guides/shadow-cohort.md first. A shadow uid is queried, scored and published, and it is never in a weight row.
+        Do not paste secrets, wallet material, seeds, keys or tokens anywhere in this form. Everything you enter here is public. The signed announcement is a public file that carries no secret.
+        A maintainer reviews the application and, if it passes, opens a reviewed pull request that adds the uid to shadow/allowlist.json, a file in the public repository that changes only that way and cites this issue. Only then is the uid queried. Filing this form does not promise a place.
+  - type: input
+    id: uid
+    attributes:
+      label: Uid
+      description: The uid you were given when you registered your hotkey on netuid 582.
+      placeholder: "12"
+    validations:
+      required: true
+  - type: input
+    id: hotkey
+    attributes:
+      label: Hotkey (SS58 address)
+      description: The public SS58 address of the registered hotkey. Never paste the key, seed or mnemonic here; do not paste secrets.
+      placeholder: "5..."
+    validations:
+      required: true
+  - type: dropdown
+    id: netuid
+    attributes:
+      label: Netuid
+      options:
+        - "582"
+    validations:
+      required: true
+  - type: input
+    id: endpoint
+    attributes:
+      label: HTTPS endpoint origin
+      description: The origin of your signed endpoint, on a public hostname (not a private or internal address), with no path, query or credentials.
+      placeholder: "https://example.invalid:8443"
+    validations:
+      required: true
+  - type: input
+    id: announcement-url
+    attributes:
+      label: URL of the signed announcement
+      description: The address of /.well-known/sn87-miner-announcement.json on your endpoint.
+      placeholder: "https://example.invalid:8443/.well-known/sn87-miner-announcement.json"
+    validations:
+      required: true
+  - type: input
+    id: miner-version
+    attributes:
+      label: sn87-miner version or commit
+      description: The version, or the commit of this repository, that you run. If your platform is Other, name it here too.
+    validations:
+      required: true
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Platform
+      options:
+        - macOS
+        - Linux
+        - Windows (WSL)
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: method
+    attributes:
+      label: Method description (optional)
+      description: A few sentences on what your method does. It is shown to the maintainers and is public. Give no hostnames, IP addresses or file paths from your own machines, and paste no code that contains secrets, keys or tokens.
+    validations:
+      required: false
+  - type: checkboxes
+    id: confirmations
+    attributes:
+      label: Confirmations
+      options:
+        - label: I registered this uid myself on netuid 582, and I understand nobody else registers, funds or changes anything on chain for me.
+          required: true
+        - label: I understand that shadow results are scored and published and are not weighted.
+          required: true
+        - label: I understand that my responses (state, finding codes, severities, evidence references, confidence and a digest of the full reply) may be published after the window closes; their free text is not published.
+          required: true
+        - label: I pasted no key, seed, mnemonic, wallet file or token into this form.
+          required: true

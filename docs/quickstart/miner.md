@@ -6,6 +6,8 @@ touches a chain. Wallets, hotkeys and funds are the operator's.
 
 For a single walkthrough that runs every command in CI, with the expected output after each, use
 the [miner guide](../guides/miner-guide.md). This page is the reference it draws on.
+To apply for the shadow cohort (scored and published, weight 0), see
+[shadow-cohort.md](../guides/shadow-cohort.md).
 
 ## What a miner does
 

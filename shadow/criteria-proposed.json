@@ -1,0 +1,19 @@
+{
+  "applies_to": "shadow to weighted",
+  "criteria_digest": "sha256:66fcd8e8f4d702c08de63e21a56bd396b561427c6cb4df7f6d56b1403a59bb4d",
+  "criteria_id": "shadow-to-weighted-proposed-1",
+  "not_claimed": [
+    "the values are proposals until an approval record cites this digest"
+  ],
+  "rules": {
+    "consecutive_windows": 7,
+    "max_integrity_failures_per_window": 0,
+    "min_valid_responses_per_window": 24,
+    "require_endpoint_announcement_valid": true,
+    "require_signature_verified": true,
+    "results_must_be_shadow_with_weight_zero": true
+  },
+  "schema_version": "sn87-admission-criteria/0.1",
+  "status": "PROPOSED_NEEDS_AUTHORITY_APPROVAL",
+  "windows": "the current latest N consecutive window indexes, none missing"
+}

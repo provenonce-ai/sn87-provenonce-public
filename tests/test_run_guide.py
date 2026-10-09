@@ -198,7 +198,8 @@ DISPLAY_ALLOWED = {"miner-guide.md": 1}
 def test_shipped_guides_parse_and_have_a_marked_network_step():
     for path in sorted((ROOT / "docs" / "guides").glob("*.md")):
         guide = rg.parse_guide(path.read_text(encoding="utf-8"), path)
-        assert guide.steps, path
+        # a criteria page without commands says so with the no-steps line
+        assert guide.steps or rg.NO_STEPS_MARK in path.read_text(encoding="utf-8"), path
         # A shipped guide leaves no command unrun, except the one container command that the
         # miner guide shows for a replay store the runner replaces with a private one.
         assert guide.display_blocks == DISPLAY_ALLOWED.get(path.name, 0), path
