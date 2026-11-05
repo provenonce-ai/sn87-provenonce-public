@@ -26,6 +26,12 @@ The same file runs in the full Provenonce tree and in the public tree. Sections:
                 scorer, equals the attested one. No reference executor is needed. PASS if equal,
                 FAIL if different, UNVERIFIED only when no truth is published for the attested
                 seed.
+     weights    per run, the attested weight row (``row.dests``, ``row.weights``) equals the
+                weight row the same recomputed validator receipt pins (``pinned.weights.uids``
+                and ``u16_weights``). This is the step from scores to weights: the validator
+                digest covers it, but only the digest was compared before. PASS if equal, FAIL
+                if any uid or u16 value differs, UNVERIFIED when the recomputation produced no
+                pinned weights (no published truth, or no private executor).
      plan       per run, the approved plan digest, recomputed by running Provenonce's private
                 flip-plan tool (``flip_to_testnet.py --plan --json``, run as a subprocess)
                 equals the attested one. The plan document is built by private operator tooling
@@ -163,6 +169,9 @@ TRANSPORT_HINT = ("run uv sync --locked --extra transport "
 
 
 TRUTH_NOTE: dict[str, str] = {}  # filled by compute_validator_digest: which truth was used
+# Filled by compute_validator_digest: (seed, timestamp) -> the receipt's pinned weight row,
+# ``{"uids": [...], "u16_weights": [...]}``. Absent key means no weights were recomputed.
+PINNED_WEIGHTS: dict[tuple[int, str], dict[str, Any]] = {}
 
 
 def compute_validator_digest(seed: int, timestamp: str) -> str:
@@ -184,6 +193,7 @@ def compute_validator_digest(seed: int, timestamp: str) -> str:
     except golden_truth.GoldenTruthInvalid as error:
         raise RuntimeError(f"the published truth is invalid: {error}") from error
     TRUTH_NOTE["truth"] = store.describe()
+    PINNED_WEIGHTS.pop((seed, timestamp), None)  # never leave a row from an earlier computation
     try:
         import staging_subnet  # noqa: PLC0415 - loads the SDK: only after the fake HOME is set
         receipt = staging_subnet.run_staging(
@@ -199,6 +209,10 @@ def compute_validator_digest(seed: int, timestamp: str) -> str:
         raise RuntimeError(f"{error}; {TRANSPORT_HINT}") from error
     if receipt["volatile"]["network_attempts"] != 0:
         raise RuntimeError("the staging run attempted a network connection")
+    weights = receipt["pinned"].get("weights")
+    if isinstance(weights, dict):
+        PINNED_WEIGHTS[(seed, timestamp)] = {"uids": weights.get("uids"),
+                                             "u16_weights": weights.get("u16_weights")}
     return receipt["pinned_digest"]
 
 
@@ -268,6 +282,43 @@ def check_validator(run: dict[str, Any],
         return False, f"attested {run.get('validator_pinned_digest')}, recomputed {value}"
     return True, (f"validator pinned digest recomputes from published truth and the public "
                   f"scorer (seed {key[0]}, {key[1]}; {value})")
+
+
+WEIGHTS_REASON = "no pinned weights were recomputed for this validator seed and timestamp"
+
+
+def pinned_weights_for(seed: int, timestamp: str) -> dict[str, Any] | None:
+    """The pinned weight row recomputed for (seed, timestamp), or None when there is none."""
+    return PINNED_WEIGHTS.get((seed, timestamp))
+
+
+def _int_list(value: Any) -> bool:
+    return isinstance(value, list) and all(_is_int(v) for v in value)
+
+
+def check_weights(run: dict[str, Any], pinned: dict[str, Any] | None
+                  ) -> tuple[bool | None, str]:
+    """The attested weight row against the pinned one. ``(None, reason)`` means UNVERIFIED."""
+    row = run.get("row")
+    if not (isinstance(row, dict) and _int_list(row.get("dests"))
+            and _int_list(row.get("weights"))
+            and len(row["dests"]) == len(row["weights"])):
+        return False, "malformed attested row: dests and weights must be equal-length int lists"
+    if pinned is None:
+        return None, WEIGHTS_REASON
+    uids, u16 = pinned.get("uids"), pinned.get("u16_weights")
+    if not (_int_list(uids) and _int_list(u16) and len(uids) == len(u16)):
+        return False, "malformed pinned weights: uids and u16_weights must be equal-length " \
+                      "int lists"
+    if not uids:
+        if row["dests"]:
+            return False, f"attested row {row['dests']} but the pinned row is empty"
+        return None, "no weights in the pinned row"
+    if row["dests"] != uids:
+        return False, f"attested uids {row['dests']}, pinned uids {uids}"
+    if row["weights"] != u16:
+        return False, f"attested u16 weights {row['weights']}, pinned {u16}"
+    return True, (f"attested row equals the pinned weights (uids {uids}, u16 weights {u16})")
 
 
 PASS, FAIL, UNVERIFIED = "PASS", "FAIL", "UNVERIFIED"
@@ -354,6 +405,7 @@ def verify(doc: Any, *, client: Any | None = None,
            chain_client: Callable[[], Any] | None = None,
            plan_digest_fn: Callable[[], str] = compute_plan_digest,
            validator_digest_fn: Callable[[int, str], str] = compute_validator_digest,
+           weights_fn: Callable[[int, str], dict[str, Any] | None] | None = None,
            ) -> dict[str, Any]:
     """The full report as plain data. ``chain_client`` is called lazily, at most once.
 
@@ -404,15 +456,24 @@ def verify(doc: Any, *, client: Any | None = None,
             checks["chain"] = check_chain(run, chain)
         checks["plan"] = _check(*check_plan(run, plan))
         checks["validator"] = _check(*check_validator(run, validators))
+        key = (run.get("validator_seed"), run.get("validator_timestamp"))
+        pinned_row = None
+        if _is_int(key[0]) and isinstance(key[1], str):
+            if weights_fn is not None:
+                pinned_row = weights_fn(*key)
+            elif isinstance(validators.get(key), str):  # only from a validator step that succeeded
+                pinned_row = pinned_weights_for(*key)
+        checks["weights"] = _check(*check_weights(run, pinned_row))
         verdict = worst([c["verdict"] for c in checks.values()])
         report["runs"].append({
             "run_id": run.get("run_id"), "confirm_seq": run.get("confirm_seq"),
             "included_block": run.get("included_block"), "checks": checks,
             "verdict": verdict, "ok": verdict == PASS})
     offline = [report["integrity"]["verdict"]] + [
-        r["checks"][n]["verdict"] for r in report["runs"] for n in ("plan", "validator")]
+        r["checks"][n]["verdict"] for r in report["runs"] for n in ("plan", "validator", "weights")]
     chain_verdicts = [r["checks"]["chain"]["verdict"] for r in report["runs"]]
-    scoring = [r["checks"][n]["verdict"] for r in report["runs"] for n in ("plan", "validator")]
+    scoring = [r["checks"][n]["verdict"] for r in report["runs"]
+               for n in ("plan", "validator", "weights")]
     report["offline"] = {"verdict": worst(offline), "tally": tally(offline)}
     report["scoring"] = {"verdict": worst(scoring), "tally": tally(scoring)}
     report["chain"] = {"verdict": worst(chain_verdicts), "tally": tally(chain_verdicts)}
@@ -453,7 +514,8 @@ def summary_line(report: dict[str, Any]) -> str:
         chain += f", {ct[FAIL]} FAIL"
     if ct[UNVERIFIED]:
         chain += f", {ct[UNVERIFIED]} UNVERIFIED"
-    scoring = f"scoring: {_check_summary(report, 'validator')}; {_check_summary(report, 'plan')}"
+    scoring = (f"scoring: {_check_summary(report, 'validator')}; "
+               f"{_check_summary(report, 'weights')}; {_check_summary(report, 'plan')}")
     return f"SUMMARY integrity: {report['integrity']['verdict']}; {chain}; {scoring}"
 
 
@@ -471,13 +533,14 @@ def render(report: dict[str, Any]) -> str:
         lines.append(f"published truth: {report['truth']}")
     for run in runs:
         lines.append(f"run {run['run_id']}  CONFIRM seq {run['confirm_seq']}")
-        for name in ("validator", "plan"):
+        for name in ("validator", "weights", "plan"):
             c = run["checks"][name]
             lines.append(f"  {name:<10} {c['verdict']}  {c['detail']}")
     t = off["tally"]
     unver = f" / {t[UNVERIFIED]} UNVERIFIED" if t[UNVERIFIED] else ""
     lines.append(f"reproduces offline: {off['verdict']}  ({t[PASS]} PASS / {t[FAIL]} FAIL{unver} "
-                 f"of {sum(t.values())} checks: integrity + plan and validator for {n} runs)")
+                 f"of {sum(t.values())} checks: integrity + plan, validator and weights "
+                 f"for {n} runs)")
     lines += ["", "== 2. CHAIN CORROBORATION (each run read at its own block on testnet 582) =="]
     for run in runs:
         c = run["checks"]["chain"]

@@ -16,6 +16,7 @@ from valkey.exceptions import NoPermissionError, ResponseError
 
 from sn87_provenonce.canonical import canonical_bytes
 from sn87_provenonce.pilot.client import prepare_request, verify_response
+from sn87_provenonce.pilot.sender_policy import AllowAnySender
 from sn87_provenonce.pilot.server import create_app
 from sn87_provenonce.pilot.transport import (
     PATH,
@@ -27,6 +28,9 @@ from sn87_provenonce.pilot.transport import (
 )
 
 pytest_plugins = ["transport_fixtures"]
+
+# These tests are about the transport, not the sender policy: let any verified key through.
+OPEN = AllowAnySender(rate_per_second=1_000_000.0, burst=1_000_000)
 
 
 def store(redis, receiver, domain="request", **kwargs):
@@ -65,7 +69,8 @@ def post(app, body, headers, path=PATH):
 
 def test_exact_request_and_signed_response_identity_binding(redis, keys):
     sender, server = keys
-    app = create_app(signer=server, store=store(redis, server.ss58_address), handle=handler)
+    app = create_app(
+        sender_policy=OPEN, signer=server, store=store(redis, server.ss58_address), handle=handler)
     body, headers = prepare_request(capsule(), sender, server.ss58_address)
     response = post(app, body, headers)
     assert response.status_code == 200
@@ -81,7 +86,8 @@ def test_exact_request_and_signed_response_identity_binding(redis, keys):
 @pytest.mark.parametrize("mutation", ["body", "receiver", "method", "path", "stale", "future"])
 def test_exact_byte_receiver_method_route_freshness_binding(redis, keys, mutation):
     sender, server = keys
-    app = create_app(signer=server, store=store(redis, server.ss58_address), handle=handler)
+    app = create_app(
+        sender_policy=OPEN, signer=server, store=store(redis, server.ss58_address), handle=handler)
     kw = {}
     if mutation == "receiver":
         kw["receiver"] = sender.ss58_address
@@ -102,7 +108,8 @@ def test_exact_byte_receiver_method_route_freshness_binding(redis, keys, mutatio
 @pytest.mark.parametrize("body", [b'{"x":1,"x":2}', b'{', b'\xff', b'{"x":NaN}'])
 def test_authenticated_bad_payload_rejected_before_handler(redis, keys, body):
     called = []
-    app = create_app(signer=keys[1], store=store(redis, keys[1].ss58_address),
+    app = create_app(
+        sender_policy=OPEN, signer=keys[1], store=store(redis, keys[1].ss58_address),
                      handle=lambda x: called.append(x))
     raw, headers = signed(keys, body=body)
     assert post(app, raw, headers).status_code == 422
@@ -110,7 +117,9 @@ def test_authenticated_bad_payload_rejected_before_handler(redis, keys, body):
 
 
 def test_unsupported_oversize_duplicate_headers_query_truncation(redis, keys):
-    app = create_app(signer=keys[1], store=store(redis, keys[1].ss58_address), handle=handler)
+    app = create_app(
+        sender_policy=OPEN, signer=keys[1], store=store(redis, keys[1].ss58_address),
+        handle=handler)
     raw, headers = signed(keys)
     assert post(app, raw, {**headers, "Content-Type": "text/plain"}).status_code == 415
     assert post(app, raw, {**headers, "Content-Length": "999999"}).status_code == 413
@@ -136,7 +145,8 @@ def test_atomic_race_and_worker_restart_share_replay(redis, keys):
     assert results.count("accepted") == 1
     assert results.count("REPLAYED_REQUEST") == 15
     # A fresh application object represents an independently started worker.
-    app = create_app(signer=server, store=store(redis, server.ss58_address), handle=handler)
+    app = create_app(
+        sender_policy=OPEN, signer=server, store=store(redis, server.ss58_address), handle=handler)
     assert post(app, body, headers).json()["error"] == "REPLAYED_REQUEST"
 
 
@@ -256,7 +266,8 @@ def test_retention_and_local_memory_rejected(redis, keys):
     with pytest.raises(ValueError, match="retention"):
         SharedReplayStore(redis, receiver="test", domain="request", retention=11)
     with pytest.raises((ValueError, AttributeError)):
-        create_app(signer=keys[1], store=http_auth.InMemoryNonceStore(), handle=handler)
+        create_app(
+        sender_policy=OPEN, signer=keys[1], store=http_auth.InMemoryNonceStore(), handle=handler)
 
 
 @pytest.mark.parametrize("mutation", ["body", "identity", "challenge", "requesthash", "nonce"])
@@ -295,7 +306,8 @@ def test_expired_deadline_and_rate_limit(redis, keys):
     assert adapter.check_and_store(sender.ss58_address, 1)
     with pytest.raises(BoundaryError, match="RATE_LIMITED"):
         adapter.check_and_store(sender.ss58_address, 2)
-    app = create_app(signer=server, store=store(redis, server.ss58_address), handle=handler)
+    app = create_app(
+        sender_policy=OPEN, signer=server, store=store(redis, server.ss58_address), handle=handler)
     raw, _ = signed(keys)
     envelope = json.loads(raw)
     envelope["deadline_ms"] = time.time_ns() // 1_000_000 - 1
@@ -319,7 +331,8 @@ def test_handler_timeout_keeps_real_worker_admission(redis, keys):
             active -= 1
         return handler(value)
 
-    app = create_app(signer=keys[1], store=store(redis, keys[1].ss58_address), handle=slow,
+    app = create_app(
+        sender_policy=OPEN, signer=keys[1], store=store(redis, keys[1].ss58_address), handle=slow,
                      config=TransportConfig(keys[1].ss58_address, max_inflight=1))
 
     async def probe():
@@ -387,7 +400,8 @@ def test_verify_bytes_rejects_another_receiver_hotkey(redis, keys):
 def test_app_rejects_bad_signature_and_wrong_hotkey_before_the_handler(redis, keys):
     sender, server = keys
     called = []
-    app = create_app(signer=server, store=store(redis, server.ss58_address),
+    app = create_app(
+        sender_policy=OPEN, signer=server, store=store(redis, server.ss58_address),
                      handle=lambda c: called.append(c) or handler(c))
     body, headers = signed(keys)
     sig = headers[http_auth.HEADER_SIGNATURE]
@@ -403,19 +417,23 @@ def test_app_rejects_bad_signature_and_wrong_hotkey_before_the_handler(redis, ke
 def test_app_refuses_a_store_or_config_for_another_hotkey(redis, keys):
     sender, server = keys
     with pytest.raises(ValueError, match="identity"):
-        create_app(signer=server, store=store(redis, sender.ss58_address), handle=handler)
+        create_app(
+        sender_policy=OPEN, signer=server, store=store(redis, sender.ss58_address), handle=handler)
     with pytest.raises(ValueError, match="identity"):
-        create_app(signer=server, store=store(redis, server.ss58_address), handle=handler,
+        create_app(
+        sender_policy=OPEN, signer=server, store=store(redis, server.ss58_address), handle=handler,
                    config=TransportConfig(sender.ss58_address))
     with pytest.raises(ValueError, match="configuration"):
-        create_app(signer=server, store=store(redis, server.ss58_address, "response"),
+        create_app(
+        sender_policy=OPEN, signer=server, store=store(redis, server.ss58_address, "response"),
                    handle=handler)
 
 
 def test_app_rejects_an_oversize_body_with_and_without_a_declared_length(redis, keys):
     sender, server = keys
     config = TransportConfig(server.ss58_address, max_body_bytes=256)
-    app = create_app(signer=server, store=store(redis, server.ss58_address), handle=handler,
+    app = create_app(
+        sender_policy=OPEN, signer=server, store=store(redis, server.ss58_address), handle=handler,
                      config=config)
     big = {"qid": "q-transport-case", "payload": "x" * 400}
     body = canonical_bytes({
@@ -448,11 +466,14 @@ def test_ready_reports_the_replay_store(redis, keys):
                 return await client.get(path)
         return asyncio.run(run())
 
-    ready = create_app(signer=keys[1], store=store(redis, keys[1].ss58_address), handle=handler)
+    ready = create_app(
+        sender_policy=OPEN, signer=keys[1], store=store(redis, keys[1].ss58_address),
+        handle=handler)
     response = get(ready, "/ready")
     assert (response.status_code, response.json()) == (200, {"ready": True})
     # a store this process has not yet seen is quarantined for a full freshness window
     warming = create_app(
+        sender_policy=OPEN, 
         signer=keys[0], handle=handler,
         store=SharedReplayStore(redis, receiver=keys[0].ss58_address, domain="request"))
     response = get(warming, "/ready")

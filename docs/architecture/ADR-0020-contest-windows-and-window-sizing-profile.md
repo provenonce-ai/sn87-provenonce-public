@@ -10,8 +10,7 @@ policy are open decisions (see "Open decisions").
 
 ## Context
 
-An external technical review of the repository and the public testnet raised three connected
-points.
+Three connected points motivate this record.
 
 1. **The public testnet series exercises the validator alone.** The attested runs share one
    validator digest, one plan digest, one seed (0) and one validator timestamp, so each run
@@ -131,7 +130,8 @@ results were computed from.
 - **Derive each window's seed from a public randomness beacon at open time.** Removes the operator's
   freedom to choose the master seed. Not done: it adds an external dependency and a timing
   assumption. The commit-before-open order already stops the operator from choosing a seed after
-  seeing any response. A beacon can be mixed into the window seed later as a new generator version.
+  seeing any response. A beacon can be mixed into the window seed later as a new generator version. That version is
+  [ADR-0023](ADR-0023-opening-block-seed-truth-commitment-and-reveal-deadline.md).
 - **Fork the case generator for seeded identifiers.** Rejected: `build_case` already takes an
   `identifier` callable, and a fork would drift from the public fixtures.
 - **A named wrong-scope finding code.** Rejected for this version for the reason recorded in

@@ -1,0 +1,1 @@
+The shadow service now spaces its sends to each miner (default 4 per second, optional config key `max_queries_per_second`) so a window's cases stay under a miner's default per-sender rate limit, and the window record states the pacing under `query_pacing`. (Operator service code; not in this repository and not yet deployed.)

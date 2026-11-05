@@ -1,0 +1,1 @@
+The weight gate can now take a family's public methods and its preregistered minimum effect from a closed list registered once per family, refuses a caller that leaves any registered method out, and treats a lead under the minimum effect as `NULL_NO_HEADROOM`. Existing families and `candidate_gate` calls behave as before. See ADR-0024.

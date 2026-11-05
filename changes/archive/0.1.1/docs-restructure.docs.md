@@ -1,0 +1,1 @@
+The README now follows a fixed outline (what it is, who it is for, how it works, current status, getting started, honest limits), and there are new pages for miners, validators, challenge authors and reviewers, a glossary, a docs map and eight diagrams of how the system works, each tied to the code it describes. Start at docs/README.md.

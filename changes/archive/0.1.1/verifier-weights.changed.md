@@ -1,0 +1,1 @@
+The attestation verifier now also compares each attested weight row with the weights pinned by the recomputed validator receipt, and reports a different uid list or u16 value as FAIL. If no pinned weights could be recomputed, the weights check is UNVERIFIED, never PASS.

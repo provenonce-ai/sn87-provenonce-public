@@ -1,0 +1,1 @@
+Admission can now build a window result for any scored profile from a window results document instead of by hand, and an admission report lists, as a flag that changes no verdict, the other uids and public methods that gave the same decisions on every scored case (SHARES_DECISION_GROUP_WITH); whether that should count is left as a decision in the admission document.

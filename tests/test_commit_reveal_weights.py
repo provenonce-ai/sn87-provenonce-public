@@ -36,6 +36,7 @@ from sn87_provenonce.weights_dry_run import TESTNET_GENESIS  # noqa: E402
 NETUID = 582
 HOTKEY_PK = bytes(range(32))
 ROW_UIDS, ROW_VALUES = [1, 2], [65535, 21845]
+PINNED = {"uids": ROW_UIDS, "u16_weights": ROW_VALUES}
 
 
 def document(commit_reveal=True, weights=None):
@@ -100,7 +101,7 @@ def test_cli_has_no_submit_and_hides_the_salt(tmp_path, capsys):
     state = tmp_path / "state.json"
     chain = fake.FakeChain()
     run = runner(chain, tmp_path, mode=crw.MODE_SALTED)
-    run.start(document())
+    run.start(document(), pinned_weights=PINNED)
     run.step()
     assert crw.main(["status", "--state", str(state)]) == 0
     printed = capsys.readouterr().out
@@ -120,21 +121,22 @@ def test_a_plain_target_is_refused_by_this_path(tmp_path):
     with pytest.raises(crw.CommitRevealError, match="TARGET_NOT_COMMIT_REVEAL"):
         crw.commit_reveal_row(document(commit_reveal=False))
     with pytest.raises(crw.CommitRevealError, match="TARGET_NOT_COMMIT_REVEAL"):
-        runner(fake.FakeChain(), tmp_path).start(document(commit_reveal=False))
+        runner(fake.FakeChain(), tmp_path).start(document(commit_reveal=False),
+                                                 pinned_weights=PINNED)
 
 
 def test_netuid_mismatch_is_refused(tmp_path):
     other = document()
     other["target"]["netuid"] = 7
     with pytest.raises(crw.CommitRevealError, match="NETUID_MISMATCH"):
-        runner(fake.FakeChain(), tmp_path).start(other)
+        runner(fake.FakeChain(), tmp_path).start(other, pinned_weights=PINNED)
 
 
 # ---------------------------------------------------- timelocked: the normal path
 def test_timelocked_commit_then_chain_reveal_applies_the_same_row(tmp_path):
     chain = fake.FakeChain()
     run = runner(chain, tmp_path)
-    run.start(document())
+    run.start(document(), pinned_weights=PINNED)
     first = run.step()
     assert first.phase == crw.COMMITTED and first.wait_until_block == 110
     assert chain.weights is None  # nothing applied before the reveal block
@@ -151,7 +153,7 @@ def test_timelocked_commit_then_chain_reveal_applies_the_same_row(tmp_path):
 def test_reveal_is_not_declared_early_and_a_missing_reveal_is_overdue(tmp_path):
     chain = fake.FakeChain()
     run = runner(chain, tmp_path, reveal_grace_blocks=4)
-    run.start(document())
+    run.start(document(), pinned_weights=PINNED)
     run.step()
     chain.advance_to(105)
     early = run.step()
@@ -183,7 +185,7 @@ def test_the_fake_chain_refuses_a_real_ciphertext():
 def test_salted_commit_and_reveal_in_the_window(tmp_path):
     chain = fake.FakeChain()
     run = runner(chain, tmp_path, crw.MODE_SALTED)
-    run.start(document())
+    run.start(document(), pinned_weights=PINNED)
     committed = run.step()
     assert committed.phase == crw.COMMITTED and committed.wait_until_block == 110
     final = finish(run, chain)
@@ -196,7 +198,7 @@ def test_salted_commit_and_reveal_in_the_window(tmp_path):
 def test_reveal_too_early_is_not_sent_and_the_chain_would_refuse_it(tmp_path):
     chain = fake.FakeChain()
     run = runner(chain, tmp_path, crw.MODE_SALTED)
-    run.start(document())
+    run.start(document(), pinned_weights=PINNED)
     run.step()
     chain.advance(3)
     early = run.step()
@@ -210,7 +212,7 @@ def test_reveal_too_early_is_not_sent_and_the_chain_would_refuse_it(tmp_path):
 def test_reveal_too_late_expires_without_sending(tmp_path):
     chain = fake.FakeChain()
     run = runner(chain, tmp_path, crw.MODE_SALTED)
-    run.start(document())
+    run.start(document(), pinned_weights=PINNED)
     run.step()
     chain.advance_to(131)  # one block after the reveal epoch
     late = run.step()
@@ -226,18 +228,18 @@ def test_salt_reuse_is_refused_by_the_ledger_and_by_the_chain(tmp_path):
     chain = fake.FakeChain()
     salt = [1, 2, 3, 4, 5, 6, 7, 8]
     first = runner(chain, tmp_path / "a", crw.MODE_SALTED, salt_source=lambda: list(salt))
-    first.start(document())
+    first.start(document(), pinned_weights=PINNED)
     assert finish(first, chain).phase == crw.REVEALED
     # same state directory, same salt: the ledger refuses before anything is sent
     again = runner(chain, tmp_path / "a", crw.MODE_SALTED, salt_source=lambda: list(salt))
-    again.start(document())
+    again.start(document(), pinned_weights=PINNED)
     sent = len(chain.calls)
     with pytest.raises(crw.SaltReused):
         again.step()
     assert len(chain.calls) == sent
     # a different state directory has its own ledger: the chain refuses the duplicate hash
     elsewhere = runner(chain, tmp_path / "b", crw.MODE_SALTED, salt_source=lambda: list(salt))
-    elsewhere.start(document())
+    elsewhere.start(document(), pinned_weights=PINNED)
     chain.advance(2)
     refused = elsewhere.step()
     assert refused.phase == crw.FAILED and refused.detail == "COMMIT_ALREADY_EXISTS"
@@ -247,7 +249,7 @@ def test_a_fresh_salt_is_used_by_default(tmp_path):
     assert len({tuple(crw.default_salt()) for _ in range(20)}) == 20
     chain = fake.FakeChain()
     run = runner(chain, tmp_path, crw.MODE_SALTED)
-    run.start(document())
+    run.start(document(), pinned_weights=PINNED)
     run.step()
     assert len(json.loads((tmp_path / "state.json").read_text())["salt"]) == 8
 
@@ -265,7 +267,7 @@ def test_salted_mode_needs_a_digest_function_and_never_guesses_one(tmp_path):
 def test_restart_between_commit_and_reveal_resumes(mode, tmp_path):
     chain = fake.FakeChain()
     first = runner(chain, tmp_path, mode)
-    first.start(document())
+    first.start(document(), pinned_weights=PINNED)
     assert first.step().phase == crw.COMMITTED
     chain.advance(3)
     del first  # the process ends here; only the state file survives
@@ -283,7 +285,7 @@ def test_crash_after_the_chain_accepted_the_commit_does_not_commit_twice(mode, o
     chain = fake.FakeChain()
     chain.crash_after(operation)
     first = runner(chain, tmp_path, mode)
-    first.start(document())
+    first.start(document(), pinned_weights=PINNED)
     with pytest.raises(fake.SimulatedCrash):
         first.step()
     assert json.loads((tmp_path / "state.json").read_text())["phase"] == crw.COMMITTING
@@ -296,7 +298,7 @@ def test_crash_after_the_chain_accepted_the_reveal_does_not_reveal_twice(tmp_pat
     chain = fake.FakeChain()
     chain.crash_after("submit_reveal")
     first = runner(chain, tmp_path, crw.MODE_SALTED)
-    first.start(document())
+    first.start(document(), pinned_weights=PINNED)
     first.step()
     chain.advance_to(112)
     with pytest.raises(fake.SimulatedCrash):
@@ -311,23 +313,23 @@ def test_crash_after_the_chain_accepted_the_reveal_does_not_reveal_twice(tmp_pat
 def test_a_run_in_progress_blocks_a_new_start_and_a_mismatch_is_refused(tmp_path):
     chain = fake.FakeChain()
     run = runner(chain, tmp_path)
-    run.start(document())
+    run.start(document(), pinned_weights=PINNED)
     with pytest.raises(crw.CommitRevealError, match="RUN_IN_PROGRESS"):
-        run.start(document())
+        run.start(document(), pinned_weights=PINNED)
     other = runner(chain, tmp_path, crw.MODE_SALTED)
     with pytest.raises(crw.CommitRevealError, match="STATE_DOES_NOT_MATCH_RUNNER"):
         other.step()
     with pytest.raises(crw.CommitRevealError, match="NO_RUN"):
         runner(chain, tmp_path / "none").step()
     finish(run, chain)
-    run.start(document())  # a finished run does not block the next one
+    run.start(document(), pinned_weights=PINNED)  # a finished run does not block the next one
 
 
 def test_a_stale_commit_is_replanned_when_the_epoch_moved_on(tmp_path):
     chain = fake.FakeChain()
     chain.crash_after("submit_hash_commit")
     first = runner(chain, tmp_path, crw.MODE_SALTED)
-    first.start(document())
+    first.start(document(), pinned_weights=PINNED)
     with pytest.raises(fake.SimulatedCrash):
         first.step()
     # simulate the commit never having landed: a new chain with the same clock
@@ -346,7 +348,7 @@ def test_rate_limit_waits_then_commits(tmp_path):
     chain = fake.FakeChain(rate_limit_blocks=5)
     chain.last_update_block = chain.block - 2
     run = runner(chain, tmp_path)
-    run.start(document())
+    run.start(document(), pinned_weights=PINNED)
     wait = run.step()
     assert wait.action == "WAIT_RATE_LIMIT" and wait.wait_until_block == 103
     assert "submit_timelocked_commit" not in [n for n, _ in chain.calls]
@@ -357,21 +359,21 @@ def test_transient_failure_is_retried_and_permanent_failure_stops(tmp_path):
     chain = fake.FakeChain()
     chain.fail_next("submit_timelocked_commit", crw.SubmitRejected("NETWORK", transient=True))
     run = runner(chain, tmp_path)
-    run.start(document())
+    run.start(document(), pinned_weights=PINNED)
     retry = run.step()
     assert retry.phase == crw.COMMITTING and retry.action == "RETRY_COMMIT"
     assert finish(run, chain).phase == crw.REVEALED
     chain2 = fake.FakeChain()
     chain2.fail_next("submit_timelocked_commit", crw.SubmitRejected("BAD_ORIGIN"))
     run2 = runner(chain2, tmp_path / "two")
-    run2.start(document())
+    run2.start(document(), pinned_weights=PINNED)
     assert run2.step().phase == crw.FAILED
     chain3 = fake.FakeChain()
     for _ in range(3):
         chain3.fail_next("submit_timelocked_commit",
                          crw.SubmitRejected("NETWORK", transient=True))
     run3 = runner(chain3, tmp_path / "three")
-    run3.start(document())
+    run3.start(document(), pinned_weights=PINNED)
     assert finish(run3, chain3).phase == crw.FAILED
 
 
@@ -379,7 +381,7 @@ def test_commit_near_the_end_of_an_epoch_waits_for_the_next(tmp_path):
     chain = fake.FakeChain(start_block=108)  # epoch 32 ends at block 109
     assert crw.blocks_to_epoch_end(108, NETUID, 20) == 1
     run = runner(chain, tmp_path)
-    run.start(document())
+    run.start(document(), pinned_weights=PINNED)
     wait = run.step()
     assert wait.action == "WAIT_EPOCH_BOUNDARY" and wait.wait_until_block == 110
     assert "submit_timelocked_commit" not in [n for n, _ in chain.calls]
@@ -397,27 +399,21 @@ def test_salted_window_is_computed_from_the_block_the_commit_landed_in(tmp_path)
     assert crw.epoch_bounds(crw.epoch_index(110, NETUID, 20), NETUID, 20) == (110, 130)
 
 
-def test_an_empty_row_sends_nothing_and_an_empty_epoch_changes_nothing(tmp_path):
+def test_an_empty_row_is_refused_and_nothing_is_planned_or_sent(tmp_path):
     chain = fake.FakeChain()
-    run = runner(chain, tmp_path)
-    run.start(document())
-    finish(run, chain)
-    applied = chain.read_applied_weights(NETUID)
-    quiet = runner(chain, tmp_path / "empty")
-    state = quiet.start(document(weights=[{"uid": 1, "weight": "0"}, {"uid": 2, "weight": "0"}]))
-    assert state["phase"] == crw.SKIPPED_EMPTY
-    before_calls = len(chain.calls)
-    assert quiet.step().phase == crw.SKIPPED_EMPTY
-    chain.advance(60)  # three epochs pass with no commit
-    assert len(chain.calls) == before_calls
-    assert chain.empty_epochs >= 2
-    assert chain.read_applied_weights(NETUID) == applied
+    zero = document(weights=[{"uid": 1, "weight": "0"}, {"uid": 2, "weight": "0"}])
+    for index, pinned in enumerate(({"uids": [], "u16_weights": []}, PINNED)):
+        quiet = runner(chain, tmp_path / str(index))
+        with pytest.raises(crw.CommitRevealError, match="ROW_DIFFERS_FROM_PINNED_WEIGHTS"):
+            quiet.start(zero, pinned_weights=pinned)
+        assert quiet.store.load() is None
+    assert chain.calls == []
 
 
 def test_a_chain_without_commit_reveal_is_refused_and_nothing_is_sent(tmp_path):
     chain = fake.FakeChain(commit_reveal_enabled=False)
     run = runner(chain, tmp_path)
-    run.start(document())
+    run.start(document(), pinned_weights=PINNED)
     with pytest.raises(crw.CommitRevealError, match="CHAIN_COMMIT_REVEAL_NOT_ENABLED"):
         run.step()
     assert not [n for n, _ in chain.calls if n.startswith("submit_")]
@@ -429,7 +425,7 @@ def test_max_steps_guard(tmp_path):
     chain = fake.FakeChain(rate_limit_blocks=10 ** 6)
     chain.last_update_block = chain.block
     run = runner(chain, tmp_path)
-    run.start(document())
+    run.start(document(), pinned_weights=PINNED)
     with pytest.raises(crw.CommitRevealError, match="MAX_STEPS_EXCEEDED"):
         run.run_until_terminal(lambda _b: None, max_steps=3)
 
@@ -530,12 +526,12 @@ def test_drand_reveal_block_estimate_uses_the_sdk_round_time():
 def test_a_row_equal_to_the_previous_row_is_not_a_reveal_until_the_chain_applies_it(tmp_path):
     chain = fake.FakeChain()
     first = runner(chain, tmp_path / "one")
-    first.start(document())
+    first.start(document(), pinned_weights=PINNED)
     assert finish(first, chain).phase == crw.REVEALED
     applied_at = chain.read_applied_block(NETUID)
     chain.advance(3)
     second = runner(chain, tmp_path / "two", reveal_grace_blocks=3)
-    second.start(document())  # the same row again
+    second.start(document(), pinned_weights=PINNED)  # the same row again
     chain.drop_next_reveal()
     result = finish(second, chain)
     assert result.phase == crw.OVERDUE  # the old row matched, but nothing new was applied
@@ -546,7 +542,7 @@ def test_a_repeated_row_is_observed_once_the_chain_applies_it_again(tmp_path):
     chain = fake.FakeChain()
     for name in ("one", "two"):
         run = runner(chain, tmp_path / name)
-        run.start(document())
+        run.start(document(), pinned_weights=PINNED)
         assert finish(run, chain).phase == crw.REVEALED
         chain.advance(3)
     assert len(chain.weights_log) == 2
@@ -556,7 +552,7 @@ def test_the_runner_waits_for_confirmation_before_replanning_a_commit(tmp_path):
     chain = fake.FakeChain(start_block=107)  # epoch 32 ends at block 109
     chain.crash_after("submit_hash_commit")
     first = runner(chain, tmp_path, crw.MODE_SALTED, commit_margin_blocks=0)
-    first.start(document())
+    first.start(document(), pinned_weights=PINNED)
     with pytest.raises(fake.SimulatedCrash):
         first.step()
     fresh = fake.FakeChain()
@@ -572,7 +568,7 @@ def test_an_abandoned_commit_that_lands_later_is_detected(tmp_path):
     chain = fake.FakeChain()
     chain.crash_after("submit_hash_commit")
     first = runner(chain, tmp_path, crw.MODE_SALTED)
-    first.start(document())
+    first.start(document(), pinned_weights=PINNED)
     with pytest.raises(fake.SimulatedCrash):
         first.step()
     state = json.loads((tmp_path / "state.json").read_text())
@@ -590,7 +586,7 @@ def test_a_current_row_equal_to_the_wanted_row_does_not_confirm_a_reveal_after_r
     chain = fake.FakeChain()
     chain.crash_after("submit_reveal")
     first = runner(chain, tmp_path, crw.MODE_SALTED)
-    first.start(document())
+    first.start(document(), pinned_weights=PINNED)
     first.step()
     chain.advance_to(112)
     with pytest.raises(fake.SimulatedCrash):
@@ -603,3 +599,39 @@ def test_a_current_row_equal_to_the_wanted_row_does_not_confirm_a_reveal_after_r
     result = second.step()
     assert result.action == "REVEALED"  # sent again; not taken on the strength of the row
     assert [n for n, _ in chain.calls].count("submit_reveal") == 2
+
+
+# --------------------------------------------- the scores-to-weights comparison
+def test_start_refuses_a_row_that_differs_from_the_pinned_weights(tmp_path):
+    for pinned, code in (
+            ({"uids": ROW_UIDS, "u16_weights": [65535, 21844]}, "ROW_WEIGHTS_DIFFER"),
+            ({"uids": [1, 3], "u16_weights": ROW_VALUES}, "ROW_UIDS_DIFFER"),
+            ({"uids": [], "u16_weights": []}, "PINNED_ROW_EMPTY"),
+            (None, "PINNED_WEIGHTS_MISSING"),
+            ({"uids": ROW_UIDS}, "PINNED_WEIGHTS_MALFORMED")):
+        run = runner(fake.FakeChain(), tmp_path / code)
+        with pytest.raises(crw.CommitRevealError, match="ROW_DIFFERS_FROM_PINNED_WEIGHTS") as e:
+            run.start(document(), pinned_weights=pinned)
+        assert code in str(e.value)
+        assert run.store.load() is None  # nothing was planned
+
+
+def test_start_requires_the_pinned_weights_argument(tmp_path):
+    with pytest.raises(TypeError):
+        runner(fake.FakeChain(), tmp_path).start(document())  # type: ignore[call-arg]
+
+
+def test_the_pinned_row_check_and_the_weight_gate_do_not_overlap():
+    """Cross-branch (pinned weights, weight gate): the runner still needs a pinned row
+    and refuses a differing one, and the gate is a separate bundle-level check that neither the
+    runner nor the pinned-row check reaches into (the gate is not wired into a live path)."""
+    import inspect
+
+    from sn87_provenonce import bundle
+
+    parameter = inspect.signature(crw.CommitRevealRunner.start).parameters["pinned_weights"]
+    assert parameter.default is inspect.Parameter.empty  # no default: a pinned row is required
+    for name in ("commit_reveal_weights", "weight_row_check"):
+        source = (ROOT / "scripts" / f"{name}.py").read_text()
+        assert "require_weight_eligible" not in source and "candidate_gate" not in source
+    assert callable(bundle.require_weight_eligible)

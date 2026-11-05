@@ -1,0 +1,1 @@
+`shadow_cohort.py check-config --online` now also looks up an opening block on the configured node, which needs a node that keeps old state, and fails with `OPENING_BLOCK_LOOKUP_FAILED` when it cannot. (Operator service code; not in this repository and not yet deployed.)

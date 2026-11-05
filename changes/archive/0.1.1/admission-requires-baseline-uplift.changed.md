@@ -1,0 +1,1 @@
+The proposed shadow-to-weighted criteria now also require the uid's estimate to be strictly above the public baseline's on the same scored instances in every checked window. The criteria stay proposed and have a new digest; see `shadow/criteria-proposed.json` and the admission document.

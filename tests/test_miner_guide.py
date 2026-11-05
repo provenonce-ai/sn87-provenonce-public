@@ -27,6 +27,7 @@ SURFACES = {
     "miner_node/loopback.py": {"RefusedHost", "_error"},
     "pilot/server.py": {"_error", "BoundaryError"},
     "pilot/transport.py": {"BoundaryError"},
+    "pilot/sender_policy.py": {"BoundaryError"},
     "pilot/client.py": {"BoundaryError"},
 }
 TOKEN = re.compile(r"[A-Z][A-Z0-9_.:]*[A-Z0-9]")
@@ -136,10 +137,16 @@ def test_every_code_the_source_produces_is_in_the_guide():
 def test_every_endpoint_code_has_the_status_the_server_sends():
     """Literal ``_error(code, status)`` calls give their status. The codes that reach the server
     as a ``BoundaryError`` get the mapping server.py applies, which is asserted to be in its
-    source: REPLAY_STORE* is 503, RATE_LIMITED 429, BODY_TOO_LARGE 413, anything else 401."""
+    source: REPLAY_STORE* is 503, RATE_LIMITED, GLOBAL_RATE_LIMITED and SENDER_RATE_LIMITED 429,
+    BODY_TOO_LARGE 413, SENDER_NOT_PERMITTED 403, SENDER_POLICY_UNAVAILABLE 503,
+    anything else 401."""
     server = (SRC / "pilot/server.py").read_text(encoding="utf-8")
     for fragment in ('status = 503 if code.startswith("REPLAY_STORE") else 401',
                      'if code == "RATE_LIMITED":\n                status = 429',
+                     'if code == "GLOBAL_RATE_LIMITED":\n                status = 429',
+                     'if code == "SENDER_RATE_LIMITED":\n                status = 429',
+                     'if code == "SENDER_NOT_PERMITTED":\n                status = 403',
+                     'if code == "SENDER_POLICY_UNAVAILABLE":\n                status = 503',
                      'if code == "BODY_TOO_LARGE":\n                status = 413'):
         assert fragment in server, fragment
     _, statuses = source_codes()
@@ -150,10 +157,12 @@ def test_every_endpoint_code_has_the_status_the_server_sends():
             return next(iter(statuses[code]))
         if code.startswith("REPLAY_STORE"):
             return 503
-        return {"RATE_LIMITED": 429, "BODY_TOO_LARGE": 413}.get(code, 401)
+        return {"RATE_LIMITED": 429, "GLOBAL_RATE_LIMITED": 429, "SENDER_RATE_LIMITED": 429,
+                "BODY_TOO_LARGE": 413,
+                "SENDER_NOT_PERMITTED": 403, "SENDER_POLICY_UNAVAILABLE": 503}.get(code, 401)
 
     table = guide_table("### What the signed endpoint answers", "### What `probe`")
-    assert len(table) == 23, len(table)
+    assert len(table) == 27, len(table)
     for code, cells in table.items():
         assert cells[0] == str(expected(code)), (code, cells[0], expected(code))
 

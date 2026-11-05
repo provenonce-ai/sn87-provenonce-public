@@ -1,15 +1,19 @@
 {
   "applies_to": "shadow to weighted",
-  "criteria_digest": "sha256:66fcd8e8f4d702c08de63e21a56bd396b561427c6cb4df7f6d56b1403a59bb4d",
-  "criteria_id": "shadow-to-weighted-proposed-1",
+  "criteria_digest": "sha256:0af747149a8e8c6c72437034dc9555ae42555c0c73fffd990ef0f843e9053141",
+  "criteria_id": "shadow-to-weighted-proposed-3",
   "not_claimed": [
     "the values are proposals until an approval record cites this digest"
   ],
   "rules": {
+    "allowed_profile_ids": [
+      "IC-FIRST-LIGHT-MIN-1"
+    ],
     "consecutive_windows": 7,
     "max_integrity_failures_per_window": 0,
     "min_valid_responses_per_window": 24,
     "require_endpoint_announcement_valid": true,
+    "require_score_beats_public_baseline": true,
     "require_signature_verified": true,
     "results_must_be_shadow_with_weight_zero": true
   },

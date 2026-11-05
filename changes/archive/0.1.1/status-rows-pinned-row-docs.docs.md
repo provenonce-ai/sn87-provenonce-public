@@ -1,0 +1,1 @@
+The implementation-status page lists the sender allowlist, contest protocol 0.2, the MIN-4 profiles, the weight gate, keyed text commitments and the admission uplift rule with their state, and the weight-flow diagram and README describe the row-versus-pinned weight check as committed, with no claim that it runs on the live path.

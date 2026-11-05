@@ -43,6 +43,11 @@ def _no_key_handling_modules_from_other_tests(monkeypatch):
         monkeypatch.delitem(sys.modules, name, raising=False)
 
 
+def pinned_row(seed, stamp):
+    """Stands in for the pinned weight row the recomputed validator receipt carries."""
+    return {"uids": [1, 2], "u16_weights": [65535, 65535]}
+
+
 def seal(doc):
     body = {k: v for k, v in doc.items() if k != "attestation_digest"}
     doc["attestation_digest"] = "sha256:" + hashlib.sha256(canonical_bytes(body)).hexdigest()
@@ -149,6 +154,8 @@ def test_plan_and_validator_are_unverified_with_the_private_reason_never_fail():
         for name in ("plan", "validator"):
             check = r["checks"][name]
             assert check["verdict"] == va.UNVERIFIED and REASON in check["detail"]
+        weights = r["checks"]["weights"]  # no recomputation, so no pinned weights
+        assert weights["verdict"] == va.UNVERIFIED and va.WEIGHTS_REASON in weights["detail"]
         assert r["verdict"] == va.UNVERIFIED
     assert va.FAIL not in (report["offline"]["verdict"], report["scoring"]["verdict"],
                            report["verdict"])
@@ -157,6 +164,7 @@ def test_plan_and_validator_are_unverified_with_the_private_reason_never_fail():
     assert "uv sync" not in text
     assert ("SUMMARY integrity: PASS; chain: 3/3 PASS; scoring: "
             f"validator 0/3 PASS, 3 UNVERIFIED ({REASON}); "
+            f"weights 0/3 PASS, 3 UNVERIFIED ({va.WEIGHTS_REASON}); "
             f"plan 0/3 PASS, 3 UNVERIFIED ({REASON})") in text
     assert "OVERALL UNVERIFIED" in text and "exit code 3" in text
 
@@ -208,15 +216,15 @@ def test_a_real_scoring_mismatch_still_fails():
 def test_overall_pass_needs_every_section_pass():
     doc = make_doc()
     report = run(doc, FakeReader(doc), plan_digest_fn=lambda: "sha256:" + "ab" * 32,
-                 validator_digest_fn=lambda s, t: "sha256:" + "cd" * 32)
+                 validator_digest_fn=lambda s, t: "sha256:" + "cd" * 32, weights_fn=pinned_row)
     assert report["verdict"] == va.PASS and report["ok"]
-    assert "scoring: validator 3/3 PASS; plan 3/3 PASS" in va.render(report)
+    assert "scoring: validator 3/3 PASS; weights 3/3 PASS; plan 3/3 PASS" in va.render(report)
     for verdict_set in ([va.PASS, va.UNVERIFIED], [va.UNVERIFIED, va.FAIL, va.PASS]):
         assert va.worst(verdict_set) != va.PASS
 
 
 # --------------------------------------------------------------------------- cli, exit codes
-def test_cli_exit_codes(tmp_path, capsys):
+def test_cli_exit_codes(tmp_path, capsys, monkeypatch):
     doc = make_doc()
     path = tmp_path / "att.json"
     path.write_text(json.dumps(doc))
@@ -228,6 +236,7 @@ def test_cli_exit_codes(tmp_path, capsys):
     assert "OVERALL UNVERIFIED" in capsys.readouterr().out
     full = {**kw, "plan_digest_fn": lambda: "sha256:" + "ab" * 32,
             "validator_digest_fn": lambda s, t: "sha256:" + "cd" * 32}
+    monkeypatch.setattr(va, "PINNED_WEIGHTS", {(0, "2026-10-04T00:00:00Z"): pinned_row(0, "")})
     assert va.main(args, **full) == 0
     assert "OVERALL PASS: 3/3" in capsys.readouterr().out
     bad = json.loads(path.read_text())

@@ -66,7 +66,7 @@ doc = {"schema_id": "fictional-launch-approvals/1",
        "exports": [export("w38", "2026-09-14T00:00:00Z", "2026-09-20T23:59:59Z", plan38),
                    export("w39", "2026-09-21T00:00:00Z", "2026-09-27T23:59:59Z", plan39)]}
 json.dump(doc, open(OUT + "fictional_launch_approvals.json", "w"), indent=1, sort_keys=True); open(OUT + "fictional_launch_approvals.json", "a").write("\n")
-perm = {"permission_id": "perm-aurora-launch-approvals-001", "fictional": True,
+perm = {"permission_id": "perm-aurora-launch-approvals-001", "fictional": True, "export_class": "FICTIONAL",
         "scope": "FICTIONAL grant: read-only, IC-APPROVAL-APPLICABILITY evidence from the Aurora launch-approvals log; identifiers and structural fields only",
         "meaning_version": "aurora-approval-meaning/1", "expires_at": "2026-12-31T00:00:00Z",
         "allowed_fields": sorted(["case_ref","pipeline","origin_agent","successor_agent","reviewer_id","approver_id","gaps","log","id","type","ts","effective_ts","policy_ref","condition_text","approved","reviewer","mission","recipient","artifact_text","review_id","approver","valid_until","token","approval_id","from_agent","to_agent","from_step","to_step","input_text","output_text","step","agent"])}

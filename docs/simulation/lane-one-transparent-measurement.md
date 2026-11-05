@@ -1,6 +1,6 @@
 # Lane One transparent component measurement
 
-This module closes three concrete measurement exploits without selecting SN87's normative
+This module fixes three measurement rules without selecting SN87's normative
 scoring function:
 
 - each planted defect can match at most one finding;

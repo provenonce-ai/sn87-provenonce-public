@@ -36,3 +36,12 @@ An inactive, inapplicable or unmeasured value is the string `"NA"`, never `0`, n
 measured zero differs from missing: `"0"` with `missing: null`, versus `"NA"` with a reason such
 as `NOT_MEASURED`. Eq. 11 is the one exception in raw records: eta = 1 stays numeric (all cost
 coefficients 0, status `INACTIVE`).
+
+## Rationale is required and not scored
+
+The response and every finding carry a `rationale`, and the contract rejects an empty one (1 to
+4096 characters). No scorer reads either: changing the text of a rationale does not change a score
+under any committed profile. The field is there for a human reader and for audit. Scoring it would
+need a judge of free text, which is a Type D question and is deferred (ADR-0022). The declared
+`severity` of a finding is different: it is ignored on a matched finding by every profile before
+`IC-FIRST-LIGHT-MIN-4` and `GRA-RELEASE-MIN-4`, and scored by those two.

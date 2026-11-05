@@ -6,6 +6,7 @@ import argparse
 import json
 from pathlib import Path
 
+from sn87_provenonce.challenge_proposal import ChallengeProposal
 from sn87_provenonce.cmt.models import CMTManifest, CompatibilityReport
 from sn87_provenonce.protocol.v0alpha1.models import (
     AdmissibilityDeclaration,
@@ -34,6 +35,7 @@ MODELS = {
     "assurance-finding.schema.json": AssuranceFinding,
     "assurance-request.schema.json": AssuranceRequest,
     "assurance-response.schema.json": AssuranceResponse,
+    "challenge-proposal.schema.json": ChallengeProposal,
     "cmt-compatibility-report.schema.json": CompatibilityReport,
     "cmt-manifest.schema.json": CMTManifest,
     "estimator-spec.schema.json": EstimatorSpec,

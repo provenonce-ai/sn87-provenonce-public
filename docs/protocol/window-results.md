@@ -49,6 +49,19 @@ exceeded the tolerance), also leaks a little. What stays hidden is which case ha
 confusion structure. The reveal makes the family of every case public in any event, and the family
 determines the truth state under current reference behavior.
 
+## Redundancy groups and flags
+
+Under a profile that declares rules version 4 (ADR-0022) the full record adds two keys beside the
+scores, derived from the responses alone and never from truth or a score. `redundancy_groups` lists
+the groups of methods with the same decision vector (state and set of finding codes) on every admitted scored case. `flags` holds
+`SIMULTANEOUS_DISPATCH`, `SIMILAR_RESPONSE_TIME` and `IDENTICAL_ANSWERS_ON_SEPARATING_TASKS` (pairs
+with the count of comparable cases and the share that matched), `separating_tasks`, and `timing`
+(`RECORDED`, or `NOT_RECORDED` when the responses file carries no `dispatched_ms` and
+`replied_ms` per entry, or the older `dispatched_at` and `responded_at` in seconds). The shadow
+service records `dispatched_ms` and `replied_ms` for every query it sent: milliseconds from the
+moment the window's queries began, taken from a monotonic clock, never a wall-clock time. `flags.scored` is always false. The `SCORES_ONLY` record omits both. No
+other profile adds the keys.
+
 ## Guards
 
 - The script refuses before the window's close time (`RESULTS_BEFORE_CLOSE`).
@@ -117,3 +130,9 @@ The markdown page repeats the record in tables: window and status, scoring profi
 method (estimate, eligibility, agreement over the scored track and over all cases, failures,
 comparison with the baseline), then per method the confusion table, the family table, failure reasons
 and the cost table. It adds no number that is not in the record.
+
+## Recomputing a window from its published files
+
+`scripts/reproduce_window.py` recomputes a closed window's seed, cases, truth commitment, scores and
+the rows derived from them, and states what it could not check. See
+[reproduce-a-window.md](../guides/reproduce-a-window.md).

@@ -39,6 +39,7 @@ from __future__ import annotations
 import argparse
 import copy
 import hashlib
+import importlib
 import ipaddress
 import json
 import re
@@ -205,17 +206,26 @@ def check_endpoint_record(
 RULE_INTS = {"consecutive_windows": (1, 10_000), "min_valid_responses_per_window": (1, 1_000_000),
              "max_integrity_failures_per_window": (0, 1_000_000)}
 RULE_BOOLS = ("require_endpoint_announcement_valid", "require_signature_verified",
-              "results_must_be_shadow_with_weight_zero")
+              "results_must_be_shadow_with_weight_zero", "require_score_beats_public_baseline")
 
 
 def _is_int(value: Any) -> bool:
     return type(value) is int
 
 
+PROFILE_ID_RE = re.compile(r"\A[A-Za-z0-9][A-Za-z0-9._-]{0,63}\Z")
+DEFAULT_PROFILE_IDS = ("IC-FIRST-LIGHT-MIN-1",)  # the profile bound to the class today
+
+
 def validate_rules(rules: Any) -> str | None:
     """None when the rules are well formed, else a stable code. Never raises."""
-    if not isinstance(rules, Mapping) or set(rules) != set(RULE_INTS) | set(RULE_BOOLS):
+    if not isinstance(rules, Mapping) \
+            or set(rules) != set(RULE_INTS) | set(RULE_BOOLS) | {"allowed_profile_ids"}:
         return "CRITERIA_RULES_KEYS"
+    ids = rules["allowed_profile_ids"]
+    if not isinstance(ids, list) or not ids or len(set(ids)) != len(ids) \
+            or not all(isinstance(i, str) and PROFILE_ID_RE.match(i) for i in ids):
+        return "CRITERIA_RULE_INVALID_allowed_profile_ids"
     for key, (low, high) in RULE_INTS.items():
         if not _is_int(rules[key]) or not low <= rules[key] <= high:
             return f"CRITERIA_RULE_INVALID_{key}"
@@ -223,14 +233,29 @@ def validate_rules(rules: Any) -> str | None:
         return "CRITERIA_RULE_NOT_BOOLEAN"
     if rules["results_must_be_shadow_with_weight_zero"] is not True:
         return "CRITERIA_SHADOW_RULE_MUST_BE_ON"
+    if rules["require_score_beats_public_baseline"] is not True:
+        return "CRITERIA_BASELINE_RULE_MUST_BE_ON"  # counting replies is not enough
     return None
+
+
+def _score(value: Any) -> Decimal | None:
+    """An estimate as an exact Decimal in [0, 1], or None when it is NA, malformed or absent.
+    Strings (the wire form), ints and floats are read; booleans, NaN and infinities are not."""
+    if type(value) is bool or value is None:
+        return None
+    try:
+        number = Decimal(value if isinstance(value, (str, int)) else repr(value))
+    except (ArithmeticError, ValueError):
+        return None
+    return number if number.is_finite() and 0 <= number <= 1 else None
 
 
 def make_criteria(*, criteria_id: str, consecutive_windows: int,
                   min_valid_responses_per_window: int,
                   max_integrity_failures_per_window: int = 0,
                   require_endpoint_announcement_valid: bool = True,
-                  require_signature_verified: bool = True) -> dict[str, Any]:
+                  require_signature_verified: bool = True,
+                  allowed_profile_ids: Iterable[str] = DEFAULT_PROFILE_IDS) -> dict[str, Any]:
     """The machine-checkable admission criteria. Values are explicit arguments, no defaults
     for the two numbers that carry the policy; the document says they are proposals."""
     if not isinstance(criteria_id, str) or not re.fullmatch(r"[A-Za-z0-9._-]{1,64}", criteria_id):
@@ -242,6 +267,10 @@ def make_criteria(*, criteria_id: str, consecutive_windows: int,
         "require_endpoint_announcement_valid": require_endpoint_announcement_valid,
         "require_signature_verified": require_signature_verified,
         "results_must_be_shadow_with_weight_zero": True,
+        "require_score_beats_public_baseline": True,
+        # Every window must be scored under one of these profiles (S6): a result from a
+        # different profile is not evidence about this one.
+        "allowed_profile_ids": sorted(allowed_profile_ids),
     }
     problem = validate_rules(rules)
     if problem:
@@ -272,7 +301,9 @@ def build_window_result(*, uid: int, hotkey: str, netuid: int, window: int, seed
                         queried: int, valid_responses: int, invalid_responses: int,
                         unavailable: int, integrity_failure_codes: Iterable[str],
                         estimate: Any, evaluable: int, admitted: int,
-                        profile_id: str, endpoint_record_digest: str | None) -> dict[str, Any]:
+                        profile_id: str, endpoint_record_digest: str | None,
+                        baseline_estimate: Any = None, baseline_admitted: int | None = None,
+                        baseline_evaluable: int | None = None) -> dict[str, Any]:
     """One published shadow window result. ``weight`` is the constant 0 and ``stage`` the
     constant ``shadow``: the checker refuses a record that says otherwise."""
     codes = sorted(integrity_failure_codes)
@@ -285,8 +316,44 @@ def build_window_result(*, uid: int, hotkey: str, netuid: int, window: int, seed
         "invalid_responses": invalid_responses, "unavailable": unavailable,
         "integrity_failure_count": len(codes), "integrity_failure_codes": codes,
         "admitted": admitted, "evaluable": evaluable, "estimate": estimate,
+        # The public baseline scored on the same scored instances under the same profile.
+        "baseline_estimate": baseline_estimate, "baseline_admitted": baseline_admitted,
+        "baseline_evaluable": baseline_evaluable,
     }
     return {**record, "record_digest": result_digest(record)}
+
+
+def window_result_from_scores(
+    document: Mapping[str, Any], *, method_id: str, uid: int, hotkey: str, netuid: int,
+    window: int, seed: int, queried: int, valid_responses: int, invalid_responses: int,
+    unavailable: int, integrity_failure_codes: Iterable[str],
+    endpoint_record_digest: str | None, baseline_method_id: str = "public_contract_baseline",
+) -> dict[str, Any]:
+    """An admission-ready window result for ANY scored profile, built from a window results
+    document (``contest_results.score_window`` on the wire, truth-derived so it carries the
+    admitted and evaluable counts). The score, the counts of scored instances and the baseline's
+    score on the same instances come from the document; the response counts come from the caller.
+    The record names the document's profile, so criteria that do not list it refuse it. Nothing is
+    typed in by hand. Refuses a document that is not a window results document, has no counts
+    (a scores-only document) or lacks the method or the baseline."""
+    try:
+        profile_id = document["profile"]["profile_id"]
+        methods = {m["method_id"]: m for m in document["methods"]}
+        mine, base = methods[method_id], methods[baseline_method_id]
+        score, base_score = mine["score"], base["score"]
+        if base["role"] != "baseline" or mine["role"] == "baseline":
+            raise KeyError("role")
+        fields = (score["estimate"], score["evaluable"], score["admitted"],
+                  base_score["estimate"], base_score["admitted"], base_score["evaluable"])
+    except (KeyError, TypeError, AttributeError):
+        raise AdmissionError("RESULTS_DOCUMENT_UNUSABLE", method_id) from None
+    return build_window_result(
+        uid=uid, hotkey=hotkey, netuid=netuid, window=window, seed=seed, queried=queried,
+        valid_responses=valid_responses, invalid_responses=invalid_responses,
+        unavailable=unavailable, integrity_failure_codes=integrity_failure_codes,
+        estimate=fields[0], evaluable=fields[1], admitted=fields[2], profile_id=profile_id,
+        endpoint_record_digest=endpoint_record_digest, baseline_estimate=fields[3],
+        baseline_admitted=fields[4], baseline_evaluable=fields[5])
 
 
 RESULT_INTS = ("uid", "netuid", "window", "seed", "queried", "valid_responses",
@@ -308,6 +375,12 @@ def result_shape_problem(record: Mapping[str, Any]) -> str | None:
         return "RESULT_COUNTS_INCONSISTENT"
     if record["evaluable"] > record["admitted"]:
         return "RESULT_COUNTS_INCONSISTENT"
+    for key in ("baseline_admitted", "baseline_evaluable"):
+        extra = record.get(key)
+        if extra is not None and (not _is_int(extra) or extra < 0):
+            return f"RESULT_FIELD_INVALID_{key}"
+    if not isinstance(record.get("profile_id"), str):
+        return "RESULT_FIELD_INVALID_profile_id"
     return None
 
 
@@ -324,6 +397,9 @@ class CriteriaReport:
     endpoint: dict[str, Any] | None = None
     now_window: int | None = None
     result_digests: list[str] = field(default_factory=list)
+    # Observations beside the verdict. They never change it: whether sharing a decision group
+    # should matter is a policy decision that has not been made.
+    flags: list[dict[str, Any]] = field(default_factory=list)
 
     def as_document(self) -> dict[str, Any]:
         body = {"schema_version": REPORT_SCHEMA, "uid": self.uid, "hotkey": self.hotkey,
@@ -331,13 +407,49 @@ class CriteriaReport:
                 "reasons": self.reasons, "windows_checked": self.windows_checked,
                 "now_window": self.now_window, "result_digests": self.result_digests,
                 "criteria_digest": self.criteria_digest, "endpoint": self.endpoint,
+                "flags": self.flags,
                 "statement": "a report is evidence for an approval record; it approves nothing"}
         return {**body, "report_digest": sha256_of(body)}
 
 
+def _baseline_problem(record: Mapping[str, Any]) -> str | None:
+    """None only when the window's score is strictly above the public baseline's score on the
+    same scored instances. A tie is not uplift; a zero score cannot pass (the baseline is
+    never below zero). Every other case is a stable reason code."""
+    score, baseline = _score(record.get("estimate")), _score(record.get("baseline_estimate"))
+    if score is None:
+        return "SCORE_NOT_AVAILABLE"
+    if baseline is None:
+        return "BASELINE_ESTIMATE_MISSING"
+    if record.get("baseline_admitted") != record["admitted"] or record["admitted"] == 0:
+        return "BASELINE_INSTANCES_DIFFER"
+    if record.get("baseline_evaluable") != record["baseline_admitted"]:
+        return "BASELINE_NOT_FULLY_EVALUATED"  # the baseline must have scored every instance
+    if score == baseline:
+        return "SCORE_TIES_BASELINE"
+    return None if score > baseline else "SCORE_BELOW_BASELINE"
+
+
+SHARES_GROUP = "SHARES_DECISION_GROUP_WITH"
+
+
+def decision_group_flags(decision_groups: Iterable[Iterable[str]] | None, identity: str
+                         ) -> list[dict[str, Any]]:
+    """The flag for one candidate: the other identities that gave the same decision (state and
+    finding codes) on every scored case, from a redundancy grouping such as the one a rules-4
+    profile records (``redundancy_groups`` in a window results document). Empty when the
+    candidate is in no group. It reports; it excludes no one."""
+    others = sorted({m for group in decision_groups or () if identity in set(group)
+                     for m in group if m != identity})
+    if not others:
+        return []
+    return [{"flag": SHARES_GROUP, "with": others, "affects_verdict": False}]
+
+
 def evaluate_criteria(criteria: Any, results: Iterable[Any], endpoint: EndpointCheck | None,
-                      *, uid: int, hotkey: str, now_window: int, netuid: int
-                      ) -> CriteriaReport:
+                      *, uid: int, hotkey: str, now_window: int, netuid: int,
+                      decision_groups: Iterable[Iterable[str]] | None = None,
+                      identity: str | None = None) -> CriteriaReport:
     """Evaluate a uid's published window results against the criteria. Fails closed: every
     problem is a reason, and one reason is enough to fail. Bad input gives a reason, not an
     exception.
@@ -413,15 +525,23 @@ def evaluate_criteria(criteria: Any, results: Iterable[Any], endpoint: EndpointC
             fail("MISSING_WINDOW", window=window)
             continue
         present.append(window)
+        if record["profile_id"] not in rules["allowed_profile_ids"]:
+            fail("RESULT_PROFILE_NOT_ALLOWED", window=window, profile_id=record["profile_id"])
         if record["integrity_failure_count"] > rules["max_integrity_failures_per_window"]:
             fail("INTEGRITY_FAILURE", window=window, count=record["integrity_failure_count"],
                  codes=record["integrity_failure_codes"])
         if record["valid_responses"] < rules["min_valid_responses_per_window"]:
             fail("TOO_FEW_VALID_RESPONSES", window=window, have=record["valid_responses"],
                  need=rules["min_valid_responses_per_window"])
+        if rules["require_score_beats_public_baseline"]:
+            problem = _baseline_problem(record)
+            if problem:
+                fail(problem, window=window, estimate=record.get("estimate"),
+                     baseline_estimate=record.get("baseline_estimate"))
     return CriteriaReport(uid, not reasons, reasons, present, criteria["criteria_digest"],
                           hotkey, None if endpoint is None else endpoint.as_dict(), now_window,
-                          [by_window[w]["record_digest"] for w in present])
+                          [by_window[w]["record_digest"] for w in present],
+                          decision_group_flags(decision_groups, identity or f"outside_uid_{uid}"))
 
 
 # ------------------------------------------------------------------------ plan versions
@@ -458,11 +578,53 @@ def approval_reference(document: Mapping[str, Any]) -> str:
     return reference if isinstance(reference, str) else ""
 
 
+def _bundle() -> Any:
+    """The scoring bundle module, imported at the call: this module imports only the standard
+    library at load time (a test keeps it so) and the gate is needed by weighted proposals only."""
+    return importlib.import_module("sn87_provenonce.bundle")
+
+
+GATE_INPUT_KEYS = {"class_id", "estimates", "roles", "method_id"}
+
+
+def gate_verdict(gate_input: Any) -> dict[str, Any]:
+    """The weight-gate verdict for one candidate method, recomputed from the window's estimates.
+
+    ``gate_input`` is ``{"class_id", "estimates", "roles", "method_id"}``: the estimate of every
+    method in the window (the public methods included), each method's role and the candidate. The
+    verdict is recomputed here with ``bundle.family_gate``, never taken from the caller. Raises
+    ``AdmissionError`` (fail closed) unless the family is weight-eligible, is not recommended for
+    retirement and the candidate is above every public method. Returns the record that goes into
+    the plan entry. This is a plan-time check; it sets no weight and no weight path calls it."""
+    bundle = _bundle()
+
+    if not isinstance(gate_input, Mapping) or set(gate_input) != GATE_INPUT_KEYS:
+        raise AdmissionError("GATE_INPUT_REQUIRED")
+    method = gate_input["method_id"]
+    try:
+        gate = bundle.family_gate(dict(gate_input["estimates"]), gate_input["class_id"],
+                                  dict(gate_input["roles"]))
+        subject = gate["methods"][method]
+    except bundle.WeightGateRefused as error:
+        raise AdmissionError("GATE_REFUSES", str(error)) from None
+    except (KeyError, TypeError, ValueError):
+        raise AdmissionError("GATE_METHOD_NOT_A_SUBJECT", str(method)) from None
+    family = gate["family"]
+    if not (family["weight_eligible"] is True and family["status"] != bundle.RETIRE_RECOMMENDED
+            and subject["verdict"] == bundle.ELIGIBLE and subject["weight_eligible"] is True):
+        raise AdmissionError("GATE_REFUSES",
+                             f"{subject['verdict']} (family status {family['status']})")
+    return {"class_id": gate_input["class_id"], "method_id": method, "verdict": subject["verdict"],
+            "family_status": family["status"], "min_margin": gate["min_margin"],
+            "estimates_digest": sha256_of({k: repr(v) for k, v in
+                                           sorted(gate_input["estimates"].items())})}
+
+
 def propose_version(
     parent: Mapping[str, Any], *, uid: int, stage: str, hotkey: str | None = None,
     endpoint_check: EndpointCheck | None = None, criteria: Mapping[str, Any] | None = None,
     results: Iterable[Mapping[str, Any]] | None = None, now_window: int | None = None,
-    netuid: int | None = None,
+    netuid: int | None = None, gate_input: Mapping[str, Any] | None = None,
 ) -> dict[str, Any]:
     """Return a NEW plan version document; ``parent`` is not mutated and keeps its digest.
 
@@ -531,6 +693,8 @@ def propose_version(
         if report["passed"] is not True or report["reasons"]:
             raise AdmissionError("CRITERIA_NOT_PASSED",
                                  ",".join(r["code"] for r in report["reasons"][:5]))
+        # The window's gate verdict is part of the input: a family the gate refuses has no plan.
+        entry["gate"] = gate_verdict(gate_input)
         entry["criteria_digest"] = criteria["criteria_digest"]
         entry["criteria_report_digest"] = report["report_digest"]
         entry["result_digests"] = report["result_digests"]
@@ -596,6 +760,11 @@ def verify_version(document: Mapping[str, Any]) -> None:
                 raise AdmissionError("VERSION_WEIGHTED_ENTRY_WITHOUT_EVIDENCE", key)
             if pinned is None or entry["criteria_digest"] != pinned:
                 raise AdmissionError("VERSION_CRITERIA_NOT_PINNED", key)
+            bundle = _bundle()
+            gate = entry.get("gate")
+            if not isinstance(gate, Mapping) or gate.get("verdict") != bundle.ELIGIBLE \
+                    or gate.get("family_status") != bundle.FAMILY_ACTIVE:
+                raise AdmissionError("VERSION_WEIGHTED_ENTRY_WITHOUT_GATE", key)
 
 
 # --------------------------------------------------------------------- weight-row choke point
@@ -707,6 +876,9 @@ def main(argv: list[str] | None = None) -> int:
     c.add_argument("--min-valid-responses", type=int, required=True)
     c.add_argument("--max-integrity-failures", type=int, default=0)
     c.add_argument("--allow-unverified-signature", action="store_true")
+    c.add_argument("--profile-id", action="append",
+                   help="a profile window results may be scored under; repeat for more "
+                        "(default: " + ", ".join(DEFAULT_PROFILE_IDS) + ")")
     c.add_argument("--out", type=Path, required=True)
     k = sub.add_parser("check", help="evaluate a uid against the criteria; exit 0 only on PASS")
     k.add_argument("--criteria", type=Path, required=True)
@@ -741,7 +913,8 @@ def main(argv: list[str] | None = None) -> int:
             doc = make_criteria(criteria_id=args.criteria_id, consecutive_windows=args.windows,
                                 min_valid_responses_per_window=args.min_valid_responses,
                                 max_integrity_failures_per_window=args.max_integrity_failures,
-                                require_signature_verified=not args.allow_unverified_signature)
+                                require_signature_verified=not args.allow_unverified_signature,
+                                allowed_profile_ids=args.profile_id or DEFAULT_PROFILE_IDS)
             _write_new(args.out, doc)
             print(doc["criteria_digest"], STATUS)
             return 0

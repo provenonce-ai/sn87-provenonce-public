@@ -1,0 +1,1 @@
+Every source permission now declares an export class (an external export or a fictional fixture), which is part of the permission digest; a missing, unknown or conflicting class is refused, and keys for keyed commitments must have enough variety. Window results also record that the baseline scored every instance, and the criteria name the profiles they accept.

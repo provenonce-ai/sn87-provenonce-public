@@ -10,15 +10,14 @@ values are open decisions (see "Open decisions").
 
 ## Context
 
-An external technical review of the repository and the public testnet raised three scoring rules
-that work against the protocol's own design. Each was reproduced with the real scorer on public
-fixtures before this record was written; the figures are in "Numbers" below.
+Three scoring rules of the committed profile work against the protocol's own design. Each was
+checked with the real scorer on public fixtures before this record was written.
 
 1. **A correct abstention scores the floor.** `INSUFFICIENT_EVIDENCE_ABSTAIN` is one of the three
    response states the design rests on, yet under `IC-FIRST-LIGHT-MIN-1` a correct abstention on
    an abstain-truth record scores epsilon (1e-6). A hedged false finding scores above it,
    because the calibration term of a finding stays in the geometric composite
-   (LIMITATIONS item 16). A miner that wants the higher score never abstains.
+   (LIMITATIONS item 16).
 2. **The wrong-scope rule is unrecorded.** The class defines one finding code, `STALE_APPROVAL`.
    When an approval covers a different mission, recipient or artifact than the action, the
    reference executors cannot name a finding and abstain. That choice is real behaviour (the
@@ -132,79 +131,12 @@ clear, shortened citation, failed integrity and a missing response), found no di
   puts the break-even where an honest abstainer would choose to abstain.
 - **Editing `IC-FIRST-LIGHT-MIN-1`.** Not allowed. Its commitment is pinned.
 
-## Numbers
+## Measurements
 
-The figures below are generated, not typed. A generator in the private test suite runs the real
-scorer and the private reference executors over the public fixtures under both profiles, and
-runs the existing multi-seed perturbation report once with each. A private test fails if this
-block differs from the committed record. The profile document, the scorer rules and the unit
-tests that exercise them ship in this repository; the generator and its records need the private
-reference executors and do not.
-
-Strategies: `reference` is a reference response with exact citations; `public_contract_baseline`
-is the matched baseline; `cite_everything` is the reference with every event and the completeness
-scope cited; `never_abstain` is the reference except that it states a hedged `STALE_APPROVAL`
-finding at confidence 0.5 where the reference abstains; `always_abstain` abstains on every
-record. The two wrong-scope families change one action's recipient in a public fixture.
-In the tables, MIN-1 is `IC-FIRST-LIGHT-MIN-1` and MIN-2 is `IC-FIRST-LIGHT-MIN-2`.
-
-<!-- BEGIN GENERATED: profile-comparison -->
-State payoff matrix of the committed profile (rows are the recomputed truth, columns the response state):
-
-| Truth \ response | FINDINGS | NO_MATERIAL_DEVIATION | INSUFFICIENT_EVIDENCE_ABSTAIN |
-| --- | --- | --- | --- |
-| FINDINGS | 1 | 0 | 0.25 |
-| NO_MATERIAL_DEVIATION | 0 | 1 | 0.25 |
-| INSUFFICIENT_EVIDENCE_ABSTAIN | 0 | 0 | 0.5 |
-
-Correct abstention against hedged false findings, one public abstain-truth case (`incomplete`, index 0):
-
-| Response | MIN-1 | MIN-2 |
-| --- | --- | --- |
-| correct abstention | 1e-06 | 0.5 |
-| false finding, confidence 0.5 | 1.496e-05 | 1e-06 |
-| false finding, confidence 0.9 | 1.137e-05 | 1e-06 |
-
-Citation, one public finding case (`stale_authority`, index 0; 9 required references, 13 events plus the completeness scope in the record):
-
-| Method | References cited | Evidence MIN-1 | Evidence MIN-2 | Score MIN-1 | Score MIN-2 |
-| --- | --- | --- | --- | --- | --- |
-| cite_everything | 13 | 1 | 0.6923 | 1 | 0.9122 |
-| public_contract_baseline | 13 | 1 | 0.6923 | 1 | 0.9122 |
-| reference | 9 | 1 | 1 | 1 | 1 |
-
-Mean score by strategy and family, 20 public fixtures per family (MIN-1 / MIN-2):
-
-| Family (recomputed truth) | reference | public_contract_baseline | cite_everything | never_abstain | always_abstain |
-| --- | --- | --- | --- | --- | --- |
-| fresh_review (NO_MATERIAL_DEVIATION) | 1 / 1 | 1 / 1 | 1 / 1 | 1 / 1 | 1e-06 / 0.25 |
-| incomplete (INSUFFICIENT_EVIDENCE_ABSTAIN) | 1e-06 / 0.5 | 1e-06 / 0.5 | 1e-06 / 0.5 | 1.496e-05 / 1e-06 | 1e-06 / 0.5 |
-| stale_authority (FINDINGS) | 1 / 1 | 1 / 0.9122 | 1 / 0.9122 | 1 / 1 | 1e-06 / 0.25 |
-| wrong_scope_clear (INSUFFICIENT_EVIDENCE_ABSTAIN) | 1e-06 / 0.5 | 1e-06 / 1e-06 | 1e-06 / 0.5 | 1.496e-05 / 1e-06 | 1e-06 / 0.5 |
-| wrong_scope_stale (INSUFFICIENT_EVIDENCE_ABSTAIN) | 1e-06 / 0.5 | 1e-06 / 1e-06 | 1e-06 / 0.5 | 1.496e-05 / 1e-06 | 1e-06 / 0.5 |
-
-Multi-seed perturbation report (20 seeds, 20 cases per family, pooled), mean score delta (perturbed minus unperturbed) and agreement with recomputed truth, MIN-1 / MIN-2:
-
-| Perturbation | reference delta | baseline delta | reference agreement | baseline agreement |
-| --- | --- | --- | --- | --- |
-| clock_skew | -0.5465 / -0.2732 | -0.5465 / -0.4722 | 1 / 1 | 0.5584 / 0.5584 |
-| clock_skew_small | -0.4342 / -0.2171 | -0.4342 / -0.4178 | 1 / 1 | 0.5658 / 0.5658 |
-| drop_event | -0.5825 / -0.2913 | -0.5825 / -0.4053 | 1 / 1 | 0.725 / 0.725 |
-| duplicate_event | -0.4292 / -0.2146 | -0.4292 / -0.3114 | 1 / 1 | 0.7775 / 0.7775 |
-<!-- END GENERATED: profile-comparison -->
-
-What the numbers show:
-
-- Under `IC-FIRST-LIGHT-MIN-1` the hedged false finding beats the correct abstention, never
-  abstaining beats the reference on every abstain-truth family, and citing everything ties
-  exact citation. All three rules from the review reproduce.
-- Under `IC-FIRST-LIGHT-MIN-2` the correct abstention pays 1/2 and the hedged false finding pays
-  the floor. The reference scores at least as high as every other strategy on every family. Citing everything and the baseline lose part
-  of the evidence term. Always abstaining pays well below answering.
-- In the perturbation report, the references and the baseline had the same mean score delta in
-  every cell under `IC-FIRST-LIGHT-MIN-1`, although the baseline's agreement with truth fell.
-  Under `IC-FIRST-LIGHT-MIN-2` the delta separates them in every cell where agreement differs,
-  in the direction of agreement. This is diagnostic output over synthetic fixtures. It is never a score input.
+The measurements behind this record (a comparison of the two profiles over the public fixtures
+and a multi-seed perturbation report) are generated by tooling that needs the private reference
+executors. They are kept with the private research records and are not part of this repository.
+The profile document, the scorer rules and the unit tests that exercise them ship here.
 
 ## Status: committed, not active
 

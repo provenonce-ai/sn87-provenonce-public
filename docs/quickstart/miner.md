@@ -102,8 +102,9 @@ the transport-neutral response boundary for the v0alpha1 objects.
 `sn87-miner serve` runs the signed endpoint behind `pilot.server.create_app`: `POST /v1/assurance`
 authenticated with the SDK's `btauth/1` envelope over the exact request bytes, a shared replay
 store that refuses requests when it cannot prove freshness, and a signed response. `GET /ready`
-reports the replay store. It never touches a chain: it does not register a key, set weights or
-publish an on-chain endpoint. The design is in
+reports the replay store. It never writes to a chain: it does not register a key, set weights or
+publish an on-chain endpoint. It does read the subnet's validator permits, read-only, to decide
+who may send (step 4). The design is in
 [ADR-0005](../architecture/ADR-0005-signed-http-and-replay-boundary.md).
 
 1. Register your own hotkey on netuid 582 with your own wallet (operator action; not covered
@@ -125,10 +126,12 @@ publish an on-chain endpoint. The design is in
 
    ```bash
    uv sync --locked --extra transport
-   uv run sn87-miner serve --role candidate --hotkey-keyfile PATH \
+   uv run sn87-miner serve --role candidate --hotkey-keyfile PATH --netuid 582 \
      --valkey-url redis://127.0.0.1:6379/0 --check
    ```
 
+   `--netuid` is required: the endpoint accepts only senders that hold `validator_permit` on
+   that subnet (step 4), and `--check` reads the permit list once to prove it can.
    `--hotkey-keyfile PATH` takes a key file only you can read (mode 0600: a looser mode is
    refused). `--hotkey-env NAME` takes the name of an environment variable that holds the seed,
    mnemonic or key file text. The key is read inside the process and never printed or logged;
@@ -137,20 +140,34 @@ publish an on-chain endpoint. The design is in
 4. Serve:
 
    ```bash
-   uv run sn87-miner serve --role candidate --hotkey-keyfile PATH \
-     --valkey-url redis://127.0.0.1:6379/0 --port 8787
+   uv run sn87-miner serve --role candidate --hotkey-keyfile PATH --netuid 582 \
+     --valkey-url redis://127.0.0.1:6379/0 --port 8787 --probe-hotkey PROBE_KEY_SS58
    ```
+
+   **Who may send.** The allowlist is on by default. A request is accepted only if its signing
+   hotkey held `validator_permit` on `--netuid` in the latest metagraph read (read-only; at
+   start-up and then once per `--sender-refresh-seconds`, default 4,320 = one epoch at tempo 360),
+   or it is the `--probe-hotkey` you name, and all senders together stay under a global rate limit
+   (`--global-rate-per-second` 20, `--global-rate-burst` 128) and a per-sender one (`--sender-rate-per-second` 5, `--sender-rate-burst` 32). Anyone else gets 403
+   `SENDER_NOT_PERMITTED`, 429 `GLOBAL_RATE_LIMITED` or, if the permit list cannot be read,
+   503 `SENDER_POLICY_UNAVAILABLE`; the request never reaches your method. For local development
+   only, `--allow-any-sender` turns the allowlist off (logged, with a warning; loopback binds only). The built-in chain settings are the public testnet and apply only to netuid 582; for another netuid give `--chain-endpoint` and `--chain-genesis`. `serve --unsigned-loopback` is unaffected. Details and every
+   code: [Who may send](../guides/miner-guide.md#who-may-send-the-sender-allowlist).
 
    `--role candidate|baseline` selects a reference method; `--method package.module:function`
    selects your own. The default bind is loopback. To listen on another address, add
    `--allow-non-loopback` and put TLS in front (a reverse proxy): validators call HTTPS for any
    remote endpoint.
-5. Test it with a signed request. `probe` sends one fixture capsule from a throwaway caller key
-   and verifies the signed response; the caller-side replay store can be the same Valkey:
+5. Test it with a signed request. `probe` sends one fixture capsule and verifies the signed
+   response; the caller-side replay store can be the same Valkey. It signs with the probe key
+   you named in step 4 (a key of its own, not your miner hotkey): without
+   `--probe-hotkey-keyfile` (or `--probe-hotkey-env NAME`) it signs with a throwaway key, which
+   an allowlisted endpoint refuses.
 
    ```bash
    uv run sn87-miner probe --endpoint http://127.0.0.1:8787 \
-     --miner-hotkey YOUR_HOTKEY_SS58 --valkey-url redis://127.0.0.1:6379/0
+     --miner-hotkey YOUR_HOTKEY_SS58 --valkey-url redis://127.0.0.1:6379/0 \
+     --probe-hotkey-keyfile PROBE_KEY_PATH
    ```
 
    Expected: `probe OK: signed request answered and verified; state=FINDINGS

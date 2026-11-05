@@ -1,0 +1,1 @@
+Identical-answer grouping under the new profiles now keys on the declared state and set of finding codes per case, and the scorer computes the groups from the answers and refuses a caller grouping that disagrees; the loader also takes family truth states from the committed class and requires a positive calibration weight.

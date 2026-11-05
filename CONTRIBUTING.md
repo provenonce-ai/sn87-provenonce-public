@@ -12,6 +12,10 @@ evidence only (see [LIMITATIONS.md](LIMITATIONS.md)). Contributions must preserv
 
 ## Development setup
 
+The route below is the quick one. CI uses the hash-verified build route in
+[AGENTS.md](AGENTS.md#run-tests) (`uv pip install --require-hashes -r requirements/build.txt`, then
+`uv sync --locked --all-extras --no-build-isolation-package sn87-provenonce`).
+
 ```bash
 uv sync --locked --all-extras   # Python 3.12+, versions pinned by uv.lock
 uv run ruff check .

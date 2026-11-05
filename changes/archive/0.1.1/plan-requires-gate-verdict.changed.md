@@ -1,0 +1,1 @@
+A weighted plan version can only be proposed when the window's baseline-headroom gate verdict, recomputed from the window's estimates, says the candidate is above every public method; a weighted entry without an eligible verdict does not verify. The gate is wired into no weight write.

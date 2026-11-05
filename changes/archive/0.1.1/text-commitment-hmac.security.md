@@ -1,0 +1,1 @@
+Text commitments in a source labelled as an external export now use HMAC-SHA256 under a key the data owner holds and passes in, so a guessable text cannot be confirmed by hashing candidates; the mapping refuses such an export without a key, and earlier plain commitments still verify under their own mapping version. See `sources/mapping.py` and LIMITATIONS item 19.

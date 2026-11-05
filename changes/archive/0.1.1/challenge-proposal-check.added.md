@@ -1,0 +1,1 @@
+A new command, `sn87-provenonce challenge check PROPOSAL.json`, reads a challenge proposal (intended consumer, evidence rights, truth source and oracle class, scoring, baselines, budget, headroom) and prints ADMISSIBLE, NEEDS_DECISION or INADMISSIBLE with reason codes; see docs/guides/propose-a-challenge.md. It activates nothing.

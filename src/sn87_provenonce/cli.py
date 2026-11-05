@@ -243,6 +243,18 @@ def build_parser() -> argparse.ArgumentParser:
         help="reconstruct and verify an offline sensitivity-analysis evidence bundle",
     )
     verify_sensitivity.add_argument("path", type=Path)
+    challenge = subcommands.add_parser(
+        "challenge",
+        help="check a challenge proposal for admissibility (activates nothing)",
+    )
+    challenge_commands = challenge.add_subparsers(dest="challenge_command", required=True)
+    challenge_check = challenge_commands.add_parser(
+        "check",
+        help="print ADMISSIBLE, NEEDS_DECISION or INADMISSIBLE with reason codes "
+        "(exit 0, 3, 1)",
+    )
+    challenge_check.add_argument("path", type=Path)
+    challenge_check.add_argument("--json", action="store_true", help="print the result as JSON")
     return parser
 
 
@@ -379,6 +391,16 @@ def _main(argv: Sequence[str] | None) -> int:
     if args.command == "verify-sensitivity-bundle":
         print(json.dumps(verify_sensitivity_evidence_bundle(args.path), indent=2, sort_keys=True))
         return 0
+    if args.command == "challenge":
+        from sn87_provenonce import challenge_proposal as cp
+
+        try:
+            result = cp.check_proposal_file(args.path)
+        except (OSError, ValueError) as exc:
+            print(f"error: cannot read {args.path}: {exc}", file=sys.stderr)
+            return 4
+        print(result.model_dump_json(indent=2) if args.json else cp.render(result))
+        return cp.EXIT_CODES[result.verdict]
     raise AssertionError(f"unhandled command: {args.command}")
 
 

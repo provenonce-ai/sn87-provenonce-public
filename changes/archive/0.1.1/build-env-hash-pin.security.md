@@ -1,0 +1,1 @@
+The package build now runs from a hash-pinned build environment (`requirements/build.txt`: hatchling and all its dependencies at exact versions with their file hashes), used as a build constraint with `--require-hashes` in CI, the exported workflow and the documented commands. A changed or substituted build dependency fails the build.

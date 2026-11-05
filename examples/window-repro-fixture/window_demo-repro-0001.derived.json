@@ -1,0 +1,380 @@
+{
+  "admission": {
+    "criteria": {
+      "applies_to": "shadow to weighted",
+      "criteria_digest": "sha256:f3bd2bd7fca64a4a31f617a81dc5709e2701a3aea45d4a910c0a6a4f68a8e692",
+      "criteria_id": "demo-repro-criteria-1",
+      "not_claimed": [
+        "the values are proposals until an approval record cites this digest"
+      ],
+      "rules": {
+        "allowed_profile_ids": [
+          "IC-FIRST-LIGHT-MIN-3"
+        ],
+        "consecutive_windows": 1,
+        "max_integrity_failures_per_window": 0,
+        "min_valid_responses_per_window": 20,
+        "require_endpoint_announcement_valid": false,
+        "require_score_beats_public_baseline": true,
+        "require_signature_verified": false,
+        "results_must_be_shadow_with_weight_zero": true
+      },
+      "schema_version": "sn87-admission-criteria/0.1",
+      "status": "PROPOSED_NEEDS_AUTHORITY_APPROVAL",
+      "windows": "the current latest N consecutive window indexes, none missing"
+    },
+    "reports": [
+      {
+        "criteria_digest": "sha256:f3bd2bd7fca64a4a31f617a81dc5709e2701a3aea45d4a910c0a6a4f68a8e692",
+        "endpoint": null,
+        "flags": [],
+        "hotkey": "FICTIONAL-PLACEHOLDER-HOTKEY-5",
+        "now_window": 1,
+        "passed": false,
+        "reasons": [
+          {
+            "baseline_estimate": "0.94144527271359202",
+            "code": "SCORE_BELOW_BASELINE",
+            "estimate": "0.91666666666666663",
+            "window": 1
+          }
+        ],
+        "report_digest": "sha256:b60289d20740356a9b3a3dbbce912637fa4d14b03fcf32683b0bcc84d3fb713e",
+        "result_digests": [
+          "sha256:862776d9f90fcc923c62d1cf776a08c558048710480f45a254e89f62da3780cc"
+        ],
+        "schema_version": "sn87-admission-criteria-report/0.1",
+        "statement": "a report is evidence for an approval record; it approves nothing",
+        "uid": 5,
+        "verdict": "FAIL",
+        "windows_checked": [
+          1
+        ]
+      },
+      {
+        "criteria_digest": "sha256:f3bd2bd7fca64a4a31f617a81dc5709e2701a3aea45d4a910c0a6a4f68a8e692",
+        "endpoint": null,
+        "flags": [],
+        "hotkey": "FICTIONAL-PLACEHOLDER-HOTKEY-6",
+        "now_window": 1,
+        "passed": false,
+        "reasons": [
+          {
+            "code": "INTEGRITY_FAILURE",
+            "codes": [
+              "RESPONSE_BINDING_FAILED"
+            ],
+            "count": 1,
+            "window": 1
+          }
+        ],
+        "report_digest": "sha256:03f4463369226e469e5a8f66760855761fad36ce46d8e40d057bd9a567c39159",
+        "result_digests": [
+          "sha256:c98fca829528322f88ed2092e62ea0159fd6506b6924398b39c45207588809c1"
+        ],
+        "schema_version": "sn87-admission-criteria-report/0.1",
+        "statement": "a report is evidence for an approval record; it approves nothing",
+        "uid": 6,
+        "verdict": "FAIL",
+        "windows_checked": [
+          1
+        ]
+      },
+      {
+        "criteria_digest": "sha256:f3bd2bd7fca64a4a31f617a81dc5709e2701a3aea45d4a910c0a6a4f68a8e692",
+        "endpoint": null,
+        "flags": [],
+        "hotkey": "FICTIONAL-PLACEHOLDER-HOTKEY-7",
+        "now_window": 1,
+        "passed": true,
+        "reasons": [],
+        "report_digest": "sha256:06238ba2bf8a22c8ffdfc8223fe4c60dd888129513f8cf7ac5cd7111032d9088",
+        "result_digests": [
+          "sha256:7d197d4b63183bc7078f08543e7600a06631dc185116ed4b41d2dba1f4db8958"
+        ],
+        "schema_version": "sn87-admission-criteria-report/0.1",
+        "statement": "a report is evidence for an approval record; it approves nothing",
+        "uid": 7,
+        "verdict": "PASS",
+        "windows_checked": [
+          1
+        ]
+      }
+    ],
+    "results": [
+      {
+        "admitted": 24,
+        "baseline_admitted": 24,
+        "baseline_estimate": "0.94144527271359202",
+        "baseline_evaluable": 24,
+        "endpoint_record_digest": null,
+        "estimate": "0.91666666666666663",
+        "evaluable": 22,
+        "hotkey": "FICTIONAL-PLACEHOLDER-HOTKEY-5",
+        "integrity_failure_codes": [],
+        "integrity_failure_count": 0,
+        "invalid_responses": 2,
+        "netuid": 87,
+        "profile_id": "IC-FIRST-LIGHT-MIN-3",
+        "queried": 32,
+        "record_digest": "sha256:862776d9f90fcc923c62d1cf776a08c558048710480f45a254e89f62da3780cc",
+        "schema_version": "sn87-shadow-window-result/0.1",
+        "seed": 135204060490378,
+        "stage": "shadow",
+        "statement": "scored and published, not weighted; never in a weight row",
+        "uid": 5,
+        "unavailable": 3,
+        "valid_responses": 27,
+        "weight": 0,
+        "window": 1
+      },
+      {
+        "admitted": 24,
+        "baseline_admitted": 24,
+        "baseline_estimate": "0.94144527271359202",
+        "baseline_evaluable": 24,
+        "endpoint_record_digest": null,
+        "estimate": "0.95833333333333337",
+        "evaluable": 23,
+        "hotkey": "FICTIONAL-PLACEHOLDER-HOTKEY-6",
+        "integrity_failure_codes": [
+          "RESPONSE_BINDING_FAILED"
+        ],
+        "integrity_failure_count": 1,
+        "invalid_responses": 0,
+        "netuid": 87,
+        "profile_id": "IC-FIRST-LIGHT-MIN-3",
+        "queried": 32,
+        "record_digest": "sha256:c98fca829528322f88ed2092e62ea0159fd6506b6924398b39c45207588809c1",
+        "schema_version": "sn87-shadow-window-result/0.1",
+        "seed": 135204060490378,
+        "stage": "shadow",
+        "statement": "scored and published, not weighted; never in a weight row",
+        "uid": 6,
+        "unavailable": 0,
+        "valid_responses": 31,
+        "weight": 0,
+        "window": 1
+      },
+      {
+        "admitted": 24,
+        "baseline_admitted": 24,
+        "baseline_estimate": "0.94144527271359202",
+        "baseline_evaluable": 24,
+        "endpoint_record_digest": null,
+        "estimate": "1",
+        "evaluable": 24,
+        "hotkey": "FICTIONAL-PLACEHOLDER-HOTKEY-7",
+        "integrity_failure_codes": [],
+        "integrity_failure_count": 0,
+        "invalid_responses": 0,
+        "netuid": 87,
+        "profile_id": "IC-FIRST-LIGHT-MIN-3",
+        "queried": 32,
+        "record_digest": "sha256:7d197d4b63183bc7078f08543e7600a06631dc185116ed4b41d2dba1f4db8958",
+        "schema_version": "sn87-shadow-window-result/0.1",
+        "seed": 135204060490378,
+        "stage": "shadow",
+        "statement": "scored and published, not weighted; never in a weight row",
+        "uid": 7,
+        "unavailable": 0,
+        "valid_responses": 32,
+        "weight": 0,
+        "window": 1
+      }
+    ]
+  },
+  "claim": "SHADOW_DERIVED_NOT_WIRED_TO_WEIGHTS",
+  "identities": [
+    {
+      "hotkey": "FICTIONAL-PLACEHOLDER-HOTKEY-1",
+      "method_id": "approval_witness",
+      "stage": "weighted",
+      "uid": 1
+    },
+    {
+      "hotkey": "FICTIONAL-PLACEHOLDER-HOTKEY-2",
+      "method_id": "weighted_b",
+      "stage": "weighted",
+      "uid": 2
+    },
+    {
+      "hotkey": "FICTIONAL-PLACEHOLDER-HOTKEY-5",
+      "method_id": "outside_uid_5",
+      "stage": "shadow",
+      "uid": 5
+    },
+    {
+      "hotkey": "FICTIONAL-PLACEHOLDER-HOTKEY-6",
+      "method_id": "outside_uid_6",
+      "stage": "shadow",
+      "uid": 6
+    },
+    {
+      "hotkey": "FICTIONAL-PLACEHOLDER-HOTKEY-7",
+      "method_id": "outside_uid_7",
+      "stage": "shadow",
+      "uid": 7
+    },
+    {
+      "hotkey": null,
+      "method_id": "public_contract_baseline",
+      "stage": "reference",
+      "uid": null
+    }
+  ],
+  "note": "Synthetic fixture. A computation from the window's files; no weight was set.",
+  "preference_row": {
+    "action": "REQUIRES_TARGET_CONFORMANCE_AND_H1",
+    "state": "VALID_PREFERENCE_ROW",
+    "weights": {
+      "approval_witness": "0.52339553871549482",
+      "weighted_b": "0.47660446128450523"
+    },
+    "z": {
+      "approval_witness": "0.16000000000000003",
+      "weighted_b": "0.14569614787445131"
+    }
+  },
+  "schema_version": "sn87-window-derived/0.1",
+  "weight_gate": {
+    "ceiling": "1",
+    "class_id": "IC-APPROVAL-APPLICABILITY",
+    "family": {
+      "eligible_methods": [],
+      "status": "ACTIVE",
+      "weight_eligible": false
+    },
+    "methods": {
+      "approval_witness": {
+        "blocked_by": [],
+        "compared": {
+          "public_contract_baseline": {
+            "estimate_delta": "0.058554727286407982",
+            "result": "ABOVE_BASELINE"
+          }
+        },
+        "compared_with": [
+          "public_contract_baseline"
+        ],
+        "estimate_missing": [],
+        "method": "approval_witness",
+        "verdict": "IS_PUBLIC_METHOD",
+        "weight_eligible": false
+      },
+      "outside_uid_5": {
+        "blocked_by": [
+          "approval_witness",
+          "public_contract_baseline"
+        ],
+        "compared": {
+          "approval_witness": {
+            "estimate_delta": "-0.08333333333333337",
+            "result": "BELOW_BASELINE"
+          },
+          "public_contract_baseline": {
+            "estimate_delta": "-0.024778606046925389",
+            "result": "BELOW_BASELINE"
+          }
+        },
+        "compared_with": [
+          "approval_witness",
+          "public_contract_baseline"
+        ],
+        "estimate_missing": [],
+        "method": "outside_uid_5",
+        "verdict": "BELOW_PUBLIC_METHOD",
+        "weight_eligible": false
+      },
+      "outside_uid_6": {
+        "blocked_by": [
+          "approval_witness"
+        ],
+        "compared": {
+          "approval_witness": {
+            "estimate_delta": "-0.04166666666666663",
+            "result": "BELOW_BASELINE"
+          },
+          "public_contract_baseline": {
+            "estimate_delta": "0.016888060619741352",
+            "result": "ABOVE_BASELINE"
+          }
+        },
+        "compared_with": [
+          "approval_witness",
+          "public_contract_baseline"
+        ],
+        "estimate_missing": [],
+        "method": "outside_uid_6",
+        "verdict": "BELOW_PUBLIC_METHOD",
+        "weight_eligible": false
+      },
+      "outside_uid_7": {
+        "blocked_by": [
+          "approval_witness"
+        ],
+        "compared": {
+          "approval_witness": {
+            "estimate_delta": "0",
+            "result": "NULL_NO_HEADROOM"
+          },
+          "public_contract_baseline": {
+            "estimate_delta": "0.058554727286407982",
+            "result": "ABOVE_BASELINE"
+          }
+        },
+        "compared_with": [
+          "approval_witness",
+          "public_contract_baseline"
+        ],
+        "estimate_missing": [],
+        "method": "outside_uid_7",
+        "verdict": "NULL_NO_HEADROOM",
+        "weight_eligible": false
+      },
+      "weighted_b": {
+        "blocked_by": [
+          "approval_witness"
+        ],
+        "compared": {
+          "approval_witness": {
+            "estimate_delta": "-0.018298352277002494",
+            "result": "BELOW_BASELINE"
+          },
+          "public_contract_baseline": {
+            "estimate_delta": "0.040256375009405487",
+            "result": "ABOVE_BASELINE"
+          }
+        },
+        "compared_with": [
+          "approval_witness",
+          "public_contract_baseline"
+        ],
+        "estimate_missing": [],
+        "method": "weighted_b",
+        "verdict": "BELOW_PUBLIC_METHOD",
+        "weight_eligible": false
+      }
+    },
+    "min_margin": "0.001",
+    "note": "Intended to apply before any weighting: not wired into any live weight path. A family is weight-eligible only if a candidate beats every public method by at least 0.001; a tie refuses.",
+    "public_methods": [
+      "public_contract_baseline",
+      "approval_witness"
+    ],
+    "public_methods_not_evaluated": [],
+    "schema_version": "sn87-weight-gate/0.1"
+  },
+  "weight_row": {
+    "state": "TARGET_CONFORMED_DRY_RUN",
+    "u16_weights": [
+      65535,
+      59676
+    ],
+    "uids": [
+      1,
+      2
+    ]
+  },
+  "window_id": "demo-repro-0001"
+}

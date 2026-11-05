@@ -1,0 +1,1 @@
+The window reproduction kit now fails a result scored under a profile other than the committed one, takes stages and uids from the submissions rather than the derived record, adds a line for whether the open record is the one seen at open, and states that an operator who controls every file can produce a set that passes. Free text of replies is no longer published in the fixture.

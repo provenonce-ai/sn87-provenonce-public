@@ -1,0 +1,97 @@
+{
+  "profile_id": "DAT-HEADROOM-MIN-4",
+  "whitepaper": "0.7.2",
+  "weights": {
+    "detection": "0.40",
+    "evidence": "0.35",
+    "severity": "0.10",
+    "calibration": "0.15"
+  },
+  "beta": "1",
+  "epsilon": "0.000001",
+  "tail_fraction": "0",
+  "difficulty": "1",
+  "freshness": "1",
+  "theta": "0.60",
+  "gamma": "2",
+  "severity": {
+    "LOW": "0.25",
+    "MEDIUM": "0.50",
+    "HIGH": "1.00"
+  },
+  "false_positive_floor": "0.25",
+  "minimum_assignments": 36,
+  "maximum_raw_invalid_or_missing_rate": "0.10",
+  "assignment": {
+    "planted_violation": 16,
+    "clean_decoys": 16,
+    "blind_spot": 8
+  },
+  "diagnostics": {},
+  "equivalent_diagnostics": "DEFERRED_BY_AUTHORITY_Q73_246",
+  "utility": "NA_NO_DEFENSIBLE_FUNCTION",
+  "robustness": "DIAGNOSTIC_ONLY",
+  "cost_coefficients": [
+    "0",
+    "0",
+    "0",
+    "0"
+  ],
+  "finding_confidence": "REQUIRED_PER_FINDING; SCORED_AS_BRIER_OVER_THE_FIXED_DEFECT_CATALOGUE",
+  "revision": "IC_FIRST_LIGHT_MIN_4_RULES_ON_THE_DAT_HEADROOM_CLASS_INACTIVE",
+  "derived_from": "IC-FIRST-LIGHT-MIN-4",
+  "scoring_rules": {
+    "rules_version": "4",
+    "state_payoff": {
+      "FINDINGS": {
+        "FINDINGS": "1",
+        "NO_MATERIAL_DEVIATION": "0",
+        "INSUFFICIENT_EVIDENCE_ABSTAIN": "0.25"
+      },
+      "NO_MATERIAL_DEVIATION": {
+        "FINDINGS": "0",
+        "NO_MATERIAL_DEVIATION": "1",
+        "INSUFFICIENT_EVIDENCE_ABSTAIN": "0.25"
+      },
+      "INSUFFICIENT_EVIDENCE_ABSTAIN": {
+        "FINDINGS": "0",
+        "NO_MATERIAL_DEVIATION": "0",
+        "INSUFFICIENT_EVIDENCE_ABSTAIN": "0.5"
+      }
+    },
+    "wrong_scope": "ABSTENTION_ON_RECORD",
+    "evidence_credit": "PRECISION_POWER_TIMES_RECALL",
+    "precision_exponent": "2",
+    "calibration": "BRIER_FIXED_OUTCOME_SET",
+    "severity_credit": "ORDINAL_DISTANCE_ON_MATCHED",
+    "rationale": "REQUIRED_NOT_SCORED_TYPE_D_DEFERRED",
+    "redundancy": "IDENTICAL_ANSWERS_SHARE_ONE_WEIGHT",
+    "flags": {
+      "scored": false,
+      "dispatch_window_seconds": "1",
+      "latency_difference_seconds": "0.5",
+      "pair_share": "0.9",
+      "min_cases": 8
+    },
+    "pool": {
+      "families": {
+        "planted_violation": "FINDINGS",
+        "clean_decoys": "NO_MATERIAL_DEVIATION",
+        "blind_spot": "INSUFFICIENT_EVIDENCE_ABSTAIN"
+      },
+      "defect_share_max": "0.40",
+      "clear_share_max": "0.40",
+      "abstain_share_max": "0.20",
+      "constant_margin": "0.15",
+      "strong_margin": "0.25"
+    }
+  },
+  "wire_max_bytes": 262144,
+  "private_storage_max_bytes": 33554432,
+  "matching": "EXACT_CODE_ONE_TO_ONE_NO_PARTIAL_CREDIT_DUPLICATES_ARE_FP",
+  "evidence_quality": "PRECISION_SQUARED_TIMES_RECALL_OVER_CITED_AND_REQUIRED_REFS",
+  "numeric": "IEEE754_BINARY64_FINITE_FSUM; REPRODUCTION_ABSOLUTE_TOLERANCE_1e-12",
+  "no_valid_row": "NO_VALID_PREFERENCE_ROW_NO_SUBMISSION",
+  "rule_reliability": "0.95",
+  "deterministic": true
+}

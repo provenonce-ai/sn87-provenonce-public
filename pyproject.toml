@@ -1,10 +1,10 @@
 [build-system]
-requires = ["hatchling>=1.27,<2"]
+requires = ["hatchling==1.33.0"]
 build-backend = "hatchling.build"
 
 [project]
 name = "sn87-provenonce"
-version = "0.1.0"
+version = "0.1.1"
 description = "Protocol contracts for evidence-backed assurance of autonomous work on SN87."
 readme = "README.md"
 requires-python = ">=3.12"

@@ -1,0 +1,1 @@
+The signed miner request envelope accepts an optional `window_commitments` object (the contest window open record). A miner built before this change rejects it, so update `sn87-miner` before the first 0.2 window opens.

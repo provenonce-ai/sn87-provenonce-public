@@ -1,0 +1,1 @@
+`sn87-miner serve` takes a repeatable `--trusted-sender SS58` (at most 8, `--probe-hotkey` is one of them): a trusted hotkey may send without validator permit but is still signature-checked and rate limited, and is listed at start-up. A shadow cohort miner adds the shadow service address this way; see the miner guide, "Who may send".
