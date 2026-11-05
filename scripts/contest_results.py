@@ -167,6 +167,7 @@ def score_window(capsules: dict[str, Any], truth: dict[str, Any], responses: dic
     if [m["role"] for m in methods].count("baseline") != 1:
         raise ValueError("exactly one public_contract_baseline row is required")
     out_methods, estimates, per_case = [], {}, []
+    bad_schema: set[tuple[str, str]] = set()  # replies the contract rejects: never grouped
     for method in methods:
         if method["role"] not in ("candidate", "baseline"):
             raise ValueError("method role must be candidate or baseline")
@@ -180,6 +181,8 @@ def score_window(capsules: dict[str, Any], truth: dict[str, Any], responses: dic
             record = score_response(binding, capsule, row["truth"], response,
                                     _integrity(entry.get("integrity")))
             records.append((row, response, record, _cost(capsule, response, entry.get("cost"))))
+            if "schema" in record["failures"]:
+                bad_schema.add((method["method_id"], row["qid"]))
         scored = [r for r in records if r[0]["track"] == "scored"]
         diagnostic = [r for r in records if r[0]["track"] == "diagnostic"]
         epoch = epoch_estimate([r[2]["score"] for r in scored], [r[2]["valid"] for r in scored],
@@ -277,7 +280,8 @@ def score_window(capsules: dict[str, Any], truth: dict[str, Any], responses: dic
     }
     if profile.fixed_outcome is not None:  # ADR-0022: shared weight groups and non-scoring flags
         seen = {m["method_id"]: {
-            r["qid"]: {"response": ((m["responses"].get(r["qid"]) or {}).get("response")),
+            r["qid"]: {"response": (None if (m["method_id"], r["qid"]) in bad_schema else
+                                    (m["responses"].get(r["qid"]) or {}).get("response")),
                        "dispatched_at": _seconds(m["responses"].get(r["qid"]), "dispatched"),
                        "responded_at": _seconds(m["responses"].get(r["qid"]), "replied")}
             for r in admitted if r["track"] == "scored"} for m in methods}

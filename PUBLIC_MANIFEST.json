@@ -183,6 +183,7 @@
         "tests/transport/**",
         "tests/cmt_vectors/*.json",
         "tests/test_bundle.py",
+        "tests/test_malformed_reply_redundancy.py",
         "tests/test_implementation_status_extra.py",
         "tests/test_a2_observe_none_and_reject_digest.py",
         "tests/test_separation.py",

@@ -196,7 +196,9 @@ uv run python scripts/admission_plan.py check --criteria criteria.json --results
     --uid U --hotkey SS58 --netuid 582 --endpoint-record record.json --now-ms NOW --now-window W
 uv run python scripts/admission_plan.py propose --parent PLAN.json --uid U --stage shadow \
     --hotkey SS58 --endpoint-record record.json --now-ms NOW --criteria criteria.json --out DIR
-# weighted: also --results RESULTS_DIR --now-window W, on an approved version that pins the criteria
+# weighted: also --results RESULTS_DIR --now-window W --gate-input GATE.json, on an approved
+# version that pins the criteria. GATE.json holds exactly class_id, estimates, roles, method_id
+# (see "The gate verdict is a plan input"); a missing or malformed file is a refusal (exit 2).
 ```
 
 Outputs are create-only: an existing file is an error, never overwritten.

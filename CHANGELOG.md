@@ -9,6 +9,17 @@ Changes waiting for the next release are written as short notes in `changes/` (s
 `changes/README.md`) and assembled into a new section here by `scripts/release_notes.py`
 when a version is cut.
 
+## [0.1.2] - 2026-11-05
+
+Fixes for inactive scoring paths
+
+No miner action needed: sn87-miner behaviour is unchanged from 0.1.1.
+
+### Fixed
+
+- `scripts/admission_plan.py propose --stage weighted` now takes `--gate-input PATH`, a JSON file with `class_id`, `estimates`, `roles` and `method_id`. Before, the command could not supply the gate input that the weighted stage requires. See `docs/protocol/admission.md`.
+- A malformed reply (an empty object, a list, a missing findings list, or a finding without a code) no longer stops a whole evaluation or window scoring under `IC-FIRST-LIGHT-MIN-4`. It scores zero, has no answer key, and joins no redundancy group or flag.
+
 ## [0.1.1] - 2026-11-05
 
 Contest protocol 0.2 and shadow cohort tooling

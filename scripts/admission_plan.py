@@ -906,6 +906,9 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--criteria", type=Path)
     p.add_argument("--results", type=Path, help="window results, for --stage weighted")
     p.add_argument("--now-window", type=int)
+    p.add_argument("--gate-input", type=Path,
+                   help="for --stage weighted: JSON with exactly the keys class_id, estimates, "
+                        "roles and method_id (the weight-gate input for the candidate)")
     p.add_argument("--out", type=Path, required=True)
     args = parser.parse_args(argv)
     try:
@@ -951,7 +954,8 @@ def main(argv: list[str] | None = None) -> int:
             parent, uid=args.uid, stage=args.stage, hotkey=args.hotkey, endpoint_check=endpoint,
             criteria=_read_json(args.criteria) if args.criteria else None,
             results=_load_results(args.results) if args.results else None,
-            now_window=args.now_window, netuid=args.netuid)
+            now_window=args.now_window, netuid=args.netuid,
+            gate_input=_read_json(args.gate_input) if args.gate_input else None)
         out = args.out / f"PLAN_VERSION_{version['plan_version']}_uid{args.uid}_{args.stage}.json"
         _write_new(out, version)
         print(out)

@@ -16,5 +16,5 @@ change a recorded row, replay or signature handling in the signed transport, evi
 boundary escapes, and secrets committed by mistake. Out of scope: findings that need access to
 private custody, wallets or operator hosts, which this repository does not contain.
 
-Supported versions: only the current release (`0.1.1`, alpha protocol); it
+Supported versions: only the current release (`0.1.2`, alpha protocol); it
 receives no security backports. No version is supported for mainnet or consequential use.

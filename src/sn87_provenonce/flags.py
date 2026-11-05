@@ -91,7 +91,8 @@ def observation_flags(
                 )
             ]
             same = [
-                answer_key(oa[c]["response"]) == answer_key(ob[c]["response"])
+                (key := answer_key(oa[c]["response"])) is not None
+                and key == answer_key(ob[c]["response"])
                 for c in both
                 if c in separating
             ]

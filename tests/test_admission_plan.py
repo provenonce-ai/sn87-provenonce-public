@@ -543,6 +543,58 @@ def test_cli_criteria_check_and_propose(tmp_path, capsys):
                     "--out", str(out)]) == 2
 
 
+def _weighted_cli(tmp_path):
+    """Files and arguments for a CLI weighted proposal, without the gate input."""
+    crit_path = tmp_path / "criteria.json"
+    assert ap.main(["criteria", "--criteria-id", "cli-w", "--windows", "3",
+                    "--min-valid-responses", "12", "--allow-unverified-signature",
+                    "--out", str(crit_path)]) == 0
+    crit = json.loads(crit_path.read_text())
+    parent_path = tmp_path / "PLAN.json"
+    parent_path.write_text(json.dumps(pinned_shadow(crit)))
+    record_path = tmp_path / "record.json"
+    record_path.write_text(json.dumps(record()))
+    results = tmp_path / "results"
+    results.mkdir()
+    for w in (1, 2, 3):
+        (results / f"w{w}.json").write_text(json.dumps(result(w)))
+    return ["propose", "--parent", str(parent_path), "--uid", "3", "--stage", "weighted",
+            "--hotkey", HOTKEY, "--endpoint-record", str(record_path), "--now-ms", str(NOW),
+            "--criteria", str(crit_path), "--results", str(results), "--now-window", "3"]
+
+
+def test_cli_weighted_proposal_takes_a_gate_input_file(tmp_path, capsys):
+    base = _weighted_cli(tmp_path)
+    gate_path = tmp_path / "gate.json"
+    gate_path.write_text(json.dumps(GATE_PASSES))
+    out = tmp_path / "out"
+    assert ap.main([*base, "--gate-input", str(gate_path), "--out", str(out)]) == 0
+    written = json.loads(next(out.glob("PLAN_VERSION_*")).read_text())
+    entry = written["plan"]["admission"]["uids"]["3"]
+    assert entry["stage"] == "weighted" and entry["gate"]["verdict"]
+    assert written["approval"]["reference"] == ""
+    capsys.readouterr()
+    # without the file the weighted stage refuses, as the function does
+    assert ap.main([*base, "--out", str(tmp_path / "out2")]) == 2
+    assert "GATE_INPUT_REQUIRED" in capsys.readouterr().err
+
+
+def test_cli_gate_input_refusals(tmp_path, capsys):
+    base = _weighted_cli(tmp_path)
+    missing = ap.main([*base, "--gate-input", str(tmp_path / "nope.json"),
+                       "--out", str(tmp_path / "o1")])
+    assert missing == 2 and "REFUSED" in capsys.readouterr().err
+    not_json = tmp_path / "bad.json"
+    not_json.write_text("{not json")
+    assert ap.main([*base, "--gate-input", str(not_json), "--out", str(tmp_path / "o2")]) == 2
+    assert "REFUSED" in capsys.readouterr().err
+    wrong_keys = tmp_path / "keys.json"
+    wrong_keys.write_text(json.dumps({k: v for k, v in GATE_PASSES.items() if k != "roles"}))
+    assert ap.main([*base, "--gate-input", str(wrong_keys), "--out", str(tmp_path / "o3")]) == 2
+    assert "GATE_INPUT_REQUIRED" in capsys.readouterr().err
+    assert not (tmp_path / "o1").exists() and not (tmp_path / "o3").exists()
+
+
 def test_module_is_standard_library_only():
     import ast
     tree = ast.parse((ROOT / "scripts/admission_plan.py").read_text())

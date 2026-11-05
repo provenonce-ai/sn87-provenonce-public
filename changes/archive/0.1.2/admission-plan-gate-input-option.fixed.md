@@ -1,0 +1,1 @@
+`scripts/admission_plan.py propose --stage weighted` now takes `--gate-input PATH`, a JSON file with `class_id`, `estimates`, `roles` and `method_id`. Before, the command could not supply the gate input that the weighted stage requires. See `docs/protocol/admission.md`.

@@ -103,7 +103,7 @@ SN87 is live on Bittensor testnet 582. The validator's first recorded set-weight
 
 | Area | State | Label |
 |---|---|---|
-| Network | Public testnet netuid 582, alpha protocol `0.1.1`. No mainnet, production or adoption claim | **In use** |
+| Network | Public testnet netuid 582, alpha protocol `0.1.2`. No mainnet, production or adoption claim | **In use** |
 | Weighted uids | Uids 1 and 2 only, both operated by Provenonce, in plain weight mode. Rows are conformance evidence | **In use** |
 | Profile in use | `IC-FIRST-LIGHT-MIN-1` for the approval class. `GRA-W03-3` is the committed profile of the release class | **In use** |
 | Shadow cohort | As the operator runs it, a uid on the allowlist is queried each window, scored and published with weight 0. The service is the operator's and is not in this repository. The allowlist here has no entries | **Open for application, allowlist empty** |
