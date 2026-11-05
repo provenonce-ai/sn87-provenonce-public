@@ -21,11 +21,21 @@ def answer_key(response: Mapping[str, Any] | None) -> tuple[Any, ...] | None:
     Citations, declared severity, confidence, rationale, method name, commitments and order are
     left out. They cost little or nothing to vary, so keying on them would let an identity
     escape its group by varying only those (ADR-0022). A missing response
-    has no key.
+    has no key, and neither has a reply that is not shaped like an answer (not a mapping, no
+    string ``state``, ``findings`` not a list, or a finding without a string ``code``): the
+    scorer gives such a reply zero, so it must never group with anyone.
     """
-    if response is None:
+    if not isinstance(response, Mapping):
         return None
-    return (response["state"], tuple(sorted({f["code"] for f in response["findings"]})))
+    state, findings = response.get("state"), response.get("findings")
+    if not isinstance(state, str) or not isinstance(findings, list):
+        return None
+    codes = set()
+    for finding in findings:
+        if not isinstance(finding, Mapping) or not isinstance(finding.get("code"), str):
+            return None
+        codes.add(finding["code"])
+    return (state, tuple(sorted(codes)))
 
 
 def redundancy_groups(
@@ -39,7 +49,11 @@ def redundancy_groups(
     """
     buckets: dict[tuple[Any, ...], list[str]] = {}
     for identity, by_case in answers.items():
-        keys = tuple(sorted((case, answer_key(r)) for case, r in by_case.items() if r is not None))
+        keys = tuple(
+            sorted(
+                (case, key) for case, r in by_case.items() if (key := answer_key(r)) is not None
+            )
+        )
         if keys:
             buckets.setdefault(keys, []).append(identity)
     return sorted(sorted(members) for members in buckets.values() if len(members) > 1)

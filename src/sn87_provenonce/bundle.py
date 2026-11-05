@@ -487,7 +487,9 @@ def evaluate(
                 case_records[index]["methods"][method] = _case_record(record, seen["response"])
             method_costs.append(seen["cost"])
             if case["track"] == "scored" and method != BASELINE:
-                answers.setdefault(method, {})[case["qid"]] = seen["response"]
+                # A reply the contract rejects scores zero and never groups (ADR-0022).
+                answers.setdefault(method, {})[case["qid"]] = (
+                    None if "schema" in record["failures"] else seen["response"])
             if case["track"] == "scored":
                 scored.append(record)
             else:

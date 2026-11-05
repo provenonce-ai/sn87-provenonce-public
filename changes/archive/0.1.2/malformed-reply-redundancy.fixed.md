@@ -1,0 +1,1 @@
+A malformed reply (an empty object, a list, a missing findings list, or a finding without a code) no longer stops a whole evaluation or window scoring under `IC-FIRST-LIGHT-MIN-4`. It scores zero, has no answer key, and joins no redundancy group or flag.
