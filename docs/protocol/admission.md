@@ -119,6 +119,8 @@ itself. A signature verifier is passed in by the caller; without one the signatu
 | `require_endpoint_announcement_valid` | The endpoint record must pass the checks |
 | `require_signature_verified` | The record's signature must have been verified |
 | `results_must_be_shadow_with_weight_zero` | Always on: a result that is not `shadow` with weight 0 fails |
+| `allowed_profile_ids` | The profile ids a window result may have been scored under (default `IC-FIRST-LIGHT-MIN-1`); every checked window must name one of them |
+| `require_score_beats_public_baseline` | Always on: in each of the N windows the uid's estimate must be strictly above the public baseline's estimate on the same scored instances under the window's profile. A tie is not uplift, and a zero score cannot pass. |
 
 The checker (`python scripts/admission_plan.py check`) prints `PASS` or `FAIL` with one reason per
 problem and exits 0 only on `PASS`. The checker needs the current window index (`--now-window`) and
@@ -130,7 +132,11 @@ that fails is a reason, never an error. Reason codes: `CRITERIA_DIGEST_OR_RULES_
 `ENDPOINT_RECORD_MISSING`, `ENDPOINT_*` (one per failed endpoint check), `ENDPOINT_SIGNATURE_NOT_VERIFIED`,
 `RESULT_SCHEMA_INVALID`, `RESULT_WINDOW_INVALID`, `RESULT_DIGEST_INVALID`, `RESULT_HOTKEY_MISMATCH`,
 `RESULT_NOT_SHADOW_WEIGHT_ZERO`, `DUPLICATE_WINDOW`, `INSUFFICIENT_WINDOWS`, `MISSING_WINDOW`,
-`INTEGRITY_FAILURE`, `TOO_FEW_VALID_RESPONSES`. An older failure outside the latest N windows does
+`INTEGRITY_FAILURE`, `TOO_FEW_VALID_RESPONSES`, and for the baseline rule `SCORE_NOT_AVAILABLE`,
+`BASELINE_ESTIMATE_MISSING`, `BASELINE_INSTANCES_DIFFER`, `SCORE_TIES_BASELINE`,
+`SCORE_BELOW_BASELINE`, `BASELINE_NOT_FULLY_EVALUATED`, and `RESULT_PROFILE_NOT_ALLOWED`. A window result carries `baseline_estimate`, `baseline_admitted` and `baseline_evaluable`
+(the public baseline scored on the same scored instances; it must have scored all of them); a result without them fails the rule
+instead of passing it. Estimates are compared exactly as decimals. An older failure outside the latest N windows does
 not count; a gap inside them does. The report has its own digest and is evidence for the approval
 record; a `weighted` proposal recomputes it instead of trusting it.
 
@@ -140,6 +146,46 @@ earlier records is not checked). Only a signed announcement can pass; a minimal 
 reports `ENDPOINT_SIGNATURE_INVALID`. `--signature-verifier MODULE:FUNCTION` replaces it with a
 callable that gets the record and returns True only if the signature verifies. Results must also
 carry the evaluated `--netuid`. Criteria created with `--allow-unverified-signature` skip the signature check, as an explicit choice.
+
+## Trust boundary of the window result
+
+A window result is a record produced by the validator that queried the uid: its counts, estimate
+and baseline figures are the validator's claims, bound to each other by the record digest. The
+digest detects accidental edits and inconsistent records; it is not a signature, and the checker
+cannot tell a validator-produced record from one written by someone else with a correct digest.
+What makes the check meaningful is the published record set a reader can compare with the
+validator's other publications (commitments, capsules, responses; see the shadow cohort guide),
+and the maintainers' approval record, which cites the criteria digest and the report. No signing
+facility for result records exists in this repository today; adding one is an open decision.
+
+## Records for any scored profile
+
+`window_result_from_scores` builds a window result from a window results document
+(`contest_results.score_window`, truth-derived): the uid's estimate, the counts of scored
+instances and the baseline's estimate on the same instances all come from the document, and the
+record names the document's profile. The service publishes such records for each profile named in
+its `report_profiles` under `data/WINDOW/report-PROFILE/uid-N.json`, apart from the active
+profile's `uid-N.json` so that a directory of results never holds two records for one uid and
+window. Criteria still decide which profiles count (`allowed_profile_ids`).
+
+## Decision groups are reported, not acted on
+
+`evaluate_criteria` takes an optional `decision_groups`, the `redundancy_groups` of a window scored
+under a rules-4 profile (identities that gave the same state and finding codes on every scored
+case). A candidate in a group gets the flag `SHARES_DECISION_GROUP_WITH` in the report's `flags`,
+listing the other members (uids and the public methods alike). The flag never changes the verdict:
+no rule excludes, halves or delays a candidate for sharing a group. Whether one should is a policy
+decision (see below).
+
+## The gate verdict is a plan input
+
+A `weighted` proposal needs `gate_input` (the window's estimates for every method, each method's
+role, the class and the candidate). The verdict is recomputed with the baseline-headroom gate and
+the proposal is refused (`GATE_REFUSES`, fail closed) unless the family is weight-eligible and the
+candidate is above every public method; the verdict is recorded in the entry, and a `weighted`
+entry without an eligible verdict does not verify. This is a plan-time check on a `PROPOSED`
+version. The gate is wired into no weight write: `compose_row` and the paths that build or send a
+row do not call it.
 
 ## Commands
 
@@ -157,8 +203,27 @@ Outputs are create-only: an existing file is an error, never overwritten.
 
 ## Open decisions for the maintainers
 
+* Whether sharing a decision group (`SHARES_DECISION_GROUP_WITH`) should matter to admission:
+  no effect (today), a warning to the approver, a bar to being `weighted`, or a split of the
+  weight inside the group. The tool reports; it does not decide. Two independent miners who are
+  both right on every case are grouped too, so a rule keyed on the flag cannot tell agreement
+  from copying.
 * The values of the criteria (`N`, `M`, the integrity allowance) and whether a verified signature
   is required. The tool takes them as explicit arguments and marks them as proposals.
+* Known limit of the baseline rule: it is checked on each shadow window's own fresh scored
+  instances under the window's profile, not on the public fixtures. With the committed families
+  and the active profile (`IC-FIRST-LIGHT-MIN-1`) the matched baseline still scores the same as
+  the reference methods, on the profile mix and on the `messy` mix (checked on generated
+  windows), so no uid can pass until the scored mix or profile gives the baseline headroom. Under
+  the committed, not yet active `IC-FIRST-LIGHT-MIN-2` the references score above the baseline
+  and admission is reachable (checked by the maintainers' tests, which need the reference executors). The rule is not weakened
+  for this; the choice of profile and mix is a decision for the maintainers.
+* Which profiles `allowed_profile_ids` names. The proposal names only `IC-FIRST-LIGHT-MIN-1`, the
+  profile bound today, under which the baseline cannot be beaten (see above); naming
+  `IC-FIRST-LIGHT-MIN-2` is a separate maintainers' decision.
+* Whether the baseline comparison stays strict in every window, or a share of windows may tie. The
+  proposal is strict in all N windows. The criteria remain `PROPOSED_NEEDS_AUTHORITY_APPROVAL`;
+  the digest changed with the new rule, so any approval of the earlier digest does not apply.
 * The window cadence and the schedule of plan versions.
 * Which truth source the scoring of outside uids uses for non-public instances (decision D05 in
   the maintainers' records; see [second-validator-readiness.md](second-validator-readiness.md)).

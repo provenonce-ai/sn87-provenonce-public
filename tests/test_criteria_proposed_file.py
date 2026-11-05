@@ -42,3 +42,10 @@ def test_the_proposed_values_and_the_signature_requirement():
     assert rules["require_endpoint_announcement_valid"] is True
     assert rules["require_signature_verified"] is True
     assert rules["results_must_be_shadow_with_weight_zero"] is True
+
+
+def test_the_proposal_requires_beating_the_public_baseline_and_stays_proposed():
+    assert CRITERIA["rules"]["require_score_beats_public_baseline"] is True
+    assert CRITERIA["status"] == "PROPOSED_NEEDS_AUTHORITY_APPROVAL"
+    assert CRITERIA["rules"]["allowed_profile_ids"] == ["IC-FIRST-LIGHT-MIN-1"]
+    assert CRITERIA["criteria_id"] == "shadow-to-weighted-proposed-3"

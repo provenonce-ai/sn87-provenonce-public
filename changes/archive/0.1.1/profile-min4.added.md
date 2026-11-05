@@ -1,0 +1,1 @@
+Two new scoring profiles, IC-FIRST-LIGHT-MIN-4 and a new Type C profile (ADR-0022), keep every constant answer below the threshold by construction, score calibration over a fixed set of outcomes, score declared severity, charge for over-citing and make identical answers share one weight. They are committed and not active on any weight path.

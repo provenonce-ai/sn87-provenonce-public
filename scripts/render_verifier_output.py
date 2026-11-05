@@ -58,7 +58,7 @@ def lines_of(report: dict) -> tuple[list[str], list[str]]:
         if section == 1:
             if line.startswith("run "):
                 in_first = line.startswith(f"run {first} ")
-            elif in_first and line.split()[:1] in (["validator"], ["plan"]):
+            elif in_first and line.split()[:1] in (["validator"], ["weights"], ["plan"]):
                 offline.append(trim(line))
             elif line.startswith(OFFLINE_PREFIXES):
                 offline.append(line)
@@ -83,7 +83,8 @@ def render_block(report: dict) -> str:
 
 def offline_lines_in(block: str) -> list[str]:
     return [ln for ln in block.splitlines()
-            if ln.startswith(OFFLINE_PREFIXES) or ln.startswith(("  validator", "  plan"))]
+            if ln.startswith(OFFLINE_PREFIXES)
+            or ln.startswith(("  validator", "  weights", "  plan"))]
 
 
 def offline_report(doc: dict) -> dict:

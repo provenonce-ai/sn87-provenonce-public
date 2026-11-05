@@ -40,7 +40,7 @@ def test_new_profile_differs_from_min_2_only_in_window_sizing():
     assert changed == {"profile_id", "assignment", "diagnostics", "minimum_assignments",
                        "revision", "derived_from"}
     assert new["derived_from"] == MID
-    assert new["scoring_rules"] == mid["scoring_rules"]  # inherits the F8 rules unchanged
+    assert new["scoring_rules"] == mid["scoring_rules"]  # inherits the scoring rules unchanged
     p, q = profile.load(NEW), profile.load(MID)
     assert (p.state_payoff, p.wrong_scope, p.evidence_credit) == (
         q.state_payoff, q.wrong_scope, q.evidence_credit)
@@ -91,11 +91,14 @@ def test_it_is_active_nowhere_and_named_only_by_the_loader():
     named = sorted(p.relative_to(SRC).as_posix() for p in SRC.rglob("*")
                    if p.is_file() and "__pycache__" not in p.parts
                    and NEW in p.read_bytes().decode("utf-8", "ignore"))
-    assert named == ["profile.py", f"profiles/{NEW}.json"]
+    # IC-FIRST-LIGHT-MIN-4 (ADR-0022) names its parent in `derived_from`, so its document is the
+    # one other carrier.
+    assert named == ["profile.py", f"profiles/{NEW}.json", "profiles/IC-FIRST-LIGHT-MIN-4.json"]
     scripts = sorted(p.name for p in (ROOT / "scripts").glob("*.py")
                      if NEW in p.read_text("utf-8", "ignore"))
     # Shadow tooling may take it by id; nothing under src/ may bind it.
-    assert set(scripts) <= {"contest_dry_run.py", "contest_results.py", "window_sizing_table.py"}
+    assert set(scripts) <= {"contest_dry_run.py", "contest_results.py", "window_sizing_table.py",
+                       "min4_table.py", "contest_lifecycle_demo.py", "gen_repro_fixture.py"}
 
 
 def test_the_profile_scores_through_the_one_scorer():

@@ -58,6 +58,33 @@ The scorer selects behaviour from these fields, never from a profile name. A res
 such a profile adds a `payoff` key. A profile with a block is a new profile version with its own
 commitment; it is not a change to a committed profile.
 
+### Rules version 4
+
+A `scoring_rules` block that declares `"rules_version": "4"` is read by a separate parser
+(ADR-0022). `IC-FIRST-LIGHT-MIN-4` and `GRA-RELEASE-MIN-4` carry it, and so does `DAT-HEADROOM-MIN-4`, the
+inactive profile of a candidate family (ADR-0024). Besides the matrix, the
+wrong-scope rule and an evidence credit of `PRECISION_POWER_TIMES_RECALL` (precision to the power
+`precision_exponent`, times recall), it declares:
+
+- `calibration`: `BRIER_FIXED_OUTCOME_SET`, a Brier score over the class's committed defect
+  catalogue, so a miner cannot change the denominator by choosing which claims to make;
+- `severity_credit`: `ORDINAL_DISTANCE_ON_MATCHED`, declared severity scored on matched findings,
+  and a fourth weight (detection, evidence, severity, calibration, summing to 1);
+- `rationale`: `REQUIRED_NOT_SCORED_TYPE_D_DEFERRED`;
+- `pool`: the truth state of every assigned family, caps on the share of defect, clear and
+  abstain-truth cases, a constant margin and a strong margin. The loader computes the largest mean
+  score any constant answer can earn from the matrix and the shares and refuses the profile unless
+  it is at most theta minus the constant margin, unless a method right on every case is at least
+  theta plus the strong margin, and unless every cap holds;
+- `redundancy`: `IDENTICAL_ANSWERS_SHARE_ONE_WEIGHT`; `scoring.preference_row` then requires the
+  answers and computes the groups itself: identities with the same decision vector (state and
+  set of finding codes, per case) share one weight, and a disagreeing caller grouping is refused;
+- `flags`: parameters of the non-scoring flags (`flags.observation_flags`), `scored` fixed to
+  false.
+
+A profile without the key behaves exactly as before, and a version 4 block with a missing or extra
+key, an unsupported value or a broken promise is refused with `PROFILE_NOT_APPLIED`.
+
 ## Changing a profile
 
 A parameter change is a new profile version and a new commitment, never a configuration edit.

@@ -1,0 +1,1 @@
+A new candidate task family built for headroom is registered as inactive: delegated-authority traces whose truth is fixed when each instance is built, with a committed profile. It is bound to no class, weight path or default, and the weight gate refuses it. See ADR-0024. Its headroom result is negative (ADR-0024); only the profile document is published here.

@@ -86,12 +86,13 @@ and rewrites this block; `--check` recomputes the offline lines (no network):
 integrity  PASS  digest recomputes (sha256:57af3c99d683fd3c868bfe6cbcc3353451fab70f70c2a374c0eec11a9c552b7a)
 published truth: 75 cases in 2 files under protocol/golden_truth, digest sha256:5fadbfcc983f7b9fb8ff1d8595e8c5dc05ae910299d6549e5347bfe805f80353
   validator  PASS  validator pinned digest recomputes from published truth and the public scorer (seed 0, 2026-10-04T00:00:00Z; sha256:6a03fa60322 ...
+  weights    PASS  attested row equals the pinned weights (uids [1, 2], u16 weights [65535, 65535])
   plan       UNVERIFIED  UNVERIFIED: the plan document is built by Provenonce-private operator tooling from files that are not published
-reproduces offline: UNVERIFIED  (22 PASS / 0 FAIL / 21 UNVERIFIED of 43 checks: integrity + plan and validator for 21 runs)
+reproduces offline: UNVERIFIED  (43 PASS / 0 FAIL / 21 UNVERIFIED of 64 checks: integrity + plan, validator and weights for 21 runs)
 run r5-20261005-a  block 8152574  PASS  uid 0 set weights in exactly block 8152574 (LastUpdate 8102381 at block 8152573, 8152574 at block 8152574) ...
 chain corroboration: PASS  (21 PASS / 0 FAIL / 0 UNVERIFIED of 21 runs)
 OVERALL UNVERIFIED: 0/21 runs PASS, 0 FAIL, 21 UNVERIFIED
-SUMMARY integrity: PASS; chain: 21/21 PASS; scoring: validator 21/21 PASS; plan 0/21 PASS, 21 UNVERIFIED (the plan document is built by Provenonce-private operator tooling from files that are not published)
+SUMMARY integrity: PASS; chain: 21/21 PASS; scoring: validator 21/21 PASS; weights 21/21 PASS; plan 0/21 PASS, 21 UNVERIFIED (the plan document is built by Provenonce-private operator tooling from files that are not published)
 exit code 3 (0 = PASS, 1 = FAIL, 3 = UNVERIFIED)
 ```
 <!-- END VERIFIER_OUTPUT -->

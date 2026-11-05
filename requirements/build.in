@@ -1,0 +1,6 @@
+# Source of requirements/build.txt (the hash-pinned build environment). Regenerate with:
+#   uv pip compile requirements/build.in --generate-hashes --python-version 3.12 -o requirements/build.txt
+# Keep the hatchling pin equal to [build-system].requires in pyproject.toml (a test checks it).
+# editables is needed by hatchling's editable build (uv sync / uv run build the project editable).
+editables==0.6
+hatchling==1.33.0

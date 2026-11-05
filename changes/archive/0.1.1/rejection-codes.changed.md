@@ -1,0 +1,1 @@
+A rejected request is now recorded as `REMOTE_REJECTED_<status>`, and a 422 as `MINER_REJECTED_ENVELOPE`, so a miner that does not know a request field is distinguishable from one that refuses the sender. See the miner guide error table.

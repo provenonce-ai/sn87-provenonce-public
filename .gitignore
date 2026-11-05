@@ -10,3 +10,4 @@ build/
 /evidence/
 .env
 .DS_Store
+/results/

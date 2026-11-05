@@ -24,11 +24,29 @@ from .transport import (
 )
 
 
-def prepare_request(capsule: dict, signer: Any, receiver: str, *, timeout_ms: int = 10_000):
+class RemoteRejected(BoundaryError):
+    """A non-200 answer. The code is built from the integer status only (100 to 599), never from
+    text the miner sent."""
+
+    def __init__(self, status: int) -> None:
+        if type(status) is not int or not 100 <= status <= 599:
+            super().__init__("REMOTE_REJECTED")
+        else:
+            super().__init__(f"REMOTE_REJECTED_{status}")
+
+
+def prepare_request(capsule: dict, signer: Any, receiver: str, *, timeout_ms: int = 10_000,
+                    window_commitments: dict | None = None):
+    """``window_commitments`` (contest protocol 0.2) is the window's open record: the cases
+    commitment and the truth commitment published when the window opened. It is part of the signed
+    body, so the miner holds the caller's signature over the commitments the answer was asked
+    under."""
     if type(timeout_ms) is not int or not 1 <= timeout_ms <= 15_000:
         raise ValueError("invalid challenge timeout")
     envelope = {"schema_version": VERSION, "challenge_id": capsule["qid"],
                 "deadline_ms": time.time_ns() // 1_000_000 + timeout_ms, "capsule": capsule}
+    if window_commitments is not None:
+        envelope["window_commitments"] = window_commitments
     body = canonical_bytes(envelope)
     headers = http_auth.sign(signer, method="POST", path=PATH, body=body,
                              receiver_ss58=receiver)
@@ -41,7 +59,11 @@ def verify_response(
     request_headers: Any, receiver: str, expected_responder: str, store: SharedReplayStore,
 ) -> dict:
     if status_code != 200:
-        raise BoundaryError("REMOTE_REJECTED")
+        # 422 is the envelope check of a miner that does not know a field of this request
+        # (for example a miner built before window_commitments); other statuses name themselves
+        if status_code == 422:
+            raise BoundaryError("MINER_REJECTED_ENVELOPE")
+        raise RemoteRejected(status_code)
     if len(body) > 262_144:
         raise BoundaryError("RESPONSE_TOO_LARGE")
     if store.receiver != receiver or store.domain != "response":
@@ -79,6 +101,7 @@ async def exchange(
     *, endpoint: str, capsule: dict, signer: Any, receiver: str,
     store: SharedReplayStore, timeout_ms: int = 10_000,
     client: httpx.AsyncClient | None = None,
+    window_commitments: dict | None = None,
 ) -> dict:
     url = urlsplit(endpoint)
     if url.path not in {"", "/"} or url.query or url.fragment or url.username or url.password:
@@ -88,7 +111,8 @@ async def exchange(
     }):
         raise ValueError("remote exchange requires HTTPS")
     sender = resolve_signer(signer, role="hotkey").ss58_address
-    body, headers = prepare_request(capsule, signer, receiver, timeout_ms=timeout_ms)
+    body, headers = prepare_request(capsule, signer, receiver, timeout_ms=timeout_ms,
+                                    window_commitments=window_commitments)
     owned = client is None
     client = client or httpx.AsyncClient(follow_redirects=False, trust_env=False)
     try:

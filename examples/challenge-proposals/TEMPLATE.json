@@ -1,0 +1,49 @@
+{
+  "proposal_id": "REPLACE-WITH-A-SHORT-UNIQUE-ID",
+  "proposal_version": "0.1.0",
+  "schema_version": "sn87/challenge-proposal/0.1",
+  "status": "PROPOSED",
+  "challenge_family": "REPLACE-WITH-FAMILY-NAME",
+  "intended_consumer": "Who acts on the result, and what they do with it.",
+  "evidence_rights": {
+    "visibility": [
+      {"party": "miner", "may_see": ["capsule with public contract fields"]},
+      {"party": "validator", "may_see": ["capsule", "truth after window close"]}
+    ],
+    "raw_evidence_leaves_source": false,
+    "export_default": "DERIVED_ONLY",
+    "export_justification": null
+  },
+  "truth_source": {
+    "oracle_class": "A",
+    "description": "Where the truth comes from and when it is fixed.",
+    "claims_self_verifying": false,
+    "reliability": null,
+    "independent_reference_executions": null,
+    "reference_executor_private": null
+  },
+  "submission_format": "Name of the response model or schema the miner returns.",
+  "scoring": {
+    "reference": "PROPOSED_UNPINNED",
+    "commitment": null,
+    "description": "How a response would be scored, until a profile is pinned."
+  },
+  "baselines": [
+    {
+      "baseline_id": "REPLACE-WITH-BASELINE-ID",
+      "description": "A naive method that sees only the public contract.",
+      "sees_public_contract_only": true,
+      "status": "PROPOSED"
+    }
+  ],
+  "resource_budget": {
+    "compute_seconds": 1.0,
+    "wall_clock_seconds": 10.0,
+    "cost_credits": 0.0
+  },
+  "headroom": {
+    "statement": "Why a better method should beat the baseline, and on what evidence.",
+    "prior_nulls": []
+  },
+  "known_limitations": ["State at least one limitation."]
+}

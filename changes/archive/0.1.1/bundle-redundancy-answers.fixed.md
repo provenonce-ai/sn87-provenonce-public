@@ -1,0 +1,1 @@
+The evaluation bundle (`bundle.evaluate`) now passes each candidate's scored answers to the preference row, so a run under `IC-FIRST-LIGHT-MIN-4` or `GRA-RELEASE-MIN-4` no longer stops with `REDUNDANCY_ANSWERS_REQUIRED`; identities that answer alike share one weight, as ADR-0022 says.

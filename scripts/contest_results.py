@@ -39,7 +39,11 @@ from typing import Any
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import contest_window as cw  # noqa: E402
 
-from sn87_provenonce import bundle  # noqa: E402
+from sn87_provenonce import (
+    bundle,  # noqa: E402
+    flags,  # noqa: E402
+    redundancy,  # noqa: E402
+)
 from sn87_provenonce import profile as profiles
 from sn87_provenonce.baselines import METHOD_ID as BASELINE  # noqa: E402
 from sn87_provenonce.canonical import canonical_bytes  # noqa: E402
@@ -64,6 +68,17 @@ REPORTED_COSTS = ("wall_time", "cpu_time", "model_tokens", "oracle_time")
 
 def _mean(values: list[float]) -> float | str:
     return math.fsum(values) / len(values) if values else NA
+
+
+def _seconds(entry: dict[str, Any] | None, name: str) -> float | None:
+    """A query time in seconds from the entry's relative milliseconds (``dispatched_ms``,
+    ``replied_ms``), or the older ``dispatched_at`` / ``responded_at`` seconds; None if absent."""
+    entry = entry or {}
+    ms = entry.get(f"{name}_ms")
+    if type(ms) is int:
+        return ms / 1000
+    old = entry.get({"dispatched": "dispatched_at", "replied": "responded_at"}[name])
+    return float(old) if type(old) in (int, float) else None
 
 
 def _signature(response: dict[str, Any] | None):
@@ -126,6 +141,8 @@ def load_inputs(capsules_path: Path, truth_path: Path, responses_path: Path
             truth["cases_commitment"] != capsules["cases_commitment"]):
         raise ValueError("CASES_COMMITMENT_MISMATCH")
     cw.check_truth_document(truth)  # the salted commitment, recomputed from the truth file
+    if cw.version_of(capsules) == 2:  # protocol 0.2: the hash published at open is the hash
+        cw.check_truth_against_open(truth, capsules)
     return capsules, truth, responses
 
 
@@ -258,6 +275,15 @@ def score_window(capsules: dict[str, Any], truth: dict[str, Any], responses: dic
         "methods": out_methods,
         "disclosure": "TRUTH_DERIVED",
     }
+    if profile.fixed_outcome is not None:  # ADR-0022: shared weight groups and non-scoring flags
+        seen = {m["method_id"]: {
+            r["qid"]: {"response": ((m["responses"].get(r["qid"]) or {}).get("response")),
+                       "dispatched_at": _seconds(m["responses"].get(r["qid"]), "dispatched"),
+                       "responded_at": _seconds(m["responses"].get(r["qid"]), "replied")}
+            for r in admitted if r["track"] == "scored"} for m in methods}
+        document["redundancy_groups"] = redundancy.redundancy_groups(
+            {mid: {q: o["response"] for q, o in by.items()} for mid, by in seen.items()})
+        document["flags"] = flags.observation_flags(seen, profile.fixed_outcome["flags"])
     if case_detail:
         document["cases"] = [
             {"position": row["position"], "qid": row["qid"], "family": row["family"],

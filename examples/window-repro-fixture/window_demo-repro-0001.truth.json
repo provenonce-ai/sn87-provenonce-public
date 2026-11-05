@@ -1,0 +1,778 @@
+{
+  "cases": [
+    {
+      "capsule_commitment": "sha256:08040329775af4eb1a535675e9dda1a0f7f458903fa42aa49c391771f4930cec",
+      "family": "stale_authority",
+      "position": 0,
+      "qid": "8266b438dc96ebc705701a612bb3acc8",
+      "reference_failure": null,
+      "track": "scored",
+      "truth": {
+        "defects": [
+          {
+            "code": "STALE_APPROVAL",
+            "required_refs": [
+              "$completeness",
+              "0a542f2c3c4ad6e8350598b96d9159b9",
+              "49ea9166bdb01af798cce683b07879df",
+              "acc93ba4fce029134efccf1f5c1a226c",
+              "bdcefd37e5b8891e9204623a7ecc429a",
+              "dd8651f242dc5aa3d1062c56e28fecfd",
+              "e0edcdb8016363ae9042766877bbf958",
+              "e72304c342e16569693bbe92ded82332",
+              "f922f18113ac03fe1595eb0f516b0ced"
+            ],
+            "severity": "HIGH"
+          }
+        ],
+        "deterministic": true,
+        "rule_reliability": "0.95",
+        "state": "FINDINGS",
+        "warrant": "bounded synthetic Type C reconstruction; two algorithms under common Provenonce control; no policy-text interpretation"
+      },
+      "wrong_scope_variant": null
+    },
+    {
+      "capsule_commitment": "sha256:d786f967617616c9a5610e4315d55c3321014366b08ca47e9a72818a155fe50a",
+      "family": "stale_authority",
+      "position": 1,
+      "qid": "c41ec5e938ab91cbc1d2abcaabc3d238",
+      "reference_failure": null,
+      "track": "scored",
+      "truth": {
+        "defects": [
+          {
+            "code": "STALE_APPROVAL",
+            "required_refs": [
+              "$completeness",
+              "20be6d17e2adbdca73648f8bd250c2a0",
+              "20d679faf4ed03df137c2bf93b2bf9c1",
+              "3213bd32557cf5bdbe627a7d01c454d5",
+              "57f2a088bbeafc82f8bfd6ca3b9e3963",
+              "68116b70b238fcddbe5c99b66e993177",
+              "ade972efa52bf87d598047ee2920df3b",
+              "dee457613438dbf8a5c5049bc65b7081",
+              "e740293c33b3854f8247ebb196b86e8d"
+            ],
+            "severity": "HIGH"
+          }
+        ],
+        "deterministic": true,
+        "rule_reliability": "0.95",
+        "state": "FINDINGS",
+        "warrant": "bounded synthetic Type C reconstruction; two algorithms under common Provenonce control; no policy-text interpretation"
+      },
+      "wrong_scope_variant": null
+    },
+    {
+      "capsule_commitment": "sha256:1c9e80d16108cae25010de4efc3ac7f22fc3573f7eb558223144978abd2a7eff",
+      "family": "incomplete",
+      "position": 2,
+      "qid": "6642b0380f0baf585c98b7809beb59a3",
+      "reference_failure": null,
+      "track": "diagnostic",
+      "truth": {
+        "defects": [],
+        "deterministic": true,
+        "rule_reliability": "0.95",
+        "state": "INSUFFICIENT_EVIDENCE_ABSTAIN",
+        "warrant": "bounded synthetic Type C reconstruction; two algorithms under common Provenonce control; no policy-text interpretation"
+      },
+      "wrong_scope_variant": null
+    },
+    {
+      "capsule_commitment": "sha256:da6d07bbf936d5a8bf15bd562466870692c9c220531a6ebbab4a11be5a033085",
+      "family": "stale_authority",
+      "position": 3,
+      "qid": "987bea43971b97cd960635a31991ff24",
+      "reference_failure": null,
+      "track": "scored",
+      "truth": {
+        "defects": [
+          {
+            "code": "STALE_APPROVAL",
+            "required_refs": [
+              "$completeness",
+              "1736485fd9dc34918bd61e22f644c21d",
+              "1fb1822702937dc03f1349490d150d8f",
+              "68d775e4c181c23499fa0d63596009cf",
+              "819da9ded374acfde5326bf91c489970",
+              "95396112c2c8df48b2f56a37a26794e6",
+              "acbdf38734850741ac590a51d4398f41",
+              "b89aa9a912244b03861fbd77760a9881",
+              "c21aa0fe03cca5e710f1b7ac0fa927c9"
+            ],
+            "severity": "HIGH"
+          }
+        ],
+        "deterministic": true,
+        "rule_reliability": "0.95",
+        "state": "FINDINGS",
+        "warrant": "bounded synthetic Type C reconstruction; two algorithms under common Provenonce control; no policy-text interpretation"
+      },
+      "wrong_scope_variant": null
+    },
+    {
+      "capsule_commitment": "sha256:16766e796348476b0ce50ae10360f0d6f1307f82894016a34cee337a1dd62385",
+      "family": "incomplete",
+      "position": 4,
+      "qid": "b796d982fb1acfc05c952a7d7f254126",
+      "reference_failure": null,
+      "track": "diagnostic",
+      "truth": {
+        "defects": [],
+        "deterministic": true,
+        "rule_reliability": "0.95",
+        "state": "INSUFFICIENT_EVIDENCE_ABSTAIN",
+        "warrant": "bounded synthetic Type C reconstruction; two algorithms under common Provenonce control; no policy-text interpretation"
+      },
+      "wrong_scope_variant": null
+    },
+    {
+      "capsule_commitment": "sha256:c0badea0eac2947c0ca21d922a482bd1e26d38c211adb0d34cf7dbdf43163e07",
+      "family": "stale_authority",
+      "position": 5,
+      "qid": "01b2ee12139901989ba8682a3cc9ee0c",
+      "reference_failure": null,
+      "track": "scored",
+      "truth": {
+        "defects": [
+          {
+            "code": "STALE_APPROVAL",
+            "required_refs": [
+              "$completeness",
+              "036c9249d53c7a809402d7592b9fe401",
+              "18146730dc0c63f87e28f042724d25cd",
+              "6b149f3f702c014b75d898e6d9b90e15",
+              "6c635b1953b40625716a47c78398154a",
+              "7a3650d21714a599afca1beb2ae7dade",
+              "84088228e82d9e34fc8a103413909de0",
+              "95abf58e33a0247b54de1a0b95cdbe30",
+              "cc9aecda1151898a04256b842425bada"
+            ],
+            "severity": "HIGH"
+          }
+        ],
+        "deterministic": true,
+        "rule_reliability": "0.95",
+        "state": "FINDINGS",
+        "warrant": "bounded synthetic Type C reconstruction; two algorithms under common Provenonce control; no policy-text interpretation"
+      },
+      "wrong_scope_variant": null
+    },
+    {
+      "capsule_commitment": "sha256:ac4178dd0214f1f2fb7592b3c3695ab60267562afcca9f228a5fac104bf0f869",
+      "family": "incomplete",
+      "position": 6,
+      "qid": "cc6a9f847824318b64788f1833573818",
+      "reference_failure": null,
+      "track": "diagnostic",
+      "truth": {
+        "defects": [],
+        "deterministic": true,
+        "rule_reliability": "0.95",
+        "state": "INSUFFICIENT_EVIDENCE_ABSTAIN",
+        "warrant": "bounded synthetic Type C reconstruction; two algorithms under common Provenonce control; no policy-text interpretation"
+      },
+      "wrong_scope_variant": null
+    },
+    {
+      "capsule_commitment": "sha256:bfdd5b7da1319b12f19fbc47ecbd29d0695313dfdba1b7e7b402996fd7a203b4",
+      "family": "stale_authority",
+      "position": 7,
+      "qid": "8d1711539e2e2f34e9fdf84e98cbed72",
+      "reference_failure": null,
+      "track": "scored",
+      "truth": {
+        "defects": [
+          {
+            "code": "STALE_APPROVAL",
+            "required_refs": [
+              "$completeness",
+              "0d53f0019815fbb2210ccab3d94c1844",
+              "87fb2852da488e6e98bbae05876e62f8",
+              "c5c70cffa687a03830111f9be5f010bb",
+              "c74aac60f964f2869b6a64de4d0aedf8",
+              "c783e8290e563b881867e8dc9d51f523",
+              "eb0c6752228d1bdaae9b7786951a6fe3",
+              "f48038151dfd8a4c9c846c7779ff10c8",
+              "fa4cc2db0aa828fda9913a72afdd59b0"
+            ],
+            "severity": "HIGH"
+          }
+        ],
+        "deterministic": true,
+        "rule_reliability": "0.95",
+        "state": "FINDINGS",
+        "warrant": "bounded synthetic Type C reconstruction; two algorithms under common Provenonce control; no policy-text interpretation"
+      },
+      "wrong_scope_variant": null
+    },
+    {
+      "capsule_commitment": "sha256:1bf090047b6ccca5d88f110e872bc836dbe6268f7ee5e1219b32e0c9dbff3ae7",
+      "family": "stale_authority",
+      "position": 8,
+      "qid": "97b9370e30372d21f4c97b8d0cc7bc09",
+      "reference_failure": null,
+      "track": "scored",
+      "truth": {
+        "defects": [
+          {
+            "code": "STALE_APPROVAL",
+            "required_refs": [
+              "$completeness",
+              "29dbce63af26aae0b845cad2f745ffed",
+              "340310742e194bfc425ccaf53757deaa",
+              "3ef5a81853e5cf29457fd9fd43a57932",
+              "6045d019eae52b9df8183d1cea7cd5b2",
+              "7417c37ab26caa63ca3e8e3178174415",
+              "93c5d30dbfcfaceb92f647d80ba62c03",
+              "d1e8cfaa1588ef82472593f1084309ea",
+              "e49c4e86ed3c36f7355bb5b92e2b1646"
+            ],
+            "severity": "HIGH"
+          }
+        ],
+        "deterministic": true,
+        "rule_reliability": "0.95",
+        "state": "FINDINGS",
+        "warrant": "bounded synthetic Type C reconstruction; two algorithms under common Provenonce control; no policy-text interpretation"
+      },
+      "wrong_scope_variant": null
+    },
+    {
+      "capsule_commitment": "sha256:d3a473c37590b059d590454faa51c2a792b1c1ccbe09b18a051ad3fd7e2db1d6",
+      "family": "stale_authority",
+      "position": 9,
+      "qid": "49a2416367cc4601808eb8877e3ff629",
+      "reference_failure": null,
+      "track": "scored",
+      "truth": {
+        "defects": [
+          {
+            "code": "STALE_APPROVAL",
+            "required_refs": [
+              "$completeness",
+              "1bb8557198255ccc29e346f2f71bfd37",
+              "2c3121d5fdf03fd1a496e4ca134c5dc8",
+              "38c90f3b05ca2139b23d8bd29ecd0e35",
+              "5c447e943a43ce29cb83cd974777385d",
+              "6a32a05f7071eceedc5ac5547823fa9f",
+              "a9e3dfc2542f86674c3e5f7bf563d731",
+              "bdecf0e3ed3fe17f112720c619d8f29a",
+              "c8697b1be9ebc6081f52e3d2b3ab9ae2"
+            ],
+            "severity": "HIGH"
+          }
+        ],
+        "deterministic": true,
+        "rule_reliability": "0.95",
+        "state": "FINDINGS",
+        "warrant": "bounded synthetic Type C reconstruction; two algorithms under common Provenonce control; no policy-text interpretation"
+      },
+      "wrong_scope_variant": null
+    },
+    {
+      "capsule_commitment": "sha256:32bf75282d087f6cac69abb27b4e6336587f77c59fc9a739185ac6b1ec6c3c90",
+      "family": "fresh_review",
+      "position": 10,
+      "qid": "edfc6201d906f8ad6462306a6560d229",
+      "reference_failure": null,
+      "track": "scored",
+      "truth": {
+        "defects": [],
+        "deterministic": true,
+        "rule_reliability": "0.95",
+        "state": "NO_MATERIAL_DEVIATION",
+        "warrant": "bounded synthetic Type C reconstruction; two algorithms under common Provenonce control; no policy-text interpretation"
+      },
+      "wrong_scope_variant": null
+    },
+    {
+      "capsule_commitment": "sha256:c921c36353cb22468225b6e9486f76ccc0b6d394c57e74e9cd6060c9621c9c5f",
+      "family": "stale_authority",
+      "position": 11,
+      "qid": "78dfd8343a6b3b060e042f0e1803e9d5",
+      "reference_failure": null,
+      "track": "scored",
+      "truth": {
+        "defects": [
+          {
+            "code": "STALE_APPROVAL",
+            "required_refs": [
+              "$completeness",
+              "063eec107541a65486cd5927d8389d7a",
+              "2d979555bf5ea6799a60ce0f8d52748d",
+              "439932f56f8a0dd04a148beffa3698ef",
+              "683169cd5dceaf536bdd801620b080a9",
+              "856e372d2905bb7b098da54b1820258b",
+              "9d0da52e3763f13d5feb7b75406784c4",
+              "b3073f7aa7f15d02e75a78bdd0bfc8e3",
+              "dabe4b68387bd2c9af87b711a965e8b6"
+            ],
+            "severity": "HIGH"
+          }
+        ],
+        "deterministic": true,
+        "rule_reliability": "0.95",
+        "state": "FINDINGS",
+        "warrant": "bounded synthetic Type C reconstruction; two algorithms under common Provenonce control; no policy-text interpretation"
+      },
+      "wrong_scope_variant": null
+    },
+    {
+      "capsule_commitment": "sha256:585587d83a8f9f37e12d0abe6f61e8757fd9a3945828484c9c4ad3dfe3b4ea3a",
+      "family": "fresh_review",
+      "position": 12,
+      "qid": "d791f913d9b6fcd4f06df3d939c65d9b",
+      "reference_failure": null,
+      "track": "scored",
+      "truth": {
+        "defects": [],
+        "deterministic": true,
+        "rule_reliability": "0.95",
+        "state": "NO_MATERIAL_DEVIATION",
+        "warrant": "bounded synthetic Type C reconstruction; two algorithms under common Provenonce control; no policy-text interpretation"
+      },
+      "wrong_scope_variant": null
+    },
+    {
+      "capsule_commitment": "sha256:118325485687762c6062107d3e3814018e362074b02424c80986d6b2e7f4dbd8",
+      "family": "stale_authority",
+      "position": 13,
+      "qid": "070e43bb8bbf9638ae5bf40a23a1d25a",
+      "reference_failure": null,
+      "track": "scored",
+      "truth": {
+        "defects": [
+          {
+            "code": "STALE_APPROVAL",
+            "required_refs": [
+              "$completeness",
+              "0fcbc04696ed2fc43a6e35227b9fd0fa",
+              "1e34172cfc56172210edad0f98247a26",
+              "1ea007aa723979b304d930594783a2fe",
+              "5d1f10bbb293ff361a49293ef04f89e8",
+              "afe4b487a5630eb42ce24f1faf9020d1",
+              "b68624ee8f7e3be0d20c0e94b1bde4bb",
+              "bd60dcd54f7af0f1b0a2813e65290213",
+              "da6aa86b8d559493969ab9d075c3067e"
+            ],
+            "severity": "HIGH"
+          }
+        ],
+        "deterministic": true,
+        "rule_reliability": "0.95",
+        "state": "FINDINGS",
+        "warrant": "bounded synthetic Type C reconstruction; two algorithms under common Provenonce control; no policy-text interpretation"
+      },
+      "wrong_scope_variant": null
+    },
+    {
+      "capsule_commitment": "sha256:987004fb519c189e18a1e0c1a5d2c3f63c6cffd01eee8e212bf4c438d6bd5b53",
+      "family": "incomplete",
+      "position": 14,
+      "qid": "b31ad7758c042070de2cbce92aaba604",
+      "reference_failure": null,
+      "track": "diagnostic",
+      "truth": {
+        "defects": [],
+        "deterministic": true,
+        "rule_reliability": "0.95",
+        "state": "INSUFFICIENT_EVIDENCE_ABSTAIN",
+        "warrant": "bounded synthetic Type C reconstruction; two algorithms under common Provenonce control; no policy-text interpretation"
+      },
+      "wrong_scope_variant": null
+    },
+    {
+      "capsule_commitment": "sha256:cc12168121fc95d1ea646d25344e9b75efed7eef224ae578acebb1a3ebe4733c",
+      "family": "fresh_review",
+      "position": 15,
+      "qid": "8fb3520782d6de6b862bb1b413b0868f",
+      "reference_failure": null,
+      "track": "scored",
+      "truth": {
+        "defects": [],
+        "deterministic": true,
+        "rule_reliability": "0.95",
+        "state": "NO_MATERIAL_DEVIATION",
+        "warrant": "bounded synthetic Type C reconstruction; two algorithms under common Provenonce control; no policy-text interpretation"
+      },
+      "wrong_scope_variant": null
+    },
+    {
+      "capsule_commitment": "sha256:7b30dd86c6ea1d006263919f7381fae6fc3c61d1314a6514e7e5f314622fbae5",
+      "family": "stale_authority",
+      "position": 16,
+      "qid": "1968feef73ee07c3c4697e7cf40da090",
+      "reference_failure": null,
+      "track": "scored",
+      "truth": {
+        "defects": [
+          {
+            "code": "STALE_APPROVAL",
+            "required_refs": [
+              "$completeness",
+              "34d3011d7639fb3cae1d6165e7aeeaf3",
+              "489fb134614d50603af0561d82f22add",
+              "6c84f7326bdfa97e6253d2f0eb7e4827",
+              "8c76af86a666bed3df97011f6b3282a3",
+              "a7db9db737ee0b2c66334d2843ec17ed",
+              "d0f99f7ce31ffe2a1eaedef591bcde05",
+              "d895c00812fd38f68e36229f5488fd0b",
+              "ef75de965c3cf97e86a94b973a5aab8d"
+            ],
+            "severity": "HIGH"
+          }
+        ],
+        "deterministic": true,
+        "rule_reliability": "0.95",
+        "state": "FINDINGS",
+        "warrant": "bounded synthetic Type C reconstruction; two algorithms under common Provenonce control; no policy-text interpretation"
+      },
+      "wrong_scope_variant": null
+    },
+    {
+      "capsule_commitment": "sha256:a9828378c91c104283f1b6c5a0e6ca4dfa06ada7d5f129f6c92fc2459e57a803",
+      "family": "stale_authority",
+      "position": 17,
+      "qid": "14b7913b4318b5d5436219f1d6125380",
+      "reference_failure": null,
+      "track": "scored",
+      "truth": {
+        "defects": [
+          {
+            "code": "STALE_APPROVAL",
+            "required_refs": [
+              "$completeness",
+              "2d20bd71c2692dd2da6bc54796fa7f18",
+              "2eb6b7b3c8b3f992a46af48bb7203a19",
+              "374abb3d8ce9def0a7ec060d9ffcc3ff",
+              "53f5835e60716eb1ec4b90beac33b68f",
+              "86029db5f48c01415723a06aa6aef023",
+              "92b0955e1c82ef7a76cd383a895081c4",
+              "bf8b62a90deec45ebc225c2ce687617a",
+              "e0194c26771720fce9a8c98feb6f4221"
+            ],
+            "severity": "HIGH"
+          }
+        ],
+        "deterministic": true,
+        "rule_reliability": "0.95",
+        "state": "FINDINGS",
+        "warrant": "bounded synthetic Type C reconstruction; two algorithms under common Provenonce control; no policy-text interpretation"
+      },
+      "wrong_scope_variant": null
+    },
+    {
+      "capsule_commitment": "sha256:07d11867484872b882a025a7d85abde5b8b24a57f5cfc55165a8cb169211af68",
+      "family": "stale_authority",
+      "position": 18,
+      "qid": "e630ecbf1acb6fdcd1721db950d56033",
+      "reference_failure": null,
+      "track": "scored",
+      "truth": {
+        "defects": [
+          {
+            "code": "STALE_APPROVAL",
+            "required_refs": [
+              "$completeness",
+              "4a83f79a854d15552bc4c5b618d6d204",
+              "4fd67f31d5215066bb978df989c3bbe0",
+              "622d9cab7c7b7d9c8bab205839659f87",
+              "667002ac07760779594a5fa29b6ca9c9",
+              "d94670407ea6daf06ada6f1186740569",
+              "f8c7ead7b6c2b7d107508435c7ab734c",
+              "f8e9ec8ac552d19c9ced4e5994103e33",
+              "fb493542033061f29b4b7efd7600ab6e"
+            ],
+            "severity": "HIGH"
+          }
+        ],
+        "deterministic": true,
+        "rule_reliability": "0.95",
+        "state": "FINDINGS",
+        "warrant": "bounded synthetic Type C reconstruction; two algorithms under common Provenonce control; no policy-text interpretation"
+      },
+      "wrong_scope_variant": null
+    },
+    {
+      "capsule_commitment": "sha256:844c50649a73e704465db047b62bd6b36673ea42d77a7ae81c6d4d9c6d9fe66b",
+      "family": "fresh_review",
+      "position": 19,
+      "qid": "7123d7d02fe62b616a99942fca062d8c",
+      "reference_failure": null,
+      "track": "scored",
+      "truth": {
+        "defects": [],
+        "deterministic": true,
+        "rule_reliability": "0.95",
+        "state": "NO_MATERIAL_DEVIATION",
+        "warrant": "bounded synthetic Type C reconstruction; two algorithms under common Provenonce control; no policy-text interpretation"
+      },
+      "wrong_scope_variant": null
+    },
+    {
+      "capsule_commitment": "sha256:42ed857a7dc3ea594ac98928c147fedcd96061f42eadeb0bb73a3ef53f40259e",
+      "family": "stale_authority",
+      "position": 20,
+      "qid": "d8762ea4777ac1c05520ce838c2af1d2",
+      "reference_failure": null,
+      "track": "scored",
+      "truth": {
+        "defects": [
+          {
+            "code": "STALE_APPROVAL",
+            "required_refs": [
+              "$completeness",
+              "3ef79c177872c3b828f37580b65f4309",
+              "3f671c279eefccbf275657f74f95b7fa",
+              "51b743ccab54efa16f857dd83cd97cd8",
+              "795f5e3c54bd7a0e1c170afe6720efc7",
+              "975ef0c953f545f31d7e542808747c4e",
+              "a9c2d20139c35c6cc2b88357321c1527",
+              "cc4d6e3314d9ae18c05ffba23e2f1d63",
+              "e048de47d02d107bdf0d0c34737f91f4"
+            ],
+            "severity": "HIGH"
+          }
+        ],
+        "deterministic": true,
+        "rule_reliability": "0.95",
+        "state": "FINDINGS",
+        "warrant": "bounded synthetic Type C reconstruction; two algorithms under common Provenonce control; no policy-text interpretation"
+      },
+      "wrong_scope_variant": null
+    },
+    {
+      "capsule_commitment": "sha256:fbca783fd8508834cf7f72176dad9e0e4a07d1894c995e8d1d8e0769a563d611",
+      "family": "fresh_review",
+      "position": 21,
+      "qid": "09bb049b45d11c406b0643af7cb317cd",
+      "reference_failure": null,
+      "track": "scored",
+      "truth": {
+        "defects": [],
+        "deterministic": true,
+        "rule_reliability": "0.95",
+        "state": "NO_MATERIAL_DEVIATION",
+        "warrant": "bounded synthetic Type C reconstruction; two algorithms under common Provenonce control; no policy-text interpretation"
+      },
+      "wrong_scope_variant": null
+    },
+    {
+      "capsule_commitment": "sha256:3bcb24279287ae6ebcfa21bf174052c4c850fbfb33136a500999f9b13a69f322",
+      "family": "fresh_review",
+      "position": 22,
+      "qid": "b537fbef2c62e6db786d17f68af1ef63",
+      "reference_failure": null,
+      "track": "scored",
+      "truth": {
+        "defects": [],
+        "deterministic": true,
+        "rule_reliability": "0.95",
+        "state": "NO_MATERIAL_DEVIATION",
+        "warrant": "bounded synthetic Type C reconstruction; two algorithms under common Provenonce control; no policy-text interpretation"
+      },
+      "wrong_scope_variant": null
+    },
+    {
+      "capsule_commitment": "sha256:135e62a88df17b520554bd3903b18609efd5b423e5a3fe0e66b48ff946f7f56b",
+      "family": "incomplete",
+      "position": 23,
+      "qid": "b379812d9fb9ecc935ccc604a9766d93",
+      "reference_failure": null,
+      "track": "diagnostic",
+      "truth": {
+        "defects": [],
+        "deterministic": true,
+        "rule_reliability": "0.95",
+        "state": "INSUFFICIENT_EVIDENCE_ABSTAIN",
+        "warrant": "bounded synthetic Type C reconstruction; two algorithms under common Provenonce control; no policy-text interpretation"
+      },
+      "wrong_scope_variant": null
+    },
+    {
+      "capsule_commitment": "sha256:7a0f28f3a30ed23c2d9397655d8e9f875237a10f0f75417d5d5e8a4ab9501a52",
+      "family": "incomplete",
+      "position": 24,
+      "qid": "8ef402f680defb865efbd1ce0227fd7a",
+      "reference_failure": null,
+      "track": "diagnostic",
+      "truth": {
+        "defects": [],
+        "deterministic": true,
+        "rule_reliability": "0.95",
+        "state": "INSUFFICIENT_EVIDENCE_ABSTAIN",
+        "warrant": "bounded synthetic Type C reconstruction; two algorithms under common Provenonce control; no policy-text interpretation"
+      },
+      "wrong_scope_variant": null
+    },
+    {
+      "capsule_commitment": "sha256:479c838efa5dafa0f56853c33b42f40f7d9dc210f97b193f7784d5d43d03ea23",
+      "family": "incomplete",
+      "position": 25,
+      "qid": "2ca170a106e0482549dffc2e82b4c6d4",
+      "reference_failure": null,
+      "track": "diagnostic",
+      "truth": {
+        "defects": [],
+        "deterministic": true,
+        "rule_reliability": "0.95",
+        "state": "INSUFFICIENT_EVIDENCE_ABSTAIN",
+        "warrant": "bounded synthetic Type C reconstruction; two algorithms under common Provenonce control; no policy-text interpretation"
+      },
+      "wrong_scope_variant": null
+    },
+    {
+      "capsule_commitment": "sha256:ea1214547697174249d1b3e2af354562ce71b54113e6962788ea60e5769adc70",
+      "family": "stale_authority",
+      "position": 26,
+      "qid": "ebfa15c08d6d44331542707cff301add",
+      "reference_failure": null,
+      "track": "scored",
+      "truth": {
+        "defects": [
+          {
+            "code": "STALE_APPROVAL",
+            "required_refs": [
+              "$completeness",
+              "04c1c03efe502543c62563f888f52660",
+              "0e1f8f1b0c3f06b298c33df37ee08506",
+              "2f70cf1d0966c8b6020a62443cf1d311",
+              "32ddb7679e21634a2b454de49a9f715a",
+              "64e9a612a114a53b78f9d8cc84f1ebc6",
+              "6b684d815d1cbb8c9b48539001e8cd0e",
+              "6d450f186f4c7a480d00e6d3c62a8ba8",
+              "c671ddd03ff86448c1d9e97da39dadce"
+            ],
+            "severity": "HIGH"
+          }
+        ],
+        "deterministic": true,
+        "rule_reliability": "0.95",
+        "state": "FINDINGS",
+        "warrant": "bounded synthetic Type C reconstruction; two algorithms under common Provenonce control; no policy-text interpretation"
+      },
+      "wrong_scope_variant": null
+    },
+    {
+      "capsule_commitment": "sha256:377a41247e4f591fb234906306e19252d80c0947c3f8b8fb4ab6155e20ce9d6d",
+      "family": "fresh_review",
+      "position": 27,
+      "qid": "abc61b49f4048810936911ef1dabde7e",
+      "reference_failure": null,
+      "track": "scored",
+      "truth": {
+        "defects": [],
+        "deterministic": true,
+        "rule_reliability": "0.95",
+        "state": "NO_MATERIAL_DEVIATION",
+        "warrant": "bounded synthetic Type C reconstruction; two algorithms under common Provenonce control; no policy-text interpretation"
+      },
+      "wrong_scope_variant": null
+    },
+    {
+      "capsule_commitment": "sha256:561683506e0da495f7c588764efe28ec86a20674b741bf9d34ea642dce473f04",
+      "family": "stale_authority",
+      "position": 28,
+      "qid": "084e544fb73d92a92dedc7a5a57bcb7d",
+      "reference_failure": null,
+      "track": "scored",
+      "truth": {
+        "defects": [
+          {
+            "code": "STALE_APPROVAL",
+            "required_refs": [
+              "$completeness",
+              "7052ab7b9f2d37c605a896a4dabce27e",
+              "8bc0094426ebbb70d680138db6cb0dc9",
+              "99d974bfab50dc63f223789cfcd4717c",
+              "a8dca4512d5c3e5b20d00acd77f335f6",
+              "af461069754b17a6db7defa751105b78",
+              "bf90937507039cb71f601c28c6ead483",
+              "cf332eebb5171d7563aac6108d7acdc1",
+              "f8934601db4ef30dfd25d4cb91ee3688"
+            ],
+            "severity": "HIGH"
+          }
+        ],
+        "deterministic": true,
+        "rule_reliability": "0.95",
+        "state": "FINDINGS",
+        "warrant": "bounded synthetic Type C reconstruction; two algorithms under common Provenonce control; no policy-text interpretation"
+      },
+      "wrong_scope_variant": null
+    },
+    {
+      "capsule_commitment": "sha256:51860450c0b41050b8ddb2ca5942b535eacc652b01496a48d71990c43539df6b",
+      "family": "fresh_review",
+      "position": 29,
+      "qid": "c7340da0499f3bf9c31b9ff7fd867590",
+      "reference_failure": null,
+      "track": "scored",
+      "truth": {
+        "defects": [],
+        "deterministic": true,
+        "rule_reliability": "0.95",
+        "state": "NO_MATERIAL_DEVIATION",
+        "warrant": "bounded synthetic Type C reconstruction; two algorithms under common Provenonce control; no policy-text interpretation"
+      },
+      "wrong_scope_variant": null
+    },
+    {
+      "capsule_commitment": "sha256:551661cbb47509da8285a381bbc1b1423bc0ae2f3975dfdbdf15d1df0079d29d",
+      "family": "incomplete",
+      "position": 30,
+      "qid": "5f40b24c349fa43c50dda76805f2d25f",
+      "reference_failure": null,
+      "track": "diagnostic",
+      "truth": {
+        "defects": [],
+        "deterministic": true,
+        "rule_reliability": "0.95",
+        "state": "INSUFFICIENT_EVIDENCE_ABSTAIN",
+        "warrant": "bounded synthetic Type C reconstruction; two algorithms under common Provenonce control; no policy-text interpretation"
+      },
+      "wrong_scope_variant": null
+    },
+    {
+      "capsule_commitment": "sha256:98b5e720b66fd372a840110e644c8da92d26c70f0c6267633c119c1088f8d533",
+      "family": "stale_authority",
+      "position": 31,
+      "qid": "459552997f94d66069b828f9defbd56a",
+      "reference_failure": null,
+      "track": "scored",
+      "truth": {
+        "defects": [
+          {
+            "code": "STALE_APPROVAL",
+            "required_refs": [
+              "$completeness",
+              "52e769c22cbda5df1dd807d82ef12840",
+              "549a45b3fd74cba3472d07a5be962c2a",
+              "5aea60c74147d90dc2064b6b83d22e29",
+              "64a0bc8e7b76389046f89707a863fa82",
+              "71607f8cd8b2db047622c309f431611a",
+              "82d2de92f441fcd97b9116ae4c88adc1",
+              "dcae1674a061679937aa8125350af9b5",
+              "f2006e8ddd420aa74fbc4a41a7ec3a55"
+            ],
+            "severity": "HIGH"
+          }
+        ],
+        "deterministic": true,
+        "rule_reliability": "0.95",
+        "state": "FINDINGS",
+        "warrant": "bounded synthetic Type C reconstruction; two algorithms under common Provenonce control; no policy-text interpretation"
+      },
+      "wrong_scope_variant": null
+    }
+  ],
+  "cases_commitment": "sha256:02bd3e26ade515f5be61cf1b89d4f8a3b22afbdbc83587b9863202edee7f7e84",
+  "salt": "28b511f28d5837f09467ce4b34e58156",
+  "schema_version": "sn87-contest-truth/0.1",
+  "seed_commitment": "sha256:a385dbc485f5cb58f02bf11e2383faa00537e96d2d35bc324bca59aafda3842e",
+  "truth_commitment": "sha256:4640e5584cfc8dcd7bd6aa59921d7b71a09a21d146b7d8e45fa2ff033cf6e98d",
+  "window_id": "demo-repro-0001"
+}

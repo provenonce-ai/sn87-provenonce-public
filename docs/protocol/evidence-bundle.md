@@ -39,7 +39,25 @@ source except labelled FIXTURE samples. Canonical `gra/0.1` JSON; numbers per
   "public_contract_only": true}`. Scores, cost and diagnostics cover it like any method.
 - `comparison`: per non-baseline method, `estimate_delta` (method minus baseline, wire string or
   `NA`) and `result` (`NULL_NO_HEADROOM`, `ABOVE_BASELINE`, `BELOW_BASELINE`, `NA`). Headroom is
-  reported, never a gate (0085 D3); a null result is displayed, never hidden.
+  reported here, and a null result is displayed, never hidden. The binding gate that uses the
+  comparison is `weight_gate` below.
+- `weight_gate` (optional, additive, no schema bump; emitted only by `evaluate(...,
+  weight_gate=True)` so existing bundles keep their bytes and pinned digests): the
+  baseline-headroom gate `sn87-weight-gate/0.1`. Only a method with role `candidate` is a
+  subject; a `reference` method gets `IS_REFERENCE_METHOD`. Per subject, `verdict`:
+  `ABOVE_ALL_PUBLIC_METHODS` (above the baseline and every published miner method,
+  `approval_witness` included, by at least `min_margin` = 0.001), `NULL_NO_HEADROOM` (a lead
+  inside the margin counts as a tie), `BELOW_PUBLIC_METHOD`, `NOT_COMPARABLE` (a needed
+  estimate is missing, or is not a float such as an integer `1`; fail closed) or
+  `IS_PUBLIC_METHOD` (a published method earns nothing). Only the first is
+  `weight_eligible`. A class not bound in `classes.BINDINGS` is refused. `family.status` is `RETIRE_RECOMMENDED` when every public method is
+  evaluated and at the ceiling, else `ACTIVE`; a retire-recommended family has no eligible
+  method. The gate is intended to apply before any weighting and is not wired into any live
+  weight path: a weighting tool calls `bundle.require_weight_eligible(bundle, method)`. It takes
+  a bundle only (never a bare gate), checks the schema, the bound class, the profile identity
+  and commitment and the baseline entry, recomputes the gate from `scores` (with or without the
+  section) and refuses on anything but an eligible method. It cannot recompute the scores
+  themselves, which needs the cases and truth.
 - `scores[method]`: `admitted`, `evaluable`, `estimate`, `eligible`, `reason`
   (`SAMPLE_FLOOR`, `RAW_FAILURE_CEILING`, `EMPTY_ASSIGNMENT` or null),
   `lower`, `upper`, `raw_invalid_or_missing_rate`, `dimensions` (each `{value, n}`: detection,

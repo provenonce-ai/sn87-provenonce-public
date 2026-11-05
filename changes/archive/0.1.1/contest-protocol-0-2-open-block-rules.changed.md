@@ -1,0 +1,1 @@
+Contest protocol 0.2 pins the opening block by time (checked offline), refuses a hand-typed block unless `--allow-manual-block`, reads only final blocks, derives the truth salt so a lost truth file is made again, caps reveal deadlines at seven days, and ties every reveal in a bundle to the published open record. See ADR-0023.

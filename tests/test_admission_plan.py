@@ -69,7 +69,8 @@ def result(window, **override):
     args = dict(uid=3, hotkey=HOTKEY, netuid=NETUID, window=window, seed=window, queried=12,
                 valid_responses=12, invalid_responses=0, unavailable=0,
                 integrity_failure_codes=[], estimate=0.5, evaluable=12, admitted=12,
-                profile_id="IC-FIRST-LIGHT-MIN-1", endpoint_record_digest="sha256:" + "0" * 64)
+                profile_id="IC-FIRST-LIGHT-MIN-1", endpoint_record_digest="sha256:" + "0" * 64,
+                baseline_estimate=0.25, baseline_admitted=12, baseline_evaluable=12)
     args |= override
     if "queried" not in override:
         args["queried"] = (args["valid_responses"] + args["invalid_responses"]
@@ -297,9 +298,16 @@ def pinned_shadow(crit=None):
     return approved(version)
 
 
+GATE_PASSES = {"class_id": "IC-APPROVAL-APPLICABILITY", "method_id": "outside_uid_3",
+               "estimates": {"outside_uid_3": 0.9, "public_contract_baseline": 0.5,
+                             "approval_witness": 0.6},
+               "roles": {"outside_uid_3": "candidate", "approval_witness": "reference"}}
+
+
 def weighted_args(**override):
     args = dict(uid=3, stage="weighted", hotkey=HOTKEY, endpoint_check=endpoint(),
-                criteria=criteria(), results=[result(w) for w in (1, 2, 3)], now_window=3)
+                criteria=criteria(), results=[result(w) for w in (1, 2, 3)], now_window=3,
+                gate_input=GATE_PASSES)
     return args | override
 
 
@@ -620,3 +628,253 @@ def test_cli_check_uses_the_repository_announcement_verifier_by_default(tmp_path
     bad.write_text(json.dumps(tampered))
     assert ap.main([*common, "--endpoint-record", str(bad)]) == 1
     assert "ENDPOINT_SIGNATURE_INVALID" in capsys.readouterr().out
+
+
+# ------------------------------------------------------- score must beat the baseline
+def _check(results):
+    return evaluate(criteria(), results, endpoint(), uid=3, hotkey=HOTKEY)
+
+
+def _codes(report):
+    return {r["code"] for r in report.reasons}
+
+
+def test_beating_the_baseline_in_every_window_passes():
+    assert _check([result(w, estimate="0.75", baseline_estimate="0.5") for w in (1, 2, 3)]).passed
+
+
+def test_zero_score_with_valid_replies_fails():
+    report = _check([result(w, estimate=0.0, baseline_estimate=0.0) for w in (1, 2, 3)])
+    assert not report.passed and "SCORE_TIES_BASELINE" in _codes(report)
+    report = _check([result(w, estimate="0", baseline_estimate="0.25") for w in (1, 2, 3)])
+    assert not report.passed and "SCORE_BELOW_BASELINE" in _codes(report)
+
+
+def test_a_baseline_tie_is_not_uplift():
+    report = _check([result(w, estimate="0.5", baseline_estimate="0.5") for w in (1, 2, 3)])
+    assert not report.passed and _codes(report) == {"SCORE_TIES_BASELINE"}
+    assert {r["window"] for r in report.reasons} == {1, 2, 3}
+
+
+def test_one_window_not_above_fails_the_whole_run():
+    rows = [result(1), result(2, estimate=0.25), result(3)]
+    report = _check(rows)
+    assert not report.passed
+    assert [r["window"] for r in report.reasons] == [2]
+
+
+def test_exact_decimal_comparison_not_float_rounding():
+    above = "0.30000000000000004"
+    assert _check([result(w, estimate=above, baseline_estimate="0.3") for w in (1, 2, 3)]).passed
+
+
+def test_missing_na_or_malformed_scores_fail_closed():
+    for override, code in (({"estimate": "NA"}, "SCORE_NOT_AVAILABLE"),
+                           ({"estimate": None}, "SCORE_NOT_AVAILABLE"),
+                           ({"estimate": True}, "SCORE_NOT_AVAILABLE"),
+                           ({"estimate": "1.5"}, "SCORE_NOT_AVAILABLE"),
+                           ({"baseline_estimate": None}, "BASELINE_ESTIMATE_MISSING"),
+                           ({"baseline_estimate": "NA"}, "BASELINE_ESTIMATE_MISSING"),
+                           ({"baseline_admitted": 11}, "BASELINE_INSTANCES_DIFFER"),
+                           ({"baseline_admitted": None}, "BASELINE_INSTANCES_DIFFER")):
+        report = _check([result(w, **override) for w in (1, 2, 3)])
+        assert not report.passed and code in _codes(report), override
+
+
+def test_a_result_without_baseline_fields_cannot_pass():
+    old = [result(w) for w in (1, 2, 3)]
+    for record in old:
+        del record["baseline_estimate"], record["baseline_admitted"]
+        record["record_digest"] = ap.result_digest(record)
+    assert "BASELINE_ESTIMATE_MISSING" in _codes(_check(old))
+
+
+def test_existing_integrity_and_count_rules_still_apply_with_a_good_score():
+    rows = [result(1), result(2, integrity_failure_codes=["X"], valid_responses=11),
+            result(3, valid_responses=5, queried=5, evaluable=5)]
+    codes = _codes(_check(rows))
+    assert {"INTEGRITY_FAILURE", "TOO_FEW_VALID_RESPONSES"} <= codes
+    assert "SCORE_TIES_BASELINE" not in codes
+
+
+def test_the_baseline_rule_cannot_be_switched_off():
+    rules = dict(criteria()["rules"], require_score_beats_public_baseline=False)
+    assert ap.validate_rules(rules) == "CRITERIA_BASELINE_RULE_MUST_BE_ON"
+    assert not ap.criteria_digest_ok({**criteria(), "rules": rules})
+    stripped = {k: v for k, v in criteria()["rules"].items()
+                if k != "require_score_beats_public_baseline"}
+    assert ap.validate_rules(stripped) == "CRITERIA_RULES_KEYS"
+
+
+# --------------------------------------------- S5 baseline fully evaluated, S6 profile named
+def test_s5_baseline_must_have_scored_every_instance():
+    for override in ({"baseline_evaluable": 11}, {"baseline_evaluable": None}):
+        report = _check([result(w, **override) for w in (1, 2, 3)])
+        assert not report.passed and "BASELINE_NOT_FULLY_EVALUATED" in _codes(report), override
+    assert _check([result(w, baseline_evaluable=12) for w in (1, 2, 3)]).passed
+
+
+def test_s5_baseline_evaluable_must_be_a_count():
+    record = result(1, baseline_evaluable="12")
+    assert ap.result_shape_problem(record) == "RESULT_FIELD_INVALID_baseline_evaluable"
+    report = _check([record, result(2), result(3)])
+    assert not report.passed and "RESULT_FIELD_INVALID_baseline_evaluable" in _codes(report)
+
+
+def test_s6_every_window_profile_must_be_named_in_the_criteria():
+    rows = [result(1), result(2, profile_id="IC-FIRST-LIGHT-MIN-2"), result(3)]
+    report = _check(rows)
+    assert not report.passed
+    bad = [r for r in report.reasons if r["code"] == "RESULT_PROFILE_NOT_ALLOWED"]
+    assert [r["window"] for r in bad] == [2]
+    both = criteria(allowed_profile_ids=["IC-FIRST-LIGHT-MIN-1", "IC-FIRST-LIGHT-MIN-2"])
+    assert evaluate(both, rows, endpoint(), uid=3, hotkey=HOTKEY).passed
+
+
+def test_s6_the_profile_list_is_part_of_the_digest_and_validated():
+    one, two = criteria(), criteria(allowed_profile_ids=["IC-FIRST-LIGHT-MIN-2"])
+    assert one["criteria_digest"] != two["criteria_digest"]
+    assert one["rules"]["allowed_profile_ids"] == ["IC-FIRST-LIGHT-MIN-1"]
+    for bad in ([], ["x", "x"], [1], ["has space"], "IC-FIRST-LIGHT-MIN-1", None):
+        rules = dict(one["rules"], allowed_profile_ids=bad)
+        assert ap.validate_rules(rules) == "CRITERIA_RULE_INVALID_allowed_profile_ids", bad
+    with pytest.raises(ap.AdmissionError):
+        criteria(allowed_profile_ids=[])
+
+
+# ----------------------------------------------- the window's gate verdict is a plan input
+def gate_with(**estimates):
+    return GATE_PASSES | {"estimates": {**GATE_PASSES["estimates"], **estimates}}
+
+
+def test_a_weighted_plan_records_the_gate_verdict_it_was_built_under():
+    weighted = ap.propose_version(pinned_shadow(), **weighted_args())
+    gate = weighted["plan"]["admission"]["uids"]["3"]["gate"]
+    assert gate["verdict"] == "ABOVE_ALL_PUBLIC_METHODS" and gate["method_id"] == "outside_uid_3"
+    assert gate["family_status"] == "ACTIVE" and gate["estimates_digest"].startswith("sha256:")
+    ap.verify_version(weighted)
+
+
+@pytest.mark.parametrize("gate_input,code", [
+    (None, "GATE_INPUT_REQUIRED"),
+    ({"estimates": {}}, "GATE_INPUT_REQUIRED"),
+    (gate_with(approval_witness=0.9), "GATE_REFUSES"),         # tie with a public method
+    (gate_with(public_contract_baseline=0.95), "GATE_REFUSES"),  # behind the baseline
+    (gate_with(outside_uid_3=None), "GATE_REFUSES"),            # no usable estimate
+    (gate_with(outside_uid_3=1), "GATE_REFUSES"),               # an int is not an estimate
+    (GATE_PASSES | {"method_id": "ghost"}, "GATE_METHOD_NOT_A_SUBJECT"),
+    (GATE_PASSES | {"roles": {"outside_uid_3": "reference"}}, "GATE_REFUSES"),
+    (GATE_PASSES | {"class_id": "NO-SUCH-CLASS"}, "GATE_REFUSES"),
+    (GATE_PASSES | {"estimates": "x"}, "GATE_METHOD_NOT_A_SUBJECT"),
+])
+def test_no_plan_is_built_for_a_family_the_gate_refuses(gate_input, code):
+    with pytest.raises(ap.AdmissionError, match=code):
+        ap.propose_version(pinned_shadow(), **weighted_args(gate_input=gate_input))
+
+
+def test_a_saturated_family_has_no_plan_even_for_a_leader():
+    saturated = gate_with(outside_uid_3=1.0, public_contract_baseline=0.9995,
+                          approval_witness=0.9995)
+    with pytest.raises(ap.AdmissionError, match="GATE_REFUSES"):
+        ap.propose_version(pinned_shadow(), **weighted_args(gate_input=saturated))
+
+
+def test_a_weighted_entry_without_the_gate_does_not_verify():
+    weighted = copy.deepcopy(ap.propose_version(pinned_shadow(), **weighted_args()))
+    for change in (None, {"verdict": "NULL_NO_HEADROOM", "family_status": "ACTIVE"},
+                   {"verdict": "ABOVE_ALL_PUBLIC_METHODS", "family_status": "RETIRE_RECOMMENDED"}):
+        broken = copy.deepcopy(weighted)
+        entry = broken["plan"]["admission"]["uids"]["3"]
+        if change is None:
+            del entry["gate"]
+        else:
+            entry["gate"] = change
+        broken["plan_digest"] = ap.sha256_of(broken["plan"])
+        with pytest.raises(ap.AdmissionError, match="VERSION_WEIGHTED_ENTRY_WITHOUT_GATE"):
+            ap.verify_version(broken)
+
+
+def test_the_gate_input_is_only_read_while_proposing_a_weighted_stage():
+    shadow = ap.propose_version(parent_document(), uid=3, stage="shadow", hotkey=HOTKEY,
+                                endpoint_check=endpoint())
+    assert "gate" not in shadow["plan"]["admission"]["uids"]["3"]
+
+
+# --------------------------------------- admission-ready records for any scored profile
+def scores_document(profile_id="IC-FIRST-LIGHT-MIN-4"):
+    def method(mid, role, estimate, admitted=12, evaluable=12):
+        return {"method_id": mid, "role": role, "uid": 3 if mid == "outside_uid_3" else None,
+                "score": {"estimate": estimate, "admitted": admitted, "evaluable": evaluable,
+                          "eligible": True, "reason": None}}
+    return {"profile": {"profile_id": profile_id},
+            "methods": [method("outside_uid_3", "candidate", "0.9"),
+                        method("public_contract_baseline", "baseline", "0.5")]}
+
+
+def from_scores(document, **override):
+    args = dict(method_id="outside_uid_3", uid=3, hotkey=HOTKEY, netuid=NETUID, window=1, seed=1,
+                queried=12, valid_responses=12, invalid_responses=0, unavailable=0,
+                integrity_failure_codes=[], endpoint_record_digest="sha256:" + "0" * 64)
+    return ap.window_result_from_scores(document, **(args | override))
+
+
+def test_a_record_for_any_scored_profile_comes_from_the_results_document():
+    record = from_scores(scores_document())
+    assert record["profile_id"] == "IC-FIRST-LIGHT-MIN-4"
+    assert (record["estimate"], record["baseline_estimate"]) == ("0.9", "0.5")
+    assert record["admitted"] == record["baseline_admitted"] == 12
+    assert ap.result_shape_problem(record) is None and record["record_digest"]
+    # the criteria decide whether that profile counts: the default list refuses it
+    assert "IC-FIRST-LIGHT-MIN-4" not in ap.DEFAULT_PROFILE_IDS
+    default = ap.evaluate_criteria(criteria(consecutive_windows=1), [record], endpoint(), uid=3,
+                                   hotkey=HOTKEY, now_window=1, netuid=NETUID)
+    assert "RESULT_PROFILE_NOT_ALLOWED" in {r["code"] for r in default.reasons}
+    named = ap.evaluate_criteria(
+        criteria(consecutive_windows=1, allowed_profile_ids=["IC-FIRST-LIGHT-MIN-4"]), [record],
+        endpoint(), uid=3, hotkey=HOTKEY, now_window=1, netuid=NETUID)
+    assert named.passed, named.reasons
+
+
+def test_a_results_document_that_cannot_support_a_record_is_refused():
+    scores_only = scores_document()
+    for m in scores_only["methods"]:
+        del m["score"]["admitted"]
+    no_baseline = scores_document()
+    no_baseline["methods"] = no_baseline["methods"][:1]
+    wrong_role = scores_document()
+    wrong_role["methods"][1]["role"] = "candidate"
+    for bad in (scores_only, no_baseline, wrong_role, {}, None, {"profile": {}, "methods": []}):
+        with pytest.raises(ap.AdmissionError, match="RESULTS_DOCUMENT_UNUSABLE"):
+            from_scores(bad)
+    with pytest.raises(ap.AdmissionError, match="RESULTS_DOCUMENT_UNUSABLE"):
+        from_scores(scores_document(), method_id="ghost")
+
+
+# ---------------------------------------------- the decision group is reported, not acted on
+GROUPS = [["approval_witness", "outside_uid_3", "outside_uid_4", "public_contract_baseline"]]
+
+
+def test_a_candidate_reports_the_group_it_shares_and_the_verdict_is_unchanged():
+    results = [result(w) for w in (1, 2, 3)]
+    plain = evaluate(criteria(), results, endpoint(), uid=3, hotkey=HOTKEY)
+    grouped = ap.evaluate_criteria(criteria(), results, endpoint(), uid=3, hotkey=HOTKEY,
+                                   now_window=3, netuid=NETUID, decision_groups=GROUPS)
+    assert grouped.passed == plain.passed is True and grouped.reasons == plain.reasons
+    (flag,) = grouped.flags
+    assert flag == {"flag": "SHARES_DECISION_GROUP_WITH", "affects_verdict": False,
+                    "with": ["approval_witness", "outside_uid_4", "public_contract_baseline"]}
+    assert grouped.as_document()["flags"] == [flag]
+    assert plain.flags == [] and plain.as_document()["flags"] == []
+
+
+def test_a_candidate_in_no_group_has_no_flag_and_groups_are_read_by_identity():
+    results = [result(w) for w in (1, 2, 3)]
+    alone = ap.evaluate_criteria(criteria(), results, endpoint(), uid=3, hotkey=HOTKEY,
+                                 now_window=3, netuid=NETUID,
+                                 decision_groups=[["outside_uid_4", "outside_uid_5"]])
+    assert alone.flags == []
+    named = ap.evaluate_criteria(criteria(), results, endpoint(), uid=3, hotkey=HOTKEY,
+                                 now_window=3, netuid=NETUID, identity="custom",
+                                 decision_groups=[["custom", "outside_uid_9"]])
+    assert named.flags[0]["with"] == ["outside_uid_9"]
+    assert ap.decision_group_flags(None, "x") == [] and ap.decision_group_flags([], "x") == []

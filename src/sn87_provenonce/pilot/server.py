@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import asyncio
 import hashlib
+import re
 import time
 from collections.abc import Callable
 from typing import Any
@@ -16,6 +17,7 @@ from starlette.routing import Route
 
 from sn87_provenonce.canonical import canonical_bytes, parse_canonical
 
+from .sender_policy import AllowAnySender, PolicyAdmission, SenderPolicy
 from .transport import (
     PATH,
     VERSION,
@@ -31,9 +33,25 @@ def _error(code: str, status: int) -> Response:
                     media_type="application/json", headers={"Cache-Control": "no-store"})
 
 
+_COMMITMENT = re.compile(r"sha256:[0-9a-f]{64}")
+_WINDOW_ID = re.compile(r"[a-z0-9][a-z0-9-]{2,47}")
+
+
+def _window_commitments_ok(value: Any) -> bool:
+    """The optional contest-window open record of a request (protocol 0.2): exactly these four
+    fields, in these shapes. The server reads it for shape only; the signed body carries it."""
+    return (isinstance(value, dict)
+            and set(value) == {"generator", "window_id", "cases_commitment", "truth_commitment"}
+            and all(isinstance(v, str) for v in value.values())
+            and re.fullmatch(r"sn87-contest-generator/0\.2", value["generator"]) is not None
+            and _WINDOW_ID.fullmatch(value["window_id"]) is not None
+            and _COMMITMENT.fullmatch(value["cases_commitment"]) is not None
+            and _COMMITMENT.fullmatch(value["truth_commitment"]) is not None)
+
+
 def create_app(
     *, signer: Any, store: SharedReplayStore, handle: Callable[[dict], dict],
-    config: TransportConfig | None = None,
+    sender_policy: SenderPolicy | AllowAnySender, config: TransportConfig | None = None,
 ) -> Starlette:
     resolved = resolve_signer(signer, role="hotkey")
     config = config or TransportConfig(receiver_ss58=resolved.ss58_address)
@@ -41,6 +59,9 @@ def create_app(
         raise ValueError("server identity does not match replay domain")
     if store.domain != "request" or store.retention < config.max_age + config.allowed_skew:
         raise ValueError("server replay configuration mismatch")
+    # The policy runs after the signature verifies and before the replay store is written. It is
+    # required: a caller that wants any verified signer says so with ``AllowAnySender()``.
+    admission = PolicyAdmission(store, sender_policy)
     limiter = anyio.CapacityLimiter(config.max_inflight)
     slots = asyncio.Semaphore(config.max_inflight)
 
@@ -101,12 +122,14 @@ def create_app(
             if length is not None and len(body) != int(length):
                 return _error("TRUNCATED_BODY", 400)
             caller = await bounded_work(lambda: verify_bytes(
-                request.headers, body, method="POST", path=PATH, config=config, store=store,
+                request.headers, body, method="POST", path=PATH, config=config, store=admission,
             ))
             envelope = parse_canonical(body)
-            if not isinstance(envelope, dict) or set(envelope) != {
-                "schema_version", "challenge_id", "deadline_ms", "capsule",
-            }:
+            required = {"schema_version", "challenge_id", "deadline_ms", "capsule"}
+            if (not isinstance(envelope, dict)
+                    or set(envelope) not in (required, required | {"window_commitments"})
+                    or ("window_commitments" in envelope
+                        and not _window_commitments_ok(envelope["window_commitments"]))):
                 return _error("INVALID_ENVELOPE", 422)
             capsule, deadline = envelope["capsule"], envelope["deadline_ms"]
             if envelope["schema_version"] != VERSION or type(deadline) is not int:
@@ -139,6 +162,14 @@ def create_app(
             status = 503 if code.startswith("REPLAY_STORE") else 401
             if code == "RATE_LIMITED":
                 status = 429
+            if code == "GLOBAL_RATE_LIMITED":
+                status = 429
+            if code == "SENDER_RATE_LIMITED":
+                status = 429
+            if code == "SENDER_NOT_PERMITTED":
+                status = 403
+            if code == "SENDER_POLICY_UNAVAILABLE":
+                status = 503
             if code == "BODY_TOO_LARGE":
                 status = 413
             return _error(code, status)

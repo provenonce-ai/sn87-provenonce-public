@@ -1,8 +1,8 @@
 """Candidate versus matched baseline on IC-APPROVAL-APPLICABILITY: where they tie and where not.
 
-Contributed by an independent reviewer. The checks were first run by the reviewer as two
-read-only probe scripts; this module is a re-implementation against the public API only, so it
-runs in the exported tree (no reference executor, no network, nothing written).
+The checks were first run as two read-only probe scripts; this module is a re-implementation
+against the public API only, so it runs in the exported tree (no reference executor, no
+network, nothing written).
 
 What it establishes, all by computation:
 

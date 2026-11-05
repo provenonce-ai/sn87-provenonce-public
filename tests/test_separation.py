@@ -1,4 +1,4 @@
-"""Truth/candidate separation (Run2 F1, W2b): the matched baseline sees only the public
+"""Truth/candidate separation: the matched baseline sees only the public
 contract. Proven twice: statically (import graph) and at runtime (evaluator-only modules
 blocked in a fresh interpreter). Reference methods, by contrast, do reach truth code; that
 is why their role is "reference" and their rows are conformance evidence only."""

@@ -96,6 +96,38 @@ demonstration window, so a silent change fails.
 Hidden-window truth is never written to a public name before close. The private truth and cases
 files are created with mode 0600 and carry `.private.` in their names.
 
+## Protocol version 0.2
+
+New schedules use `sn87-contest-generator/0.2` (schemas `/0.2`; decision record
+[ADR-0023](../architecture/ADR-0023-opening-block-seed-truth-commitment-and-reveal-deadline.md)).
+Version 0.1 files stay readable and verifiable: every phase and the verify check dispatch on the
+schema version of the document they read, and the 0.1 derivation is unchanged.
+
+| Change | What it is |
+|---|---|
+| Opening block in the seed | `preseed = HMAC(master, frame(PRESEED_DOMAIN, schedule_id, window_id))`; the commitment published at commit is `seed_commitment = sha256(frame(PRESEED_COMMIT_DOMAIN, window_id, preseed))`, so in a 0.2 file the `seed_commitment` field commits to the pre-seed. The window seed is `HMAC(preseed, frame(WINDOW_SEED_DOMAIN_2, schedule_id, window_id, block_number, block_hash))`. The spec commitment is salted from the pre-seed |
+| The block is an input | `open` and `reveal` take an injected read-only provider. `find_beacon_block` bisects a reader (`block_time_ms`, `block_hash`, and `finalized_block` or `current_block`) up to the finalized head, else up to `FINALITY_DEPTH` (12) blocks behind the head, then reads the chosen block twice and refuses if the reads differ. Nothing in `contest_window.py` reads a chain. The committed rule is `FIRST_BLOCK_AT_OR_AFTER_OPENS_AT`, and the network is named by its genesis hash |
+| The block record | `{number, hash, time_ms, parent_time_ms}`, plus `depth` (0 means read at the finalized head) and, only if typed in by hand, `manual: true`. `verify` and `verify-bundle` check offline that `parent_time_ms < opens_at <= time_ms`, so only the one block the rule names passes. A block typed in with `--block-number`, `--block-hash`, `--block-time-ms` and `--parent-block-time-ms` is refused unless `--allow-manual-block` is given; it is printed loudly and marked. The block is printed (`OPENING_BLOCK`), recorded in the cases file before anything else, and uploaded in the open record before any miner is queried. A crashed open reuses the recorded block; a different block is refused (`BEACON_CONFLICT`) |
+| Truth fixed at open | `open` also runs the private reference (an injectable seam), writes the private truth file with a random salt, and puts `truth_commitment` (same function as before: salted, bound to the seed commitment and the cases commitment) in the capsules file next to `cases_commitment`. The salt is derived (`HMAC(preseed, window id)`), so a lost private truth file is made again by the `truth` phase (needs `--schedule` and the master seed file) and must hash to the value published at open, else `TRUTH_HASH_DIFFERS_FROM_OPEN`. An existing file is never replaced (`TRUTH_FIXED_AT_OPEN`). The service voids a window whose truth cannot be made again with `TRUTH_LOST_AFTER_OPEN` and still publishes its reveal |
+| Carried in each request | The signed request envelope gains an optional `window_commitments` object `{generator, window_id, cases_commitment, truth_commitment}`. It is part of the signed body. A server accepts it or its absence and checks its shape only |
+| Refusal on a differing hash | `publish-truth`, `verify` and `contest_results.py` compare the truth file's hash and cases commitment with the capsules file published at open and refuse with `TRUTH_HASH_DIFFERS_FROM_OPEN`, or `OPEN_RECORD_MISSING` when the capsules file is absent |
+| Reveal deadline | Each schedule window carries `reveal_deadline` (from `closes_at` to seven days after it); it is part of the spec, the commitments row and the capsules file. The shadow service reports a window past it with no uploaded reveal as `REVEAL_OVERDUE` |
+| Whole-schedule reveal | the operator's local `reveal-schedule` command writes a bundle (schema `sn87-reveal-bundle/0.1`): per window `OPENED` (reveal plus the open record, the opening block taken from the published open record), `NOT_OPENED` (no seed; nothing was drawn) or, for 0.1, `REVEALED`. The public `verify-bundle` phase checks it against the commitments and ties every reveal to the published open records (`--open-dir`, required for 0.2); it fails on closed windows the bundle misses unless `--allow-partial`, refuses an older protocol with `--min-protocol`, and with `--index` fails on a `REVEAL_OVERDUE` window the bundle does not cover (see the [shadow cohort guide](../guides/shadow-cohort.md)) |
+
+The reveal file of a 0.2 window holds `preseed`, `beacon`, the derived `seed` and the spec. `verify`
+checks the pre-seed against the committed value, recomputes the seed from the pre-seed and the
+block, and checks the spec commitment, the spec against the committed row, and, when the capsules
+and truth files are present, the open record against the reveal.
+
+**What the block hash does and does not do.** Before the opening block exists, nobody can compute
+the window seed, so neither miners nor the operator can know the instances ahead of the window
+(the operator knows the pre-seed, not the block hash). It removes advance knowledge only. The
+operator still builds the instances, runs the private reference and controls scoring, and a block
+producer could in principle influence a block hash. Trust in the scoring still needs independent
+validators that construct their own challenges. Outsiders must check the block record against the
+chain themselves, including that it is the first block at or after `opens_at`; this tooling does
+not.
+
 ## Anchoring the commitments
 
 The commitments file proves order only if readers know when it was published. An operator should
@@ -108,7 +140,8 @@ anchoring; it only produces the value to anchor.
 
 - The operator controls the master seed. Committing the whole schedule first stops choosing a seed
   after seeing responses; it does not prove the master seed was not chosen with the schedule in view.
-  A public randomness source can be mixed in by a later generator version.
+  Version 0.2 mixes the opening block hash into each window seed, which removes the operator's
+  advance knowledge of the instances (see "Protocol version 0.2" for its limits).
 - Truth stays with the private reference executors. Outside parties verify commitments and
   capsules, and truth only as far as per-case truth is published.
 - Integrity predicates in the dry run are asserted, not proven (no network exchange).

@@ -21,6 +21,7 @@ from dataclasses import asdict, dataclass, field
 from typing import Any
 
 from sn87_provenonce.profile import Profile
+from sn87_provenonce.redundancy import redundancy_groups
 
 NA = "NA"
 EFFICIENCY_STATUS = "INACTIVE_ZERO_COEFFICIENTS"
@@ -135,6 +136,9 @@ def evidence_credit(profile: Profile, required: list[str], cited: list[str]) -> 
     if profile.evidence_credit is None or not needed:  # nothing required: credit 1, as before
         return float(needed <= seen)
     hits = len(needed & seen)
+    if profile.fixed_outcome is not None:  # ADR-0022: precision ** e * recall prices over-citing
+        exponent = profile.fixed_outcome["precision_exponent"]
+        return (hits / len(seen)) ** exponent * hits / len(needed) if hits else 0.0
     return hits * hits / (len(seen) * len(needed)) if hits else 0.0
 
 
@@ -155,6 +159,129 @@ def state_payoff_score(profile: Profile, truth_state: str, response_state: str,
     quality = composite if truth_state == response_state == "FINDINGS" else 1.0
     return bounded(max(cell * quality, profile.epsilon)), {
         "truth": truth_state, "response": response_state, "cell": cell, "quality": quality}
+
+
+SEVERITY_ORDER = {"LOW": 0, "MEDIUM": 1, "HIGH": 2}
+
+
+def severity_credit(truth_severity: str, declared: str) -> float:
+    """Declared severity against the sealed one: 1, 1/2 or 0 by ordinal distance (ADR-0022)."""
+    return 1.0 - abs(SEVERITY_ORDER[truth_severity] - SEVERITY_ORDER[declared]) / 2
+
+
+def fixed_outcome_calibration(catalogue: list[str], truth_codes: set[str],
+                              findings: list[dict[str, Any]]) -> float:
+    """Brier score over the class's FIXED set of defect codes, one outcome per code (ADR-0022).
+
+    The outcome set is the committed defect catalogue, so a miner cannot change the denominator
+    by choosing which claims to make. Each code has a forecast p (the stated confidence, 0 when
+    the code is not claimed) and an outcome y (1 if the sealed truth holds the code). The score is
+    1 - sum (p - y)^2 / K, floored at 0. A code claimed more than once is read least favourably
+    to the claimant (the lowest confidence on a true code, the highest on a false one), and a code
+    outside the catalogue is a false claim, so a false claim at any confidence only ever lowers
+    the score and one at confidence 0 changes nothing. The rule is strictly proper per code.
+    """
+    claims: dict[str, list[float]] = {}
+    for finding in findings:
+        claims.setdefault(finding["code"], []).append(bounded(float(finding["confidence"])))
+    total = 0.0
+    for code in {*catalogue, *claims}:
+        y = 1.0 if code in truth_codes else 0.0
+        stated = claims.get(code)
+        p = 0.0 if not stated else (min(stated) if y else max(stated))
+        total += (p - y) ** 2
+    return bounded(max(0.0, 1 - total / len(catalogue)))
+
+
+def _score_fixed_outcome(binding: ClassBinding, truth: dict[str, Any],
+                         response: dict[str, Any]) -> dict[str, Any]:
+    """Rules version 4 (ADR-0022) for one valid response.
+
+    Same matching, false-positive cost, precision, recall and detection as the original scorer.
+    Added: declared severity is scored on matched findings, evidence credit is priced for
+    surplus, and calibration is the fixed-outcome Brier score above, computed in every cell of
+    the payoff matrix. A response that makes no forecast (an abstention) is paid its cell alone.
+    The score is ``cell * Q``: Q blends the geometric composite of detection, evidence and
+    severity with the calibration score, additively, so calibration enters linearly and the
+    expected score is maximised by stating true beliefs.
+    """
+    profile = binding.profile
+    assert profile.state_payoff is not None and profile.fixed_outcome is not None
+    severity = profile.severity
+    targets = {t["code"]: t for t in truth["defects"]}
+    if len(targets) != len(truth["defects"]):
+        raise ValueError("duplicate hidden truth code")
+    matched, unmatched, evidence, sev_credit, tp_weights, fp_costs = [], [], [], [], [], []
+    for index, finding in enumerate(response["findings"]):
+        code = finding["code"]
+        target = targets.get(code)
+        if target is not None and code not in matched:
+            matched.append(code)
+            weight = severity[target["severity"]]
+            tp_weights.append(weight)
+            evidence.append((weight, evidence_credit(
+                profile, target["required_refs"], finding["evidence_refs"])))
+            sev_credit.append((weight, severity_credit(target["severity"], finding["severity"])))
+        else:
+            unmatched.append(index)
+            sealed = binding.defect_severity.get(code, "HIGH")
+            fp_costs.append(max(profile.false_positive_floor, severity[finding["severity"]],
+                                severity[sealed]))
+    tp, fp = math.fsum(tp_weights), math.fsum(fp_costs)
+    precision = tp / (tp + fp) if matched or unmatched else 1.0
+    total = math.fsum(severity[t["severity"]] for t in targets.values())
+    recall = tp / total if total else None
+    if response["state"] == "INSUFFICIENT_EVIDENCE_ABSTAIN":
+        detection = 0.0
+    elif total:
+        detection = 2 * precision * recall / (precision + recall) if precision + recall else 0.0
+    elif response["state"] == "NO_MATERIAL_DEVIATION":
+        detection = 1.0
+    else:
+        detection = max(0.0, 1 - fp)
+    abstains = response["state"] == "INSUFFICIENT_EVIDENCE_ABSTAIN"
+    calibrated = None if abstains else fixed_outcome_calibration(
+        sorted(binding.defect_severity), set(targets), response["findings"])
+    dimensions = {
+        "detection": detection,
+        "evidence": math.fsum(w * q for w, q in evidence) / tp if tp else None,
+        "severity": math.fsum(w * q for w, q in sev_credit) / tp if tp else None,
+        "calibration": calibrated,
+        "utility": None,
+        "robustness": None,
+    }
+    truth_state, response_state = truth["state"], response["state"]
+    try:
+        cell = profile.state_payoff[truth_state][response_state]
+    except KeyError:
+        raise ValueError("unknown truth or response state") from None
+    composite_weights = {k: profile.weights[k] for k in ("detection", "evidence", "severity")}
+    core = geometric(dimensions, composite_weights, profile.epsilon)
+    forecast = 1.0 if calibrated is None else calibrated
+    if truth_state == response_state == "FINDINGS" and core is not None:
+        # A finding set with no matched code has nothing to calibrate: it keeps the composite.
+        w = profile.weights["calibration"] if matched else 0.0
+        quality = (1 - w) * core + w * forecast
+    else:
+        quality = forecast
+    score = bounded(max(cell * quality, profile.epsilon))
+    return {
+        "score": score,
+        "valid": True,
+        "failures": [],
+        "dimensions": {k: NA if v is None else v for k, v in dimensions.items()},
+        "precision": precision,
+        "recall": recall,
+        "fp_cost": fp,
+        "matched": matched,
+        "unmatched": unmatched,
+        "eta": 1.0,
+        "efficiency": EFFICIENCY_STATUS,
+        "cost_coefficients": list(profile.coefficients),
+        "rule_score": NA,
+        "payoff": {"truth": truth_state, "response": response_state, "cell": cell,
+                   "quality": quality},
+    }
 
 
 def score_response(
@@ -179,6 +306,8 @@ def score_response(
                 "dimensions": {}, "precision": None, "recall": None, "fp_cost": 0.0,
                 "matched": [], "unmatched": []}
     assert response is not None
+    if profile.fixed_outcome is not None:  # rules version 4 (ADR-0022), separate code path
+        return _score_fixed_outcome(binding, truth, response)
     severity = profile.severity
     targets = {t["code"]: t for t in truth["defects"]}
     if len(targets) != len(truth["defects"]):
@@ -281,8 +410,21 @@ def epoch_estimate(scores: list[float], valid: list[bool], profile: Profile) -> 
             "raw_invalid_or_missing_rate": rate, "lower": lower, "upper": upper}
 
 
-def preference_row(estimates: dict[str, float | None], profile: Profile) -> dict[str, Any]:
-    """Eqs. 14-15. Weights leave as wire strings; no valid row is an explicit state."""
+def preference_row(
+    estimates: dict[str, float | None],
+    profile: Profile,
+    groups: list[list[str]] | None = None,
+    answers: dict[str, dict[str, dict[str, Any] | None]] | None = None,
+) -> dict[str, Any]:
+    """Eqs. 14-15. Weights leave as wire strings; no valid row is an explicit state.
+
+    Under a profile with the redundancy rule (ADR-0022) the caller passes ``answers`` (identity ->
+    case id -> response). The scorer computes the groups itself: identities whose decision vectors
+    (state and set of finding codes) are identical on every case form a group, and each group
+    shares the one weight a single member would have earned. ``groups`` is optional and only
+    checked: a caller-supplied grouping that differs from the computed one is refused. A profile
+    without the rule ignores both and behaves as before.
+    """
     theta, gamma = profile.theta, profile.gamma
     if not 0 <= theta < 1 or not math.isfinite(gamma) or gamma <= 0:
         raise ValueError("invalid threshold/sharpness")
@@ -290,6 +432,18 @@ def preference_row(estimates: dict[str, float | None], profile: Profile) -> dict
         identity: max(bounded(score) - theta, 0) ** gamma if score is not None else 0.0
         for identity, score in estimates.items()
     }
+    if profile.fixed_outcome is not None:
+        if answers is None:
+            raise ValueError("REDUNDANCY_ANSWERS_REQUIRED")
+        if set(answers) != set(estimates):
+            raise ValueError("answers must cover exactly the identities of this row")
+        computed = redundancy_groups(answers)
+        if groups is not None and sorted(sorted(g) for g in groups) != computed:
+            raise ValueError("REDUNDANCY_GROUPS_DISAGREE")
+        groups = computed
+        for group in groups:
+            for identity in group:
+                z[identity] = z[identity] / len(group)
     total = math.fsum(z.values())
     if total == 0:
         return {"state": "NO_VALID_PREFERENCE_ROW", "weights": None, "z": z,

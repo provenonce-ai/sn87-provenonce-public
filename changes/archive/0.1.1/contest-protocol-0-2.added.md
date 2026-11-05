@@ -1,0 +1,1 @@
+Contest windows have a new protocol version 0.2 for new schedules: the opening block hash is mixed into each window seed, the truth hash is fixed at open and sent in every request to a miner, and `publish-truth`, `verify` and the results tool refuse a truth that differs from it. Version 0.1 windows still verify. See ADR-0023 and docs/protocol/contest-windows.md.

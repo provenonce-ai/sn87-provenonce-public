@@ -328,8 +328,85 @@ scorer. They are not a ranking: see "Honest limits".
 The endpoint a validator calls is `sn87-miner serve` without `--unsigned-loopback`:
 `POST /v1/assurance`, authenticated with the SDK's `btauth/1` envelope over the exact request
 bytes, a replay store that refuses requests when it cannot prove freshness, and a signed response.
-It never touches a chain. The design is in
+It never writes to a chain. By default it also reads the subnet's validator permits (read-only)
+to decide who may send; see [Who may send](#who-may-send-the-sender-allowlist). The design is in
 [ADR-0005](../architecture/ADR-0005-signed-http-and-replay-boundary.md).
+
+### Who may send: the sender allowlist
+
+A signature proves that some key sent a request, not that the key should be heard: anyone can
+make a key. So `sn87-miner serve` is **allowlisted by default**. It accepts a request only if the
+signing hotkey held `validator_permit` on the subnet in the latest read of the metagraph, or is
+the hotkeys you name as trusted senders (at most 8: your probe key, and the shadow service if you
+are in the shadow cohort). Everything else is refused before your method runs and before
+anything reaches scoring, with `SENDER_NOT_PERMITTED` (HTTP 403).
+
+```text
+uv run --extra transport sn87-miner serve --role candidate --hotkey-keyfile PATH \
+  --valkey-url-env SN87_VALKEY_URL --netuid 582 [--trusted-sender SS58 ...]
+```
+
+* **Which chain.** The built-in chain settings are the public **testnet**, and they are used
+  only for netuid 582. For any other netuid, `serve` refuses to start unless you give
+  `--chain-endpoint WSS_URL` and `--chain-genesis 0xHASH` of that network (for a mainnet
+  subnet: a public mainnet endpoint and the mainnet genesis hash, both taken from the network's
+  own documentation, not from this guide). The genesis hash is checked before any answer is
+  used, and the start-up banner prints the endpoint and hash it uses. A wrong network does not
+  fail loudly by itself: it usually yields an empty permit list, which is warned about below.
+* **The permit list** is read from the chain with read-only storage queries (no wallet, no
+  transaction), pinned to one block, once at start-up and then at most once per
+  `--sender-refresh-seconds` (default 4,320, one epoch at the usual tempo of 360 blocks of 12
+  seconds; allowed 60 to 25,920). The read runs on a background thread, so a slow or hung chain
+  never delays a request: requests are decided from the last list. A permit revoked on chain
+  stops working once the next read has finished, and one granted starts working then. If the
+  first read fails or takes over 60 seconds, the miner does not start (`SENDER_SNAPSHOT_FAILED`).
+  If a later read fails or hangs, the last list is kept for up to twice the refresh interval and
+  then every sender is refused with `SENDER_POLICY_UNAVAILABLE` (503) until a read succeeds: the
+  miner fails closed. **An empty list** (no hotkey holds a permit, or the wrong chain or netuid
+  was given) is warned about at start-up and in the policy line; the miner still runs and
+  refuses everyone except the probe key.
+* **The rate limits.** Each accepted sender, the probe key included, has its own allowance:
+  `--sender-rate-per-second` (default 5) with a burst of `--sender-rate-burst` (default 32), so
+  one validator cannot use up the others' share; past it a request gets `SENDER_RATE_LIMITED`
+  (429). All senders together share `--global-rate-per-second` (default 20) with a burst of
+  `--global-rate-burst` (default 128); past it, `GLOBAL_RATE_LIMITED` (429). A validator's round
+  is 16 requests, so keep the bursts above that. The permit check comes first, so a key without
+  a permit cannot use up either allowance. The per-sender limit of the replay store
+  (`RATE_LIMITED`) still applies.
+* **The probe key** is for `sn87-miner probe`, which has to sign as somebody. Make a key for it
+  (not your miner hotkey, and not a key that holds funds), pass its address to `serve` with
+  `--probe-hotkey SS58`, and give the key itself to `probe` with `--probe-hotkey-keyfile PATH`
+  or `--probe-hotkey-env NAME`:
+
+  ```text
+  uv run --extra transport sn87-miner probe --endpoint ORIGIN \
+    --miner-hotkey YOUR_HOTKEY_SS58 --valkey-url-env SN87_VALKEY_URL \
+    --probe-hotkey-keyfile PATH_TO_PROBE_KEY
+  ```
+
+  Without `--probe-hotkey-*`, `probe` signs with a throwaway key, which an allowlisted endpoint
+  refuses (`PROBE_FAILED: REMOTE_REJECTED_403`; the endpoint answered 403 `SENDER_NOT_PERMITTED`). The probe key is rate limited like everyone else. Remove `--probe-hotkey` from the
+  command when you are done testing.
+* **Trusted senders.** `--trusted-sender SS58` (repeat it; at most 8 in all, `--probe-hotkey`
+  counting as one) lets a named hotkey send without `validator_permit`. It skips only the permit
+  check: the key is still signature-checked and rate limited, and every trusted sender is listed
+  in the start-up line and the log. Add only keys you have a reason to trust. **A shadow cohort
+  participant adds `--trusted-sender <shadow service address>`**: the shadow service signs its
+  challenges with one stable key that is not a registered hotkey, so an allowlisted miner refuses
+  it otherwise (`REMOTE_REJECTED_403`, scored as unavailable). That address is **not published yet**;
+  the operator will publish it on the shadow page once that page shows it, and you should check
+  it there before adding it; until then ask in your intake issue.
+* **The opt-out** is `--allow-any-sender`. Any key with a valid signature may then send; only
+  the global rate limit stays. It prints a warning at start-up and writes one to the log, and it
+  is refused (`ALLOW_ANY_SENDER_NON_LOOPBACK`) unless `--host` is a loopback address. Use it for
+  local development and rehearsal, never on an endpoint a validator will call. It cannot be
+  combined with `--probe-hotkey`, `--trusted-sender`, `--chain-endpoint`, `--chain-genesis` or
+  `--sender-refresh-seconds`.
+
+`sn87-miner serve --unsigned-loopback` (the development server of Part C) is a different
+server with no signatures and no senders, and is not affected by any of this.
+
+This page does not say who holds a permit on 582 or how many do; read that from the chain.
 
 ### Step 11. Generate a throwaway key for this rehearsal
 
@@ -387,20 +464,25 @@ an old request.
 ### Step 13. Check the configuration
 
 Nothing is started. The key is loaded, the method is imported, the store is pinged and its
-eviction policy is verified.
+eviction policy is verified. A real endpoint also reads the permit list here and needs
+`--netuid` (see [Who may send](#who-may-send-the-sender-allowlist)); this rehearsal has no chain
+to read, so it turns the allowlist off with `--allow-any-sender`. Use that flag for local
+rehearsal only.
 
 ```bash step id=serve-check requires-valkey
 PYTHONPATH=my-miner uv run --extra transport sn87-miner serve --method my_method:answer \
-  --hotkey-keyfile my-miner/throwaway.key --valkey-url-env SN87_VALKEY_URL --check
+  --hotkey-keyfile my-miner/throwaway.key --valkey-url-env SN87_VALKEY_URL \
+  --allow-any-sender --check 2> /dev/null
 ```
 
 ```text expect
 CONFIGURATION CHECK ONLY (nothing was started)
-SN87 MINER: signed endpoint (btauth/1), no chain access
+SN87 MINER: signed endpoint (btauth/1), no chain writes
 method: method=my_method:answer (my_method:answer)
 re: hotkey: 5\S+
 listen: http://127.0.0.1:8787  POST /v1/assurance  GET /ready
 re: replay store: \S+ \(credentials not shown\)
+sender policy: ALLOWLIST DISABLED (--allow-any-sender); local and development use only; global limit 20/s burst 128
 replay store check: ok
 check: OK
 ```
@@ -477,7 +559,9 @@ re:   "signed_by": "5\S+",
 The block starts your method behind the signed endpoint with the announcement attached, waits
 until `/ready` answers (the store's start-up window, about 13 seconds), runs `probe`, fetches the
 announcement from the well-known path, and stops the server. `probe` sends one fixture capsule
-from a throwaway caller key, with its own replay store, and verifies the signed response. The
+from a throwaway caller key, with its own replay store, and verifies the signed response. (This
+rehearsal serves with `--allow-any-sender`, so the throwaway key is accepted. A real endpoint
+refuses it; see [Who may send](#who-may-send-the-sender-allowlist) for the probe key.) The
 first probe waits out the caller-side start-up window as well, so the block takes about half a
 minute. In your own shell, run the `serve` command in a second terminal.
 
@@ -486,7 +570,7 @@ PORT=$(uv run --extra transport python -c \
   'import socket; s = socket.socket(); s.bind(("127.0.0.1", 0)); print(s.getsockname()[1])')
 PYTHONPATH=my-miner uv run --extra transport sn87-miner serve --method my_method:answer \
   --hotkey-keyfile my-miner/throwaway.key --valkey-url-env SN87_VALKEY_URL \
-  --announcement my-miner/announcement.json --netuid 582 --port "$PORT" \
+  --announcement my-miner/announcement.json --netuid 582 --allow-any-sender --port "$PORT" \
   > my-miner/serve.log 2>&1 &
 SERVER=$!
 for _ in $(seq 1 90); do
@@ -681,7 +765,14 @@ key text or record contents.
 | `VALKEY_URL_ENV_UNSET` | The named environment variable is empty or unset. | Export it, for example `export SN87_VALKEY_URL=redis://127.0.0.1:6379/0`. |
 | `VALKEY_URL_INVALID` | The store address does not parse, or the store cannot be set up with it. | Check the address. It is never echoed, so a password stays out of the output. |
 | `VALKEY_URL_SCHEME_INVALID` | The scheme is not `redis`, `rediss` or `unix`. | Use one of those. |
-| `NETUID_REQUIRED` | `--announcement` was given without `--netuid`. | Add `--netuid 582`. |
+| `NETUID_REQUIRED` | `--netuid` is missing: the sender allowlist needs it, and so does `--announcement`. | Add `--netuid 582`, or for local rehearsal only add `--allow-any-sender`. |
+| `SENDER_POLICY_INVALID` | A sender-policy number is out of range. The word after the colon names it: `refresh_seconds` (60 to 25,920), `trusted_senders` (more than 8 in all), `rate` (rate above 0, burst at least 1), `netuid`. | Fix the flag. |
+| `SENDER_POLICY_FLAGS_CONFLICT` | `--allow-any-sender` was combined with a flag that only means something with the allowlist. | Drop the listed flags, or drop `--allow-any-sender`. |
+| `ALLOW_ANY_SENDER_NON_LOOPBACK` | `--allow-any-sender` was given with a `--host` that is not loopback. | Bind `127.0.0.1`, or drop the opt-out and use the allowlist. |
+| `PROBE_HOTKEY_INVALID` | `--probe-hotkey` is not an SS58 address. | Pass the address of the probe key, not the key. |
+| `TRUSTED_SENDER_INVALID` | A `--trusted-sender` is not an SS58 address. | Pass the address, not the key. |
+| `CHAIN_GENESIS_REQUIRED` | `--chain-endpoint` and `--chain-genesis` were not given together, or the netuid is not 582 and neither was given (the built-in chain is the testnet). | Give both for the network the netuid lives on. |
+| `SENDER_SNAPSHOT_FAILED` | The permit list could not be read at start-up. The text after the colon is the reason (`CHAIN_GENESIS_MISMATCH`, `SENDER_SNAPSHOT_READ_FAILED`, `SENDER_SNAPSHOT_UNUSABLE`, `SENDER_SNAPSHOT_TIMEOUT` or the name of an error). | Check the chain endpoint and your network, then start again. |
 | `ANNOUNCEMENT_FILE_UNREADABLE` | The announcement file cannot be read. | Check the path and the permissions. |
 | `PREVIOUS_ANNOUNCEMENT_INVALID` | `--previous` does not name a record for this hotkey and netuid. | Give the record you are replacing, or omit the flag. |
 | `SEQUENCE_NOT_INCREASING` | The sequence is not higher than the previous record's. | Omit `--sequence`, or choose a larger one. |
@@ -752,6 +843,10 @@ sees the same ones.
 | `REPLAY_STORE_EVICTION_POLICY_UNSAFE` | 503 | The store's `maxmemory-policy` is not `noeviction`. | Set `maxmemory-policy noeviction`. |
 | `REPLAY_STORE_EVICTION_POLICY_UNVERIFIABLE` | 503 | The policy cannot be read, for example the `CONFIG` command is disabled. | Allow `CONFIG GET` for this client. |
 | `RATE_LIMITED` | 429 | The caller sent too many requests in a minute. | Slow down. |
+| `GLOBAL_RATE_LIMITED` | 429 | All senders together are over the endpoint's global limit. | Retry shortly; the operator can raise `--global-rate-per-second` and `--global-rate-burst`. |
+| `SENDER_RATE_LIMITED` | 429 | This sender is over its own allowance. | Slow down; the operator can raise `--sender-rate-per-second` and `--sender-rate-burst`. |
+| `SENDER_NOT_PERMITTED` | 403 | The signing hotkey does not hold `validator_permit` on the subnet (and is not a trusted sender). | A validator: check your permit. A miner running `probe`: use `--probe-hotkey` on `serve` and `--probe-hotkey-keyfile` on `probe`. The shadow service: the miner must add its address with `--trusted-sender`. |
+| `SENDER_POLICY_UNAVAILABLE` | 503 | The permit list has not been read, or is too old to trust, so every sender except trusted senders is refused. | Check the miner's chain access; it recovers by itself when a read succeeds. |
 | `CAPACITY_LIMIT` | 429 | All request slots are busy. | Retry; raise `--max-inflight` if your method is fast. |
 | `AUTHENTICATION_FAILED` | 401 | The `btauth/1` signature, age or receiver check failed. | Check the caller's clock and the hotkey it addresses. |
 | `AUTHENTICATION_UNAVAILABLE` | 401 | Authentication hit an unexpected failure. | Retry; report it if it persists. |
@@ -776,7 +871,8 @@ sees the same ones.
 | Code | What it means | What to do |
 | --- | --- | --- |
 | `PROBE_FAILED` | The probe did not complete. The text after the colon is a code below, or the name of the error, such as `ConnectError` when nothing answers at `--endpoint`. | Check the endpoint is running and the address is right. |
-| `REMOTE_REJECTED` | The endpoint answered with a status other than 200. | Look in the server log and the table above for the code it sent. |
+| `REMOTE_REJECTED_<status>` | The endpoint answered with a status other than 200 (for example `REMOTE_REJECTED_403`); the status is part of the code. | Look in the table above for the code it sent. If the endpoint is allowlisted, use the probe key (see [Who may send](#who-may-send-the-sender-allowlist)). |
+| `MINER_REJECTED_ENVELOPE` | The endpoint answered 422: it rejected the request envelope. A miner built before contest protocol 0.2 rejects the optional `window_commitments` field this way. | Update `sn87-miner`. The window records you as unavailable until you do. |
 | `RESPONSE_TOO_LARGE` | The response is over the wire limit. | Return a smaller differential. |
 | `RESPONSE_MEDIA_TYPE` | The response is not `application/json`. | A proxy in front may be rewriting it. |
 | `DUPLICATE_RESPONSE_HEADER` | The response repeats a header. | Check the proxy in front. |

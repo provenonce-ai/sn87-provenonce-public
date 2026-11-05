@@ -55,6 +55,8 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
+from weight_row_check import WeightRowMismatch, require_row_equals_pinned
+
 from sn87_provenonce.weights_dry_run import dry_run
 
 MODE_TIMELOCKED = "timelocked"
@@ -378,7 +380,13 @@ class CommitRevealRunner:
         self.store = StateFile(Path(state_path))
 
     # ---- planning
-    def start(self, document: dict[str, Any]) -> dict[str, Any]:
+    def start(self, document: dict[str, Any], *, pinned_weights: Any) -> dict[str, Any]:
+        """Plan a run. ``pinned_weights`` is the validator receipt's pinned row,
+        ``{"uids": [...], "u16_weights": [...]}``: the row quantized from the scores in
+        ``document`` must equal it, or nothing is planned (``CommitRevealError``). There is no
+        default: a run cannot start without a pinned row to compare with, and an empty row
+        (no positive score) is refused, not planned as a skipped run. The comparison is only as
+        independent as the pinned row the caller passes."""
         existing = self.store.load()
         if existing is not None and existing["phase"] not in TERMINAL:
             raise CommitRevealError("RUN_IN_PROGRESS", existing["phase"])
@@ -386,6 +394,10 @@ class CommitRevealRunner:
         if target["netuid"] != self.netuid:
             raise CommitRevealError("NETUID_MISMATCH")
         row_uids, row_values = commit_reveal_row(document)
+        try:
+            require_row_equals_pinned(row_uids, row_values, pinned_weights)
+        except WeightRowMismatch as error:
+            raise CommitRevealError("ROW_DIFFERS_FROM_PINNED_WEIGHTS", str(error)) from error
         state = {
             "schema": STATE_SCHEMA, "mode": self.mode, "netuid": self.netuid,
             "mecid": self.mecid, "version_key": self.version_key,

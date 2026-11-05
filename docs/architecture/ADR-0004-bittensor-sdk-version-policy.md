@@ -55,7 +55,7 @@ The reproducible local checks are:
 uv sync --locked --all-extras
 uv run pytest tests/bittensor
 uv run pytest
-uv build --wheel
+uv build --wheel --build-constraints requirements/build.txt --require-hashes
 ```
 
 Do not pin the moving monorepo main branch. Do not use a compatible-release range for the SDK.

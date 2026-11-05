@@ -87,7 +87,9 @@ def test_committed_profiles_declare_no_new_rules_and_keep_their_pins():
         p = binding.profile
         assert (p.state_payoff, p.wrong_scope, p.evidence_credit) == (None, None, None)
         assert "scoring_rules" not in p.document
-    assert set(profile.REGISTRY) == {"GRA-W03-3", OLD_ID, NEW_ID, "IC-FIRST-LIGHT-MIN-3"}
+    assert set(profile.REGISTRY) == {"GRA-W03-3", OLD_ID, NEW_ID, "IC-FIRST-LIGHT-MIN-3",
+                                     "IC-FIRST-LIGHT-MIN-4", "GRA-RELEASE-MIN-4",
+                                     "DAT-HEADROOM-MIN-4"}
 
 
 def test_old_profile_scores_are_unchanged_to_the_last_bit():

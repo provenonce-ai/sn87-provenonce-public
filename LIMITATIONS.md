@@ -1,6 +1,6 @@
 # Limitations
 
-Status: alpha protocol (`0.1.0`) on public testnet netuid 582. Existing testnet rows are
+Status: alpha protocol (`0.1.1`) on public testnet netuid 582. Existing testnet rows are
 conformance evidence only.
 
 1. **Conformance, not competition.** The First Light row (run `e6ffa76e6f8a14bc0625fc2caf92e2cc`,
@@ -13,18 +13,14 @@ conformance evidence only.
    not that either beats the other. Every bundle carries `claim: CONFORMANCE_ONLY`.
 2. **Plain weight mode only.** Testnet runs with commit-reveal off. Commit-reveal submission exists as tested payload, schedule and state code against a fake chain, with no submitter that sends to a chain, so it has not run on any chain ([second-validator readiness](docs/protocol/second-validator-readiness.md)). The plain path refuses a commit-reveal target.
 3. **Binary evidence credit.** Evidence quality is 1 only if every required reference is cited,
-   else 0. No partial credit, and no penalty for citing more: any superset of the required refs
-   receives full credit. The public-contract baselines use exactly that (they cite every bounded
-   event plus the completeness scope, e.g. 13 refs where an IC `stale_authority` case requires 9),
-   so their evidence score shows the rule's weakness, not evidence skill. A new profile version,
-   `IC-FIRST-LIGHT-MIN-2`, makes the credit precision-aware (ADR-0019); on the published
-   `stale_authority` fixture it gives the baseline lower evidence credit than the candidate while
-   `IC-FIRST-LIGHT-MIN-1` gives both full credit (computed in
-   `tests/test_candidate_baseline_divergence.py`). It is committed and not
-   active on any weight path; the committed profiles score as described here.
+   else 0. No partial credit, and no penalty for citing more: under the committed profiles any
+   superset of the required refs receives full credit. Newer profile versions score citation
+   precision as well: `IC-FIRST-LIGHT-MIN-2` (ADR-0019) and `IC-FIRST-LIGHT-MIN-4` with
+   `GRA-RELEASE-MIN-4` (ADR-0022). They are committed and not active on any weight path; the
+   committed profiles score as described here.
 4. **Dead branch.** The "no grounded dimension, flag for review" branch is unreachable: detection
    is always applicable, so the branch cannot fire.
-5. **beta is fixed at 1** (F1 score) in both profiles.
+5. **beta is fixed at 1** (the F-measure with equal weight on precision and recall) in both profiles.
 6. **Inactive equations.** Eq. 2 (rule score), Eq. 8 (utility) and Eq. 10 (robustness) are
    defined in the whitepaper but not scored; they serialize and display as `"NA"`, never `0`.
    Eq. 11 (efficiency) keeps its neutral factor eta = 1 numerically in raw records because all
@@ -114,21 +110,18 @@ conformance evidence only.
     (ADR-0020 lists the size and the tolerance, generated from the profile). It is committed and
     not active on any weight path.
 
-16. **The score does not credit a correct abstention.** When recomputed truth is
-    `INSUFFICIENT_EVIDENCE_ABSTAIN` with no defects, a correct abstention scores the floor
-    (epsilon, about 1e-6). The tested methods (both references and the public-contract baseline)
-    always state confidence 1, so their wrong answers there also score the floor: a
-    `NO_MATERIAL_DEVIATION` scores the same, and a false finding at confidence 1 is higher by
-    about 2e-21. A hedged false finding scores above a correct abstention, because its calibration
-    term 1 - c^2 stays in the geometric composite (weights 0.60/0.25/0.15, epsilon 1e-6, checked
-    with `score_response`): about 1.14e-5 at confidence 0.9 and 1.50e-5 at 0.5, roughly 11 to 15
-    times the abstention's 1.0e-6. Provenonce's private multi-seed
-    perturbation report shows the tie on IC: the baseline's agreement with
-    truth falls to about 0.56 under clock skew, but its mean score delta is identical to the
-    references' in every cell. Score alone does not separate the tested methods there; agreement
-    does. This is an observation about the committed profiles; they are unchanged. A new profile
-    version, `IC-FIRST-LIGHT-MIN-2`, pays a correct abstention and a wrong-scope abstention on
-    record (ADR-0019). It is committed and not active on any weight path.
+16. **The committed profiles do not credit a correct abstention, and ignore declared severity.**
+    When recomputed truth is `INSUFFICIENT_EVIDENCE_ABSTAIN` with no defects, a correct
+    abstention scores the floor (epsilon, about 1e-6) under the committed profiles, as does a
+    wrong answer stated at confidence 1. The calibration term (Eq. 7) is computed over the claims
+    the miner chooses to make, and the declared severity of a matched finding is not scored (the
+    rationale is required and never scored; scoring it is a Type D question that is deferred).
+    Under these profiles score alone does not separate the tested methods under perturbation of
+    the evidence; agreement with truth does. This is a description of the committed profiles;
+    they are unchanged. New profile versions pay a correct abstention and a wrong-scope
+    abstention on record (`IC-FIRST-LIGHT-MIN-2`, ADR-0019), and `IC-FIRST-LIGHT-MIN-4` and
+    `GRA-RELEASE-MIN-4` (ADR-0022) additionally score calibration over a fixed set of outcomes
+    and score declared severity. Committed, not active on any weight path.
 
 17. **Scoring is checkable for the committed public fixtures only.** The per-case truth of those
     fixtures is published in [`protocol/golden_truth/`](protocol/golden_truth), so the public
@@ -139,11 +132,57 @@ conformance evidence only.
     ends UNVERIFIED, exit 3); (b) that the published truth is the reference executors' output,
     which a private test shows and the digest match supports but does not prove; (c) the truth
     of any instance other than those public fixtures, which only the private reference executors
-    compute. The executors stay private because, for a family whose truth is computed from the
-    capsule, they are a perfect answer key for hidden instances. The files cover the attested
-    seed only; the truth of later windows is not published. The design for new families, where
-    truth is fixed when the instance is built, is in
+    compute. For the current families, whose truth is computed from the capsule, the private
+    reference executors are load-bearing: published, they would answer any instance whose
+    capsule is known. Correct scoring therefore depends on the operator keeping them private and
+    running them, and this repository does not remove that dependence. "Open code, hidden instances" (protection from instances being unknown to miners
+    until reveal, not from secret code) holds only for a family whose truth is fixed when the
+    instance is built (ADR-0021, "Truth fixed at build time for new families"). That is where
+    new families are meant to go. One candidate family of that kind is committed (inactive, bound
+    to no class, weight 0); its baseline-headroom result is negative (ADR-0024), so no family
+    that qualifies exists here yet. Even then the operator can derive
+    seeds in advance unless the opening-block seed of ADR-0023 (committed tooling, not deployed) is used, so instances are unknown to miners until reveal
+    but not to the operator. The binding gate in `bundle.py` (`candidate_gate`,
+    `require_weight_eligible`) is intended to apply before any weighting: a family is
+    weight-eligible only if a candidate beats every public method, `approval_witness` included,
+    by at least a stated margin (0.001), and a tie is `NULL_NO_HEADROOM` and refuses. It is not
+    wired into any live weight path. The files cover the attested seed only; the truth of later
+    windows is not published. The design for new families is in
     [ADR-0021](docs/architecture/ADR-0021-published-truth-for-public-fixtures.md).
+
+18. **Pool design bounds constant answers only.** The profiles `IC-FIRST-LIGHT-MIN-4` and
+    `GRA-RELEASE-MIN-4` (ADR-0022) cap the share of defect, clear and abstain-truth cases in the
+    scored pool, have the loader prove that no constant answer can reach theta minus a margin,
+    price surplus citation, and make identities with the same decision vector (state and finding
+    codes per case) share one weight, with dispatch, response-time and identical-answer flags
+    that are never scored. The bound is on constant answers: a method that uses the pool mix,
+    which is public in the profile, is not bounded by it. The pools as committed are small and
+    repeat public fixtures, so a public method can reach the same score; that is a headroom
+    question, handled by the gate in item 17, not a scoring rule. The redundancy rule cannot tell
+    agreement from copying (two independent correct miners share one weight, an open design
+    question for Provenonce) and has a second limit stated in ADR-0022. Committed, not active on any weight path; which scoring design a competition uses is
+    a decision for Provenonce's own decision process.
+
+19. **Text commitments in a customer export depend on a customer-held key.** A plain
+    `sha256` commitment to a short or guessable source text can be confirmed by hashing
+    candidate texts. For a source labelled `CUSTOMER_EXPORT` the mapping therefore commits text
+    with HMAC-SHA256 under a key the customer holds and passes in; it refuses to run without one,
+    never stores or logs it, and records the scheme in the mapping version
+    (`launch-approvals-to-institution/0.2@2-hmac`). Plain commitments (the fictional fixtures,
+    which hold no secret) keep the earlier version and still verify. What remains: a verifier
+    needs the key to check a commitment, so third parties cannot; key custody, rotation and
+    loss are the customer's, and the repository does not manage them; HMAC hides the text only
+    as well as the key stays secret (the mapping refuses constant or low-variety keys but cannot
+    measure entropy); the same text in two fields has the same commitment under one key; and
+    `export_class` is required on every permission, so an unlabelled or misspelt class is refused,
+    not treated as plain.
+
+20. **The baseline-uplift admission rule cannot be met under today's windows.** The proposed
+    criteria require a strictly higher estimate than the public baseline on each shadow window's
+    scored instances. On the committed families under `IC-FIRST-LIGHT-MIN-1`, the baseline ties
+    the reference methods on both the profile mix and the `messy` mix (item 8), so a tie fails
+    every window. Under the committed, not active `IC-FIRST-LIGHT-MIN-2` the references beat the
+    baseline. The rule is kept strict; the profile or mix that gives it headroom is undecided.
 
 See [docs/protocol/implementation-status.md](docs/protocol/implementation-status.md) for what
 is implemented, enabled, tested and deployed.

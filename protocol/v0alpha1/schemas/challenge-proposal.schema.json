@@ -1,0 +1,448 @@
+{
+  "$defs": {
+    "AgreementName": {
+      "enum": [
+        "COHEN_KAPPA",
+        "FLEISS_KAPPA",
+        "KRIPPENDORFF_ALPHA",
+        "PERCENT_AGREEMENT"
+      ],
+      "title": "AgreementName",
+      "type": "string"
+    },
+    "AgreementStatistic": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "$ref": "#/$defs/AgreementName"
+        },
+        "value": {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Value",
+          "type": "number"
+        }
+      },
+      "required": [
+        "name",
+        "value"
+      ],
+      "title": "AgreementStatistic",
+      "type": "object"
+    },
+    "Baseline": {
+      "additionalProperties": false,
+      "properties": {
+        "baseline_id": {
+          "minLength": 1,
+          "title": "Baseline Id",
+          "type": "string"
+        },
+        "description": {
+          "minLength": 1,
+          "title": "Description",
+          "type": "string"
+        },
+        "sees_public_contract_only": {
+          "title": "Sees Public Contract Only",
+          "type": "boolean"
+        },
+        "status": {
+          "enum": [
+            "IMPLEMENTED",
+            "PROPOSED"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "baseline_id",
+        "description",
+        "sees_public_contract_only",
+        "status"
+      ],
+      "title": "Baseline",
+      "type": "object"
+    },
+    "EvidenceRights": {
+      "additionalProperties": false,
+      "properties": {
+        "export_default": {
+          "$ref": "#/$defs/ExportDefault"
+        },
+        "export_justification": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Export Justification"
+        },
+        "raw_evidence_leaves_source": {
+          "title": "Raw Evidence Leaves Source",
+          "type": "boolean"
+        },
+        "visibility": {
+          "items": {
+            "$ref": "#/$defs/Visibility"
+          },
+          "minItems": 1,
+          "title": "Visibility",
+          "type": "array"
+        }
+      },
+      "required": [
+        "visibility",
+        "raw_evidence_leaves_source",
+        "export_default"
+      ],
+      "title": "EvidenceRights",
+      "type": "object"
+    },
+    "ExportDefault": {
+      "enum": [
+        "NONE",
+        "DERIVED_ONLY",
+        "RAW_RECORDS"
+      ],
+      "title": "ExportDefault",
+      "type": "string"
+    },
+    "HeadroomArgument": {
+      "additionalProperties": false,
+      "properties": {
+        "prior_nulls": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/PriorNull"
+          },
+          "title": "Prior Nulls",
+          "type": "array"
+        },
+        "statement": {
+          "minLength": 1,
+          "title": "Statement",
+          "type": "string"
+        }
+      },
+      "required": [
+        "statement"
+      ],
+      "title": "HeadroomArgument",
+      "type": "object"
+    },
+    "OracleClass": {
+      "enum": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "title": "OracleClass",
+      "type": "string"
+    },
+    "PriorNull": {
+      "additionalProperties": false,
+      "properties": {
+        "note": {
+          "minLength": 1,
+          "title": "Note",
+          "type": "string"
+        },
+        "reference": {
+          "minLength": 1,
+          "title": "Reference",
+          "type": "string"
+        },
+        "result": {
+          "enum": [
+            "NULL_NO_HEADROOM",
+            "BELOW_BASELINE"
+          ],
+          "title": "Result",
+          "type": "string"
+        }
+      },
+      "required": [
+        "reference",
+        "result",
+        "note"
+      ],
+      "title": "PriorNull",
+      "type": "object"
+    },
+    "ReliabilityBlock": {
+      "additionalProperties": false,
+      "properties": {
+        "agreement": {
+          "$ref": "#/$defs/AgreementStatistic"
+        },
+        "method": {
+          "minLength": 1,
+          "title": "Method",
+          "type": "string"
+        },
+        "sample_size": {
+          "exclusiveMinimum": 0,
+          "title": "Sample Size",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "method",
+        "sample_size",
+        "agreement"
+      ],
+      "title": "ReliabilityBlock",
+      "type": "object"
+    },
+    "ResourceBudget": {
+      "additionalProperties": false,
+      "properties": {
+        "compute_seconds": {
+          "exclusiveMinimum": 0.0,
+          "title": "Compute Seconds",
+          "type": "number"
+        },
+        "cost_credits": {
+          "minimum": 0.0,
+          "title": "Cost Credits",
+          "type": "number"
+        },
+        "wall_clock_seconds": {
+          "exclusiveMinimum": 0.0,
+          "title": "Wall Clock Seconds",
+          "type": "number"
+        }
+      },
+      "required": [
+        "compute_seconds",
+        "wall_clock_seconds",
+        "cost_credits"
+      ],
+      "title": "ResourceBudget",
+      "type": "object"
+    },
+    "ScoringRule": {
+      "additionalProperties": false,
+      "properties": {
+        "commitment": {
+          "anyOf": [
+            {
+              "pattern": "^sha256:[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Commitment"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Description"
+        },
+        "reference": {
+          "minLength": 1,
+          "pattern": "^\\S(?:.*\\S)?$",
+          "title": "Reference",
+          "type": "string"
+        }
+      },
+      "required": [
+        "reference"
+      ],
+      "title": "ScoringRule",
+      "type": "object"
+    },
+    "TruthSource": {
+      "additionalProperties": false,
+      "properties": {
+        "claims_self_verifying": {
+          "default": false,
+          "title": "Claims Self Verifying",
+          "type": "boolean"
+        },
+        "description": {
+          "minLength": 1,
+          "title": "Description",
+          "type": "string"
+        },
+        "independent_reference_executions": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Independent Reference Executions"
+        },
+        "oracle_class": {
+          "$ref": "#/$defs/OracleClass"
+        },
+        "reference_executor_private": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reference Executor Private"
+        },
+        "reliability": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ReliabilityBlock"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "oracle_class",
+        "description"
+      ],
+      "title": "TruthSource",
+      "type": "object"
+    },
+    "Visibility": {
+      "additionalProperties": false,
+      "properties": {
+        "may_see": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "May See",
+          "type": "array"
+        },
+        "party": {
+          "minLength": 1,
+          "title": "Party",
+          "type": "string"
+        }
+      },
+      "required": [
+        "party",
+        "may_see"
+      ],
+      "title": "Visibility",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "baselines": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/Baseline"
+      },
+      "title": "Baselines",
+      "type": "array"
+    },
+    "challenge_family": {
+      "minLength": 1,
+      "pattern": "^\\S(?:.*\\S)?$",
+      "title": "Challenge Family",
+      "type": "string"
+    },
+    "evidence_rights": {
+      "$ref": "#/$defs/EvidenceRights"
+    },
+    "headroom": {
+      "$ref": "#/$defs/HeadroomArgument"
+    },
+    "intended_consumer": {
+      "minLength": 1,
+      "title": "Intended Consumer",
+      "type": "string"
+    },
+    "known_limitations": {
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Known Limitations",
+      "type": "array"
+    },
+    "proposal_id": {
+      "minLength": 1,
+      "title": "Proposal Id",
+      "type": "string"
+    },
+    "proposal_version": {
+      "minLength": 1,
+      "title": "Proposal Version",
+      "type": "string"
+    },
+    "resource_budget": {
+      "$ref": "#/$defs/ResourceBudget"
+    },
+    "schema_version": {
+      "const": "sn87/challenge-proposal/0.1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "scoring": {
+      "$ref": "#/$defs/ScoringRule"
+    },
+    "status": {
+      "const": "PROPOSED",
+      "default": "PROPOSED",
+      "title": "Status",
+      "type": "string"
+    },
+    "submission_format": {
+      "minLength": 1,
+      "title": "Submission Format",
+      "type": "string"
+    },
+    "truth_source": {
+      "$ref": "#/$defs/TruthSource"
+    }
+  },
+  "required": [
+    "proposal_id",
+    "proposal_version",
+    "schema_version",
+    "challenge_family",
+    "intended_consumer",
+    "evidence_rights",
+    "truth_source",
+    "submission_format",
+    "scoring",
+    "resource_budget",
+    "headroom",
+    "known_limitations"
+  ],
+  "title": "ChallengeProposal",
+  "type": "object"
+}

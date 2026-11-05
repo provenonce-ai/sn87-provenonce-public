@@ -1,20 +1,28 @@
 """``sn87-miner``: serve one miner method behind the signed endpoint, or sign an announcement.
 
-  sn87-miner serve --role candidate --hotkey-env SN87_HOTKEY --valkey-url redis://127.0.0.1:6379/0
-  sn87-miner serve --role candidate --hotkey-keyfile PATH --valkey-url-env SN87_VALKEY_URL --check
+  sn87-miner serve --role candidate --hotkey-env SN87_HOTKEY --netuid N \\
+      --valkey-url redis://127.0.0.1:6379/0 [--probe-hotkey SS58]
+  sn87-miner serve --role candidate --hotkey-keyfile PATH --netuid N \\
+      --valkey-url-env SN87_VALKEY_URL --check
+  sn87-miner serve --allow-any-sender --role candidate ...               # local development only
   sn87-miner serve --unsigned-loopback --role candidate --port 8787     # local development only
   sn87-miner announce --hotkey-env SN87_HOTKEY --netuid N --endpoint <https-origin>
   sn87-miner verify-announcement FILE --netuid N [--hotkey SS58]
-  sn87-miner probe --endpoint URL --miner-hotkey SS58 --valkey-url URL    # self-test an endpoint
+  sn87-miner probe --endpoint URL --miner-hotkey SS58 --valkey-url URL \\
+      [--probe-hotkey-keyfile PATH | --probe-hotkey-env NAME]            # self-test an endpoint
 
 ``serve`` runs ``pilot.server.create_app``: ``POST /v1/assurance`` authenticated with the
 SDK's ``btauth/1`` envelope over the exact request bytes, a shared replay store (Valkey) that
-fails closed, and a signed response. ``GET /ready`` reports the replay store. The method is
+fails closed, and a signed response. ``GET /ready`` reports the replay store. Only senders that
+hold ``validator_permit`` on ``--netuid`` (read from the chain, read-only, once per epoch), or the
+one ``--probe-hotkey`` the operator names, are accepted, behind a global rate limit; the opt-out
+is ``--allow-any-sender`` (local and development use, logged). The method is
 ``--role candidate|baseline`` (the reference methods) or ``--method package.module:function``
 (your own: one capsule dict in, one differential dict out).
 
-No subcommand touches a chain: nothing here registers a key, sets weights, publishes an
-on-chain endpoint or reads a wallet by name. The signing key is read only inside this process,
+No subcommand writes to a chain: nothing here registers a key, sets weights, publishes an
+on-chain endpoint or reads a wallet by name. The sender allowlist makes read-only storage
+queries. The signing key is read only inside this process,
 from a file path or an environment variable name, and is never printed or logged.
 """
 
@@ -32,13 +40,16 @@ from pathlib import Path
 from typing import Any
 from urllib.parse import urlsplit
 
+from sn87_provenonce.pilot import sender_policy as sp
+
 from . import announcement as ann
 from .core import ROLES, MethodError, MinerCore, StagingError
 from .keys import HotkeyError, load_hotkey
 
 DEFAULT_PORT = 8787
 VALKEY_SCHEMES = {"redis", "rediss", "unix"}
-BANNER = "SN87 MINER: signed endpoint (btauth/1), no chain access"
+TESTNET_NETUID = 582   # the netuid the built-in chain endpoint and genesis hash belong to
+BANNER = "SN87 MINER: signed endpoint (btauth/1), no chain writes"
 
 
 class ConfigError(Exception):
@@ -123,15 +134,88 @@ def probe_store(store: Any) -> str:
 
 
 def build_signed_app(
-    core: MinerCore, keypair: Any, store: Any, *, max_inflight: int = 8,
+    core: MinerCore, keypair: Any, store: Any, *, sender_policy: Any, max_inflight: int = 8,
     announcement_record: bytes | None = None,
 ) -> Any:
     """The Starlette app: ``create_app`` plus, optionally, the signed announcement served
-    verbatim at the well-known path."""
+    verbatim at the well-known path. ``sender_policy`` is required: a ``SenderPolicy`` (the
+    default for ``serve``) or the explicit ``AllowAnySender`` opt-out."""
     from .transport_glue import make_app
 
     return make_app(core.handle, keypair, store, max_inflight=max_inflight,
-                    announcement_record=announcement_record)
+                    announcement_record=announcement_record, sender_policy=sender_policy)
+
+
+def valid_ss58(address: str) -> bool:
+    """True for a well-formed SS58 address in the canonical form the SDK produces."""
+    from bittensor import sp_core
+
+    try:
+        return bool(sp_core.ss58_encode(sp_core.ss58_decode(address), 42) == address)
+    except Exception:  # noqa: BLE001 - any parse failure means not valid
+        return False
+
+
+def build_permit_provider(args: argparse.Namespace) -> Any:
+    """The production snapshot source: a read-only chain read. Tests replace this."""
+    from .transport_glue import (
+        DEFAULT_CHAIN_ENDPOINT,
+        DEFAULT_CHAIN_GENESIS,
+        make_permit_provider,
+    )
+
+    if bool(args.chain_endpoint) != bool(args.chain_genesis):
+        raise ConfigError("CHAIN_GENESIS_REQUIRED: give --chain-endpoint and --chain-genesis "
+                          "together")
+    if not args.chain_endpoint and args.netuid != TESTNET_NETUID:
+        raise ConfigError("CHAIN_GENESIS_REQUIRED: the built-in chain is the testnet (netuid "
+                          f"{TESTNET_NETUID}); for netuid {args.netuid} give --chain-endpoint "
+                          "and --chain-genesis")
+    return make_permit_provider(args.chain_endpoint or DEFAULT_CHAIN_ENDPOINT,
+                                args.chain_genesis or DEFAULT_CHAIN_GENESIS)
+
+
+def build_sender_policy(args: argparse.Namespace) -> Any:
+    """The sender policy for ``serve``: the permit allowlist unless ``--allow-any-sender``."""
+    try:
+        if args.allow_any_sender:
+            conflicting = [name for name, value in (
+                ("--probe-hotkey", args.probe_hotkey),
+                ("--trusted-sender", args.trusted_sender or None),
+                ("--chain-endpoint", args.chain_endpoint),
+                ("--chain-genesis", args.chain_genesis),
+                ("--sender-refresh-seconds", args.sender_refresh_seconds)) if value is not None]
+            if conflicting:
+                raise ConfigError("SENDER_POLICY_FLAGS_CONFLICT: " + ", ".join(conflicting)
+                                  + " mean nothing with --allow-any-sender")
+            if not is_loopback(args.host):
+                raise ConfigError("ALLOW_ANY_SENDER_NON_LOOPBACK: --allow-any-sender is for "
+                                  "local development; bind a loopback --host")
+            print("WARNING: --allow-any-sender: the sender allowlist is OFF; any key with a valid "
+                  "signature may send. Local and development use only.", file=sys.stderr)
+            return sp.AllowAnySender(rate_per_second=args.global_rate_per_second,
+                                     burst=args.global_rate_burst)
+        if args.netuid is None:
+            raise ConfigError("NETUID_REQUIRED: the sender allowlist needs --netuid "
+                              "(or --allow-any-sender for local development)")
+        if args.probe_hotkey is not None and not valid_ss58(args.probe_hotkey):
+            raise ConfigError("PROBE_HOTKEY_INVALID: --probe-hotkey is not an SS58 address")
+        trusted = tuple(dict.fromkeys(args.trusted_sender or []))
+        for address in trusted:
+            if not valid_ss58(address):
+                raise ConfigError("TRUSTED_SENDER_INVALID: --trusted-sender is not an SS58 "
+                                  "address")
+        refresh = (args.sender_refresh_seconds if args.sender_refresh_seconds is not None
+                   else sp.DEFAULT_REFRESH_SECONDS)
+        config = sp.SenderPolicyConfig(
+            netuid=args.netuid, refresh_seconds=refresh, probe_hotkey=args.probe_hotkey,
+            trusted_senders=trusted,
+            rate_per_second=args.global_rate_per_second, burst=args.global_rate_burst,
+            sender_rate_per_second=args.sender_rate_per_second,
+            sender_burst=args.sender_rate_burst)
+    except ValueError as error:
+        raise ConfigError("SENDER_POLICY_INVALID: " + str(error)) from None
+    return sp.SenderPolicy(build_permit_provider(args), config)
 
 
 def _load_announcement(path: str, keypair: Any, netuid: int | None) -> bytes:
@@ -172,8 +256,17 @@ def serve_command(args: argparse.Namespace) -> int:
     store = build_store(valkey_url, receiver)
     record = (_load_announcement(args.announcement, keypair, args.netuid)
               if args.announcement else None)
-    app = build_signed_app(core, keypair, store, max_inflight=args.max_inflight,
-                           announcement_record=record)
+    policy = build_sender_policy(args)
+    try:
+        policy.load()
+    except sp.SnapshotError as error:
+        raise ConfigError(f"SENDER_SNAPSHOT_FAILED: {error}") from None
+    if getattr(policy, "snapshot_size", None) == 0:
+        print("WARNING: no hotkey holds validator_permit on this netuid (or the wrong chain or "
+              "netuid was given): every sender except the probe key will be refused.",
+              file=sys.stderr)
+    app = build_signed_app(core, keypair, store, sender_policy=policy,
+                           max_inflight=args.max_inflight, announcement_record=record)
     lines = [
         BANNER,
         f"method: {core.label} ({core.method_id})",
@@ -182,6 +275,7 @@ def serve_command(args: argparse.Namespace) -> int:
         + (f"  GET {ann.WELL_KNOWN_PATH}" if record else ""),
         f"replay store: {redact_url(valkey_url)} (credentials not shown)",
     ]
+    lines.append(policy.describe())
     if core.cmt_commitment:
         lines.append(f"cmt: {core.cmt_commitment}")
     if not is_loopback(args.host):
@@ -317,8 +411,14 @@ def probe_command(args: argparse.Namespace) -> int:
 
     url = _source(args.valkey_url, args.valkey_url_env, "VALKEY_URL")
     check_store_url(url)
+    caller = None
+    if args.probe_hotkey_keyfile or args.probe_hotkey_env:
+        try:
+            caller = load_hotkey(keyfile=args.probe_hotkey_keyfile, env=args.probe_hotkey_env)
+        except HotkeyError as error:
+            raise ConfigError(str(error)) from None
     try:
-        differential = probe_exchange(args.endpoint, args.miner_hotkey, url)
+        differential = probe_exchange(args.endpoint, args.miner_hotkey, url, caller=caller)
     except Exception as error:  # noqa: BLE001 - report a stable code, never a message
         from sn87_provenonce.pilot.transport import BoundaryError
 
@@ -358,7 +458,41 @@ def build_parser() -> argparse.ArgumentParser:
     s.add_argument("--max-inflight", type=int, default=8)
     s.add_argument("--announcement", metavar="FILE",
                    help=f"signed announcement served at {ann.WELL_KNOWN_PATH}")
-    s.add_argument("--netuid", type=int, help="netuid the announcement must name")
+    s.add_argument("--netuid", type=int,
+                   help="the subnet whose validator_permit holders may send (required unless "
+                        "--allow-any-sender); also the netuid an --announcement must name")
+    s.add_argument("--allow-any-sender", action="store_true",
+                   help="DEVELOPMENT ONLY: turn the sender allowlist off, so any key with a "
+                        "valid signature may send (the global rate limit stays). Logged.")
+    s.add_argument("--trusted-sender", metavar="SS58", action="append",
+                   help="a hotkey that may send without validator_permit (repeat for more; at "
+                        f"most {sp.MAX_TRUSTED_SENDERS} with --probe-hotkey): the probe key, or "
+                        "the address of a shadow service. It skips only the permit check, is "
+                        "still rate limited, and is listed at start-up")
+    s.add_argument("--probe-hotkey", metavar="SS58",
+                   help="the key you use with `sn87-miner probe`: the same as one "
+                        "--trusted-sender")
+    s.add_argument("--sender-refresh-seconds", type=float, metavar="S",
+                   help=f"re-read the permit list this often (default "
+                        f"{sp.DEFAULT_REFRESH_SECONDS:g} = one epoch at tempo 360; "
+                        f"{sp.MIN_REFRESH_SECONDS:g} to {sp.MAX_REFRESH_SECONDS:g})")
+    s.add_argument("--global-rate-per-second", type=float, default=sp.DEFAULT_RATE_PER_SECOND,
+                   help="requests per second all senders together may make "
+                        f"(default {sp.DEFAULT_RATE_PER_SECOND:g})")
+    s.add_argument("--global-rate-burst", type=int, default=sp.DEFAULT_BURST,
+                   help=f"burst allowance of that limit (default {sp.DEFAULT_BURST})")
+    s.add_argument("--sender-rate-per-second", type=float,
+                   default=sp.DEFAULT_SENDER_RATE_PER_SECOND,
+                   help="requests per second ONE sender (the probe key included) may make "
+                        f"(default {sp.DEFAULT_SENDER_RATE_PER_SECOND:g})")
+    s.add_argument("--sender-rate-burst", type=int, default=sp.DEFAULT_SENDER_BURST,
+                   help=f"burst allowance of that limit (default {sp.DEFAULT_SENDER_BURST})")
+    s.add_argument("--chain-endpoint", metavar="WSS_URL",
+                   help="chain endpoint for the permit read; the built-in default is the public "
+                        f"testnet and is used only for netuid {TESTNET_NETUID}; needs "
+                        "--chain-genesis")
+    s.add_argument("--chain-genesis", metavar="0xHASH",
+                   help="genesis hash the endpoint must report before its answer is used")
     s.add_argument("--check", "--dry-run", dest="check", action="store_true",
                    help="validate the configuration, probe the replay store, exit; start nothing")
     s.add_argument("--unsigned-loopback", action="store_true",
@@ -399,6 +533,11 @@ def build_parser() -> argparse.ArgumentParser:
     pr.add_argument("--miner-hotkey", required=True, help="the endpoint's hotkey (SS58)")
     pr.add_argument("--valkey-url", metavar="URL", help="the caller-side replay store")
     pr.add_argument("--valkey-url-env", metavar="NAME")
+    pr.add_argument("--probe-hotkey-keyfile", metavar="PATH",
+                    help="the key file of the hotkey the endpoint was started with "
+                         "`--probe-hotkey` (mode 0600; never printed)")
+    pr.add_argument("--probe-hotkey-env", metavar="NAME",
+                    help="NAME of an environment variable holding that probe key")
     pr.set_defaults(run=probe_command)
     return parser
 

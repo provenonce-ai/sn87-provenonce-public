@@ -1,0 +1,72 @@
+{
+  "not_closed_and_left_out": [],
+  "protocol": "sn87-contest-generator/0.2",
+  "schedule_commitment": "sha256:c9653559d7f1b792c9d00028388ef4f382db6c8f5a918055cabb2dd717c202b8",
+  "schedule_id": "demo-repro-sched",
+  "schema_version": "sn87-reveal-bundle/0.1",
+  "windows": [
+    {
+      "open_record": {
+        "beacon": {
+          "hash": "0x2c0550be68db226c01c3460689b240a82498b44ad7ec3cc754439cf04849cad4",
+          "manual": true,
+          "number": 4242424,
+          "parent_time_ms": 1794268794000,
+          "time_ms": 1794268806000
+        },
+        "cases_commitment": "sha256:02bd3e26ade515f5be61cf1b89d4f8a3b22afbdbc83587b9863202edee7f7e84",
+        "reveal_deadline": "2026-11-12T00:00:00Z",
+        "schema_version": "sn87-contest-open-record/0.1",
+        "truth_commitment": "sha256:4640e5584cfc8dcd7bd6aa59921d7b71a09a21d146b7d8e45fa2ff033cf6e98d",
+        "window_id": "demo-repro-0001"
+      },
+      "reveal": {
+        "beacon": {
+          "hash": "0x2c0550be68db226c01c3460689b240a82498b44ad7ec3cc754439cf04849cad4",
+          "manual": true,
+          "number": 4242424,
+          "parent_time_ms": 1794268794000,
+          "time_ms": 1794268806000
+        },
+        "preseed": "3e9cc6a13f7c91760e410bcb94ac578b714c16f46156731979f54a31c0488728",
+        "schema_version": "sn87-contest-reveal/0.2",
+        "seed": "7af7a5ff6a8a7a057796a72e769c3254ce9a5637030fcfe18e56bf21e0c2c86a",
+        "spec": {
+          "beacon": {
+            "network": "fixture:fake-beacon",
+            "rule": "FIRST_BLOCK_AT_OR_AFTER_OPENS_AT"
+          },
+          "closes_at": "2026-11-11T00:00:00Z",
+          "generator": "sn87-contest-generator/0.2",
+          "mix": [
+            {
+              "count": 16,
+              "family": "stale_authority",
+              "track": "scored"
+            },
+            {
+              "count": 8,
+              "family": "fresh_review",
+              "track": "scored"
+            },
+            {
+              "count": 8,
+              "family": "incomplete",
+              "track": "diagnostic"
+            }
+          ],
+          "mix_preset": "profile",
+          "opens_at": "2026-11-10T00:00:00Z",
+          "profile_commitment": "sha256:039b8639a839f8617003c2f5e686dcf313dd7fc80f9de2c1b8d7d9762a6e7665",
+          "profile_id": "IC-FIRST-LIGHT-MIN-3",
+          "reveal_deadline": "2026-11-12T00:00:00Z",
+          "schedule_id": "demo-repro-sched",
+          "window_id": "demo-repro-0001"
+        },
+        "window_id": "demo-repro-0001"
+      },
+      "status": "OPENED",
+      "window_id": "demo-repro-0001"
+    }
+  ]
+}

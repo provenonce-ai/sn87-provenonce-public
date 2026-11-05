@@ -1,0 +1,1 @@
+A new redundancy module groups identities that give identical answers and records simultaneous-dispatch, response-time and identical-answer flags in window results under the new profiles; the flags are never scored.

@@ -1,0 +1,1 @@
+LIMITATIONS item 17 now says plainly that for the current capsule-computed families the private reference executors are load-bearing and the operator dependence remains, and that "open code, hidden instances" holds only for families whose truth is fixed at build time (ADR-0021).

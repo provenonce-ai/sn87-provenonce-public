@@ -1,0 +1,60 @@
+{
+  "proposal_id": "EXAMPLE-IC-APPROVAL-APPLICABILITY-01",
+  "proposal_version": "0.1.0",
+  "schema_version": "sn87/challenge-proposal/0.1",
+  "status": "PROPOSED",
+  "challenge_family": "IC-APPROVAL-APPLICABILITY",
+  "intended_consumer": "An institution's reviewer, who wants to know whether a recorded approval applied to the action it was cited for, or whether the evidence is too incomplete to say.",
+  "evidence_rights": {
+    "visibility": [
+      {"party": "miner", "may_see": ["capsule: typed records with declared completeness"]},
+      {"party": "validator", "may_see": ["capsule", "published truth after the window closes"]},
+      {"party": "institution", "may_see": ["its own source records", "the response and score"]}
+    ],
+    "raw_evidence_leaves_source": false,
+    "export_default": "DERIVED_ONLY",
+    "export_justification": null
+  },
+  "truth_source": {
+    "oracle_class": "C",
+    "description": "Comparison against two independently structured reference executions of the declared approval rules. Both are under common Provenonce control and stay private; public fixtures carry published golden vectors.",
+    "claims_self_verifying": false,
+    "reliability": null,
+    "independent_reference_executions": 2,
+    "reference_executor_private": true
+  },
+  "submission_format": "AssuranceResponse (sn87/0alpha1): FINDINGS, NO_MATERIAL_DEVIATION or INSUFFICIENT_EVIDENCE_ABSTAIN, with cited evidence references.",
+  "scoring": {
+    "reference": "IC-FIRST-LIGHT-MIN-2",
+    "commitment": "sha256:1c0562f791afa00caeebdfa5a9afcc3473957e6f0f2d7f07d4f8bae310c75bfe",
+    "description": null
+  },
+  "baselines": [
+    {
+      "baseline_id": "BASELINE-IC-APPROVAL-APPLICABILITY",
+      "description": "Public-contract baseline in src/sn87_provenonce/baselines.py: abstains on declared incompleteness or ambiguity; otherwise flags STALE_APPROVAL when an action's linked review condition differs from the governing policy in force.",
+      "sees_public_contract_only": true,
+      "status": "IMPLEMENTED"
+    }
+  ],
+  "resource_budget": {
+    "compute_seconds": 10.0,
+    "wall_clock_seconds": 60.0,
+    "cost_credits": 0.0
+  },
+  "headroom": {
+    "statement": "The baseline does not check the approval chain, so a method that does should differ from it on cases with a broken chain. That difference is shown on in-memory edits of the public fixtures, but their truth is not published, so it is not shown to be a gain.",
+    "prior_nulls": [
+      {
+        "reference": "LIMITATIONS.md item 8",
+        "result": "NULL_NO_HEADROOM",
+        "note": "On the committed fixtures the baseline scores 1, like both reference methods, so each reference method reports NULL_NO_HEADROOM."
+      }
+    ]
+  },
+  "known_limitations": [
+    "Both reference executions are under common Provenonce control, so agreement between them is conformance evidence, not independent confirmation of the rules.",
+    "Headroom is not demonstrated on published truth.",
+    "Only synthetic fixtures are scored; no real institutional record has been used."
+  ]
+}

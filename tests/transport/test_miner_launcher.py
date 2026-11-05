@@ -26,6 +26,7 @@ from sn87_provenonce.miner_node import loopback
 from sn87_provenonce.miner_node.core import MinerCore
 from sn87_provenonce.miner_node.launcher import build_signed_app, main, redact_url
 from sn87_provenonce.pilot.client import exchange, prepare_request
+from sn87_provenonce.pilot.sender_policy import AllowAnySender
 from sn87_provenonce.pilot.transport import PATH, SharedReplayStore
 
 HOTKEY_ENV = "SN87_TEST_MINER_HOTKEY"
@@ -53,6 +54,11 @@ def leaks(mnemonic, text):
 
 
 def serve(*flags):
+    """``sn87-miner serve``. These tests are about other things than the sender allowlist, so
+    unless a test names a netuid or an opt-out itself, the opt-out is added (the allowlist has
+    its own tests in test_sender_policy.py)."""
+    if not {"--netuid", "--allow-any-sender", "--unsigned-loopback"} & set(flags):
+        flags = (*flags, "--allow-any-sender")
     return main(["serve", *flags])
 
 
@@ -169,7 +175,7 @@ def test_one_method_one_set_of_bytes_on_the_signed_and_the_loopback_wire(valkey_
     store = SharedReplayStore.from_url(valkey_url, receiver=server.ss58_address,
                                        domain="request")
     redis.set(store.prefix + ":generation", redis.info("server")["run_id"] + ":0")
-    app = build_signed_app(core, server, store)
+    app = build_signed_app(core, server, store, sender_policy=AllowAnySender())
     loop = loopback.MinerServer("127.0.0.1", 0, "candidate", core.compiled)
     thread = threading.Thread(target=loop.serve_forever, daemon=True)
     thread.start()
@@ -207,7 +213,8 @@ def test_signed_app_serves_the_announcement_verbatim_and_nothing_else_new(valkey
     store = SharedReplayStore.from_url(valkey_url, receiver=server.ss58_address,
                                        domain="request")
     app = build_signed_app(MinerCore.from_path("transport_support:echo_differential"), server,
-                           store, announcement_record=record)
+                           store, announcement_record=record,
+                           sender_policy=AllowAnySender())
 
     async def get(path):
         async with httpx.AsyncClient(transport=httpx.ASGITransport(app=app),
@@ -246,7 +253,8 @@ def test_a_real_process_answers_a_signed_request_over_a_socket(tmp_path, valkey_
     with log.open("wb") as sink:
         process = subprocess.Popen(
             [sys.executable, "-m", "sn87_provenonce.miner_node", "serve", "--role", "candidate",
-             "--port", str(port), "--hotkey-env", HOTKEY_ENV, "--valkey-url", valkey_url],
+             "--allow-any-sender", "--port", str(port), "--hotkey-env", HOTKEY_ENV,
+         "--valkey-url", valkey_url],
             env={**os.environ, HOTKEY_ENV: mnemonic}, stdout=sink, stderr=sink)
     try:
         _wait_ready(port, process)
@@ -273,7 +281,7 @@ def test_a_real_process_answers_a_signed_request_over_a_socket(tmp_path, valkey_
         if process.poll() is None:
             process.kill()
     text = log.read_text()
-    assert miner.ss58_address in text and "no chain access" in text
+    assert miner.ss58_address in text and "no chain writes" in text
     assert not leaks(mnemonic, text)
 
 
@@ -309,7 +317,8 @@ def test_probe_round_trip_against_a_running_endpoint(valkey_url, redis, capsys):
         redis.set(store.prefix + ":generation", redis.info("server")["run_id"] + ":0")
     process = subprocess.Popen(
         [sys.executable, "-m", "sn87_provenonce.miner_node", "serve", "--role", "baseline",
-         "--port", str(port), "--hotkey-env", HOTKEY_ENV, "--valkey-url", valkey_url],
+         "--allow-any-sender", "--port", str(port), "--hotkey-env", HOTKEY_ENV,
+         "--valkey-url", valkey_url],
         env={**os.environ, HOTKEY_ENV: mnemonic}, stdout=subprocess.DEVNULL,
         stderr=subprocess.DEVNULL)
     try:
